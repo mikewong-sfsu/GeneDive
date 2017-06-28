@@ -1,0 +1,173 @@
+/* Copyright (c) 2016 Brook Thomas, Paul Previde, Mike Wong, Russ Altman, Emily Mallory, 
+ Anagha Kulkarni and Dragutin Petkovic. All rights reserved; see project license information 
+ in accompanying LICENSE.txt for more details. */
+
+.announce {
+  padding:40px 20px;
+  background-color:#5184a2;
+  color:white;
+}
+
+.announce .unit-left {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Coda", "serif";
+}
+
+.announce .unit-left h1 {
+  font-size: 4em;
+}
+
+.announce .unit-right {
+  padding:10px;
+  border-radius:4px;
+}
+
+.announce .unit-right .alert {
+  margin-top:10px;
+}
+
+.announce .unit-right a {
+  color:#5ece29;
+  text-decoration: underline;
+}
+
+.description {
+  padding:40px 20px;
+  margin-left:15px;
+}
+
+.description .logo-grid {
+  display: flex;
+  flex-wrap:wrap;
+}
+
+.description .logo-grid img {
+  padding-left:20px;
+  height:50px;
+}
+
+.registration-form {
+  margin: 40px 0px;
+}
+
+/* Hold-Over */
+
+
+#search-form-holder #search-form-gene {
+    margin-top:100px;
+}
+
+
+.login-form {
+    padding:8px;
+    background-color:#deeced;
+    border-radius: 4px;
+
+}
+
+.navbar-default {
+  background-color:white;
+}
+
+.navbar-brand {
+  font-family:"Raleway", sans-serif;
+  color:rgb(120,120,120) !important;
+}
+
+.topnav {
+    margin-bottom: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    box-shadow: 0 1px 1px 0px rgba(180,180,180,0.3);
+}
+
+.views {
+    margin-top:142px;
+}
+
+.view-controller {
+    padding: 0px 10px;
+    margin-top:6px;
+    margin-left:20px;
+    font-size:2em;
+    color:rgb(180,180,180);
+    cursor:pointer;
+}
+
+.view-controller i {
+    padding-left:12px;
+}
+
+.view-controller .active {
+   color:rgb(60,60,60);
+}
+
+.view-controller i:hover {
+    color:rgb(128,128,128);
+}
+
+.spinner-holder {
+    margin-top:300px;
+    display:flex;
+    justify-content: center;
+}
+
+.logo-grid {
+    display: flex;
+    padding:20px 0px;
+}
+
+.logo-grid img {
+    padding-left:20px;
+    height:50px;
+}
+
+.download-panel {
+    text-align: right;
+}
+
+
+.graph-searches button {
+    display: flex;
+    height:50px;
+    flex-direction:column-reverse;
+    justify-content: center;
+}
+
+#index-account-required .jumbotron {
+    background-color:#bcd8da;
+    display:grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+}
+
+.sign-in {
+    background-color:#deeced;
+    border-radius:4px;
+    padding:8px;
+}
+
+.highlight-form {
+    display: flex;
+    align-items: center;
+}
+
+.highlight-form label, .highlight-form span {
+    padding:0px 10px;
+}
+
+.graph-controls {
+    padding:10px;
+}
+
+.result-count-holder {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size:1em;
+    height:36px;
+    color:rgb(51,51,51);
+}
