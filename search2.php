@@ -75,21 +75,26 @@
   </div>
 
   <div class="table-view">
-    <div class="controls">
-      <div class="close">
-        <i class="fa fa-times" aria-hidden="true"></i>
+
+    <div class="controls-overlay">
+      <div class="controls">
+        <h5>Group By</h5>
+        <div class="option">
+          <input type="radio" checked> Gene<br>
+          <input type="radio"> Article<br>
+        </div>
       </div>
-      <div class="option">
-        <input type="radio"> Article<br>
-        <input type="radio"> Gene<br>
+      <div class='expand-collapse'>
+        <i class="fa fa-bars" aria-hidden="true"></i>
       </div>
     </div>
-    <div class='expand-collapse'>
-      <i class="fa fa-bars" aria-hidden="true"></i>
+
+    <div class="table">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </div>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
   </div>
   <div class="graph-view">
     <div class='expand-collapse'>
@@ -100,11 +105,16 @@
 
 <?php include "footer.php"; ?>
 
-
 <script>
+$('.table-view .controls-overlay .expand-collapse').on('click', function () {
+  let expanded = $('.table-view .controls-overlay .controls').width() == 0;
 
-$('.table-view .expand-collapse').on('click', function () {
-  $('.table-view .controls').animate({"width":"200px"}, 1000);
+  if ( !expanded ) {
+    $(this).html('<i class="fa fa-bars" aria-hidden="true"></i>');
+    $('.table-view .controls-overlay .controls').animate({'width':'0px'}, () => $('.table-view .controls-overlay .controls').hide() );
+  } else {
+    $(this).html('<i class="fa fa-times" aria-hidden="true"></i>');
+    $('.table-view .controls-overlay .controls').show().animate({'width':'200px'});   
+  }
 });
-
 </script>

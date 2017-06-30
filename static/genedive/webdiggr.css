@@ -196,6 +196,8 @@
   grid-row-start:1;
   grid-row-end:3;
   background-color:rgb(240,240,240);
+  box-shadow: 2px 0px 2px 0px rgba(128,128,128,0.75);
+  z-index: 20;
 }
 
 .controls-topology, .controls-filter {
@@ -258,10 +260,11 @@
   grid-column-end:3;
   grid-row-start:1;
   grid-row-end:2;
-  border-bottom:2px solid rgb(128,128,128);
 
   display:flex;
   flex-direction: row;
+  padding:7px;
+  border-bottom:1px solid gray;
 }
 
 .graph-view {
@@ -271,21 +274,36 @@
   grid-row-end:3;
 }
 
+.controls-overlay {
+  position: fixed;
+  display: flex;
+  height:50%;
+  z-index: 10;
+  margin-top:-7px;
+  margin-left:-7px;
+}
+
 .expand-collapse {
-  position:absolute;
-  padding:7px;
-  color:rgb(128,128,128);
+  color:gray;
   font-size:2em;
+
+  padding-left:7px;
 }
 
 .controls {
-  position:absolute;
-  height:50%;
+  height:100%;
   width:0px;
-  background-color:gray;
+  display:none;
+  background-color:rgb(220,220,220);
+  padding:14px;
+  padding-bottom:28px;
+  border-bottom:1px solid gray;
+  box-shadow: 2px 0px 2px 0px rgba(128,128,128,0.75);
 }
 
-.controls .close {
-  text-align: right;
-  font-size: 2em;
+.table {
+  z-index: 5;
 }
+
+
+
