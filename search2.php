@@ -2,119 +2,118 @@
 
 <?php include "header.php"; ?>
 
-<div class="container-fluid search-display">
+<!-- Main Display is a full-screen grid element holding all sub-views -->
+<div class="container-fluid main-display">
+
+  <!-- Control View - left sidebar for all global controls (ie those effecting table and graph) -->
   <div class="control-view">
 
-    <div class="controls-search">
-
-      <div class="title-bar">
+    <!-- Search Controls -->
+    <div class="module search-module">
+      <div class="title">
         <h5>Search</h5>
-        <span>Help</span>
+        <span class="module-help" data-unit="search">Help</span>
       </div>
-
+      <div class="topology-row">
+        <h6>Type</h6>
+        <select class="topology-selector form-control">
+          <option value="basic">Basic</option>
+          <option value="clique">Clique</option>
+          <option value="nhop">n-Hop</option>
+        </select>
+      </div>
       <input type="text" placeholder="search a gene..." class="form-control search-input">
 
-      <div class="search-item">
-        <span class="name">BRCA2</span>
-        <span class="remove">X</span>
+      <!-- Search Sets displays current search objects -->
+      <div class="search-sets">
       </div>
-
-      <div class="search-item">
-        <span class="name">ABC1</span>
-        <span class="remove">X</span>
-      </div>
-
     </div>
-
-    <div class="controls-topology">
-      
-      <div class="title-bar">
-        <h5>Topology</h5>
-        <span>Help</span>
+    
+    <!-- Filter Controls -->
+    <div class="module filter-module">
+      <div class="title">
+        <h5>Filter</h5>
+        <span class="module-help" data-unit="filter">Help</span>
       </div>
 
-      <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default">None</button>
-        <button type="button" class="btn btn-default">Clique</button>
-        <button type="button" class="btn btn-default">n-Hop</button>
+      <!-- Probability Filter Submodule -->
+      <div class="min-prob-titlebar">
+        <h6>Minimum Probability</h6>
+        <span class="min-prob-slider-value">0.7</span>
       </div>
+      <input class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" 
+              data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7">
 
-    </div>
+      <div class="divider"></div>
 
-    <div class="controls-filter">
-
-      <div class="title-bar">
-        <h5>Filters</h5>
-        <span>Help</span>
-      </div>
-
-      <div class="top-row">
-        <select class="filter-select">
-          <option>Journal</option>
-          <option>Article</option>
-          <option>Gene</option>
-          <option>Excerpt</option>
-        </select>
-
-        <div class="filter-is-not">
-          <input type="radio" name="isnot" value="is" checked> is<br>
-          <input type="radio" name="isnot" value="not" checked> not<br>
+      <!-- Text Filter Submodule -->
+      <h6>Text Filters</h6>
+      <form id="add-filter">
+        <div class="top-row">
+          <select class="filter-select">
+            <option>Journal</option>
+            <option>Article</option>
+            <option>Gene</option>
+            <option>Excerpt</option>
+          </select>
+          <div class="filter-is-not">
+            <span><input type="radio" name="isnot" value="is" class="is" checked > is </span>
+            <span><input type="radio" name="isnot" value="not"> not </span>
+          </div>
         </div>
+        <div class="input-group filter-input-group">
+          <input type="text" class="form-control filter-input" placeholder="value..." required>
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-default" type="button">Add</button>
+          </span>
+        </div>
+      </form>
 
+      <!-- Filter Sets displays current filter objects -->
+      <div class="filters">
       </div>
-
-      <input type="text" placeholder="filter..." class="form-control filter-input">
-
     </div>
 
-    <div class="controls-account">
+    <!-- Highlight Module -->
+    <div class="module highlight-module">
+      <div class="title">
+        <h5>Highlight</h5>
+        <span class="module-help" data-unit="highlight">Help</span>
+      </div>
+      <input type="text" placeholder="highlight term..." class="form-control highlight-input">
+    </div>
+
+    <!-- Account Module -->
+    <div class="module account-module">
       <h4>GeneDive</h4>
-      <span>brookthomas@gmail.com</span>
     </div>
 
-  </div>
+  </div> <!-- End Control View -->
 
+  <!-- Table View -->
   <div class="table-view">
-
-    <div class="controls-overlay">
-      <div class="controls">
-        <h5>Group By</h5>
-        <div class="option">
-          <input type="radio" checked> Gene<br>
-          <input type="radio"> Article<br>
-        </div>
+    <div class="topbar">
+      <div class="back">
+        <span><i class="fa fa-caret-left"></i>Back</span>
       </div>
-      <div class='expand-collapse'>
-        <i class="fa fa-bars" aria-hidden="true"></i>
+      <div class="spacer"></div>
+      <div class="grouping-controls">
+        <h6>Group Table By</h6>
+        <select class="table-grouping-selector" selected="gene">
+          <option value="gene">Gene</option>
+          <option value="article">Article</option>
+        </select>
       </div>
     </div>
-
-    <div class="table">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class="table-responsive">
     </div>
-
   </div>
+
+  <!-- Graph View -->
   <div class="graph-view">
-    <div class='expand-collapse'>
-      <i class="fa fa-bars" aria-hidden="true"></i>
+    <div class="graph">
+      Graph
     </div>
   </div>
-</div>
 
 <?php include "footer.php"; ?>
-
-<script>
-$('.table-view .controls-overlay .expand-collapse').on('click', function () {
-  let expanded = $('.table-view .controls-overlay .controls').width() == 0;
-
-  if ( !expanded ) {
-    $(this).html('<i class="fa fa-bars" aria-hidden="true"></i>');
-    $('.table-view .controls-overlay .controls').animate({'width':'0px'}, () => $('.table-view .controls-overlay .controls').hide() );
-  } else {
-    $(this).html('<i class="fa fa-times" aria-hidden="true"></i>');
-    $('.table-view .controls-overlay .controls').show().animate({'width':'200px'});   
-  }
-});
-</script>

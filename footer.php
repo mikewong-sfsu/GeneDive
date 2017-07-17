@@ -1,13 +1,12 @@
     <!-- JQuery -->
-    <script src="static/jquery/jquery-3.2.1.min.js">
+    <script src="static/jquery/jquery-3.2.1.min.js"></script>
 
     <!-- Bootstrap and Modules -->
     <script src="static/bootstrap/bootstrap.min.js"></script>
-    <script src="static/bootstrap/bootbox/bootbox.min.js"></script>
-    <script src="static/bootstrap/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    <script src="static/bootstrap/bootstrap-slider/bootstrap-slider.min.js"></script>
 
     <!-- Typeahead -->
-    <script src="static/typeahead/typeahead.bundle.js"></script>
+    <script src="static/typeahead/typeahead.bundle.min.js"></script>
 
     <!-- SHA256 -->
     <script src="static/sha256/sha256.js"></script>
@@ -27,8 +26,31 @@
 
     <!-- Adjacency Matrix -->
     <script src="static/genedive/json/adjacency_matrix.js"></script>
+    <!-- <script src="static/genedive/json/test_adjacency.js"></script> -->
+
+    <!-- GeneDive Classses -->
+    <script src="static/genedive/GeneDiveAPI.js"></script>
+    <script src="static/genedive/search/graphsearch.js"></script>
+    <script src="static/genedive/search/search.js"></script>
+    <script src="static/genedive/color/color.js"></script>
+    <script src="static/genedive/synonym/synonym.js"></script>
+    <script src="static/genedive/filter/probabilityfilter.js"></script>
+    <script src="static/genedive/filter/textfilter.js"></script>
+    <script src="static/genedive/highlight/highlight.js"></script>
+    <script src="static/genedive/grouper/grouper.js"></script>
+    <script src="static/genedive/view/table/resultstable.js"></script>
+    <script src="static/genedive/view/table/tabledetail.js"></script>
+    <script src="static/genedive/view/table/tablesummarygene.js"></script>
+    <script src="static/genedive/view/table/tablesummaryarticle.js"></script>
+    <script src="static/genedive/view/graph/graph.js"></script>
+    <script src="static/genedive/help/help.js"></script>
+
+    <!-- Core Controller -->
+    <script src="static/genedive/controller.js"></script>
 
     <!-- Webdiggr -->
+
+    <!-- 
     <script src="static/genedive/WebdiggrAPI.js"></script>
 
     <script src="static/genedive/genes/gene.class.js"></script>
@@ -50,6 +72,8 @@
     <script src="static/genedive/view/table/table.class.js"></script>
     <script src="static/genedive/view/graph/class.js"></script>
     <script src="static/genedive/Webdiggr.js"></script>
+
+    -->
 
   </body>
 </html>

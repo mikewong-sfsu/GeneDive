@@ -1,0 +1,69 @@
+.filter-module .top-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.filter-module .top-row .filter-select {
+  height:34px;
+  flex-grow: 1;
+}
+
+.filter-module .top-row .filter-is-not {
+  margin-left:7px;
+}
+
+.filter-module .top-row .filter-is-not span {
+  padding:7px 7px;
+}
+
+.filter-module .top-row .filter-greater-than {
+  padding:7px 14px;
+}
+
+.filter-input-group {
+  margin-top:7px;
+}
+
+.filters .filter-item {
+  display:flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top:7px;
+  padding:7px 14px; 
+  background-color:rgb(210,210,210);
+  border-radius:3px;
+}
+
+.filters .filter-item .is-not {
+  font-weight: bold;
+}
+
+.filters .filter-item .value {
+  font-style: italic;
+}
+
+.filter-item i:hover {
+  color:#920907;
+  cursor: pointer;
+}
+
+.min-prob-titlebar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: baseline;
+}
+
+.min-prob-slider {
+  display: none;
+}
+
+.slider-selection {
+  background: #9fcbe0;
+}
+
+#add-filter {
+  margin-top:7px;
+}

@@ -1,0 +1,109 @@
+/* search.css */
+
+/* Core View Units */
+.main-display {
+  display: grid;
+  position:fixed;
+  padding:0;
+  grid-template-columns:20% 80%;
+  grid-template-rows:50% 50%;
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+  font-family: "Roboto", sans-serif;
+}
+
+.control-view {
+  display:flex;
+  padding:0 20px 20px 20px;
+  flex-direction: column;
+  grid-column-start:1;
+  grid-column-end:2;
+  grid-row-start:1;
+  grid-row-end:3;
+  background-color:rgb(240,240,240);
+  box-shadow: 2px 0px 2px 0px rgba(128,128,128,0.75);
+  z-index: 20;
+  overflow-y: scroll;
+}
+
+.table-view {
+  grid-column-start:2;
+  grid-column-end:3;
+  grid-row-start:1;
+  grid-row-end:2;
+  border-bottom:1px solid gray;
+
+  overflow-y: scroll;
+}
+
+.graph-view {
+  grid-column-start:2;
+  grid-column-end:3;
+  grid-row-start:2;
+  grid-row-end:3;
+
+}
+
+.table-view, .graph-view {
+  display:flex;
+  flex-direction: column;
+  padding:7px 12px 0 12px;
+}
+
+h5, h6 {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  color:rgb(128,128,128);
+}
+
+h5 {
+  text-transform: uppercase;
+}
+
+h6 {
+  margin:0px;
+  color:rgb(80,80,80);
+}
+
+
+/* Control View Units */
+
+.module {
+  margin-top: 24px;
+}
+
+.highlight-module {
+  flex-grow: 1; /* Push Account Controller to bottom */
+}
+
+.module .title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.module .title span {
+  color:rgb(128,128,128);
+}
+
+.module-help {
+  cursor:pointer;
+}
+
+.divider {
+  width:100%;
+  margin:14px 0px;
+  border-bottom:1px solid rgb(220,220,220);
+}
+
+/* Sliding Drawers for table/graph specific controls */
+
+.table, .graph {
+  z-index: 5;
+  margin-bottom: 0px;
+}
+
+/* Header */
