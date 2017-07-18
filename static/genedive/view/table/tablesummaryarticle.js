@@ -7,7 +7,10 @@ class TableSummaryArticle extends ResultsTable {
     this.drawHeaders();
     this.drawBody();
 
-    this.table.tablesorter( { sortList: [[4,1],] } ); // [index, asc/desc]
+    this.table.tablesorter({ 
+      headers: { 3: { sorter: false }, 5: { sorter: false }, 6: { sorter: false } }, 
+      sortList: [[5,1],] } // [index, asc/desc]
+    ); 
   }
   
   drawHeaders ( ) {
@@ -17,8 +20,8 @@ class TableSummaryArticle extends ResultsTable {
     thead.append(tr);
 
     tr.append( $(document.createElement("th")).text( "Article" ) );
-    tr.append( $(document.createElement("th")).text( "Genes in Group" ) );
-    tr.append( $(document.createElement("th")).text( "Interactions in Group" ) );
+    tr.append( $(document.createElement("th")).text( "Genes" ) );
+    tr.append( $(document.createElement("th")).text( "Interactions" ) );
     tr.append( $(document.createElement("th")).text( "P. Distribution" ) );
     tr.append( $(document.createElement("th")).text( "Max Probability" ) );
     tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width", "40%") );

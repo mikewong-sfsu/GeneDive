@@ -25,6 +25,9 @@
     <!-- TableSorter -->
     <link rel="stylesheet" href="static/tablesorter/tablesorter.css">
 
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="static/jquery/jquery-ui.min.css">
+
     <!-- Alertify -->
     <link rel="stylesheet" href="static/alertify/css/alertify.min.css">
     <link rel="stylesheet" href="static/alertify/css/alertify.bootstrap.min.css">

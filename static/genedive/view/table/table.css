@@ -55,6 +55,7 @@
   font-weight:normal;
   color:rgb(128,128,128);
   text-align: right;
+  white-space: nowrap;
 }
 
 .table-view .table td {
@@ -78,7 +79,7 @@
 /* D3 Histogram */
 
 .bars rect {
-    fill: gray;
+    fill: lightblue;
 }
 .axis path, .axis line {
   fill: none;

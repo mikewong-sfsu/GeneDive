@@ -5,7 +5,7 @@
 function histogramChart() {
   var margin = {top: 0, right: 0, bottom: 0, left: 0},
       width = 125,
-      height = 40;
+      height = 30;
 
   var histogram = d3.layout.histogram(),
       x = d3.scale.ordinal(),

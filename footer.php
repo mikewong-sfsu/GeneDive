@@ -1,5 +1,6 @@
     <!-- JQuery -->
     <script src="static/jquery/jquery-3.2.1.min.js"></script>
+    <script src="static/jquery/jquery-ui.min.js"></script>
 
     <!-- Bootstrap and Modules -->
     <script src="static/bootstrap/bootstrap.min.js"></script>
@@ -31,6 +32,7 @@
     <!-- GeneDive Classses -->
     <script src="static/genedive/GeneDiveAPI.js"></script>
     <script src="static/genedive/search/graphsearch.js"></script>
+    <script src="static/genedive/search/disambiguation.js"></script>
     <script src="static/genedive/search/search.js"></script>
     <script src="static/genedive/color/color.js"></script>
     <script src="static/genedive/synonym/synonym.js"></script>

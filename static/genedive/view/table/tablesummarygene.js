@@ -7,7 +7,10 @@ class TableSummaryGene extends ResultsTable {
     this.drawHeaders();
     this.drawBody();
 
-    this.table.tablesorter( { sortList: [[5,1],] } ); // [index, asc/desc]
+    this.table.tablesorter({ 
+      headers: { 4: { sorter: false }, 6: { sorter: false }, 7: { sorter: false } }, 
+      sortList: [[5,1],] } // [index, asc/desc]
+    ); 
   }
   
   drawHeaders ( ) {

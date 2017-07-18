@@ -25,6 +25,7 @@ class Search {
   }
 
   addSearchSet ( name, ids ) {
+    
     switch ( this.selectedTopology() ) {
       case "basic":
         this.sets.push( new SearchSet( name, ids ) );

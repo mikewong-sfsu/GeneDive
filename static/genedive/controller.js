@@ -88,3 +88,9 @@ class Controller {
 }
 
 let GeneDive = new Controller();
+
+/* 
+$(document).on('ready', function () {
+  $('.table-view').resizable();
+});
+*/

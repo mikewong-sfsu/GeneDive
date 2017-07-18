@@ -91,7 +91,7 @@
   </div> <!-- End Control View -->
 
   <!-- Table View -->
-  <div class="table-view">
+  <div class="table-view ui-widget-content">
     <div class="topbar">
       <div class="back">
         <span><i class="fa fa-caret-left"></i>Back</span>

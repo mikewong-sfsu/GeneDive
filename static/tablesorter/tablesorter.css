@@ -1,3 +1,7 @@
+.table-view th.header {
+  cursor:pointer;
+}
+
 .table-view th.header::after {
   padding-left:8px;
   content: "\f0dc";
