@@ -2,8 +2,9 @@ class TableDetail extends ResultsTable {
 
   constructor ( table, interactions, back, group ) {
     super( table, interactions );
-    
     this.interactions = GeneDive.grouper.group( interactions )[group];
+    this.updateTopbarMessage(`<strong>${this.interactions.length}</strong> Interactions`);
+
     this.back = $(back);
     
     this.drawHeaders();

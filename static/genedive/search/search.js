@@ -15,8 +15,8 @@ class Search {
     alertify.set('notifier','position', 'top-left');
 
     this.topology.on("change", () => {
-      this.clearSearch();
       this.input.val("");
+      GeneDive.runSearch();
     });
   }
 
@@ -27,25 +27,27 @@ class Search {
   addSearchSet ( name, ids ) {
     
     switch ( this.selectedTopology() ) {
-      case "basic":
-        this.sets.push( new SearchSet( name, ids ) );
-        break;
 
       case "clique":
-        if ( this.sets.length >= 1 ) { 
+        if ( this.sets.length >= 1 || ids.length > 1 ) { 
           alertify.notify("Clique searches are limited to a single gene.", "", "3");
           this.input.val(""); return; 
         }
+
         this.sets.push( new SearchSet( name, ids ) );
         break;
 
-      case "nhop":
-        if ( this.sets.length >= 2 ) { 
-          alertify.notify("n-Hop searches are limited to two genes.", "", "3");
-          this.input.val(""); return; 
-        }
+      case "1hop":
+      case "2hop":
+      case "3hop":
+      default:
         this.sets.push( new SearchSet( name, ids ) );
         break;
+    }
+
+    // Disable option to selected clique search if 2 or more genes selected
+    if ( this.sets.length >= 2 ) {
+      this.disableCliqueSelection();
     }
 
     this.renderDisplay();
@@ -54,6 +56,11 @@ class Search {
 
   removeSearchSet ( identifier ) {
     this.sets = this.sets.filter( ( set ) => set.name != identifier && set.ids[0] != identifier );
+
+    if ( this.sets.length <= 1 ) {
+      this.enableCliqueSelection();
+    }
+
     this.renderDisplay();
     GeneDive.runSearch();
   }
@@ -63,45 +70,56 @@ class Search {
     this.renderDisplay();
   }
 
-  getIds( ) {
+  enableCliqueSelection () {
+    this.topology.children("option[value='clique']").prop("disabled", false);
+  }
+
+  disableCliqueSelection () {
+    this.topology.children("option[value='clique']").prop("disabled", true);
+  }
+
+  getIds( minProb ) {
 
     this.color.reset();
     
     switch ( this.selectedTopology() ) {
 
-      case "basic":
-        return this.getBasicIds();
+      case "1hop":
+        return this.search1Hop();
+
+      case "2hop":
+        if ( this.sets.length == 1 ) { return []; }
+        return this.search2Hop();
+
+      case "3hop":
+        if ( this.sets.length == 1 ) { return []; }
+        return this.search3Hop();
 
       case "clique":
-        return this.getCliqueIds( );
-
-      case "nhop":
-        if ( this.sets.length == 1 ) { return []; }
-        return this.getnHopIds();
+        return this.searchClique( minProb );
     }
-
   }
 
-  getBasicIds() {
-    // Re-render Search Display with Colors
+  search1Hop () {
+    // Generate colors and re-render display
     this.sets.forEach( s => { let color = this.color.allocateColor( s.ids ); s.color = color; });
     this.renderDisplay();
 
     return _.flatten(this.sets.map( s => s.ids ));
   }
 
-  getCliqueIds( ) {
-    let clique = this.graphsearch.clique( this.sets[0].ids[0] );
+  search2Hop() {
+    let nhop = this.graphsearch.nHop( this.sets[0].ids[0], this.sets[1].ids[0], 2, false );
 
     // Re-render Search Display with Colors
     this.sets.forEach( s => { s.color = "#4dadf7"; this.color.setColor( s.ids, s.color ); });
-    this.color.setColor( clique.interactants, "#fd7e14" );
+    this.color.setColor( nhop.interactants, "#fd7e14" );
     this.renderDisplay();
 
-    return _.flattenDeep([this.sets.map( s => s.ids ), clique.interactants, clique.non_interactants]);
+    return _.flattenDeep([ this.sets.map( s => s.ids ), nhop.interactants ]);
   }
 
-  getnHopIds() {
+  search3Hop() {
     let nhop = this.graphsearch.nHop( this.sets[0].ids[0], this.sets[1].ids[0], 3, false );
 
     // Re-render Search Display with Colors
@@ -110,6 +128,18 @@ class Search {
     this.renderDisplay();
 
     return _.flattenDeep([ this.sets.map( s => s.ids ), nhop.interactants ]);
+
+  }
+
+  searchClique( minProb ) {
+    let clique = this.graphsearch.clique( this.sets[0].ids[0], minProb );
+
+    // Re-render Search Display with Colors
+    this.sets.forEach( s => { s.color = "#4dadf7"; this.color.setColor( s.ids, s.color ); });
+    this.color.setColor( clique.interactants, "#fd7e14" );
+    this.renderDisplay();
+
+    return _.flattenDeep([this.sets.map( s => s.ids ), clique.interactants, clique.non_interactants]);
   }
 
   renderDisplay () {
@@ -171,6 +201,7 @@ class Search {
       this.addSearchSet( item.symbol, item.values );
       this.input.typeahead("val", "");
     });
+    
   }
 
 }

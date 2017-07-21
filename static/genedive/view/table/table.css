@@ -22,7 +22,8 @@
   padding-right:3px;
 }
 
-.topbar .spacer {
+.topbar .message {
+  text-align: center;
   flex-grow: 1;
 }
 

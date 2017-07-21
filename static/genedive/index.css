@@ -6,12 +6,18 @@
   color:white;
 }
 
+.announce .row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .announce .unit-left {
   display:flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Coda", "serif";
+  font-family: "Roboto", "serif";
 }
 
 .announce .unit-left h1 {

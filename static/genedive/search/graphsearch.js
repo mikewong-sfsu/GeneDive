@@ -11,11 +11,30 @@ class GraphSearch {
     this.genes = new Set(); // Used by nHop/dfs only
   }
 
-  /* Gene interactings also having an interaction with at least one other interactant */
-  clique( gene ) {
-      let interactants = this.getInteractants( gene ).filter( id => id != gene );
-      let clique = interactants.filter( i => this.hasInteraction(i, interactants) );
-      return new GraphResult( clique, _.xor(interactants, clique) );
+  clique ( geneid, minProb ) {
+    
+    let clique = [];
+    minProb = minProb * 1000;
+
+    // Get all the genes that interact with the target gene. Remove self interaction if present.
+    let interactants = _.without(Object.keys( adjacency_matrix[geneid] ), geneid); 
+
+    // Filter genes that have no interactions with target gene above prob cutoff
+    interactants = interactants.filter( i =>  { 
+      let probs = adjacency_matrix[geneid][i];
+      return probs.some( prob => prob >= minProb );
+    });
+
+    for ( let candidate of interactants ) {
+      let intersection = _.intersection( interactants, Object.keys( adjacency_matrix[candidate] ) );
+      intersection = intersection.filter( i => adjacency_matrix[candidate][i].some( prob => prob >= minProb ) );
+
+      if ( intersection.length > 0 ) {
+        clique.push( candidate ); 
+      }
+    }
+
+    return new GraphResult( clique, _.difference(  interactants, clique, [geneid] ) );
   }
 
      

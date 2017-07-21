@@ -7,6 +7,7 @@
 
   <!-- Control View - left sidebar for all global controls (ie those effecting table and graph) -->
   <div class="control-view">
+    <h4>GeneDive</h4>
 
     <!-- Search Controls -->
     <div class="module search-module">
@@ -17,9 +18,10 @@
       <div class="topology-row">
         <h6>Type</h6>
         <select class="topology-selector form-control">
-          <option value="basic">Basic</option>
-          <option value="clique">Clique</option>
-          <option value="nhop">n-Hop</option>
+          <option value="1hop">1-Hop</option>
+          <option value="2hop">2-Hop</option>
+          <option value="3hop">3-Hop</option>
+          <option value="clique">Clique (Max 1 Gene)</option>
         </select>
       </div>
       <input type="text" placeholder="search a gene..." class="form-control search-input">
@@ -85,7 +87,6 @@
 
     <!-- Account Module -->
     <div class="module account-module">
-      <h4>GeneDive</h4>
     </div>
 
   </div> <!-- End Control View -->
@@ -96,7 +97,7 @@
       <div class="back">
         <span><i class="fa fa-caret-left"></i>Back</span>
       </div>
-      <div class="spacer"></div>
+      <div class="message"><span class="message-text"></span></div>
       <div class="grouping-controls">
         <h6>Group Table By</h6>
         <select class="table-grouping-selector" selected="gene">
