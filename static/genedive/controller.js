@@ -10,6 +10,7 @@ class Controller {
     this.highlighter = new Highlight( ".highlight-input" );
     this.grouper = new Grouper( ".table-grouping-selector" );
     this.tablestate = { zoomed: false, zoomgroup: null }; 
+    this.graph = new GraphView("graph");
 
     this.interactions = null;
     this.filtrate = null;
@@ -69,6 +70,7 @@ class Controller {
     } 
 
     // If user changes groups while zoomed in, hide the back button
+    // todo: abstract this
     $(".table-view .topbar .back").hide();
 
     // Otherwise show the appropriate summary view
@@ -80,17 +82,16 @@ class Controller {
 
   }
 
+  // Graph.js provides a common Node interchange format we use for sending node data
+  // Node( id, name || undefined, color )
   drawGraph() {
-    //new GraphView( ".graph-view .graph", this.filtrate );
-    $(".graph-view .graph").html("[ GRAPH GOES HERE ]");
+
+
+
+    this.graph.create( this.search.sets, this.probfilter.getMinimumProbability() );
   }
 
 }
 
 let GeneDive = new Controller();
 
-/* 
-$(document).on('ready', function () {
-  $('.table-view').resizable();
-});
-*/

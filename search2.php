@@ -7,12 +7,13 @@
 
   <!-- Control View - left sidebar for all global controls (ie those effecting table and graph) -->
   <div class="control-view">
-    <h4>GeneDive</h4>
+    
+    <div class="titlebar">GeneDive</div>
 
     <!-- Search Controls -->
     <div class="module search-module">
       <div class="title">
-        <h5>Search</h5>
+        <h5><i class="fa fa-search" aria-hidden="true"></i>Search</h5>
         <span class="module-help" data-unit="search">Help</span>
       </div>
       <div class="topology-row">
@@ -34,7 +35,7 @@
     <!-- Filter Controls -->
     <div class="module filter-module">
       <div class="title">
-        <h5>Filter</h5>
+        <h5><i class="fa fa-filter" aria-hidden="true"></i>Filter</h5>
         <span class="module-help" data-unit="filter">Help</span>
       </div>
 
@@ -79,7 +80,7 @@
     <!-- Highlight Module -->
     <div class="module highlight-module">
       <div class="title">
-        <h5>Highlight</h5>
+        <h5><i class="fa fa-pencil" aria-hidden="true"></i>Highlight</h5>
         <span class="module-help" data-unit="highlight">Help</span>
       </div>
       <input type="text" placeholder="highlight term..." class="form-control highlight-input">
@@ -112,7 +113,7 @@
 
   <!-- Graph View -->
   <div class="graph-view">
-    <div class="graph">
+    <div id="graph">
       Graph
     </div>
   </div>

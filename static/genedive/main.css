@@ -16,7 +16,7 @@
 
 .control-view {
   display:flex;
-  padding:0 20px 20px 20px;
+  padding:10px 16px;
   flex-direction: column;
   grid-column-start:1;
   grid-column-end:2;
@@ -52,26 +52,36 @@
   padding:7px 12px 0 12px;
 }
 
+.titlebar {
+  margin-top: 4px;
+  margin-bottom:-24px;
+  text-align: center;
+  font-size:1.5em;
+  color:rgb(80,80,80);
+}
+
 h5, h6 {
   font-family: "Roboto", sans-serif;
   font-style: normal;
-  color:rgb(128,128,128);
+  color:rgb(110,110,110);
 }
 
 h5 {
   text-transform: uppercase;
+  padding:8px 0;
+  font-size: 16px;
 }
 
 h6 {
   margin:0px;
-  color:rgb(80,80,80);
+  padding:6px 0;
 }
 
 
 /* Control View Units */
 
 .module {
-  margin-top: 24px;
+  margin-top: 28px;
 }
 
 .highlight-module {
@@ -86,6 +96,11 @@ h6 {
 }
 
 .module .title span {
+  color:rgb(128,128,128);
+}
+
+.module .title i {
+  padding-right:1em;
   color:rgb(128,128,128);
 }
 

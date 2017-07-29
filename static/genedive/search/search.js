@@ -185,8 +185,8 @@ class Search {
 
     this.input.typeahead(
       { minLength: 2, highlight: true },
-      { name: 'Genes', source: genes, display: 'symbol' },
-      { name: 'Genesets', source: geneset, display: 'symbol' }
+      { name: 'Genes', source: genes, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }  },
+      { name: 'Genesets', source: geneset, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } }
       //{name: 'Testgenes', source: testgenes, display:'symbol'}
     );
 
@@ -204,10 +204,32 @@ class Search {
     
   }
 
+  getGraphData ( ) {
+
+    let graph_data = {};
+    let name_lookup = [];
+
+    for ( let set of this.sets ) {
+
+      if ( set.type == "gene" ) {
+        graph_data[set.ids[0]] = { name: set.name, color: set.color }; 
+        continue;
+      }
+
+      // Geneset: process each gene individually
+      set.ids.forEach( g => {
+        graph_data[g] = { name: undefined, color: set.color };
+        name_lookup.push(g);
+      });
+    }
+
+    return graph_data;
+
+  }
 }
 
 class SearchSet {
-  constructor (name, ids ) {
+  constructor ( name, ids ) {
     this.name = name;
     this.type = ids.length > 1 ? "set" : "gene";
     this.ids = ids.map( i => Number(i) );

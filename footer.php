@@ -29,6 +29,9 @@
     <script src="static/genedive/json/adjacency_matrix.js"></script>
     <!-- <script src="static/genedive/json/test_adjacency.js"></script> -->
 
+    <!-- Cytoscape -->
+    <script src="static/cytoscape/cytoscape.min.js"></script>
+
     <!-- GeneDive Classses -->
     <script src="static/genedive/GeneDiveAPI.js"></script>
     <script src="static/genedive/search/graphsearch.js"></script>
@@ -44,6 +47,7 @@
     <script src="static/genedive/view/table/tabledetail.js"></script>
     <script src="static/genedive/view/table/tablesummarygene.js"></script>
     <script src="static/genedive/view/table/tablesummaryarticle.js"></script>
+    <script src="static/genedive/view/graph/node.js"></script>
     <script src="static/genedive/view/graph/graph.js"></script>
     <script src="static/genedive/help/help.js"></script>
 
