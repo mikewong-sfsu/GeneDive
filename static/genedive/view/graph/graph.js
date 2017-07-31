@@ -34,8 +34,9 @@ class GraphView {
 
     // Some nodes may be missing names
     //let missing_names = _.pickBy( nodes, n => n.scratch.name == undefined );
-    let missing_names = _.pickBy( nodes, n => n.data.name == undefined );
+    let missing_names = _.values(_.pickBy( nodes, n => n.data.name == undefined ));
 
+    debugger; 
 
     // Fill nodes with missing names if any present
     // Otherwise, go directly to creating the graph
@@ -48,7 +49,6 @@ class GraphView {
     } else {
       this.updateGraph( nodes, edges );
     }
-
   }
 
   createNodesFromInteractions ( interactions ) {
@@ -56,15 +56,12 @@ class GraphView {
     let nodes = {};
 
     interactions.forEach( i => {
-
       if ( !nodes.hasOwnProperty( i.geneids1 ) ) {
         nodes[i.geneids1] = { group: 'nodes', data: { id: i.geneids1, name: i.mention1, color: i.mention1_color } };
-
       }
 
       if ( !nodes.hasOwnProperty( i.geneids2 ) ) {
         nodes[i.geneids2] = { group: 'nodes', data: { id: i.geneids2, name: i.mention2, color: i.mention2_color } };
-
       }
     });
 
@@ -115,7 +112,7 @@ class GraphView {
   fillUnknownNames ( names, nodes ) {
     let id_name = {};
     names.forEach( n => id_name[n.id] = n.primary_name );
-
+    debugger;
     Object.keys( id_name ).forEach( id => {
       nodes[id].data.name = id_name[id];
     });
@@ -139,7 +136,7 @@ let GENEDIVE_CYTOSCAPE_STYLESHEET = [
   {
     selector: 'edge',
     style: {
-      'line-color': ele => ele.data('highlight') ? '#fdfd81' : '#bbbbbb'
+      'line-color': ele => ele.data('highlight') ? '#66d9e8' : '#bbbbbb'
     }
   }
 ]

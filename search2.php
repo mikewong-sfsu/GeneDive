@@ -7,6 +7,8 @@
 
   <!-- Control View - left sidebar for all global controls (ie those effecting table and graph) -->
   <div class="control-view">
+
+    <div class="titlebar">GeneDive</div>
     
     <!-- Search Controls -->
     <div class="module search-module">
@@ -81,8 +83,6 @@
       <input type="text" placeholder="highlight term..." class="form-control highlight-input">
     </div>
 
-    <div class="titlebar">GeneDive</div>
-    
     <!-- Account Module -->
     <div class="module account-module">
     </div>

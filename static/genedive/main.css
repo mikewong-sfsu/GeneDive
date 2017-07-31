@@ -52,11 +52,10 @@
 }
 
 .titlebar {
-  margin-top: 4px;
-  margin-bottom:-24px;
+  padding: 6px 4px;
   text-align: center;
-  font-size:1.5em;
-  color:rgb(80,80,80);
+  font-size:18px;
+  color:rgb(60,60,60);
 }
 
 h5, h6 {
@@ -79,7 +78,7 @@ h6 {
 /* Control View Units */
 
 .module {
-  padding: 18px 16px;
+  padding: 24px 16px;
 }
 
 .highlight-module {

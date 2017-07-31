@@ -189,16 +189,18 @@ class Search {
     });
 
     this.input.on('typeahead:selected', ( event, item ) => {
-      // Standard Gene - Add
-      if ( item.values.length == 1 ) {
-        this.addSearchSet( item.symbol, item.values );
-        this.input.typeahead("val", "");
-        return; 
+
+      // Case: Gene w/ Disambiguation
+      if ( item.values.length > 1 && item.type != "set" ) {
+        GeneDive.disambiguation.resolveIds( item.symbol, item.values );
+        this.input.typeahead("val","");
+        return;     
       }
 
-      // Needs Disambiguation
-      GeneDive.disambiguation.resolveIds( item.symbol, item.values );
-      this.input.typeahead("val","");
+      // Case: Gene w/o Disambiguation || Search Set
+      this.addSearchSet( item.symbol, item.values );
+      this.input.typeahead("val", "");
+
     });
     
   }
