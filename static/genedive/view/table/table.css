@@ -77,6 +77,10 @@
   display: none;
 }
 
+.table-view .table .highlight-row td {
+  background-color: #fdfd81;
+}
+
 /* D3 Histogram */
 
 .bars rect {

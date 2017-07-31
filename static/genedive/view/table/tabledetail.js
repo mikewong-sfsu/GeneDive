@@ -20,7 +20,7 @@ class TableDetail extends ResultsTable {
 
     this.table.tablesorter({ 
       headers: { 5: { sorter: false }, 6: { sorter: false  } }, 
-      sortList: [[5,1],] } // [index, asc/desc]
+      sortList: [[4,1],] } // [index, asc/desc]
     ); 
   }
 

@@ -48,7 +48,6 @@
     <script src="static/genedive/view/table/tabledetail.js"></script>
     <script src="static/genedive/view/table/tablesummarygene.js"></script>
     <script src="static/genedive/view/table/tablesummaryarticle.js"></script>
-    <script src="static/genedive/view/graph/node.js"></script>
     <script src="static/genedive/view/graph/graph.js"></script>
     <script src="static/genedive/help/help.js"></script>
 

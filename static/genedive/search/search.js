@@ -189,7 +189,6 @@ class Search {
     });
 
     this.input.on('typeahead:selected', ( event, item ) => {
-
       // Standard Gene - Add
       if ( item.values.length == 1 ) {
         this.addSearchSet( item.symbol, item.values );

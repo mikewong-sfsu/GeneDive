@@ -8,13 +8,10 @@
   <!-- Control View - left sidebar for all global controls (ie those effecting table and graph) -->
   <div class="control-view">
     
-    <div class="titlebar">GeneDive</div>
-
     <!-- Search Controls -->
     <div class="module search-module">
       <div class="title">
-        <h5><i class="fa fa-search" aria-hidden="true"></i>Search</h5>
-        <span class="module-help" data-unit="search">Help</span>
+        <h5><!-- <i class="fa fa-search" aria-hidden="true"></i> -->Search</h5>
       </div>
       <div class="topology-row">
         <h6>Type</h6>
@@ -35,8 +32,7 @@
     <!-- Filter Controls -->
     <div class="module filter-module">
       <div class="title">
-        <h5><i class="fa fa-filter" aria-hidden="true"></i>Filter</h5>
-        <span class="module-help" data-unit="filter">Help</span>
+        <h5><!-- <i class="fa fa-filter" aria-hidden="true"></i> -->Filter</h5>
       </div>
 
       <!-- Probability Filter Submodule -->
@@ -80,12 +76,13 @@
     <!-- Highlight Module -->
     <div class="module highlight-module">
       <div class="title">
-        <h5><i class="fa fa-pencil" aria-hidden="true"></i>Highlight</h5>
-        <span class="module-help" data-unit="highlight">Help</span>
+        <h5><!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->Highlight Rows</h5>
       </div>
       <input type="text" placeholder="highlight term..." class="form-control highlight-input">
     </div>
 
+    <div class="titlebar">GeneDive</div>
+    
     <!-- Account Module -->
     <div class="module account-module">
     </div>

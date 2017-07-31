@@ -49,6 +49,14 @@
   cursor: pointer;
 }
 
+.filters .filter-is {
+  background-color: #69db7c;
+}
+
+.filters .filter-not {
+  background-color: #ff8787;
+}
+
 .min-prob-titlebar {
   display: flex;
   flex-direction: row;

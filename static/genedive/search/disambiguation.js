@@ -37,7 +37,7 @@ class Disambiguation {
   }
 
   prepareForm ( symbol, geneData ) {
-    debugger;
+
     let form = $("<form/>").addClass("disambiguation-form");
     form.append("<p/>").text(`${symbol} resolves to several different genes.`);
 

@@ -14,14 +14,21 @@ class GraphView {
     this.graph.elements().remove();
     this.graph.add( nodes );
     this.graph.add( edges );
-    this.graph.layout( { name: 'euler' } ).run();
+
+    this.graph.layout( { 
+      name: 'euler', 
+      springLength: edge => 120,
+      springCoeff: edge => 0.0012,
+      mass: node => 4,
+      gravity: -4
+       } ).run();
   }
 
   // Core method to be called by controller for each graph iteration
   draw ( interactions, sets ) {
     let nodes = this.createNodesFromInteractions( interactions );
     let edges = this.createEdges( interactions );
-    debugger;
+
     // Some nodes in the search set may not have come in from interactions. Add those nodes separately.
     this.addNodesFromSearchSets( nodes, sets );
 
@@ -67,7 +74,7 @@ class GraphView {
   addNodesFromSearchSets ( nodes, sets ) {
 
     sets.forEach( set => {
-      debugger;
+
       if ( set.type == 'gene' ) {
         if ( !nodes.hasOwnProperty( set.ids[0] ) ) {
           nodes[ set.ids[0] ] = { group: 'nodes', data: { id: set.ids[0], name: set.name, color: set.color } };
@@ -107,19 +114,6 @@ class GraphView {
     });
   }
 
-  /*
-  buildStylesheet ( nodes, edges ) {
-    let style = [];
-
-    nodes.forEach( n => {
-      let gene = n.scratch.name;
-      style.push( { selector: n.data.id, style: { 'background-color': n.scratch.color }  } );
-    });
-
-    return style;
-  }
-  */
-
 }
 
 let GENEDIVE_CYTOSCAPE_STYLESHEET = [
@@ -127,8 +121,19 @@ let GENEDIVE_CYTOSCAPE_STYLESHEET = [
     selector: 'node',
     style: {
       'background-color': ele => ele.data('color'),
-      'label': ele => ele.data('name')
+      'label': ele => ele.data('name'),
+      'text-halign': 'center',
+      'text-valign': 'center',
+      'color': '#ffffff',
+      'text-outline-color': ele => ele.data('color'),
+      'text-outline-width': 2,
+
+    }
+  },
+  {
+    selector: 'edge',
+    style: {
+      'line-color': ele => ele.data('highlight') ? '#fdfd81' : '#bbbbbb'
     }
   }
 ]
-

@@ -1,3 +1,7 @@
+.search-module {
+  background-color: rgb(210,210,210);
+}
+
 .search-module .search-item {
   display:flex;
   justify-content: space-between;

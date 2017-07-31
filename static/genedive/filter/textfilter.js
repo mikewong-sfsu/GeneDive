@@ -41,6 +41,7 @@ class TextFilter {
     for ( let set of this.sets ) {
       let item = $("<div/>")
         .addClass("filter-item")
+        .addClass( set.is ? "filter-is" : "filter-not" )
         .append( $("<span/>").addClass("attribute").text( set.attribute ) )
         .append( $("<span/>").addClass("is").text( set.is ? "is" : "not" ) )
         .append( $("<span/>").addClass("value").text( set.value ) )
