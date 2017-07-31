@@ -160,14 +160,6 @@ class Search {
   }
 
   initTypeahead () {
-    /*
-    var testgenes = new Bloodhound({
-      prefetch: 'static/genedive/json/test_symbol_id.json',
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
-      queryTokenizer: Bloodhound.tokenizers.whitespace
-    });
-    testgenes.initialize();
-    */
 
     var genes = new Bloodhound({
       prefetch: 'static/genedive/json/symbol_id.json',
@@ -187,7 +179,6 @@ class Search {
       { minLength: 2, highlight: true },
       { name: 'Genes', source: genes, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }  },
       { name: 'Genesets', source: geneset, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } }
-      //{name: 'Testgenes', source: testgenes, display:'symbol'}
     );
 
     $('.twitter-typeahead').css('width','100%');
@@ -198,8 +189,17 @@ class Search {
     });
 
     this.input.on('typeahead:selected', ( event, item ) => {
-      this.addSearchSet( item.symbol, item.values );
-      this.input.typeahead("val", "");
+
+      // Standard Gene - Add
+      if ( item.values.length == 1 ) {
+        this.addSearchSet( item.symbol, item.values );
+        this.input.typeahead("val", "");
+        return; 
+      }
+
+      // Needs Disambiguation
+      GeneDive.disambiguation.resolveIds( item.symbol, item.values );
+      this.input.typeahead("val","");
     });
     
   }

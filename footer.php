@@ -31,6 +31,7 @@
 
     <!-- Cytoscape -->
     <script src="static/cytoscape/cytoscape.min.js"></script>
+    <script src="static/cytoscape/cytoscape-euler.js"></script>
 
     <!-- GeneDive Classses -->
     <script src="static/genedive/GeneDiveAPI.js"></script>
@@ -53,33 +54,6 @@
 
     <!-- Core Controller -->
     <script src="static/genedive/controller.js"></script>
-
-    <!-- Webdiggr -->
-
-    <!-- 
-    <script src="static/genedive/WebdiggrAPI.js"></script>
-
-    <script src="static/genedive/genes/gene.class.js"></script>
-    <script src="static/genedive/genes/geneset.class.js"></script>
-    <script src="static/genedive/queryinput/disambiguation/disambiguation.class.js"></script>
-    <script src="static/genedive/queryinput/graphSearch.class.js"></script>
-    <script src="static/genedive/queryinput/clique/clique.class.js"></script>
-    <script src="static/genedive/queryinput/onehop/onehop.class.js"></script>
-    <script src="static/genedive/queryinput/onehopfriends/onehopfriends.class.js"></script>
-    <script src="static/genedive/queryinput/onehopbridges/onehopbridges.class.js"></script>
-    <script src="static/genedive/queryinput/genecolor/genecolor.class.js"></script>
-    <script src="static/genedive/queryinput/queryinput.class.js"></script>
-    <script src="static/genedive/highlight/highlight.class.js"></script>
-    <script src="static/genedive/queryresults/queryresults.class.js"></script>
-    <script src="static/genedive/filtercontrols/filtercontrols2.class.js"></script>
-    <script src="static/genedive/view/table/grouper/grouper.class.js"></script>
-    <script src="static/genedive/view/table/synonyms/synonyms.class.js"></script>
-    <script src="static/genedive/view/view.class.js"></script>
-    <script src="static/genedive/view/table/table.class.js"></script>
-    <script src="static/genedive/view/graph/class.js"></script>
-    <script src="static/genedive/Webdiggr.js"></script>
-
-    -->
 
   </body>
 </html>

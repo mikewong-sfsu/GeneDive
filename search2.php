@@ -114,7 +114,6 @@
   <!-- Graph View -->
   <div class="graph-view">
     <div id="graph">
-      Graph
     </div>
   </div>
 

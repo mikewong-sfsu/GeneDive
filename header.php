@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Fonts -->
-   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+   <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet"> -->
 
 
     <!-- Bootstrap -->
@@ -39,6 +39,7 @@
     <link rel=stylesheet type=text/css href="static/genedive/search/search.css">
     <link rel=stylesheet type=text/css href="static/genedive/filter/filter.css">
     <link rel=stylesheet type=text/css href="static/genedive/view/table/table.css">
+    <link rel=stylesheet type=text/css href="static/genedive/view/graph/graph.css">
 
   </head>
   <body>

@@ -5,26 +5,26 @@ class Node {
     this.id = id;
     this.name = name;
     this.color = color;
-    this.interactants = [];
+    this.connections = [];
     this.counts = {};
   }
 
   generateConnectionData( minProb ) {
-    let interactants = [];
+    let connections = [];
     let counts = {};
     minProb = minProb * 1000;
 
-    interactants = Object.keys(adjacency_matrix[this.id]);
+    connections = Object.keys(adjacency_matrix[this.id]);
 
-    // First pass - remove interactants that have no probs above min
-    interactants = interactants.filter( i => adjacency_matrix[this.id][i].some( p => p >= minProb ) );
+    // First pass - remove connections that have no probs above min
+    connections = connections.filter( i => adjacency_matrix[this.id][i].some( p => p >= minProb ) );
 
     // Now generate connection counts for each that remains - if any
-    interactants.forEach( i => {
+    connections.forEach( i => {
       counts[i] = adjacency_matrix[this.id][i].filter( p => p >= minProb ).length;
     });
 
-    this.interactants = interactants;
+    this.connections = connections;
     this.counts = counts;
 
   }

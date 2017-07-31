@@ -58,8 +58,8 @@ class TableDetail extends ResultsTable {
         tr.addClass("warning"); // warning is bootstrap highlight yellow
       }
 
-      let excerpt = this.styleExcerpt( i.context, i.mention1, GeneDive.color.getColor(i.geneids1) );
-          excerpt = this.styleExcerpt( excerpt, i.mention2, GeneDive.color.getColor(i.geneids2) );
+      let excerpt = this.styleExcerpt( i.context, i.mention1, i.mention1_color );
+          excerpt = this.styleExcerpt( excerpt, i.mention2, i.mention2_color );
 
       tr.append( $(document.createElement("td")).html( i.mention1 ) );
       tr.append( $(document.createElement("td")).html( i.mention2 ) );

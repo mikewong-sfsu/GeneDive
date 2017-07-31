@@ -56,8 +56,8 @@ class TableSummaryArticle extends ResultsTable {
 
       let row = this.interactions[group][0];
 
-      let excerpt = this.styleExcerpt( row.context, row.mention1, GeneDive.color.getColor(row.geneids1) );
-          excerpt = this.styleExcerpt( excerpt, row.mention2, GeneDive.color.getColor(row.geneids2) );
+      let excerpt = this.styleExcerpt( row.context, row.mention1, row.mention1_color );
+          excerpt = this.styleExcerpt( excerpt, row.mention2, row.mention2_color );
 
       let genecount = _.uniq( this.interactions[group].map( i => i.geneids1 ).concat( this.interactions[group].map( i => i.geneids2 ) ) ).length;
 

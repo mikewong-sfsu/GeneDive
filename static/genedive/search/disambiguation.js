@@ -28,7 +28,6 @@ class Disambiguation {
         },
         callback: function( closeEvent ) {
           if ( closeEvent.index == 0 ) return;  // Cancel
-
           let selected = $(".disambiguation-form input:checked");
 
           GeneDive.search.addSearchSet( selected.data("name"), [selected.val()] );
@@ -38,14 +37,14 @@ class Disambiguation {
   }
 
   prepareForm ( symbol, geneData ) {
-
+    debugger;
     let form = $("<form/>").addClass("disambiguation-form");
     form.append("<p/>").text(`${symbol} resolves to several different genes.`);
 
     for ( let gene of geneData ) {
       let input = `<div>
-                    <input type='radio' value='${gene.id}' name='resolveId' data-name='${gene.primary}'>
-                    <span>${gene.primary}</span>
+                    <input type='radio' value='${gene.id}' name='resolveId' data-name='${gene.primary_name}'>
+                    <span>${gene.primary_name}</span>
                     <span>${gene.name}</span>
                   </div>`;
       form.append(input);
@@ -56,7 +55,7 @@ class Disambiguation {
   }
 
   resolveIds ( symbol, ids ) {
-    GeneDiveAPI.getGeneDetails(ids.toString(), ( geneDetails ) => {
+    GeneDiveAPI.geneDetails(ids.toString(), ( geneDetails ) => {
       alertify.disambiguationPrompt( this.prepareForm( symbol, JSON.parse(geneDetails) ));
     });
   }

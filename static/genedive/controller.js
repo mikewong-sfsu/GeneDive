@@ -5,6 +5,7 @@ class Controller {
     this.color = new Color();
     this.help = new Help(".module-help");
     this.search = new Search( ".search-input", ".topology-selector", ".search-sets", this.color );
+    this.disambiguation = new Disambiguation();
     this.probfilter = new ProbabilityFilter( ".min-prob-slider", ".min-prob-slider-value" );
     this.textfilter = new TextFilter( ".filter-select", ".filter-is-not .is", ".filter-input", ".add-filter", ".filters");
     this.highlighter = new Highlight( ".highlight-input" );
@@ -82,13 +83,8 @@ class Controller {
 
   }
 
-  // Graph.js provides a common Node interchange format we use for sending node data
-  // Node( id, name || undefined, color )
   drawGraph() {
-
-
-
-    this.graph.create( this.search.sets, this.probfilter.getMinimumProbability() );
+    this.graph.draw( this.filtrate, this.search.sets );
   }
 
 }

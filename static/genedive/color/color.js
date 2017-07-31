@@ -28,8 +28,8 @@ class Color {
 
   colorInteractions ( interactions ) {
     interactions.forEach( i => {
-      i.mention1_color = this.colormap[i.mention1];
-      i.mention2_color = this.colormap[i.mention2]; 
+      i.mention1_color = this.colormap[i.geneids1] || "#bbbbbb";
+      i.mention2_color = this.colormap[i.geneids2] || "#bbbbbb";
     });
     return interactions;
   }
