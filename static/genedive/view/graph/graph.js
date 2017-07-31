@@ -99,7 +99,14 @@ class GraphView {
       let key = [i.geneids1, i.geneids2].sort().join("_");
       if ( !edges.hasOwnProperty( key ) ) {
         edges[key] = { group: 'edges', data: { id: key, source: i.geneids1, target: i.geneids2, highlight: i.highlight } };
+        return;
+      } 
+
+      // Even if we've added the edge, we still want to check if the row should be highlighted
+      if ( i.highlight && !edges[key].data.highlight ) {
+        edges[key].data.highlight = true;
       }
+
     });
 
     return edges;
@@ -126,8 +133,7 @@ let GENEDIVE_CYTOSCAPE_STYLESHEET = [
       'text-valign': 'center',
       'color': '#ffffff',
       'text-outline-color': ele => ele.data('color'),
-      'text-outline-width': 2,
-
+      'text-outline-width': 2
     }
   },
   {

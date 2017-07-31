@@ -29,10 +29,11 @@
 .filters .filter-item {
   display:flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: baseline; */
   margin-top:7px;
-  padding:7px 14px; 
-  background-color:rgb(210,210,210);
+  padding:7px 14px;
+  background-color: white;
+  color: rgb(60,60,60);
   border-radius:3px;
 }
 
