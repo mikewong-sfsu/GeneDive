@@ -1,4 +1,4 @@
-let GENEDIVE_COLORS = ["#ff8787","#748ffc","#ffd43b","#4dadf7","#69db7c","#3bc9db","#38d9a9","#9775fa","#ffa94d","#da77f2","#a9e34b","#f783ac"];
+let GENEDIVE_COLORS = ["#4dadf7","#ff8787","#748ffc","#ffd43b","#69db7c","#3bc9db","#38d9a9","#9775fa","#ffa94d","#da77f2","#a9e34b","#f783ac"];
 
 class Color {
   
@@ -13,7 +13,7 @@ class Color {
   }
 
   getColor ( id ) {
-    return this.colormap[id] || "#bbbbbb";
+    return this.colormap[id] || "#aaaaaa";
   }
 
   setColor ( ids, color ) {
@@ -28,8 +28,8 @@ class Color {
 
   colorInteractions ( interactions ) {
     interactions.forEach( i => {
-      i.mention1_color = this.colormap[i.geneids1] || "#bbbbbb";
-      i.mention2_color = this.colormap[i.geneids2] || "#bbbbbb";
+      i.mention1_color = this.colormap[i.geneids1] || "#aaaaaa";
+      i.mention2_color = this.colormap[i.geneids2] || "#aaaaaa";
     });
     return interactions;
   }
