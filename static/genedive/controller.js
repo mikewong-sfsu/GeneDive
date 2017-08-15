@@ -9,15 +9,22 @@ class Controller {
     this.probfilter = new ProbabilityFilter( ".min-prob-slider", ".min-prob-slider-value" );
     this.textfilter = new TextFilter( ".filter-select", ".filter-is-not .is", ".filter-input", ".add-filter", ".filters");
     this.highlighter = new Highlight( ".highlight-input" );
-    this.grouper = new Grouper( ".table-grouping-selector" );
+    this.grouper = new Grouper( ".grouper-module .table-grouping-selector" );
     this.tablestate = { zoomed: false, zoomgroup: null }; 
     this.graph = new GraphView("graph");
+    this.firstsearch = true;
 
     this.interactions = null;
     this.filtrate = null;
   }
 
   runSearch() {
+    // When first search is performed, expose all controls and set up everything
+    if ( this.firstsearch ) {
+      this.firstsearch = false;
+      $('.table-view .grouping-controls').css('display', 'flex');
+    }
+
     if ( this.search.sets.length == 0 ) return;
 
     let minProb = this.probfilter.getMinimumProbability();
@@ -66,7 +73,9 @@ class Controller {
 
     // First check for zoom condition
     if ( this.tablestate.zoomed ) {
+      $('.table-view .grouping-controls').hide();
       new TableDetail( ".table-view table", this.filtrate, ".table-view .topbar .back", this.tablestate.zoomgroup );
+      this.textfilter.updateOptions( "detail" );
       return;
     } 
 
@@ -74,11 +83,16 @@ class Controller {
     // todo: abstract this
     $(".table-view .topbar .back").hide();
 
+    // Re-expose the table grouper
+    $('.table-view .grouping-controls').show();
+
     // Otherwise show the appropriate summary view
     if ( this.grouper.selected() == "gene" ) {
       new TableSummaryGene( ".table-view .table", this.filtrate, ".table-view .topbar .back" );
+      this.textfilter.updateOptions( "gene" );
     } else {
       new TableSummaryArticle( ".table-view table", this.filtrate, ".table-view .topbar .back" );
+      this.textfilter.updateOptions( "article" );
     }
 
   }

@@ -36,8 +36,6 @@ class GraphView {
     //let missing_names = _.pickBy( nodes, n => n.scratch.name == undefined );
     let missing_names = _.values(_.pickBy( nodes, n => n.data.name == undefined ));
 
-    debugger; 
-
     // Fill nodes with missing names if any present
     // Otherwise, go directly to creating the graph
     if ( missing_names.length > 0 ) {
@@ -95,11 +93,13 @@ class GraphView {
     interactions.forEach( i => {
       let key = [i.geneids1, i.geneids2].sort().join("_");
       if ( !edges.hasOwnProperty( key ) ) {
-        edges[key] = { group: 'edges', data: { id: key, source: i.geneids1, target: i.geneids2, highlight: i.highlight } };
+        edges[key] = { group: 'edges', data: { id: key, source: i.geneids1, target: i.geneids2, highlight: i.highlight, count: 1 } };
         return;
       } 
 
-      // Even if we've added the edge, we still want to check if the row should be highlighted
+      edges[key].data.count++;
+
+      // Even if we've added the edge, check highlighting and increment edge count
       if ( i.highlight && !edges[key].data.highlight ) {
         edges[key].data.highlight = true;
       }
@@ -126,6 +126,7 @@ let GENEDIVE_CYTOSCAPE_STYLESHEET = [
     style: {
       'background-color': ele => ele.data('color'),
       'label': ele => ele.data('name'),
+      'font-size': '16px',
       'text-halign': 'center',
       'text-valign': 'center',
       'color': '#ffffff',
@@ -136,7 +137,16 @@ let GENEDIVE_CYTOSCAPE_STYLESHEET = [
   {
     selector: 'edge',
     style: {
-      'line-color': ele => ele.data('highlight') ? '#66d9e8' : '#bbbbbb'
+      'line-color': ele => ele.data('highlight') ? '#99e9f2' : '#bbbbbb',
+      'width': ele => {
+        let count = ele.data('count');
+        count /= 10;
+
+        count = Math.max( 2, count );
+        count = Math.min( 20, count );
+
+        return count;
+      }
     }
   }
 ]

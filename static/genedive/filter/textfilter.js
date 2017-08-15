@@ -1,5 +1,4 @@
 /* Interacts with the Controller-Filter module */
-
 class TextFilter {
   
   constructor ( attribute, is, value, submit, display )  {
@@ -18,8 +17,19 @@ class TextFilter {
 
   }
 
+  updateOptions ( selection ) {
+    let dropdown = $('.filter-module .filter-select');
+    dropdown.empty();
+
+    FILTER_DROPDOWN_GROUPS[selection].forEach( option => {
+      let element = document.createElement("option");
+      element.textContent = option;
+      dropdown.append( element );
+    });
+  }
+
   addFilter ( ) {
-    this. addFilterSet( this.attribute.val(), this.is.prop("checked"), this.value.val() );
+    this.addFilterSet( this.attribute.val(), this.is.prop("checked"), this.value.val() );
     this.value.val("");
   }
 
@@ -66,6 +76,14 @@ class TextFilter {
           }
           break;
 
+        case "Section":
+          if ( filter.is ) {
+            interactions = interactions.filter( ( i ) => new RegExp(filter.value,"i").test(i.section) );
+          } else {
+            interactions = interactions.filter( ( i ) => !new RegExp(filter.value,"i").test(i.section) );
+          }
+          break;
+
         case "Article":
           if ( filter.is ) {
             interactions = interactions.filter( ( i ) => new RegExp(filter.value,"i").test(i.article_id) );
@@ -108,3 +126,9 @@ class FilterSet {
     this.value = value;
   }
 }
+
+const FILTER_DROPDOWN_GROUPS = {
+  "gene": ["Gene", "Excerpt"],
+  "article": ["Article", "Excerpt"],
+  "detail": ["Gene", "Article", "Section", "Excerpt"]
+};

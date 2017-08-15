@@ -48,14 +48,13 @@
 .table-view, .graph-view {
   display:flex;
   flex-direction: column;
-  padding:7px 12px 0 12px;
 }
 
 .titlebar {
   padding: 6px 4px;
   text-align: center;
-  font-size:18px;
-  color:rgb(60,60,60);
+  font-size:16px;
+  color:rgb(128,128,128);
 }
 
 h5, h6 {
@@ -66,7 +65,8 @@ h5, h6 {
 
 h5 {
   margin-top:0px;
-  font-size: 16px;
+  font-size: 14px;
+  color:rgb(128,128,128);
 }
 
 h6 {
@@ -82,7 +82,11 @@ h6 {
 }
 
 .highlight-module {
-  flex-grow: 1; /* Push Account Controller to bottom */
+
+}
+
+.grouper-module {
+  flex-grow: 1;
 }
 
 .module .title {

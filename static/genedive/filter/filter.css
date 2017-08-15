@@ -29,7 +29,7 @@
 .filters .filter-item {
   display:flex;
   justify-content: space-between;
-  align-items: baseline; */
+  align-items: baseline;
   margin-top:7px;
   padding:7px 14px;
   background-color: white;

@@ -30,7 +30,7 @@
       <div class="search-sets">
       </div>
     </div>
-    
+ 
     <!-- Filter Controls -->
     <div class="module filter-module">
       <div class="title">
@@ -45,15 +45,11 @@
       <input class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" 
               data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7">
 
-      <div class="divider"></div>
-
       <!-- Text Filter Submodule -->
       <h6>Text Filters</h6>
-      <form id="add-filter">
+      <form id="add-filter" onsubmit="return false;">
         <div class="top-row">
           <select class="filter-select">
-            <option>Journal</option>
-            <option>Article</option>
             <option>Gene</option>
             <option>Excerpt</option>
           </select>
@@ -83,6 +79,17 @@
       <input type="text" placeholder="highlight term..." class="form-control highlight-input">
     </div>
 
+    <!-- Grouper -->
+    <div class="module grouper-module">
+      <div class="title">
+        <h5>Group Results (Table Only)</h5>
+      </div>
+      <select class="table-grouping-selector form-control" selected="gene">
+        <option value="gene">Gene Pair</option>
+        <option value="article">Article</option>
+      </select>
+    </div>
+
     <!-- Account Module -->
     <div class="module account-module">
     </div>
@@ -91,21 +98,21 @@
 
   <!-- Table View -->
   <div class="table-view ui-widget-content">
+    <!--
     <div class="topbar">
       <div class="back">
         <span><i class="fa fa-caret-left"></i>Back</span>
       </div>
-      <div class="message"><span class="message-text"></span></div>
       <div class="grouping-controls">
-        <h6>Group Table By</h6>
+        <h6>Group By</h6>
         <select class="table-grouping-selector" selected="gene">
-          <option value="gene">Gene</option>
+          <option value="gene">Gene Pair</option>
           <option value="article">Article</option>
         </select>
       </div>
+      <div class="message"><span class="message-text"></span></div>
     </div>
-    <div class="table-responsive">
-    </div>
+    -->
   </div>
 
   <!-- Graph View -->

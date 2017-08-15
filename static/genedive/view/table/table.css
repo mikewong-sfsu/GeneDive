@@ -5,6 +5,7 @@
   flex-direction: row;
   min-height: 30px;
   align-items: center;
+  padding:0 12px;
 }
 
 .topbar .back {
@@ -23,12 +24,12 @@
 }
 
 .topbar .message {
-  text-align: center;
+  text-align: right;
   flex-grow: 1;
 }
 
 .topbar .grouping-controls {
-  display: flex;
+  display: none;
   flex-direction: row;
   align-items: center;
 }
@@ -36,7 +37,6 @@
 .topbar .grouping-controls h6 {
   padding-right: 12px;
 }
-
 
 /* TABLE */
 
@@ -78,7 +78,7 @@
 }
 
 .table-view .table .highlight-row td {
-  background-color: #66d9e8;
+  background-color: #e3fafc;
 }
 
 /* D3 Histogram */

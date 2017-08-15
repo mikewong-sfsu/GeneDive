@@ -65,7 +65,7 @@ class TableDetail extends ResultsTable {
       tr.append( $(document.createElement("td")).html( i.mention2 ) );
       tr.append( $(document.createElement("td")).text( i.article_id ) );
       tr.append( $(document.createElement("td")).text( i.section ) );
-      tr.append( $(document.createElement("td")).text( i.probability ) );
+      tr.append( $(document.createElement("td")).text( Number(i.probability).toFixed(3) ) );
       tr.append( $(document.createElement("td")).html( excerpt ) );
       tr.append( $(document.createElement("td")).html( this.buildPubmedLink( i.pubmed_id ) ) );
 
