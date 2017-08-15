@@ -17,17 +17,6 @@ class TextFilter {
 
   }
 
-  updateOptions ( selection ) {
-    let dropdown = $('.filter-module .filter-select');
-    dropdown.empty();
-
-    FILTER_DROPDOWN_GROUPS[selection].forEach( option => {
-      let element = document.createElement("option");
-      element.textContent = option;
-      dropdown.append( element );
-    });
-  }
-
   addFilter ( ) {
     this.addFilterSet( this.attribute.val(), this.is.prop("checked"), this.value.val() );
     this.value.val("");
@@ -126,9 +115,3 @@ class FilterSet {
     this.value = value;
   }
 }
-
-const FILTER_DROPDOWN_GROUPS = {
-  "gene": ["Gene", "Excerpt"],
-  "article": ["Article", "Excerpt"],
-  "detail": ["Gene", "Article", "Section", "Excerpt"]
-};

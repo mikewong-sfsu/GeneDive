@@ -75,7 +75,6 @@ class Controller {
     if ( this.tablestate.zoomed ) {
       $('.table-view .grouping-controls').hide();
       new TableDetail( ".table-view table", this.filtrate, ".table-view .topbar .back", this.tablestate.zoomgroup );
-      this.textfilter.updateOptions( "detail" );
       return;
     } 
 
@@ -89,10 +88,8 @@ class Controller {
     // Otherwise show the appropriate summary view
     if ( this.grouper.selected() == "gene" ) {
       new TableSummaryGene( ".table-view .table", this.filtrate, ".table-view .topbar .back" );
-      this.textfilter.updateOptions( "gene" );
     } else {
       new TableSummaryArticle( ".table-view table", this.filtrate, ".table-view .topbar .back" );
-      this.textfilter.updateOptions( "article" );
     }
 
   }
