@@ -227,6 +227,11 @@ class Search {
     return graph_data;
 
   }
+
+  hasSearchSet( name ) {
+    return this.sets.filter( s => s.name == name ).length > 0;
+  }
+
 }
 
 class SearchSet {

@@ -5,6 +5,14 @@ class GraphView {
       container: document.getElementById(viewport),
       style: GENEDIVE_CYTOSCAPE_STYLESHEET
     });
+
+    this.graph.on('tap', 'node', function () {
+      if ( !GeneDive.search.hasSearchSet(this.data('name')) ) {
+        GeneDive.search.addSearchSet( this.data('name'), [this.data('id')] );
+      } else {
+        alertify.notify("Gene already in search.", "", "3");
+      }
+    });
   }
 
   updateGraph( nodes, edges ) {
