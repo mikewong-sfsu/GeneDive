@@ -14,9 +14,20 @@
 
 .search-module .search-item .name {
   font-weight: bold;
+  flex-grow: 1;
 }
 
-.search-module .search-item i:hover {
+.search-module .search-item .ncbi-linkout {
+  color: rgb(90,90,90);
+  margin:0 12px;
+}
+
+.search-module .search-item .ncbi-linkout:hover {
+  color: green;
+  cursor:pointer;
+}
+
+.search-module .search-item remove:hover {
   color:#920907;
   cursor: pointer;
 }

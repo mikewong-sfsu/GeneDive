@@ -1,4 +1,4 @@
-let GENEDIVE_COLORS = ["#ff8787","#4dadf7","#748ffc","#ffd43b","#69db7c","#38d9a9","#9775fa","#ffa94d","#da77f2","#a9e34b","#f783ac"];
+let GENEDIVE_COLORS = ["#ff8787","#4dadf7","#ffd43b","#748ffc","#69db7c","#38d9a9","#9775fa","#ffa94d","#da77f2","#a9e34b","#f783ac"];
 
 class Color {
   

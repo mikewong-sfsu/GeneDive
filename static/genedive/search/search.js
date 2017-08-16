@@ -146,17 +146,43 @@ class Search {
     this.display.html("");
 
     for ( let set of this.sets ) {
-      let item = $("<div/>")
-        .addClass("search-item")
-        .css("background-color", set.color)
-        .append( $("<span/>").addClass("name").text( set.name ) )
-        .append( 
-          $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
-          .on('click', ( event ) => { this.removeSearchSet( $(event.target).data("id") ) } ) 
-        );
+      let item = undefined;
+
+      if ( set.type == "gene" ) {
+        item = $("<div/>")
+          .addClass("search-item")
+          .css("background-color", set.color)
+          .append( $("<span/>").addClass("name").text( set.name ) )
+          .append(
+            $("<i/>").addClass("fa fa-question ncbi-linkout")
+              .data("ncbi", set.ids[0])
+              .attr("data-toggle", "tooltip")
+              .attr("title", "Open NCBI Datasheet In New Tab")
+              .on('click', ( event ) => { 
+                let ncbi_id = $(event.target).data("ncbi");
+                window.open(`https://www.ncbi.nlm.nih.gov/gene/${ncbi_id}`); 
+              })
+          )
+          .append( 
+            $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
+            .on('click', ( event ) => { this.removeSearchSet( $(event.target).data("id") ) } ) 
+          );
+      } else {
+        item = $("<div/>")
+          .addClass("search-item")
+          .css("background-color", set.color)
+          .append( $("<span/>").addClass("name").text( set.name ) )
+          .append( 
+            $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
+            .on('click', ( event ) => { this.removeSearchSet( $(event.target).data("id") ) } ) 
+          );
+      }
 
       this.display.append(item);
     }
+
+    // Initialize tooltips
+    $('[data-toggle="tooltip"]').tooltip(); 
   }
 
   initTypeahead () {
