@@ -2,8 +2,7 @@ class GraphView {
   
   constructor ( viewport ) {
     this.graph = cytoscape( { 
-      container: document.getElementById(viewport),
-      style: GENEDIVE_CYTOSCAPE_STYLESHEET
+      container: document.getElementById(viewport)
     });
 
     this.graph.on('tap', 'node', function () {
@@ -18,6 +17,11 @@ class GraphView {
   updateGraph( nodes, edges ) {
     nodes = _.values( nodes );
     edges = _.values( edges );
+
+    // Multiset membership coloring setup
+    nodes = this.bindSetMembership( nodes, GeneDive.search.sets );
+
+    this.graph.style( this.bindSetStyles( GENEDIVE_CYTOSCAPE_STYLESHEET, GeneDive.search.sets ) );
 
     this.graph.elements().remove();
     this.graph.add( nodes );
@@ -120,10 +124,43 @@ class GraphView {
   fillUnknownNames ( names, nodes ) {
     let id_name = {};
     names.forEach( n => id_name[n.id] = n.primary_name );
-    debugger;
     Object.keys( id_name ).forEach( id => {
       nodes[id].data.name = id_name[id];
     });
+  }
+
+  bindSetMembership( nodes, sets ) {
+    let set_ids = sets.map( s => s.id );
+
+    // Set default membership for each set to 0
+    nodes.forEach( node => {
+      set_ids.forEach( set => {
+        node.data[set] = 0;
+      });
+    });
+
+    nodes.forEach( node => {
+      let membership = GeneDive.search.memberOf( node.data.id );
+      let partition_size = Math.floor(100 / membership.length);
+
+      membership.forEach( mid => {
+        node.data[mid] = partition_size;
+      })
+    });
+
+    return nodes;
+  }
+
+  bindSetStyles ( stylesheet, sets ) {
+    let index = 1;
+
+    sets.forEach( s =>  {
+      stylesheet[0].style[`pie-${index}-background-color`] = s.color;
+      stylesheet[0].style[`pie-${index}-background-size`] = `mapData(${s.id}, 0, 100, 0, 100)`;  
+      index++;
+    });
+
+    return stylesheet;
   }
 
 }
@@ -138,8 +175,9 @@ let GENEDIVE_CYTOSCAPE_STYLESHEET = [
       'text-halign': 'center',
       'text-valign': 'center',
       'color': '#ffffff',
-      'text-outline-color': ele => ele.data('color'),
-      'text-outline-width': 2
+      'text-outline-color': /*ele => ele.data('color')*/ '#aaaaaa',
+      'text-outline-width': 1,
+      'pie-size': '100%'
     }
   },
   {
@@ -151,7 +189,7 @@ let GENEDIVE_CYTOSCAPE_STYLESHEET = [
         count /= 10;
 
         count = Math.max( 2, count );
-        count = Math.min( 20, count );
+        count = Math.min( 15, count );
 
         return count;
       }

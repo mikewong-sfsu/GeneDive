@@ -176,7 +176,7 @@ class Search {
     geneset.initialize();
 
     this.input.typeahead(
-      { minLength: 2, highlight: true },
+      { minLength: 1, highlight: true },
       { name: 'Genes', source: genes, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }  },
       { name: 'Genesets', source: geneset, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } }
     );
@@ -232,10 +232,15 @@ class Search {
     return this.sets.filter( s => s.name == name ).length > 0;
   }
 
+  memberOf( id ) {
+    return this.sets.filter( s => s.ids.includes( Number( id ) ) ).map( s => s.id );
+  }
+
 }
 
 class SearchSet {
   constructor ( name, ids ) {
+    this.id = sha256(name).slice(0,15);
     this.name = name;
     this.type = ids.length > 1 ? "set" : "gene";
     this.ids = ids.map( i => Number(i) );
