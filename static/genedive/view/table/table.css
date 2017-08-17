@@ -78,13 +78,13 @@
 }
 
 .table-view .table .highlight-row td {
-  background-color: #e3fafc;
+  background-color: #99e9f2;
 }
 
 /* D3 Histogram */
 
 .bars rect {
-    fill: lightblue;
+    fill: gray;
 }
 .axis path, .axis line {
   fill: none;
