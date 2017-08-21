@@ -61,7 +61,7 @@ class TableSummaryArticle extends ResultsTable {
 
       let genecount = _.uniq( this.interactions[group].map( i => i.geneids1 ).concat( this.interactions[group].map( i => i.geneids2 ) ) ).length;
 
-      tr.append( $(document.createElement("td")).text( row.article_id ) );
+      tr.append( $(document.createElement("td")).text( row.pubmed_id ) );
       tr.append( $(document.createElement("td")).text( genecount ) );
       tr.append( $(document.createElement("td")).text( this.interactions[group].length ) );
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );

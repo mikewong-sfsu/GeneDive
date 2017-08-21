@@ -27,7 +27,7 @@
   cursor:pointer;
 }
 
-.search-module .search-item remove:hover {
+.search-module .search-item .remove:hover {
   color:#920907;
   cursor: pointer;
 }

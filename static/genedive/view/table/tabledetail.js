@@ -19,8 +19,8 @@ class TableDetail extends ResultsTable {
     });
 
     this.table.tablesorter({ 
-      headers: { 5: { sorter: false }, 6: { sorter: false  } }, 
-      sortList: [[4,1],] } // [index, asc/desc]
+      headers: { 6: { sorter: false }, 7: { sorter: false  } }, 
+      sortList: [[5,1],] } // [index, asc/desc]
     ); 
   }
 
@@ -38,6 +38,7 @@ class TableDetail extends ResultsTable {
 
     tr.append( $(document.createElement("th")).text( "Gene" ) );
     tr.append( $(document.createElement("th")).text( "Gene" ) );
+    tr.append( $(document.createElement("th")).text("Journal") );
     tr.append( $(document.createElement("th")).text( "Article ID" ) );
     tr.append( $(document.createElement("th")).text( "Section" ) );
     tr.append( $(document.createElement("th")).text( "Probability" ) );
@@ -63,7 +64,8 @@ class TableDetail extends ResultsTable {
 
       tr.append( $(document.createElement("td")).html( i.mention1 ) );
       tr.append( $(document.createElement("td")).html( i.mention2 ) );
-      tr.append( $(document.createElement("td")).text( i.article_id ) );
+      tr.append( $(document.createElement("td")).html( i.journal ) );
+      tr.append( $(document.createElement("td")).text( i.pubmed_id ) );
       tr.append( $(document.createElement("td")).text( i.section ) );
       tr.append( $(document.createElement("td")).text( Number(i.probability).toFixed(3) ) );
       tr.append( $(document.createElement("td")).html( excerpt ) );
