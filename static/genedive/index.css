@@ -1,0 +1,58 @@
+/* index.css */
+
+.announce {
+  padding:40px 20px;
+  background-color:#5184a2;
+  color:white;
+}
+
+.announce .row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.announce .unit-left {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Roboto", "serif";
+}
+
+.announce .unit-left h1 {
+  font-size: 4em;
+}
+
+.announce .unit-right {
+  padding:10px;
+  border-radius:4px;
+}
+
+.announce .unit-right .alert {
+  margin-top:10px;
+}
+
+.announce .unit-right a {
+  color:#5ece29;
+  text-decoration: underline;
+}
+
+.description {
+  padding:40px 20px;
+  margin-left:15px;
+}
+
+.description .logo-grid {
+  display: flex;
+  flex-wrap:wrap;
+}
+
+.description .logo-grid img {
+  padding-left:20px;
+  height:50px;
+}
+
+.registration-form {
+  margin: 40px 0px;
+}

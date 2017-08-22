@@ -13,27 +13,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
+   <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet"> -->
+
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
-    <link rel=stylesheet type=text/css href="static/bootstrap/bootstrap-tagsinput/bootstrap-tagsinput.css">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap-slider/bootstrap-slider.min.css">
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="static/fonts/font-awesome.min.css">
+
+    <!-- TableSorter -->
+    <link rel="stylesheet" href="static/tablesorter/tablesorter.css">
+
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="static/jquery/jquery-ui.min.css">
 
     <!-- Alertify -->
     <link rel="stylesheet" href="static/alertify/css/alertify.min.css">
     <link rel="stylesheet" href="static/alertify/css/alertify.bootstrap.min.css">
 
-    <!-- Webdiggr -->
-    <link rel=stylesheet type=text/css href="static/genedive/webdiggr.css">
-    <link rel=stylesheet type=text/css href="static/genedive/queryinput/queryinput.css">
+    <!-- GeneDive -->
+    <link rel=stylesheet type=text/css href="static/genedive/index.css">
+    <link rel=stylesheet type=text/css href="static/genedive/main.css">
+    <link rel=stylesheet type=text/css href="static/genedive/search/search.css">
+    <link rel=stylesheet type=text/css href="static/genedive/filter/filter.css">
     <link rel=stylesheet type=text/css href="static/genedive/view/table/table.css">
-    <link rel=stylesheet type=text/css href="static/genedive/queryresults/queryresults.css">
-    <link rel=stylesheet type=text/css href="static/genedive/view/graph/graphview.css">
-    <link rel=stylesheet type=text/css href="static/genedive/filtercontrols/filtercontrols.css">
-    <link rel=stylesheet type=text/css href="static/genedive/view/table/grouper/grouper.css">
+    <link rel=stylesheet type=text/css href="static/genedive/view/graph/graph.css">
 
   </head>
   <body>

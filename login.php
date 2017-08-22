@@ -36,5 +36,5 @@
   // Set session and redirect
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $email;
-  header("Location: search.php");
+  header("Location: search2.php");
 ?>

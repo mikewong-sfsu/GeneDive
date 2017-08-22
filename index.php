@@ -61,14 +61,6 @@
 <div class="description container-fluid">
   <div class="row">
     <div class="col-md-6">
-      <img src="static/genedive/images/graph.png" class="img-responsive">
-    </div>
-    <div class="col-md-6">
-      <img src="static/genedive/images/table.png" class="img-responsive">
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
       <p>
         Mallory et al. 2016 have developed an approach to extract gene-gene and protein-protein interactions from text and applied this system to over 100,000 full text PLOS articles.  GeneDive is a web application developed in collaboration with San Francisco State University researchers to facilitate discovery based on the large number of extracted interactions (over 1.6M).  GeneDive users can search for gene interactions, prioritize probable relationships, compile supporting literature evidence, and discover biopathways to direct new curation investigations and potentially new discoveries.
       </p>
@@ -95,6 +87,9 @@
         <img src='/static/genedive/images/sfsu.jpg'>
         <img src='/static/genedive/images/helix.png'>
       </div>
+    </div>
+    <div class="col-md-6">
+      <img src="static/genedive/images/table.png" class="img-responsive">
     </div>
   </div>
 </div>
