@@ -1,9 +1,7 @@
 class TableSummaryArticle extends ResultsTable {
 
   constructor ( table, interactions ) {
-    super( table, interactions );
-    this.updateTopbarMessage(`<strong>${this.interactions.length}</strong> Interactions`);
-    
+    super( table, interactions );    
     this.interactions = GeneDive.grouper.group( interactions );
 
     this.drawHeaders();

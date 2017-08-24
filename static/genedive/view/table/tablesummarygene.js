@@ -2,9 +2,6 @@ class TableSummaryGene extends ResultsTable {
 
   constructor ( table, interactions ) {
     super( table, interactions );
-    // Update Topbar Message with Count
-    this.updateTopbarMessage(`<strong>${this.interactions.length}</strong> Interactions`);
-
     this.interactions = GeneDive.grouper.group( this.interactions );
 
     this.drawHeaders();

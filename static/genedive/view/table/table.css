@@ -99,3 +99,19 @@
 .tick text {
     display: none;
 }
+
+/* Temp */
+
+.table-preheader {
+  width:100%;
+}
+
+.table-back-button {
+  color: #ff5454;
+  padding:6px 24px;
+  cursor: pointer;
+}
+
+.table-back-button:hover {
+  color:#c13e3e;
+}

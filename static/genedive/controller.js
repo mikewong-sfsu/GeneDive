@@ -74,7 +74,7 @@ class Controller {
     // First check for zoom condition
     if ( this.tablestate.zoomed ) {
       $('.table-view .grouping-controls').hide();
-      new TableDetail( ".table-view table", this.filtrate, ".table-view .topbar .back", this.tablestate.zoomgroup );
+      new TableDetail( ".table-view table", this.filtrate, this.tablestate.zoomgroup );
       return;
     } 
 

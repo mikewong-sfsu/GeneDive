@@ -5,10 +5,6 @@ class ResultsTable {
     this.interactions = interactions;
     this.table.html("");
   }
-
-  updateTopbarMessage ( message ) {
-    $(".topbar .message .message-text").html(message);
-  }
   
   // build pubmed link
   buildPubmedLink ( pubmedID ) {
