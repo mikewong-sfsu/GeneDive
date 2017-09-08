@@ -23,6 +23,9 @@ class Controller {
     if ( this.firstsearch ) {
       this.firstsearch = false;
       $('.table-view .messaging-and-controls').css('visibility', 'visible');
+      $('.filter-module').css('visibility', 'visible');
+      $('.highlight-module').css('visibility', 'visible');
+      $('.grouper-module').css('visibility', 'visible');
     }
 
     // Hide the Table and Graph While Rendering

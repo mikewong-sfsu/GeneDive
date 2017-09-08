@@ -81,12 +81,17 @@ h6 {
   padding: 24px 16px;
 }
 
-.highlight-module {
+.filter-module {
+  visibility: hidden;
+}
 
+.highlight-module {
+  visibility: hidden;
 }
 
 .grouper-module {
   flex-grow: 1;
+  visibility: hidden;
 }
 
 .module .title {
