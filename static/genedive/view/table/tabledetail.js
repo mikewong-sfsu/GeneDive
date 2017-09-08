@@ -4,7 +4,9 @@ class TableDetail extends ResultsTable {
     super( table, interactions );
     this.interactions = GeneDive.grouper.group( interactions )[group];
 
-    this.drawPreheader( group );
+    this.updateMessage( `Viewing <span class="figure">${Object.keys(this.interactions).length}</span> Interactions` );
+    this.showBackButton();
+
     this.drawHeaders();
     this.drawBody();
 
@@ -12,24 +14,12 @@ class TableDetail extends ResultsTable {
       headers: { 6: { sorter: false }, 7: { sorter: false  } }, 
       sortList: [[5,1],] } // [index, asc/desc]
     ); 
-  }
 
-  drawPreheader ( group ) {
-    let preheader = $( document.createElement("div") ).addClass("table-preheader");
-    let back = $( document.createElement("span") );
-
-    // Back button setup
-    back.text( "Back" ).addClass("table-back-button");
-
-    back.on('click', ( ) => {
+    // Bind zoom out behavior
+    $('.table-view .messaging-and-controls .go-back').on('click', function () {
       GeneDive.tablestate.zoomed = false;
-      GeneDive.drawTable();
+      GeneDive.runSearch();
     });
-
-    preheader.append( back );
-
-    // Add preheader to table
-    this.table.prepend( preheader );
 
   }
 

@@ -11,6 +11,18 @@ class ResultsTable {
     return `<a href='https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/' target='_blank'>View on Pubmed</a>`;
   }
 
+  updateMessage ( message ) {
+    $('.table-view .messaging-and-controls .metadata').html(message);
+  }
+
+  hideBackButton () {
+    $('.table-view .messaging-and-controls .go-back').css('visibility', 'hidden');
+  }
+
+  showBackButton () {
+    $('.table-view .messaging-and-controls .go-back').css('visibility', 'visible');
+  }
+
   // synonymize gene
   addSynonym ( gene, synonym ) {
     return `${gene} <span class="text-muted">[aka ${synonym}]</span>`;

@@ -1,43 +1,3 @@
-/* TOPBAR */
-
-.topbar {
-  display: flex;
-  flex-direction: row;
-  min-height: 30px;
-  align-items: center;
-  padding:0 12px;
-}
-
-.topbar .back {
-  display: none;
-  font-size:16px;
-  cursor:pointer;
-  color: #cc6666;
-}
-
-.topbar .back:hover {
-  color:#ffa6a6;
-}
-
-.topbar .back i {
-  padding-right:3px;
-}
-
-.topbar .message {
-  text-align: right;
-  flex-grow: 1;
-}
-
-.topbar .grouping-controls {
-  display: none;
-  flex-direction: row;
-  align-items: center;
-}
-
-.topbar .grouping-controls h6 {
-  padding-right: 12px;
-}
-
 /* TABLE */
 
 .table-view .table tr.grouped {
@@ -100,18 +60,29 @@
     display: none;
 }
 
-/* Temp */
+/* Table Messaging and Controls */
 
-.table-preheader {
-  width:100%;
+.table-view .messaging-and-controls {
+  padding:6px 0px; 
+  visibility: hidden;
+  flex-direction: row;
+  justify-content: space-between;
+  font-weight: bold;
 }
 
-.table-back-button {
-  color: #ff5454;
-  padding:6px 24px;
+.table-view .messaging-and-controls .go-back {
+  float: left;
+  color: #d84b2b;
+  visibility: hidden;
+  margin-left: 1em;
   cursor: pointer;
 }
 
-.table-back-button:hover {
-  color:#c13e3e;
+.table-view .messaging-and-controls .metadata {
+  float: right;
+  margin-right: 1em;
+}
+
+.table-view .messaging-and-controls .metadata .figure {
+  color:#337ab7;
 }

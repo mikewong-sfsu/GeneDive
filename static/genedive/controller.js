@@ -22,7 +22,7 @@ class Controller {
     // When first search is performed, expose all controls and set up everything
     if ( this.firstsearch ) {
       this.firstsearch = false;
-      $('.table-view .grouping-controls').css('display', 'flex');
+      $('.table-view .messaging-and-controls').css('visibility', 'visible');
     }
 
     if ( this.search.sets.length == 0 ) return;

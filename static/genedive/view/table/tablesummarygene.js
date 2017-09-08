@@ -2,7 +2,12 @@ class TableSummaryGene extends ResultsTable {
 
   constructor ( table, interactions ) {
     super( table, interactions );
+    this.interactions_count = this.interactions.length;
     this.interactions = GeneDive.grouper.group( this.interactions );
+
+    // Topbar management
+    this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` );
+    this.hideBackButton();
 
     this.drawHeaders();
     this.drawBody();

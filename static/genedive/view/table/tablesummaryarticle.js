@@ -1,8 +1,12 @@
 class TableSummaryArticle extends ResultsTable {
 
   constructor ( table, interactions ) {
-    super( table, interactions );    
+    super( table, interactions );   
+    this.interactions_count = this.interactions.length; 
     this.interactions = GeneDive.grouper.group( interactions );
+
+    this.updateMessage( `Viewing ${this.interactions_count} Interactions in ${Object.keys(this.interactions).length} Groups` );
+    this.hideBackButton();
 
     this.drawHeaders();
     this.drawBody();

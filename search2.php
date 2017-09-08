@@ -98,21 +98,10 @@
 
   <!-- Table View -->
   <div class="table-view ui-widget-content">
-    <!--
-    <div class="topbar">
-      <div class="back">
-        <span><i class="fa fa-caret-left"></i>Back</span>
-      </div>
-      <div class="grouping-controls">
-        <h6>Group By</h6>
-        <select class="table-grouping-selector" selected="gene">
-          <option value="gene">Gene Pair</option>
-          <option value="article">Article</option>
-        </select>
-      </div>
-      <div class="message"><span class="message-text"></span></div>
+    <div class="messaging-and-controls hide-on-start">
+      <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
+      <span class="metadata"></span>
     </div>
-    -->
   </div>
 
   <!-- Graph View -->
