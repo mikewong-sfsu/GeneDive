@@ -102,11 +102,17 @@
       <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
       <span class="metadata"></span>
     </div>
+    <div class="rendering-results">
+      <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+    </div>
   </div>
 
   <!-- Graph View -->
   <div class="graph-view">
     <div id="graph">
+    </div>
+    <div class="rendering-results">
+      <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
     </div>
   </div>
 

@@ -115,3 +115,13 @@ h6 {
   border-bottom:1px solid rgb(220,220,220);
 }
 
+/* Rendering */
+
+.rendering-results {
+  width: 100%;
+  padding-top:20px;
+  font-size: 4em;
+  color:#bbbbbb;
+  text-align:center;
+  display: none;
+}

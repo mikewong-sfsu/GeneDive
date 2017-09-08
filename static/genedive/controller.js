@@ -25,6 +25,13 @@ class Controller {
       $('.table-view .messaging-and-controls').css('visibility', 'visible');
     }
 
+    // Hide the Table and Graph While Rendering
+    $('#graph').hide();
+    $('.table').hide();
+    $('.rendering-results').show();
+
+
+
     if ( this.search.sets.length == 0 ) return;
 
     let minProb = this.probfilter.getMinimumProbability();
@@ -92,10 +99,13 @@ class Controller {
       new TableSummaryArticle( ".table-view table", this.filtrate, ".table-view .topbar .back" );
     }
 
+    $('.table-view .rendering-results').hide();
   }
 
   drawGraph() {
     this.graph.draw( this.filtrate, this.search.sets );
+    $('.graph-view .rendering-results').hide();
+    $('#graph').show();
   }
 
 }
