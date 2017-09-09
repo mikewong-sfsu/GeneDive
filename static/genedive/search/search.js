@@ -24,7 +24,7 @@ class Search {
     return this.topology.val();
   }
 
-  addSearchSet ( name, ids ) {
+  addSearchSet ( name, ids, deferRunSearch = false ) {
     
     switch ( this.selectedTopology() ) {
 
@@ -51,10 +51,14 @@ class Search {
     }
 
     this.renderDisplay();
-    GeneDive.runSearch();
+
+    if ( !deferRunSearch ) {
+      GeneDive.runSearch();
+    }
+    
   }
 
-  removeSearchSet ( identifier ) {
+  removeSearchSet ( identifier, deferRunSearch = false ) {
     this.sets = this.sets.filter( ( set ) => set.name != identifier && set.ids[0] != identifier );
 
     if ( this.sets.length <= 1 ) {
@@ -62,7 +66,10 @@ class Search {
     }
 
     this.renderDisplay();
-    GeneDive.runSearch();
+
+    if ( !deferRunSearch ) {
+      GeneDive.runSearch();
+    }
   }
 
   clearSearch() {
