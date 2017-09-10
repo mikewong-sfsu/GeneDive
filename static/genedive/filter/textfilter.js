@@ -1,13 +1,39 @@
 /* Interacts with the Controller-Filter module */
 class TextFilter {
   
-  constructor ( attribute, is, value, submit, display )  {
+  constructor ( attribute, is, valueText, valueDropdown, submit, display )  {
     this.attribute = $(attribute);
     this.is = $(is);        // dual radio is/not
-    this.value = $(value);
+    this.valueText = $(valueText);
+    this.valueDropdown = $(valueDropdown);
+    this.currentValueInput = this.valueText;
     this.submit = $(submit);
     this.display = $(display);
     this.sets = [];
+    this.filterValues = [];
+
+    // Filter dropdown lists behavior
+    $(".filter-select").on('change', ( event ) => {
+
+      // Excerpt-type uses plain text input
+      // All other types use dropdown
+      if ( event.target.value == "Excerpt" ) {
+        this.currentValueInput = this.valueText;
+        this.valueDropdown.hide();
+        this.valueText.show();
+      } else {
+        this.currentValueInput = this.valueDropdown;
+        this.valueText.hide();
+        this.valueDropdown.show().empty();
+
+        let values = Array.from(this.filterValues[event.target.value]).sort();
+
+        values.forEach( v => {
+          this.valueDropdown.append( $("<option/>").html(v) );
+        });
+
+      }
+    });
 
     // On form submission, add filter
     $("#add-filter").on('submit', () => {
@@ -17,9 +43,23 @@ class TextFilter {
 
   }
 
+  createFilterValueLists ( interactions ) {
+    let values = { "Article": new Set(), "Gene": new Set(), "Journal": new Set(), "Section": new Set() };
+
+    interactions.forEach( i => {
+      values["Article"].add( i.pubmed_id );
+      values["Gene"].add( i.mention1 );
+      values["Gene"].add( i.mention2 );
+      values["Journal"].add( i.journal );
+      values["Section"].add( i.section );
+    });
+
+    this.filterValues = values;
+  }
+
   addFilter ( ) {
-    this.addFilterSet( this.attribute.val(), this.is.prop("checked"), this.value.val() );
-    this.value.val("");
+    this.addFilterSet( this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val() );
+    this.currentValueInput.val("");
   }
 
   addFilterSet ( attribute, is, value ) {
@@ -55,6 +95,9 @@ class TextFilter {
 
   filterInteractions ( interactions ) {
 
+    // Build Lists for Filter Values Dropdown
+    this.createFilterValueLists( interactions );
+
     for ( let filter of this.sets ) {
       switch ( filter.attribute ) {
         case "Journal":
@@ -83,11 +126,13 @@ class TextFilter {
 
         case "Gene":
           if ( filter.is ) {
-            interactions = interactions.filter( ( i ) => new RegExp(filter.value,"i").test(i.mention1) );
-            interactions = interactions.filter( ( i ) => new RegExp(filter.value,"i").test(i.mention2) );
+            interactions = interactions.filter( ( i ) => {
+              return ( new RegExp(filter.value,"i").test(i.mention1) || new RegExp(filter.value,"i").test(i.mention2) )
+            });
           } else {
-            interactions = interactions.filter( ( i ) => !new RegExp(filter.value,"i").test(i.mention1) );
-            interactions = interactions.filter( ( i ) => !new RegExp(filter.value,"i").test(i.mention2) );
+            interactions = interactions.filter( ( i ) => {
+              return ( !new RegExp(filter.value,"i").test(i.mention1) && !new RegExp(filter.value,"i").test(i.mention2) )
+            });
           }
           break;
 

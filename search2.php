@@ -50,16 +50,22 @@
       <form id="add-filter" onsubmit="return false;">
         <div class="top-row">
           <select class="filter-select">
+            <option>Article</option>
+            <option selected="selected">Excerpt</option>
             <option>Gene</option>
-            <option>Excerpt</option>
+            <option>Journal</option>
+            <option>Section</option>
           </select>
           <div class="filter-is-not">
             <span><input type="radio" name="isnot" value="is" class="is" checked > is </span>
             <span><input type="radio" name="isnot" value="not"> not </span>
           </div>
         </div>
+
         <div class="input-group filter-input-group">
-          <input type="text" class="form-control filter-input" placeholder="value..." required>
+          <input type="text" class="form-control filter-input filter-text" placeholder="value...">
+          <select class="form-control filter-input filter-dropdown" style="display:none;">
+          </select>
           <span class="input-group-btn">
             <button type="submit" class="btn btn-default" type="button">Add</button>
           </span>

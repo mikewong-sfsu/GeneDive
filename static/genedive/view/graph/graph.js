@@ -6,43 +6,7 @@ class GraphView {
     });
     this.shiftListenerActive = false;
 
-    this.graph.on('tap', 'node', function ( event ) {
-
-      /* Is the clicked node already in the search? */
-      if ( GeneDive.search.hasSearchSet(this.data('name')) ) {
-        alertify.notify("Gene already in search.", "", "3");
-        return;
-      }
-
-      let shiftKey = event.originalEvent.shiftKey;
-      /* 
-        Shift key?  Add clicked nodes and defer search until shift released.
-        Else: Replace all current search members with the clicked node.
-      */
-
-      if ( shiftKey ) {
-        /* Add search member, defer search */
-        GeneDive.search.addSearchSet( this.data('name'), [this.data('id')], true );
-
-        if ( !this.shiftListenerActive ) {
-          // Bind event - run search when shift is released
-          $(document).on('keyup', function ( event ) {
-            $(document).unbind('keyup');
-            this.shiftListenerActive = false;
-            GeneDive.runSearch();
-          });
-
-          this.shiftListenerActive = true;
-        }
-      } else {
-        GeneDive.search.clearSearch();
-        GeneDive.search.addSearchSet( this.data('name'), [this.data('id')] );
-      }
-
-
-
-
-    });
+    this.graph.on('tap', 'node', nodeClickBehavior );
   }
 
   updateGraph( nodes, edges ) {
@@ -195,6 +159,40 @@ class GraphView {
   }
 
 }
+
+var nodeClickBehavior = function ( event ) {
+
+      /* Is the clicked node already in the search? */
+      if ( GeneDive.search.hasSearchSet(this.data('name')) ) {
+        alertify.notify("Gene already in search.", "", "3");
+        return;
+      }
+
+      let shiftKey = event.originalEvent.shiftKey;
+      /* 
+        Shift key?  Add clicked nodes and defer search until shift released.
+        Else: Replace all current search members with the clicked node.
+      */
+
+      if ( shiftKey ) {
+        /* Add search member, defer search */
+        GeneDive.search.addSearchSet( this.data('name'), [this.data('id')], true );
+
+        if ( !this.shiftListenerActive ) {
+          // Bind event - run search when shift is released
+          $(document).on('keyup', function ( event ) {
+            $(document).unbind('keyup');
+            this.shiftListenerActive = false;
+            GeneDive.runSearch();
+          });
+
+          this.shiftListenerActive = true;
+        }
+      } else {
+        GeneDive.search.clearSearch();
+        GeneDive.search.addSearchSet( this.data('name'), [this.data('id')] );
+      }
+};
 
 let GENEDIVE_CYTOSCAPE_STYLESHEET = [
   { 

@@ -22,6 +22,11 @@
   padding:7px 14px;
 }
 
+.filter-module .filter-input {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
 .filter-input-group {
   margin-top:7px;
 }

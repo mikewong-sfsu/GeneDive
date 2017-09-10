@@ -7,7 +7,7 @@ class Controller {
     this.search = new Search( ".search-input", ".topology-selector", ".search-sets", this.color );
     this.disambiguation = new Disambiguation();
     this.probfilter = new ProbabilityFilter( ".min-prob-slider", ".min-prob-slider-value" );
-    this.textfilter = new TextFilter( ".filter-select", ".filter-is-not .is", ".filter-input", ".add-filter", ".filters");
+    this.textfilter = new TextFilter( ".filter-select", ".filter-is-not .is", ".filter-text", ".filter-dropdown", ".add-filter", ".filters");
     this.highlighter = new Highlight( ".highlight-input" );
     this.grouper = new Grouper( ".grouper-module .table-grouping-selector" );
     this.tablestate = { zoomed: false, zoomgroup: null }; 
@@ -32,8 +32,6 @@ class Controller {
     $('#graph').hide();
     $('.table').hide();
     $('.rendering-results').show();
-
-
 
     if ( this.search.sets.length == 0 ) return;
 
@@ -83,17 +81,9 @@ class Controller {
 
     // First check for zoom condition
     if ( this.tablestate.zoomed ) {
-      $('.table-view .grouping-controls').hide();
       new TableDetail( ".table-view table", this.filtrate, this.tablestate.zoomgroup );
       return;
     } 
-
-    // If user changes groups while zoomed in, hide the back button
-    // todo: abstract this
-    $(".table-view .topbar .back").hide();
-
-    // Re-expose the table grouper
-    $('.table-view .grouping-controls').show();
 
     // Otherwise show the appropriate summary view
     if ( this.grouper.selected() == "gene" ) {
