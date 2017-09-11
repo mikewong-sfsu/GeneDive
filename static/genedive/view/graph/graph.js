@@ -162,12 +162,6 @@ class GraphView {
 
 var nodeClickBehavior = function ( event ) {
 
-      /* Is the clicked node already in the search? */
-      if ( GeneDive.search.hasSearchSet(this.data('name')) ) {
-        alertify.notify("Gene already in search.", "", "3");
-        return;
-      }
-
       let shiftKey = event.originalEvent.shiftKey;
       /* 
         Shift key?  Add clicked nodes and defer search until shift released.

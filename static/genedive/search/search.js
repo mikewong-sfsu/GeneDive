@@ -25,6 +25,11 @@ class Search {
   }
 
   addSearchSet ( name, ids, deferRunSearch = false ) {
+
+    if ( this.hasSearchSet( name ) ) {
+      alertify.notify("Gene already in search.", "", "3");
+      return;
+    }
     
     switch ( this.selectedTopology() ) {
 
