@@ -3,14 +3,18 @@ class Grouper {
   constructor ( selector ) {
     this.selector = $(selector);
 
-    this.selector.on("change", ( e ) => {
+    this.selector.children("button").on("click", ( event ) => {
+      this.selector.children("button").removeClass("active");
+      $(event.currentTarget).addClass("active");
+
       GeneDive.tablestate.zoomed = false;
       GeneDive.drawTable();
     });
+    
   }
 
   selected ( ) {
-    return this.selector.val();
+    return this.selector.children("button.active").attr("data-type");
   }
 
   group ( interactions ) {

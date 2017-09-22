@@ -29,6 +29,27 @@ class GraphView {
       mass: node => 4,
       gravity: -4
        } ).run();
+
+    this.graph.fit();
+
+    /*
+    this.graph.elements().qtip({
+      content: function(){ return 'Example qTip on ele ' + this.id() },
+      position: {
+        my: 'top center',
+        at: 'bottom center'
+      },
+      style: {
+        classes: 'qtip-bootstrap',
+        tip: {
+          width: 16,
+          height: 8
+        }
+      }
+    });
+    */
+
+
   }
 
   // Core method to be called by controller for each graph iteration

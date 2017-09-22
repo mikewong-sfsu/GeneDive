@@ -21,10 +21,11 @@
   grid-column-end:2;
   grid-row-start:1;
   grid-row-end:3;
-  background-color:rgb(240,240,240);
-  box-shadow: 2px 0px 2px 0px rgba(128,128,128,0.75);
+  border-right:2px solid gray;
+  box-shadow: 1px 0px 1px 0px rgba(128,128,128,0.75);
   z-index: 20;
   overflow-y: scroll;
+  background-color: rgb(247,247,247);
 }
 
 .table-view {
@@ -57,28 +58,21 @@
   color:rgb(128,128,128);
 }
 
-h5, h6 {
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  color:rgb(60,60,60);
-}
-
 h5 {
-  margin-top:0px;
-  font-size: 14px;
-  color:rgb(128,128,128);
+  font-family: "Roboto", sans-serif;
+  margin-top:6px;
+  color: rgb(90,90,90);
 }
-
-h6 {
-  margin:0px;
-  padding:6px 0;
-}
-
 
 /* Control View Units */
 
+.titlebar {
+  background-color: rgb(230,230,230);
+  padding:8px 0 0 0;
+}
+
 .module {
-  padding: 24px 16px;
+  padding: 24px 18px;
 }
 
 .filter-module {
@@ -116,8 +110,8 @@ h6 {
 
 .divider {
   width:100%;
-  margin:14px 0px;
   border-bottom:1px solid rgb(220,220,220);
+  visibility: hidden;
 }
 
 /* Rendering */

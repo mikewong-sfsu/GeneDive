@@ -9,16 +9,18 @@ class Controller {
     this.probfilter = new ProbabilityFilter( ".min-prob-slider", ".min-prob-slider-value" );
     this.textfilter = new TextFilter( ".filter-select", ".filter-is-not .is", ".filter-text", ".filter-dropdown", ".add-filter", ".filters");
     this.highlighter = new Highlight( ".highlight-input" );
-    this.grouper = new Grouper( ".grouper-module .table-grouping-selector" );
+    this.grouper = new Grouper( ".grouper-module .table-grouping" );
     this.tablestate = { zoomed: false, zoomgroup: null }; 
     this.graph = new GraphView("graph");
     this.firstsearch = true;
+    this.spinneractive = false;
 
     this.interactions = null;
     this.filtrate = null;
   }
 
   runSearch() {
+
     // When first search is performed, expose all controls and set up everything
     if ( this.firstsearch ) {
       this.firstsearch = false;
@@ -26,12 +28,10 @@ class Controller {
       $('.filter-module').css('visibility', 'visible');
       $('.highlight-module').css('visibility', 'visible');
       $('.grouper-module').css('visibility', 'visible');
+      $('.divider').css('visibility', 'visible');
     }
 
-    // Hide the Table and Graph While Rendering
-    $('#graph').hide();
-    $('.table').hide();
-    $('.rendering-results').show();
+    this.engageSpinner();
 
     if ( this.search.sets.length == 0 ) return;
 
@@ -52,6 +52,7 @@ class Controller {
   /* Returns new array of interactions passing the text filters */
   /* IMPORTANT - use this.filtrate, not this.interactions hereafter */
   filterInteractions() {
+    if ( !this.spinneractive ) { this.engageSpinner(); this.spinneractive = true; }
     this.filtrate = this.textfilter.filterInteractions( this.interactions );
     this.colorInteractions();
   }
@@ -69,12 +70,15 @@ class Controller {
 
   /* Highlight class adds a highlight property to interactions */
   highlightInteractions() {
+    if ( !this.spinneractive ) { this.engageSpinner(); this.spinneractive = true; }
     this.filtrate = this.highlighter.highlight( this.filtrate );
-    this.drawGraph();
     this.drawTable();
+    this.drawGraph();
+    this.spinneractive = false;
   }
 
   drawTable() {
+
     // We want to create a new table for each iteration as the old one will have prior listener/config/bindings
     $('.table-view table').remove();
     $('.table-view').append($("<table/>").addClass("table table-hover"));
@@ -82,6 +86,7 @@ class Controller {
     // First check for zoom condition
     if ( this.tablestate.zoomed ) {
       new TableDetail( ".table-view table", this.filtrate, this.tablestate.zoomgroup );
+      $('.table-view .rendering-results').hide();
       return;
     } 
 
@@ -99,6 +104,13 @@ class Controller {
     this.graph.draw( this.filtrate, this.search.sets );
     $('.graph-view .rendering-results').hide();
     $('#graph').show();
+  }
+
+  engageSpinner () {
+    this.spinneractive = true;
+    $('#graph').hide();
+    $('.table').hide();
+    $('.rendering-results').show();
   }
 
 }

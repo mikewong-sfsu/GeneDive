@@ -14,14 +14,17 @@ class Search {
 
     alertify.set('notifier','position', 'top-left');
 
-    this.topology.on("change", () => {
+    this.topology.children("button").on("click", ( event ) => {
+      this.topology.children("button").removeClass("active");
+      $(event.currentTarget).addClass("active");
+
       this.input.val("");
       GeneDive.runSearch();
     });
   }
 
   selectedTopology() {
-    return this.topology.val();
+    return this.topology.children("button.active").attr("data-type");
   }
 
   addSearchSet ( name, ids, deferRunSearch = false ) {
@@ -50,11 +53,6 @@ class Search {
         break;
     }
 
-    // Disable option to selected clique search if 2 or more genes selected
-    if ( this.sets.length >= 2 ) {
-      this.disableCliqueSelection();
-    }
-
     this.renderDisplay();
 
     if ( !deferRunSearch ) {
@@ -66,10 +64,6 @@ class Search {
   removeSearchSet ( identifier, deferRunSearch = false ) {
     this.sets = this.sets.filter( ( set ) => set.name != identifier && set.ids[0] != identifier );
 
-    if ( this.sets.length <= 1 ) {
-      this.enableCliqueSelection();
-    }
-
     this.renderDisplay();
 
     if ( !deferRunSearch ) {
@@ -80,14 +74,6 @@ class Search {
   clearSearch() {
     this.sets = [];
     this.renderDisplay();
-  }
-
-  enableCliqueSelection () {
-    this.topology.children("option[value='clique']").prop("disabled", false);
-  }
-
-  disableCliqueSelection () {
-    this.topology.children("option[value='clique']").prop("disabled", true);
   }
 
   getIds( minProb ) {
@@ -213,10 +199,20 @@ class Search {
     });
     geneset.initialize();
 
+    /*
+    var drugs = new Bloodhound({
+      prefetch: 'static/genedive/json/drug_id.json',
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace
+    });
+    drugs.initialize();
+    */
+
     this.input.typeahead(
       { minLength: 1, highlight: true },
       { name: 'Genes', source: genes, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }  },
-      { name: 'Genesets', source: geneset, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } }
+      { name: 'Genesets', source: geneset, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } },
+      /*{ name: 'Drugs', source: drugs, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Drugs</h4>" } } */
     );
 
     $('.twitter-typeahead').css('width','100%');

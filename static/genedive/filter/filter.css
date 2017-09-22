@@ -6,7 +6,7 @@
 }
 
 .filter-module .top-row .filter-select {
-  height:34px;
+  height: 28px;
   flex-grow: 1;
 }
 
@@ -67,7 +67,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-content: baseline;
+  align-items: center;
 }
 
 .min-prob-slider {
@@ -80,4 +80,8 @@
 
 #add-filter {
   margin-top:7px;
+}
+
+.filter-module .h5-second {
+  margin-top:12px;
 }

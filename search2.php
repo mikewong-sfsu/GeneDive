@@ -12,19 +12,16 @@
     
     <!-- Search Controls -->
     <div class="module search-module">
-      <div class="title">
-        <h5><!-- <i class="fa fa-search" aria-hidden="true"></i> -->Search</h5>
-      </div>
       <div class="topology-row">
-        <h6>Type</h6>
-        <select class="topology-selector form-control">
-          <option value="1hop">1-Hop</option>
-          <option value="2hop">2-Hop</option>
-          <option value="3hop">3-Hop</option>
-          <option value="clique">Clique (Max 1 Gene)</option>
-        </select>
+        <div class="btn-group topology-selector" role="group" aria-label="...">
+          <button type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
+          <button type="button" class="btn btn-default" data-type="2hop">2-Hop</button>
+          <button type="button" class="btn btn-default" data-type="3hop">3-Hop</button>
+          <button type="button" class="btn btn-default" data-type="clique">Clique</button>
+        </div>
       </div>
-      <input type="text" placeholder="search a gene..." class="form-control search-input">
+
+      <input type="text" placeholder="enter a gene symbol..." class="form-control search-input">
 
       <!-- Search Sets displays current search objects -->
       <div class="search-sets">
@@ -33,20 +30,16 @@
  
     <!-- Filter Controls -->
     <div class="module filter-module">
-      <div class="title">
-        <h5><!-- <i class="fa fa-filter" aria-hidden="true"></i> -->Filter</h5>
-      </div>
-
       <!-- Probability Filter Submodule -->
       <div class="min-prob-titlebar">
-        <h6>Minimum Probability</h6>
+        <h5>Minimum Probability</h5>
         <span class="min-prob-slider-value">0.7</span>
       </div>
       <input class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" 
               data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7">
 
       <!-- Text Filter Submodule -->
-      <h6>Text Filters</h6>
+      <h5 class="h5-second">Filter Results</h5>
       <form id="add-filter" onsubmit="return false;">
         <div class="top-row">
           <select class="filter-select">
@@ -77,6 +70,8 @@
       </div>
     </div>
 
+    <div class="divider"></div>
+
     <!-- Highlight Module -->
     <div class="module highlight-module">
       <div class="title">
@@ -85,20 +80,20 @@
       <input type="text" placeholder="highlight term..." class="form-control highlight-input">
     </div>
 
+    <div class="divider"></div>
+
     <!-- Grouper -->
     <div class="module grouper-module">
       <div class="title">
-        <h5>Group Results (Table Only)</h5>
+        <h5>Group Table Results By</h5>
       </div>
-      <select class="table-grouping-selector form-control" selected="gene">
-        <option value="gene">Gene Pair</option>
-        <option value="article">Article</option>
-      </select>
+
+      <div class="btn-group table-grouping" style="width:100%;" role="group" aria-label="...">
+        <button style="width:50%;" type="button" class="btn btn-default active" data-type="gene">Gene Pair</button>
+        <button style="width:50%;" type="button" class="btn btn-default" data-type="article">Article</button>
+      </div>
     </div>
 
-    <!-- Account Module -->
-    <div class="module account-module">
-    </div>
 
   </div> <!-- End Control View -->
 

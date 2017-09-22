@@ -32,6 +32,8 @@
     <!-- Cytoscape -->
     <script src="static/cytoscape/cytoscape.min.js"></script>
     <script src="static/cytoscape/cytoscape-euler.js"></script>
+    <script src="static/cytoscape/jquery.qtip.min.js"></script>
+    <script src="static/cytoscape/cytoscape-qtip.js"></script>
 
     <!-- GeneDive Classses -->
     <script src="static/genedive/GeneDiveAPI.js"></script>
