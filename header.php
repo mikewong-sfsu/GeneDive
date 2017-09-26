@@ -12,6 +12,10 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Typeahead Files / Adjacency Matrix -->
+    <script src="static/genedive/json/symbol_id.json"></script>
+    <script src="static/genedive/json/symbol_id_sets.json"></script>
+
     <!-- Fonts -->
    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 

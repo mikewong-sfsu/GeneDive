@@ -1,6 +1,7 @@
 class GraphView {
   
   constructor ( viewport ) {
+
     this.graph = cytoscape( { 
       container: document.getElementById(viewport)
     });
@@ -10,13 +11,14 @@ class GraphView {
   }
 
   updateGraph( nodes, edges ) {
+
     nodes = _.values( nodes );
     edges = _.values( edges );
 
     // Multiset membership coloring setup
     nodes = this.bindSetMembership( nodes, GeneDive.search.sets );
-
-    this.graph.style( this.bindSetStyles( GENEDIVE_CYTOSCAPE_STYLESHEET, GeneDive.search.sets ) );
+    
+     this.graph.style( this.bindSetStyles( GENEDIVE_CYTOSCAPE_STYLESHEET, GeneDive.search.sets ) );
 
     this.graph.elements().remove();
     this.graph.add( nodes );
@@ -25,10 +27,12 @@ class GraphView {
     this.graph.layout( { 
       name: 'euler', 
       springLength: edge => 120,
-      springCoeff: edge => 0.0012,
+      springCoeff: edge => 0.002,
       mass: node => 4,
-      gravity: -4
+      gravity: -3
        } ).run();
+
+    this.graph.center();
 
   }
 
@@ -126,7 +130,7 @@ class GraphView {
   }
 
   bindSetMembership( nodes, sets ) {
-    let set_ids = sets.map( s => s.id );
+    let set_ids = sets.map( s => String(s.id) );
 
     // Set default membership for each set to 0
     nodes.forEach( node => {
@@ -199,7 +203,7 @@ let GENEDIVE_CYTOSCAPE_STYLESHEET = [
       'text-halign': 'center',
       'text-valign': 'center',
       'color': '#ffffff',
-      'text-outline-color': /*ele => ele.data('color')*/ '#aaaaaa',
+      'text-outline-color': '#aaaaaa',
       'text-outline-width': 1,
       'pie-size': '100%'
     }

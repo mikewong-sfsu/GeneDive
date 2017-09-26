@@ -186,14 +186,14 @@ class Search {
   initTypeahead () {
 
     var genes = new Bloodhound({
-      prefetch: 'static/genedive/json/symbol_id.json',
+      local: AUTOCOMPLETE_SYMBOL,
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });
     genes.initialize();
 
     var geneset = new Bloodhound({
-      prefetch: 'static/genedive/json/symbol_id_sets.json',
+      local: AUTOCOMPLETE_SYMBOL_SET,
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });

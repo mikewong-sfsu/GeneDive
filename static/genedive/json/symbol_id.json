@@ -1,4 +1,4 @@
-[{"symbol": "#945", "values": [479]},
+const AUTOCOMPLETE_SYMBOL = [{"symbol": "#945", "values": [479]},
 {"symbol": "(FM-3)", "values": [10316]},
 {"symbol": "0610037N12Rik", "values": [10248]},
 {"symbol": "0710008D09Rik", "values": [10975]},
@@ -58220,4 +58220,4 @@
 {"symbol": "zfp-42", "values": [132625]},
 {"symbol": "zfp-90", "values": [146198]},
 {"symbol": "zinedin", "values": [29888]},
-{"symbol": "znT-4", "values": [7782]}]
+{"symbol": "znT-4", "values": [7782]}];
