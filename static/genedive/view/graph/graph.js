@@ -30,26 +30,6 @@ class GraphView {
       gravity: -4
        } ).run();
 
-    this.graph.fit();
-
-    /*
-    this.graph.elements().qtip({
-      content: function(){ return 'Example qTip on ele ' + this.id() },
-      position: {
-        my: 'top center',
-        at: 'bottom center'
-      },
-      style: {
-        classes: 'qtip-bootstrap',
-        tip: {
-          width: 16,
-          height: 8
-        }
-      }
-    });
-    */
-
-
   }
 
   // Core method to be called by controller for each graph iteration
@@ -139,7 +119,7 @@ class GraphView {
 
   fillUnknownNames ( names, nodes ) {
     let id_name = {};
-    names.forEach( n => id_name[n.id] = n.primary_name );
+    names.forEach( n => id_name[n.id] = n.primary );
     Object.keys( id_name ).forEach( id => {
       nodes[id].data.name = id_name[id];
     });

@@ -10,30 +10,28 @@ class Controller {
     this.textfilter = new TextFilter( ".filter-select", ".filter-is-not .is", ".filter-text", ".filter-dropdown", ".add-filter", ".filters");
     this.highlighter = new Highlight( ".highlight-input" );
     this.grouper = new Grouper( ".grouper-module .table-grouping" );
-    this.tablestate = { zoomed: false, zoomgroup: null }; 
     this.graph = new GraphView("graph");
+
+    this.tablestate = { zoomed: false, zoomgroup: null }; 
     this.firstsearch = true;
     this.spinneractive = false;
-
     this.interactions = null;
     this.filtrate = null;
   }
 
   runSearch() {
 
-    // When first search is performed, expose all controls and set up everything
+    // When first search is performed, expose all control modules
     if ( this.firstsearch ) {
       this.firstsearch = false;
       $('.table-view .messaging-and-controls').css('visibility', 'visible');
-      $('.filter-module').css('visibility', 'visible');
-      $('.highlight-module').css('visibility', 'visible');
-      $('.grouper-module').css('visibility', 'visible');
+      $('.module').css('visibility', 'visible');
       $('.divider').css('visibility', 'visible');
     }
 
     this.engageSpinner();
 
-    if ( this.search.sets.length == 0 ) return;
+    if ( this.search.sets.length == 0 ) { return; } 
 
     let minProb = this.probfilter.getMinimumProbability();
     let ids = this.search.getIds( minProb );
@@ -45,6 +43,9 @@ class Controller {
 
     GeneDiveAPI.interactions( ids, minProb, ( interactions ) => {
       this.interactions = JSON.parse( interactions );
+
+      if ( this.interactions.length == 0 ) { return; }
+
       this.filterInteractions();
     });
   }

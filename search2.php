@@ -94,6 +94,12 @@
       </div>
     </div>
 
+    <div class="divider"></div>
+
+    <!-- Download -->
+    <div class="module download-module">
+      <button style="width:100%;" type="button" class="btn btn-default download">Download Results</button>
+    </div>
 
   </div> <!-- End Control View -->
 

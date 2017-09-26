@@ -40,12 +40,13 @@ class Disambiguation {
 
     let form = $("<form/>").addClass("disambiguation-form");
     form.append("<p/>").text(`${symbol} resolves to several different genes.`);
-
+    form.append("<br/>");
+    
     for ( let gene of geneData ) {
-      let input = `<div>
-                    <input type='radio' value='${gene.id}' name='resolveId' data-name='${gene.primary_name}'>
-                    <span>${gene.primary_name}</span>
-                    <span>${gene.name}</span>
+      let input = `<div class="disambiguation-row">
+                    <input type='radio' value='${gene.id}' name='resolveId' data-name='${gene.primary}'>
+                    <span class='symbol'>${gene.primary}</span>
+                    <span class='name'>${gene.name}</span>
                   </div>`;
       form.append(input);
     }

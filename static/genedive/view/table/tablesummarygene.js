@@ -4,6 +4,7 @@ class TableSummaryGene extends ResultsTable {
     super( table, interactions );
     this.interactions_count = this.interactions.length;
     this.interactions = GeneDive.grouper.group( this.interactions );
+    this.row_id = 1
 
     // Topbar management
     this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` );
@@ -13,8 +14,8 @@ class TableSummaryGene extends ResultsTable {
     this.drawBody();
 
     this.table.tablesorter({ 
-      headers: { 4: { sorter: false }, 6: { sorter: false }, 7: { sorter: false } }, 
-      sortList: [[5,1],] } // [index, asc/desc]
+      headers: { 0: { sorter: false }, 1: { sorter: false }, 5: { sorter: false }, 7: { sorter: false }, 8: { sorter: false } }, 
+      sortList: [[6,1],] } // [index, asc/desc]
     ); 
   }
   
@@ -23,14 +24,14 @@ class TableSummaryGene extends ResultsTable {
     let tr = $(document.createElement("tr"));
     thead.append(tr);
 
+    tr.append( $(document.createElement("th")).text( "" ) );
+    tr.append( $(document.createElement("th")).text( "Row" ) );
     tr.append( $(document.createElement("th")).text( "Gene" ) );
     tr.append( $(document.createElement("th")).text( "Gene" ) );
     tr.append( $(document.createElement("th")).text( "Interactions" ) );
-    tr.append( $(document.createElement("th")).text( "Articles" ) );
     tr.append( $(document.createElement("th")).text( "P. Distribution" ) );
     tr.append( $(document.createElement("th")).text( "Max Probability" ) );
-    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width", "40%") );
-    tr.append( $(document.createElement("th")).text( "" ) );
+    tr.append( $(document.createElement("th")).text( "Excerpt" ).css("width", "40%") );
 
     this.table.append(thead);
   }
@@ -64,14 +65,15 @@ class TableSummaryGene extends ResultsTable {
       let excerpt = this.styleExcerpt( row.context, row.mention1, row.mention1_color );
           excerpt = this.styleExcerpt( excerpt, row.mention2, row.mention2_color );
 
+      tr.append( $(document.createElement("td")).html( "<i class='fa fa-plus'></i>" ).addClass("zoom") );
+      tr.append( $(document.createElement("td")).html( this.row_id++ ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( mention1 ) );
       tr.append( $(document.createElement("td")).html( mention2 ) );
-      tr.append( $(document.createElement("td")).html( `<strong>${this.interactions[group].length}</strong>` ) );
-      tr.append( $(document.createElement("td")).text( _.uniq(this.interactions[group].map( i => i.article_id )).length ) );
+      tr.append( $(document.createElement("td")).html( `<strong>${this.interactions[group].length}</strong>` ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
-      tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ) );
+      tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( excerpt ) );
-      tr.append( $(document.createElement("td")).html( "<i class='fa fa-caret-right'></i>" ).addClass("zoom") );
+      
       tbody.append(tr);
     }
 

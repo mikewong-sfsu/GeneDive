@@ -209,7 +209,7 @@ class Search {
     */
 
     this.input.typeahead(
-      { minLength: 1, highlight: true },
+      { minLength: 1, highlight: true, hint: false },
       { name: 'Genes', source: genes, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }  },
       { name: 'Genesets', source: geneset, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } },
       /*{ name: 'Drugs', source: drugs, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Drugs</h4>" } } */

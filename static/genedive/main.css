@@ -84,8 +84,13 @@ h5 {
 }
 
 .grouper-module {
-  flex-grow: 1;
   visibility: hidden;
+}
+
+.download-module {
+  visibility: hidden;
+  text-align: center;
+  flex-grow: 1;
 }
 
 .module .title {

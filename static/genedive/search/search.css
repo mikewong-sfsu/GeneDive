@@ -66,3 +66,22 @@
 .topology-selector button {
   font-size:10px;
 }
+
+/* Disambiguation Form */
+
+.disambiguation-row {
+  width: 100%;
+}
+
+.disambiguation-row input {
+}
+
+.disambiguation-row .symbol {
+  display:inline-block;
+  padding-left: 18px;
+  width: 45%;
+}
+
+.disambiguation-row .name {
+}
+
