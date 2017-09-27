@@ -29,6 +29,12 @@
     <script src="static/genedive/json/adjacency_matrix.js"></script>
     <!-- <script src="static/genedive/json/test_adjacency.js"></script> -->
 
+    <!-- JSZip -->
+    <script src="static/jszip/jszip.min.js"></script>
+
+    <!-- FileSaver -->
+    <script src="static/filesaver/filesaver.min.js"></script>
+
     <!-- Cytoscape -->
     <script src="static/cytoscape/cytoscape.min.js"></script>
     <script src="static/cytoscape/cytoscape-euler.js"></script>
@@ -52,6 +58,7 @@
     <script src="static/genedive/view/table/tablesummaryarticle.js"></script>
     <script src="static/genedive/view/graph/graph.js"></script>
     <script src="static/genedive/help/help.js"></script>
+    <script src="static/genedive/download/download.js"></script>
 
     <!-- Core Controller -->
     <script src="static/genedive/controller.js"></script>

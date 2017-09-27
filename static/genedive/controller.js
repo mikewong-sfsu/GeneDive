@@ -11,6 +11,7 @@ class Controller {
     this.highlighter = new Highlight( ".highlight-input" );
     this.grouper = new Grouper( ".grouper-module .table-grouping" );
     this.graph = new GraphView("graph");
+    this.download = new Download(".download-module button.download");
 
     this.tablestate = { zoomed: false, zoomgroup: null }; 
     this.firstsearch = true;
