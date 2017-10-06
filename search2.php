@@ -122,5 +122,7 @@
       <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
     </div>
   </div>
+  
+</div>
 
 <?php include "footer.php"; ?>
