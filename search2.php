@@ -100,17 +100,22 @@
     <div class="module download-module">
       <button style="width:100%;" type="button" class="btn btn-default download">Download Results</button>
     </div>
-
-  </div> <!-- End Control View -->
+  </div>
 
   <!-- Table View -->
   <div class="table-view ui-widget-content">
-    <div class="messaging-and-controls hide-on-start">
+    <div class="messaging-and-controls">
       <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
       <span class="metadata"></span>
     </div>
-    <div class="rendering-results">
+    <div class="spinner table-rendering-spinner">
       <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+    </div>
+    <div class="help table-help">
+      <p>This is where general help shows up.</p>
+    </div>
+    <div class="no-results">
+      <p>No Results Found</p>
     </div>
   </div>
 
@@ -118,11 +123,13 @@
   <div class="graph-view">
     <div id="graph">
     </div>
-    <div class="rendering-results">
+    <div class="spinner graph-rendering-spinner">
       <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
     </div>
+    <div class="help graph-help">
+      <p>This is where graph help shows.</p>
+    </div>
   </div>
-  
 </div>
 
 <?php include "footer.php"; ?>

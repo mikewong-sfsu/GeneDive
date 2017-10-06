@@ -121,11 +121,20 @@ h5 {
 
 /* Rendering */
 
-.rendering-results {
+.spinner {
+  display: flex;
   width: 100%;
-  padding-top:20px;
   font-size: 4em;
   color:#bbbbbb;
-  text-align:center;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.help {
+  width:100%;
+}
+
+.no-results {
   display: none;
 }

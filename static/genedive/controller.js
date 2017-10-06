@@ -15,14 +15,19 @@ class Controller {
 
     this.tablestate = { zoomed: false, zoomgroup: null }; 
     this.firstsearch = true;
-    this.spinneractive = false;
     this.interactions = null;
     this.filtrate = null;
   }
 
   runSearch() {
+    this.hideHelp();
+    this.hideTable();
+    this.hideGraph();
+    this.hideNoResults();
+    this.hideTableSpinner();
+    this.hideGraphSpinner();
 
-    // When first search is performed, expose all control modules
+    // Some control modules are hidden until the first search is run. Expose them.
     if ( this.firstsearch ) {
       this.firstsearch = false;
       $('.table-view .messaging-and-controls').css('visibility', 'visible');
@@ -30,22 +35,33 @@ class Controller {
       $('.divider').css('visibility', 'visible');
     }
 
-    this.engageSpinner();
-
-    if ( this.search.sets.length == 0 ) { return; } 
+    // If the user has cleared the last search items, go to HELP state
+    if ( this.search.sets.length == 0 ) { 
+      this.showHelp();
+      return;
+    } 
 
     let minProb = this.probfilter.getMinimumProbability();
     let ids = this.search.getIds( minProb );
 
-    if ( !ids || ids.length == 0 ) return;
+    // It's possible that no results were found from the adjacency matrix
+    if ( !ids || ids.length == 0 ) {
+      this.showNoResults();
+      return;
+    };
 
     // This resets the table view to default
     this.tablestate.zoomed = false;
+    this.showSpinners();
 
     GeneDiveAPI.interactions( ids, minProb, ( interactions ) => {
       this.interactions = JSON.parse( interactions );
-
-      if ( this.interactions.length == 0 ) { return; }
+      if ( this.interactions.length == 0 ) { 
+        this.hideTableSpinner();
+        this.hideGraphSpinner();
+        this.showNoResults();
+        return; 
+      }
 
       this.filterInteractions();
     });
@@ -54,11 +70,16 @@ class Controller {
   /* Returns new array of interactions passing the text filters */
   /* IMPORTANT - use this.filtrate, not this.interactions hereafter */
   filterInteractions() {
-    if ( !this.spinneractive ) { this.engageSpinner(); this.spinneractive = true; }
+    if ( !this.spinneractive ) { 
+      this.hideTable();
+      this.hideGraph();
+      this.showSpinners(); 
+    }
     this.filtrate = this.textfilter.filterInteractions( this.interactions );
     this.colorInteractions();
   }
 
+  /* Figures out the color(s) for each gene based on topology */
   colorInteractions() {
     this.filtrate = this.color.colorInteractions( this.filtrate );
     this.addSynonyms();
@@ -72,7 +93,11 @@ class Controller {
 
   /* Highlight class adds a highlight property to interactions */
   highlightInteractions() {
-    if ( !this.spinneractive ) { this.engageSpinner(); this.spinneractive = true; }
+    if ( !this.spinneractive ) { 
+      this.hideTable();
+      this.hideGraph();
+      this.showSpinners(); 
+    }
     this.filtrate = this.highlighter.highlight( this.filtrate );
     this.drawTable();
     this.drawGraph();
@@ -80,7 +105,6 @@ class Controller {
   }
 
   drawTable() {
-
     // We want to create a new table for each iteration as the old one will have prior listener/config/bindings
     $('.table-view table').remove();
     $('.table-view').append($("<table/>").addClass("table table-hover"));
@@ -88,7 +112,7 @@ class Controller {
     // First check for zoom condition
     if ( this.tablestate.zoomed ) {
       new TableDetail( ".table-view table", this.filtrate, this.tablestate.zoomgroup );
-      $('.table-view .rendering-results').hide();
+      this.hideTableSpinner();
       return;
     } 
 
@@ -99,31 +123,63 @@ class Controller {
       new TableSummaryArticle( ".table-view table", this.filtrate, ".table-view .topbar .back" );
     }
 
-    $('.table-view .rendering-results').hide();
+    this.hideTableSpinner();
   }
 
   drawGraph() {
     this.graph.draw( this.filtrate, this.search.sets );
-    $('.graph-view .rendering-results').hide();
+    this.hideGraphSpinner();
     $('#graph').show();
   }
 
-  engageSpinner () {
-    this.spinneractive = true;
-    $('#graph').hide();
+  hideTable() {
+    $('.messaging-and-controls').hide();
     $('.table').hide();
-    $('.rendering-results').show();
+  }
+
+  showTable() {
+    $('.messaging-and-controls').show();
+    $('.table').show();
+  }
+
+  hideGraph() {
+    $('#graph').hide();
+  }
+
+  showGraph() {
+    $('#graph').show();
+  }
+
+  showSpinners() {
+    $(".spinner").show();
+  }
+
+  hideTableSpinner() {
+    $(".table-rendering-spinner").hide();
+  }
+
+  hideGraphSpinner() {
+    $(".graph-rendering-spinner").hide();
+  }
+
+  showHelp() {
+    $(".help").show();
+  }
+
+  hideHelp() {
+    $(".help").hide();
+  }
+
+  showNoResults() {
+    $(".no-results").show();
+  }
+
+  hideNoResults() {
+    $(".no-results").hide();
   }
 
 }
 
 let GeneDive = new Controller();
 
-/* Delay timer used by various modules */
-let delay = (function(){
-  var timer = 0;
-  return function(callback, ms){
-    clearTimeout (timer);
-    timer = setTimeout(callback, ms);
-  };
-})();
+

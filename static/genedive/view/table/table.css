@@ -86,3 +86,7 @@ td.embiggen {
   display: flex;
   align-items: center;
 }
+
+.messaging-and-controls {
+  display: none;
+}
