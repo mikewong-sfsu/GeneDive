@@ -17,6 +17,7 @@ class Controller {
     this.firstsearch = true;
     this.interactions = null;
     this.filtrate = null;
+    
   }
 
   runSearch() {

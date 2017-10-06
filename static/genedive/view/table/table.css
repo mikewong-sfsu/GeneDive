@@ -21,9 +21,6 @@
 
 .table-view .table td {
   color:rgb(40,40,40);
-}
-
-.table-view .table td.numeric {
   text-align: right;
 }
 

@@ -12,6 +12,8 @@ class GraphView {
   }
 
   draw( interactions, sets ) {
+    this.checkGraphSize();
+
     let nodes = this.createNodes( interactions );
     let edges = this.createEdges( interactions );
 
@@ -140,6 +142,14 @@ class GraphView {
     let vert = ($(".graph-view").height() / 2);
     let horz = ($(".graph-view").width() / 2);
     this.graph.viewport({ zoom: 0, pan: { x: horz, y: vert } });
+  }
+
+  checkGraphSize() {
+    let total = $(".table-graph-holder").height();
+    let table = $(".table-view").height();
+
+    $(".graph-view").height(total - table);
+    $("#graph").height(total-table);
   }
 
 }

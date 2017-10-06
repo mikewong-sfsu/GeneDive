@@ -1,6 +1,6 @@
     <!-- JQuery -->
     <script src="static/jquery/jquery-3.2.1.min.js"></script>
-    <script src="static/jquery/jquery-ui.min.js"></script>
+    <!-- <script src="static/jquery/jquery-ui.min.js"></script> -->
 
     <!-- Bootstrap and Modules -->
     <script src="static/bootstrap/bootstrap.min.js"></script>
