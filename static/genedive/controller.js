@@ -151,7 +151,7 @@ class Controller {
   }
 
   showSpinners() {
-    $(".spinner").show();
+    $(".spinner").show().css("display", "flex");
   }
 
   hideTableSpinner() {

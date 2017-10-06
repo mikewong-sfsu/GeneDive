@@ -17,7 +17,7 @@
     <script src="static/genedive/json/symbol_id_sets.json"></script>
 
     <!-- Fonts -->
-   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+   <!-- <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet"> -->
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">

@@ -25,7 +25,6 @@ class TableSummaryGene extends ResultsTable {
     thead.append(tr);
 
     tr.append( $(document.createElement("th")).text( "" ) );
-    tr.append( $(document.createElement("th")).text( "Row" ) );
     tr.append( $(document.createElement("th")).text( "Gene" ) );
     tr.append( $(document.createElement("th")).text( "Gene" ) );
     tr.append( $(document.createElement("th")).text( "Interactions" ) );
@@ -66,7 +65,6 @@ class TableSummaryGene extends ResultsTable {
           excerpt = this.styleExcerpt( excerpt, row.mention2, row.mention2_color );
 
       tr.append( $(document.createElement("td")).html( "<i class='fa fa-plus'></i>" ).addClass("zoom") );
-      tr.append( $(document.createElement("td")).html( this.row_id++ ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( mention1 ) );
       tr.append( $(document.createElement("td")).html( mention2 ) );
       tr.append( $(document.createElement("td")).html( `<strong>${this.interactions[group].length}</strong>` ).addClass("numeric") );

@@ -109,7 +109,9 @@
       <span class="metadata"></span>
     </div>
     <div class="spinner table-rendering-spinner">
-      <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+      <div>
+        <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+      </div>
     </div>
     <div class="help table-help">
       <p>This is where general help shows up.</p>
@@ -124,7 +126,9 @@
     <div id="graph">
     </div>
     <div class="spinner graph-rendering-spinner">
-      <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+      <div>
+        <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+      </div>
     </div>
     <div class="help graph-help">
       <p>This is where graph help shows.</p>

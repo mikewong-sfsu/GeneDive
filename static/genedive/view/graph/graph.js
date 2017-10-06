@@ -139,7 +139,6 @@ class GraphView {
   centerGraph() {
     let vert = ($(".graph-view").height() / 2);
     let horz = ($(".graph-view").width() / 2);
-    debugger;
     this.graph.viewport({ zoom: 0, pan: { x: horz, y: vert } });
   }
 
