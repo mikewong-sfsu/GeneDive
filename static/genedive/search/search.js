@@ -201,12 +201,13 @@ class Search {
 
     /*
     var drugs = new Bloodhound({
-      prefetch: 'static/genedive/json/drug_id.json',
+      local: AUTOCOMPLETE_DRUG,
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });
     drugs.initialize();
     */
+
 
     this.input.typeahead(
       { minLength: 1, highlight: true, hint: false },
@@ -277,7 +278,7 @@ class SearchSet {
     this.id = sha256(name).slice(0,15);
     this.name = name;
     this.type = ids.length > 1 ? "set" : "gene";
-    this.ids = ids.map( i => Number(i) );
+    this.ids = ids.map( i => String(i) );
     this.color = "#cccccc";
   }
 }

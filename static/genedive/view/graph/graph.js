@@ -5,20 +5,25 @@ class GraphView {
     this.graph = cytoscape( { 
       container: document.getElementById(viewport)
     });
+
     this.shiftListenerActive = false;
+    this.controlListener = false;
 
     this.graph.on('tap', 'node', nodeClickBehavior );
   }
 
-  updateGraph( nodes, edges ) {
+  draw( interactions, sets ) {
+    let nodes = this.createNodes( interactions );
+    let edges = this.createEdges( interactions );
 
+    // Rebuild Nodes and Edges into Arrays
     nodes = _.values( nodes );
     edges = _.values( edges );
 
     // Multiset membership coloring setup
     nodes = this.bindSetMembership( nodes, GeneDive.search.sets );
     
-     this.graph.style( this.bindSetStyles( GENEDIVE_CYTOSCAPE_STYLESHEET, GeneDive.search.sets ) );
+    this.graph.style( this.bindSetStyles( GENEDIVE_CYTOSCAPE_STYLESHEET, GeneDive.search.sets ) );
 
     this.graph.elements().remove();
     this.graph.add( nodes );
@@ -32,37 +37,11 @@ class GraphView {
       gravity: -3
        } ).run();
 
-    this.graph.center();
-
+    // Notify user of set members that don't appear in search results 
+    this.notifyAbsentNodes ( nodes, sets );
   }
 
-  // Core method to be called by controller for each graph iteration
-  draw ( interactions, sets ) {
-    let nodes = this.createNodesFromInteractions( interactions );
-    let edges = this.createEdges( interactions );
-
-    // Some nodes in the search set may not have come in from interactions. Add those nodes separately.
-    this.addNodesFromSearchSets( nodes, sets );
-
-    // Some nodes may be missing names
-    //let missing_names = _.pickBy( nodes, n => n.scratch.name == undefined );
-    let missing_names = _.values(_.pickBy( nodes, n => n.data.name == undefined ));
-
-    // Fill nodes with missing names if any present
-    // Otherwise, go directly to creating the graph
-    if ( missing_names.length > 0 ) {
-      GeneDiveAPI.geneNames( missing_names.map( mn => mn.data.id ) )
-        .then( names => {
-          this.fillUnknownNames( names, nodes );
-          this.updateGraph( nodes, edges );
-        });
-    } else {
-      this.updateGraph( nodes, edges );
-    }
-  }
-
-  createNodesFromInteractions ( interactions ) {
-
+  createNodes ( interactions ) {
     let nodes = {};
 
     interactions.forEach( i => {
@@ -76,27 +55,6 @@ class GraphView {
     });
 
     return nodes;
-  }
-
-  addNodesFromSearchSets ( nodes, sets ) {
-
-    sets.forEach( set => {
-
-      if ( set.type == 'gene' ) {
-        if ( !nodes.hasOwnProperty( set.ids[0] ) ) {
-          nodes[ set.ids[0] ] = { group: 'nodes', data: { id: set.ids[0], name: set.name, color: set.color } };
-        }
-        return;
-      }
-
-      // Type Geneset
-      set.ids.forEach( id => {
-        if ( !nodes.hasOwnProperty( id ) ) {
-          nodes[ id ] = { group: 'nodes', data: { id: id, name: undefined, color: set.color } };
-        }
-      });
-
-    });
   }
 
   createEdges( interactions ) {
@@ -119,14 +77,6 @@ class GraphView {
     });
 
     return edges;
-  }
-
-  fillUnknownNames ( names, nodes ) {
-    let id_name = {};
-    names.forEach( n => id_name[n.id] = n.primary );
-    Object.keys( id_name ).forEach( id => {
-      nodes[id].data.name = id_name[id];
-    });
   }
 
   bindSetMembership( nodes, sets ) {
@@ -163,35 +113,56 @@ class GraphView {
     return stylesheet;
   }
 
+  notifyAbsentNodes ( nodes, sets ) {
+    let all_ids = _.flatten( sets.map( s => s.ids ) );
+    let node_ids = nodes.map( n => n.data.id );
+    let absent = _.difference(all_ids, node_ids);
+
+    if ( absent.length == 0 ) { return; }
+
+    GeneDiveAPI.geneNames( absent )
+      .then( names => {
+        let header = "<h4>Some members of the search set had no associated interactions:</h4>";
+        let message = "";
+
+        names.forEach( n => {
+          message += `<p><span>${n.id}</span><span class='absent-name'>${n.primary}</span></p>`;  
+        });
+
+        message = `<div class='absent-gene-message'>${message}</div>`;
+
+        alertify.alert('GeneDive', header + message);
+      });
+  }
+
 }
 
 var nodeClickBehavior = function ( event ) {
 
-      let shiftKey = event.originalEvent.shiftKey;
-      /* 
-        Shift key?  Add clicked nodes and defer search until shift released.
-        Else: Replace all current search members with the clicked node.
-      */
+  if ( event.originalEvent.ctrlKey ) {
+    GeneDive.search.clearSearch();
+    GeneDive.search.addSearchSet( this.data('name'), [this.data('id')] );
+    return;
+  } 
 
-      if ( shiftKey ) {
-        /* Add search member, defer search */
-        GeneDive.search.addSearchSet( this.data('name'), [this.data('id')], true );
+  if ( event.originalEvent.shiftKey ) {
 
-        if ( !this.shiftListenerActive ) {
-          // Bind event - run search when shift is released
-          $(document).on('keyup', function ( event ) {
-            $(document).unbind('keyup');
-            this.shiftListenerActive = false;
-            GeneDive.runSearch();
-          });
+    GeneDive.search.addSearchSet( this.data('name'), [this.data('id')], true );
 
-          this.shiftListenerActive = true;
-        }
-      } else {
-        GeneDive.search.clearSearch();
-        GeneDive.search.addSearchSet( this.data('name'), [this.data('id')] );
-      }
+    if ( !this.shiftListenerActive ) {
+      // Bind event - run search when shift is released
+      $(document).on('keyup', function ( event ) {
+        $(document).unbind('keyup');
+        this.shiftListenerActive = false;
+        GeneDive.runSearch();
+      });
+
+      this.shiftListenerActive = true;
+    }
+  }
 };
+
+
 
 let GENEDIVE_CYTOSCAPE_STYLESHEET = [
   { 
