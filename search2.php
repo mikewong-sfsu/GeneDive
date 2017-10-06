@@ -8,7 +8,7 @@
   <!-- Control View - left sidebar for all global controls (ie those effecting table and graph) -->
   <div class="control-view">
 
-    <div class="titlebar">GeneDive</div>
+    <div class="titlebar"><a href="/">GeneDive</a></div>
     
     <!-- Search Controls -->
     <div class="module search-module">
@@ -33,10 +33,10 @@
       <!-- Probability Filter Submodule -->
       <div class="min-prob-titlebar">
         <h5>Minimum Probability</h5>
-        <span class="min-prob-slider-value">0.7</span>
+        <span class="min-prob-slider-value">0.70</span>
       </div>
       <input class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" 
-              data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7">
+              data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7" style="width:100%">
 
       <!-- Text Filter Submodule -->
       <h5 class="h5-second">Filter Results</h5>

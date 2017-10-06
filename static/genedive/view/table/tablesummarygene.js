@@ -52,7 +52,7 @@ class TableSummaryGene extends ResultsTable {
 
         // If any of the group's interactions are a highlight match, highlight the summary row
         if ( this.interactions[group].some( i => i.highlight ) ) {
-          tr.addClass( "highlight-row" )
+          tr.addClass( "highlight-row" );
         }
 
       let row = this.interactions[group][0];
