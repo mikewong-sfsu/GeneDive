@@ -13,11 +13,11 @@
     <!-- Search Controls -->
     <div class="module search-module">
       <div class="topology-row">
-        <div class="btn-group topology-selector" role="group" aria-label="...">
-          <button type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
-          <button type="button" class="btn btn-default" data-type="2hop">2-Hop</button>
-          <button type="button" class="btn btn-default" data-type="3hop">3-Hop</button>
-          <button type="button" class="btn btn-default" data-type="clique">Clique</button>
+        <div class="btn-group topology-selector" style="width:100%;" role="group" aria-label="...">
+          <button style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
+          <button style="width:25%;" type="button" class="btn btn-default" data-type="2hop">2-Hop</button>
+          <button style="width:25%;" type="button" class="btn btn-default" data-type="3hop">3-Hop</button>
+          <button style="width:25%;" type="button" class="btn btn-default" data-type="clique">Clique</button>
         </div>
       </div>
 

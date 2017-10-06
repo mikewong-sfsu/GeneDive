@@ -7,7 +7,6 @@ class GraphView {
     });
 
     this.shiftListenerActive = false;
-    this.controlListener = false;
 
     this.graph.on('tap', 'node', nodeClickBehavior );
   }
@@ -36,6 +35,8 @@ class GraphView {
       mass: node => 4,
       gravity: -3
        } ).run();
+
+    this.centerGraph();
 
     // Notify user of set members that don't appear in search results 
     this.notifyAbsentNodes ( nodes, sets );
@@ -133,6 +134,13 @@ class GraphView {
 
         alertify.alert('GeneDive', header + message);
       });
+  }
+
+  centerGraph() {
+    let vert = ($(".graph-view").height() / 2);
+    let horz = ($(".graph-view").width() / 2);
+    debugger;
+    this.graph.viewport({ zoom: 0, pan: { x: horz, y: vert } });
   }
 
 }
