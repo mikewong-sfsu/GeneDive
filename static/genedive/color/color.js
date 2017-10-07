@@ -17,7 +17,11 @@ class Color {
   }
 
   setColor ( ids, color ) {
-    ids.forEach( id => this.colormap[id] = color );
+    ids.forEach( id => {
+      if ( !(id in this.colormap) ) {
+        this.colormap[id] = color;
+      }
+    });
   }
 
   allocateColor ( ids ) {

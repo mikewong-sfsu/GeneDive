@@ -27,10 +27,10 @@ class TableSummaryGene extends ResultsTable {
     tr.append( $(document.createElement("th")).text( "" ) );
     tr.append( $(document.createElement("th")).text( "Gene" ) );
     tr.append( $(document.createElement("th")).text( "Gene" ) );
-    tr.append( $(document.createElement("th")).text( "Interactions" ) );
+    tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric") );
     tr.append( $(document.createElement("th")).text( "P. Distribution" ) );
-    tr.append( $(document.createElement("th")).text( "Max Probability" ) );
-    tr.append( $(document.createElement("th")).text( "Excerpt" ).css("width", "40%") );
+    tr.append( $(document.createElement("th")).text( "Max Probability" ).addClass("numeric") );
+    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ) );
 
     this.table.append(thead);
   }

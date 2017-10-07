@@ -36,7 +36,7 @@ class TableDetail extends ResultsTable {
     tr.append( $(document.createElement("th")).text( "Section" ) );
     tr.append( $(document.createElement("th")).text( "Probability" ) );
     tr.append( $(document.createElement("th")).text( "Excerpt" ).css("width", "45%") );
-    tr.append( $(document.createElement("th")).text( "" ) );
+    tr.append( $(document.createElement("th")).text( "Pubmed" ) );
 
     this.table.append(thead);
   }

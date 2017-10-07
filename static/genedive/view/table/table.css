@@ -15,12 +15,18 @@
 .table-view .table th {
   font-weight:normal;
   color:rgb(128,128,128);
-  text-align: right;
+  text-align: left;
   white-space: nowrap;
+  padding: 6px 14px;
 }
 
 .table-view .table td {
   color:rgb(40,40,40);
+  text-align: left;
+  padding: 6px 14px;
+}
+
+.table-view .table .numeric {
   text-align: right;
 }
 
@@ -56,7 +62,7 @@
 
 .table-view .messaging-and-controls {
   padding:6px 0px; 
-  visibility: hidden;
+  display: none;
   flex-direction: row;
   justify-content: space-between;
   font-weight: bold;

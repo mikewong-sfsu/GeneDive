@@ -4,11 +4,17 @@ class ResultsTable {
     this.table = $(table);
     this.interactions = interactions;
     this.table.html("");
+
+    $(".messaging-and-controls").show();
   }
   
   // build pubmed link
   buildPubmedLink ( pubmedID ) {
-    return `<a href='https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/' target='_blank'>View on Pubmed</a>`;
+    return `
+      <a href='https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/' target='_blank'>
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+      </a>`;
   }
 
   updateMessage ( message ) {

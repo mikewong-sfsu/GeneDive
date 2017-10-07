@@ -24,11 +24,11 @@ class TableSummaryArticle extends ResultsTable {
     thead.append(tr);
 
     tr.append( $(document.createElement("th")).text( "Article" ) );
-    tr.append( $(document.createElement("th")).text( "Genes" ) );
-    tr.append( $(document.createElement("th")).text( "Interactions" ) );
+    tr.append( $(document.createElement("th")).text( "Genes" ).addClass("numeric") );
+    tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric") );
     tr.append( $(document.createElement("th")).text( "P. Distribution" ) );
-    tr.append( $(document.createElement("th")).text( "Max Probability" ) );
-    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width", "40%") );
+    tr.append( $(document.createElement("th")).text( "Max Probability" ).addClass("numeric") );
+    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ) );
     tr.append( $(document.createElement("th")).text( "" ) );
 
     this.table.append(thead);
@@ -64,10 +64,10 @@ class TableSummaryArticle extends ResultsTable {
       let genecount = _.uniq( this.interactions[group].map( i => i.geneids1 ).concat( this.interactions[group].map( i => i.geneids2 ) ) ).length;
 
       tr.append( $(document.createElement("td")).text( row.pubmed_id ) );
-      tr.append( $(document.createElement("td")).text( genecount ) );
-      tr.append( $(document.createElement("td")).text( this.interactions[group].length ) );
+      tr.append( $(document.createElement("td")).text( genecount ).addClass("numeric") );
+      tr.append( $(document.createElement("td")).text( this.interactions[group].length ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
-      tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ) );
+      tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( excerpt ) );
       tr.append( $(document.createElement("td")).html( "<i class='fa fa-caret-right'></i>" ).addClass("zoom") );
       tbody.append(tr);
