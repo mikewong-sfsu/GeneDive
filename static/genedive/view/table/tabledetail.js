@@ -48,8 +48,9 @@ class TableDetail extends ResultsTable {
 
       let tr = $(document.createElement("tr"));
 
-      if ( i.highlight ) {
-        tr.addClass("warning"); // warning is bootstrap highlight yellow
+      // If any of the group's interactions are a highlight match, highlight the summary row
+      if ( this.interactions[group].some( i => i.highlight ) ) {
+        tr.addClass( "highlight-row" );
       }
 
       let excerpt = this.styleExcerpt( i.context, i.mention1, i.mention1_color );
