@@ -36,7 +36,6 @@
 }
 
 .table-view .table tr td.zoom {
-  display: flex;
   color: rgb(128,128,128);
 }
 
