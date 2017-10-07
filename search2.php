@@ -127,6 +127,9 @@
 
     <!-- Graph View -->
     <div class="graph-view">
+      <div class="absent">
+        <div>View Absent Nodes List</div>
+      </div>
       <div class="legend">
         <p>Click To Drag</p>
         <p>Shift-Click to Add</p>

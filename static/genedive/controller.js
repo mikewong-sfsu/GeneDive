@@ -24,6 +24,7 @@ class Controller {
     this.hideTable();
     this.hideGraph();
     this.hideGraphLegend();
+    this.hideGraphAbsent();
     this.hideNoResults();
     this.hideTableSpinner();
     this.hideGraphSpinner();
@@ -186,6 +187,10 @@ class Controller {
 
   hideGraphLegend() {
     $(".graph-view .legend").hide();
+  }
+
+  hideGraphAbsent() {
+    $(".graph-view .absent").hide();
   }
 
 }

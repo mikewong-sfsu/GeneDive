@@ -18,8 +18,28 @@
   bottom: 0;
 }
 
+.graph-view .absent {
+  position: absolute;
+  display: flex;
+  background-color:rgb(230,230,230);
+  border-radius: 4px;
+  margin: 0 0 12px 12px;
+  padding:8px 12px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  bottom: 0;
+  z-index: 20;
+  cursor: pointer;
+}
+
+.graph-view .absent:hover {
+  background-color:rgb(170,170,170);
+}
+
 .absent-gene-message {
-  height: 8em;
+  height: 12.5em;
   overflow-y: scroll;
 }
 

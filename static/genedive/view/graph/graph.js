@@ -2,14 +2,15 @@ class GraphView {
   
   constructor ( viewport ) {
 
-    this.graph = cytoscape( { 
-      container: document.getElementById(viewport)
-    });
-
+    this.graph = cytoscape( { container: document.getElementById(viewport) });
     this.shiftListenerActive = false;
-
     this.graph.on('tap', 'node', nodeClickBehavior );
 
+    this.absentNodes = [];
+
+    $(".graph-view .absent").on("click", () => {
+      this.showAbsentNodes();
+    });
   }
 
   draw( interactions, sets ) {
@@ -43,7 +44,7 @@ class GraphView {
     this.centerGraph();
 
     // Notify user of set members that don't appear in search results 
-    this.notifyAbsentNodes ( nodes, sets );
+    this.storeAbsentNodes ( nodes, sets );
   }
 
   createNodes ( interactions ) {
@@ -118,16 +119,23 @@ class GraphView {
     return stylesheet;
   }
 
-  notifyAbsentNodes ( nodes, sets ) {
+  storeAbsentNodes ( nodes, sets ) {
     let all_ids = _.flatten( sets.map( s => s.ids ) );
     let node_ids = nodes.map( n => n.data.id );
-    let absent = _.difference(all_ids, node_ids);
+    this.absentNodes = _.difference(all_ids, node_ids);
 
-    if ( absent.length == 0 ) { return; }
+    if ( this.absentNodes.length > 0 ) {
+      $(".graph-view .absent").show();
+    } else {
+      $(".graph-view .absent").hide();
+    }
+  }
 
-    GeneDiveAPI.geneNames( absent )
+  showAbsentNodes ( ) {
+
+    GeneDiveAPI.geneNames( this.absentNodes )
       .then( names => {
-        let header = "<h4>Some members of the search set had no associated interactions:</h4>";
+        let header = `<h4>${this.absentNodes.length} genes in the search set(s) had no matching results:</h4>`;
         let message = "";
 
         names.forEach( n => {
@@ -136,7 +144,7 @@ class GraphView {
 
         message = `<div class='absent-gene-message'>${message}</div>`;
 
-        alertify.alert('GeneDive', header + message);
+        alertify.alert("Absent Nodes", header + message);
       });
   }
 
