@@ -5,7 +5,7 @@ class TableSummaryArticle extends ResultsTable {
     this.interactions_count = this.interactions.length; 
     this.interactions = GeneDive.grouper.group( interactions );
 
-    this.updateMessage( `Viewing ${this.interactions_count} Interactions in ${Object.keys(this.interactions).length} Groups` );
+    this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` );
     this.hideBackButton();
 
     this.drawHeaders();

@@ -120,6 +120,11 @@
 
     <!-- Graph View -->
     <div class="graph-view">
+      <div class="legend">
+        <p>Click To Drag</p>
+        <p>Shift-Click to Add</p>
+        <p>Ctrl-Click to Replace</p>
+      </div>
       <div id="graph">
       </div>
       <div class="spinner graph-rendering-spinner">

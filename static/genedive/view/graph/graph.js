@@ -9,9 +9,11 @@ class GraphView {
     this.shiftListenerActive = false;
 
     this.graph.on('tap', 'node', nodeClickBehavior );
+
   }
 
   draw( interactions, sets ) {
+    
     this.checkGraphSize();
 
     let nodes = this.createNodes( interactions );
@@ -141,7 +143,7 @@ class GraphView {
   centerGraph() {
     let vert = ($(".graph-view").height() / 2);
     let horz = ($(".graph-view").width() / 2);
-    this.graph.viewport({ zoom: 0, pan: { x: horz, y: vert } });
+    this.graph.viewport({ zoom: 1.5, pan: { x: horz, y: vert } });
   }
 
   checkGraphSize() {

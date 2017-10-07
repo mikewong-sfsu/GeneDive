@@ -16,14 +16,14 @@ class Controller {
     this.tablestate = { zoomed: false, zoomgroup: null }; 
     this.firstsearch = true;
     this.interactions = null;
-    this.filtrate = null;
-    
+    this.filtrate = null; 
   }
 
   runSearch() {
     this.hideHelp();
     this.hideTable();
     this.hideGraph();
+    this.hideGraphLegend();
     this.hideNoResults();
     this.hideTableSpinner();
     this.hideGraphSpinner();
@@ -131,6 +131,7 @@ class Controller {
     this.graph.draw( this.filtrate, this.search.sets );
     this.hideGraphSpinner();
     $('#graph').show();
+    this.showGraphLegend();
   }
 
   hideTable() {
@@ -177,6 +178,14 @@ class Controller {
 
   hideNoResults() {
     $(".no-results").hide();
+  }
+
+  showGraphLegend() {
+    $(".graph-view .legend").show();
+  }
+
+  hideGraphLegend() {
+    $(".graph-view .legend").hide();
   }
 
 }

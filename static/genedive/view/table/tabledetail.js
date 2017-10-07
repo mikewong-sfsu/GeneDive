@@ -32,10 +32,10 @@ class TableDetail extends ResultsTable {
     tr.append( $(document.createElement("th")).text( "Gene" ) );
     tr.append( $(document.createElement("th")).text( "Gene" ) );
     tr.append( $(document.createElement("th")).text("Journal") );
-    tr.append( $(document.createElement("th")).text( "Article ID" ) );
+    tr.append( $(document.createElement("th")).text( "Article ID" ).addClass("numeric") );
     tr.append( $(document.createElement("th")).text( "Section" ) );
-    tr.append( $(document.createElement("th")).text( "Probability" ) );
-    tr.append( $(document.createElement("th")).text( "Excerpt" ).css("width", "45%") );
+    tr.append( $(document.createElement("th")).text( "Probability" ).addClass("numeric") );
+    tr.append( $(document.createElement("th")).text( "Excerpt" ) );
     tr.append( $(document.createElement("th")).text( "Pubmed" ) );
 
     this.table.append(thead);
@@ -58,9 +58,9 @@ class TableDetail extends ResultsTable {
       tr.append( $(document.createElement("td")).html( i.mention1 ) );
       tr.append( $(document.createElement("td")).html( i.mention2 ) );
       tr.append( $(document.createElement("td")).html( i.journal ) );
-      tr.append( $(document.createElement("td")).text( i.pubmed_id ) );
+      tr.append( $(document.createElement("td")).text( i.pubmed_id ).addClass("numeric") );
       tr.append( $(document.createElement("td")).text( i.section ) );
-      tr.append( $(document.createElement("td")).text( Number(i.probability).toFixed(3) ) );
+      tr.append( $(document.createElement("td")).text( Number(i.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( excerpt ) );
       tr.append( $(document.createElement("td")).html( this.buildPubmedLink( i.pubmed_id ) ) );
 

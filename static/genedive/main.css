@@ -32,12 +32,12 @@
 .table-view {
   border-bottom:1px solid gray;
   overflow-y: scroll;
-  height: 50%;
+  height: 40%;
   resize: vertical;
 }
 
 .graph-view {
-  height:50%;
+  height:60%;
 }
 
 .titlebar {

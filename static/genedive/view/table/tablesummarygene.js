@@ -14,8 +14,8 @@ class TableSummaryGene extends ResultsTable {
     this.drawBody();
 
     this.table.tablesorter({ 
-      headers: { 0: { sorter: false }, 1: { sorter: false }, 5: { sorter: false }, 7: { sorter: false }, 8: { sorter: false } }, 
-      sortList: [[6,1],] } // [index, asc/desc]
+      headers: { 0: { sorter: false }, 4: { sorter: false }, 6: { sorter: false } }, 
+      sortList: [[5,1],] } // [index, asc/desc]
     ); 
   }
   
@@ -67,7 +67,7 @@ class TableSummaryGene extends ResultsTable {
       tr.append( $(document.createElement("td")).html( "<i class='fa fa-plus'></i>" ).addClass("zoom") );
       tr.append( $(document.createElement("td")).html( mention1 ) );
       tr.append( $(document.createElement("td")).html( mention2 ) );
-      tr.append( $(document.createElement("td")).html( `<strong>${this.interactions[group].length}</strong>` ).addClass("numeric") );
+      tr.append( $(document.createElement("td")).html( `${this.interactions[group].length}` ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( excerpt ) );
