@@ -43,16 +43,10 @@ body {
   height:60%;
 }
 
-.titlebar {
-  padding: 6px 4px;
-  text-align: center;
-  font-size:16px;
-  color:rgb(128,128,128);
-}
-
 h5 {
   margin-top:6px;
   color: rgb(90,90,90);
+  font-size: 1.1em;
 }
 
 /* Control View Units */
@@ -61,11 +55,12 @@ h5 {
   background-color: rgb(230,230,230);
   padding:8px 0 0 0;
   font-size: 2em;
+  text-align: center;
 }
 
 .titlebar a {
   text-decoration: none;
-  color: rgb(90,90,90);
+  color:rgb(128,128,128);
 }
 
 .titlebar a:hover {
