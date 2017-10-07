@@ -76,6 +76,12 @@
         <li>Reveal hidden connections with Clique, 1-Hop, and more.</li>
         <li>Download both search/filter state and results.</li>
       </ol>
+      <h3>Architecture</h3>
+      <img src="/static/genedive/images/architecture.png" class="img-responsive">
+      <br>
+      <p>
+        GeneDive is a single-page web application following the model-view-controller (MVC) architecture. User account management and web services are implemented in PHP. As shown above, the web service comprises a RESTful API layer to a SQLite relational database containing complete interaction and gene data, extracted from Entrez/NCBI, Reactome, KEGG, and DeepDive-identified GGI data. All gene references are mapped to Entrez gene IDs, and all gene sets are filtered using the GGI data; if a gene in a set does not have a DeepDive-identified interaction with any other gene in the same set, that gene is removed from the set. To improve responsiveness, most of the processing is done client-side through modules connected in serial, assisted by cached lookup tables. The modules manage filtering, coloring, synonym tagging, highlighting, grouping, and view rendering. Compressed caches include a GGI adjacency matrix with probabilities, and gene and gene set lookup tables for auto-complete.
+      </p>
       <p>
         SFSU Collaborators: Brook Thomas, Paul Previde, Mike Wong, Anagha Kulkarni, Dragutin Petkovic.
       </p>
