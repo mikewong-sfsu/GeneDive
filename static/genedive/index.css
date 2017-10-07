@@ -56,3 +56,10 @@
 .registration-form {
   margin: 40px 0px;
 }
+
+.logo-grid {
+  width: 100%;
+  padding:30px 0;
+  display: flex;
+  justify-content: center;
+}

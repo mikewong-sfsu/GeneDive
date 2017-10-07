@@ -88,14 +88,18 @@
       <p>
         Contacts: emily.mallory@stanford.edu, mikewong@sfsu.edu, ak@sfsu.edu
       </p>
+    </div>
+    <div class="col-md-6">
+      <img src="static/genedive/images/table.png" class="img-responsive">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
       <div class='logo-grid'>
         <img src='/static/genedive/images/ccls.png'>
         <img src='/static/genedive/images/sfsu.jpg'>
         <img src='/static/genedive/images/helix.png'>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <img src="static/genedive/images/table.png" class="img-responsive">
+       </div>
     </div>
   </div>
 </div>
