@@ -5,8 +5,9 @@
 <div class="main-display">
   <div class="control-view">
 
-    <div class="titlebar"><a href="/">GeneDive</a></div>
-    
+    <div class="titlebar"><a href="/">GeneDive</a>
+    </div>
+
     <!-- Search Controls -->
     <div class="module search-module">
       <div class="topology-row">
@@ -24,7 +25,7 @@
       <div class="search-sets">
       </div>
     </div>
- 
+
     <!-- Filter Controls -->
     <div class="module filter-module">
       <!-- Probability Filter Submodule -->
@@ -32,8 +33,7 @@
         <h5>Minimum Probability</h5>
         <span class="min-prob-slider-value">0.70</span>
       </div>
-      <input class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" 
-              data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7" style="width:100%">
+      <input class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7" style="width:100%">
 
       <!-- Text Filter Submodule -->
       <h5 class="h5-second">Filter Results</h5>
@@ -97,7 +97,14 @@
     <div class="module download-module">
       <button style="width:100%;" type="button" class="btn btn-default download">Download Results</button>
     </div>
+
+    <div class="module about-module">
+      <a href="">Terms and Conditions</a>
+      <a href="/privacy.html" target="_blank">Privacy Policy</a>
+      <a href="">About</a>
+    </div>
   </div>
+
   <div class="table-graph-holder">
     <!-- Table View -->
     <div class="table-view ui-widget-content">

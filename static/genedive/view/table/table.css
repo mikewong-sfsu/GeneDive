@@ -13,9 +13,8 @@
 }
 
 .table-view .table th {
-  font-size:1.2em;
   font-weight:bold;
-  color:rgb(160,160,160);
+  color:rgb(60,60,60);
   text-align: left;
   white-space: nowrap;
   padding: 6px 14px;

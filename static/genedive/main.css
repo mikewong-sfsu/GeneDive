@@ -1,4 +1,7 @@
 /* search.css */
+body {
+  font-family: "Open Sans", sans-serif;
+}
 
 /* Core View Units */
 .main-display {
@@ -109,6 +112,13 @@ h5 {
 
 .module-help {
   cursor:pointer;
+}
+
+.about-module {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom:8px;
 }
 
 .divider {
