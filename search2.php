@@ -101,7 +101,7 @@
     <div class="module about-module">
       <a href="">Terms and Conditions</a>
       <a href="/privacy.html" target="_blank">Privacy Policy</a>
-      <a href="">About</a>
+      <span class="help-toggle">Help</span>
     </div>
   </div>
 

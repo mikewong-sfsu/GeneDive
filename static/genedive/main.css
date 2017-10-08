@@ -141,6 +141,7 @@ h5 {
 .help {
   width:100%;
   padding:10px;
+  z-index: 40;
 }
 
 .help h3 {
