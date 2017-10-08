@@ -109,8 +109,9 @@
     <!-- Table View -->
     <div class="table-view ui-widget-content">
       <div class="messaging-and-controls">
-        <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
         <span class="metadata"></span>
+      </div>
+      <div class="results">
       </div>
       <div class="spinner table-rendering-spinner">
         <div>

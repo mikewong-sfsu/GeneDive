@@ -54,6 +54,7 @@
     <script src="static/genedive/grouper/grouper.js"></script>
     <script src="static/genedive/view/table/resultstable.js"></script>
     <script src="static/genedive/view/table/tabledetail.js"></script>
+    <script src="static/genedive/view/table/genepairlist.js"></script>
     <script src="static/genedive/view/table/tablesummarygene.js"></script>
     <script src="static/genedive/view/table/tablesummaryarticle.js"></script>
     <script src="static/genedive/view/graph/graph.js"></script>

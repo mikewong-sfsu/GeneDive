@@ -107,24 +107,8 @@ class Controller {
   }
 
   drawTable() {
-    // We want to create a new table for each iteration as the old one will have prior listener/config/bindings
-    $('.table-view table').remove();
-    $('.table-view').append($("<table/>").addClass("table table-hover"));
-
-    // First check for zoom condition
-    if ( this.tablestate.zoomed ) {
-      new TableDetail( ".table-view table", this.filtrate, this.tablestate.zoomgroup );
-      this.hideTableSpinner();
-      return;
-    } 
-
-    // Otherwise show the appropriate summary view
-    if ( this.grouper.selected() == "gene" ) {
-      new TableSummaryGene( ".table-view .table", this.filtrate, ".table-view .topbar .back" );
-    } else {
-      new TableSummaryArticle( ".table-view table", this.filtrate, ".table-view .topbar .back" );
-    }
-
+    new GenePairList( ".table-view .results", this.filtrate );
+    this.showTable();
     this.hideTableSpinner();
   }
 

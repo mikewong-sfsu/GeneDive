@@ -1,47 +1,131 @@
-/* TABLE */
-
-.table-view .table {
-  table-layout: fixed;
+.table-view .messaging-and-controls {
+  width: 100%;
+  padding: 8px 0;
 }
 
-.table-view .table tr.grouped {
-  cursor:pointer;
+.table-view .messaging-and-controls .metadata {
+  display: flex;
+  justify-content: center;
+  font-size: 1.2em;
 }
 
-.table-view .table .tr.grouped:hover {
-  background-color:rgb(220,220,220);
+.table-view .messaging-and-controls .metadata .count,
+.table-view .messaging-and-controls .metadata .groups {
+  font-weight: bold;
+  color: #337ab7;
+  padding:0 0.5em;
 }
 
-.table-view .table tr .gene {
-  padding:4px;
+.table-view .results {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(245,245,245);
 }
 
-.table-view .table th {
-  font-weight:bold;
-  color:rgb(60,60,60);
-  text-align: left;
-  white-space: nowrap;
-  padding: 6px 14px;
-
+.table-view .results .group-card {
+  background-color: #fefefa;
+  border-radius:4px;
+  display: grid;
+  padding:0 10px;
+  grid-template-columns: 70% 30%;
+  grid-template-rows: minmax(24px,auto) minmax(45px,auto) minmax(24px,auto) minmax(0,auto);
+  grid-template-areas: "title count"
+                       "excerpt histogram"
+                       "excerpt probs"
+                       "detail detail";
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+  margin:8px 14px;
 }
 
-.table-view .table td {
-  color:rgb(40,40,40);
-  text-align: left;
-  padding: 6px 14px;
+.table-view .results .highlight {
+  border:2px solid red;
 }
 
-.table-view .table .numeric {
-  text-align: right;
+.table-view .results .group-card p {
+  margin-bottom: 0;
 }
 
-.table-view .table .highlight-row td {
-  background-color: #99e9f2;
+.table-view .results .group-card .group-title {
+  grid-area: title;
 }
 
-.table-view .table tr td.zoom {
-  color: rgb(128,128,128);
+.table-view .results.group-card .group-title h4 {
+  margin:2px;
 }
+
+.table-view .results .group-card .count {
+  grid-area: count;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 16px;
+  color: #aaaaaa;
+}
+
+.table-view .results .group-card .count .interactions {
+  font-weight: bold;
+  color: #337ab7;
+}
+
+.table-view .results .group-card .excerpt {
+  grid-area: excerpt;
+  padding: 12px;
+}
+
+.table-view .results .group-card .histogram {
+  grid-area: histogram;
+  display: flex;
+  flex-direction: flex-end;
+  align-items: flex-end;
+}
+
+.table-view .results .group-card .probs {
+  grid-area: probs;
+  display:flex;
+  justify-content: space-around;
+  padding: 12px 0;
+}
+
+.table-view .results .group-card .probs .min-tag,
+.table-view .results .group-card .probs .max-tag {
+  font-weight: bold;
+  padding-right: 1em;
+}
+
+/* DETAIL VIEWS */
+
+.table-view .results .group-card .detail {
+  grid-area: detail;
+  border-top: 2px solid rgb(128,128,128);
+}
+
+.table-view .results .group-card .detail .detail-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom:1px solid rgb(220,220,220);
+  margin-bottom:7px;
+  padding: 8px;
+}
+
+.table-view .results .group-card .detail .highlight {
+  border:0;
+  background-color: #ffe5e5;
+}
+
+.table-view .results .group-card .detail .detail-row .excerpt {
+  padding: 0;
+  width: 75%;
+}
+
+.table-view .results .group-card .detail .detail-row .probability {
+
+} 
+
+.table-view .results .group-card .detail .detail-row .pubmed {
+
+} 
 
 /* D3 Histogram */
 
@@ -60,40 +144,4 @@
 
 .tick text {
     display: none;
-}
-
-/* Table Messaging and Controls */
-
-.table-view .messaging-and-controls {
-  padding:6px 0px; 
-  display: none;
-  flex-direction: row;
-  justify-content: space-between;
-  font-weight: bold;
-}
-
-.table-view .messaging-and-controls .go-back {
-  float: left;
-  color: #d84b2b;
-  visibility: hidden;
-  margin-left: 1em;
-  cursor: pointer;
-}
-
-.table-view .messaging-and-controls .metadata {
-  float: right;
-  margin-right: 1em;
-}
-
-.table-view .messaging-and-controls .metadata .figure {
-  color:#337ab7;
-}
-
-td.embiggen {
-  display: flex;
-  align-items: center;
-}
-
-.messaging-and-controls {
-  display: none;
 }
