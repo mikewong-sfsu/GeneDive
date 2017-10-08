@@ -118,7 +118,29 @@
         </div>
       </div>
       <div class="help table-help">
-        <p>This is where general help shows up.</p>
+        <h3>Search Modes</h3>
+        <div class="modes">
+          <div class="mode">
+            <h4>1-Hop</h4>
+            <img src="/static/genedive/images/help/1hop.png" class="img-responsive">
+            <p>View direct interactions with the genes you search.</p>
+          </div>
+          <div class="mode">
+            <h4>2-Hop</h4>
+            <img src="/static/genedive/images/help/2hop.png" class="img-responsive">
+            <p>Given two genes (blue), view genes (orange) that interact with both.</p>
+          </div>
+          <div class="mode">
+            <h4>3-Hop</h4>
+            <img src="/static/genedive/images/help/3hop.png" class="img-responsive">
+            <p>Given two genes (blue), view genes (orange) that interact with both through up to one intermediary.</p>
+          </div>
+          <div class="mode">
+            <h4>Clique</h4>
+            <img src="/static/genedive/images/help/clique.png" class="img-responsive">
+            <p>Given a single gene (blue), view genes (orange) that interact with the gene and at least one other interactant.</p>
+          </div>
+        </div>
       </div>
       <div class="no-results">
         <p>No Results Found</p>
@@ -143,7 +165,25 @@
         </div>
       </div>
       <div class="help graph-help">
-        <p>This is where graph help shows.</p>
+        <h3>Using the Graph</h3>
+        <div class="modes">
+          <div class="mode">
+            <h4>Navigate</h4>
+            <p>Click and drag on any whitespace to move. Zoom with your mousewheel, touchpad, or pinch.</p>
+          </div>
+          <div class="mode">
+            <h4>Manipulate</h4>
+            <p>Click and drag nodes to move them.</p>
+          </div>
+          <div class="mode">
+            <h4>Shift-Click to Add</h4>
+            <p>Shift-Click on nodes to add them to the search set. Releaseing shift starts a new search.</p>
+          </div>
+          <div class="mode">
+            <h4>Ctrl-Click to Replace</h4>
+            <p>Ctrl-Click on a node to replace all current search items with the clicked node and start a new search.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
