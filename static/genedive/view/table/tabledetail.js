@@ -29,13 +29,13 @@ class TableDetail extends ResultsTable {
     let tr = $(document.createElement("tr"));
     thead.append(tr);
 
-    tr.append( $(document.createElement("th")).text( "Gene" ) );
-    tr.append( $(document.createElement("th")).text( "Gene" ) );
-    tr.append( $(document.createElement("th")).text("Journal") );
-    tr.append( $(document.createElement("th")).text( "Article ID" ).addClass("numeric") );
-    tr.append( $(document.createElement("th")).text( "Section" ) );
-    tr.append( $(document.createElement("th")).text( "Probability" ).addClass("numeric") );
-    tr.append( $(document.createElement("th")).text( "Excerpt" ) );
+    tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
+    tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
+    tr.append( $(document.createElement("th")).text("Journal").css("width","8%") );
+    tr.append( $(document.createElement("th")).text( "Article ID" ).addClass("numeric").css("width","8%") );
+    tr.append( $(document.createElement("th")).text( "Section" ).css("width","8%") );
+    tr.append( $(document.createElement("th")).text( "Probability" ).addClass("numeric").css("width","10%") );
+    tr.append( $(document.createElement("th")).text( "Excerpt" ).css("width","40%") );
     tr.append( $(document.createElement("th")).text( "Pubmed" ) );
 
     this.table.append(thead);

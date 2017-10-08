@@ -17,6 +17,8 @@ class TableSummaryGene extends ResultsTable {
       headers: { 0: { sorter: false }, 4: { sorter: false }, 6: { sorter: false } }, 
       sortList: [[5,1],] } // [index, asc/desc]
     ); 
+
+
   }
   
   drawHeaders ( ) {
@@ -24,13 +26,13 @@ class TableSummaryGene extends ResultsTable {
     let tr = $(document.createElement("tr"));
     thead.append(tr);
 
-    tr.append( $(document.createElement("th")).text( "" ) );
-    tr.append( $(document.createElement("th")).text( "Gene" ) );
-    tr.append( $(document.createElement("th")).text( "Gene" ) );
+    tr.append( $(document.createElement("th")).text( "" ).css("width","4%") );
+    tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
+    tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
     tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric") );
     tr.append( $(document.createElement("th")).text( "P. Distribution" ) );
     tr.append( $(document.createElement("th")).text( "Max Probability" ).addClass("numeric") );
-    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ) );
+    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width","40%") );
 
     this.table.append(thead);
   }

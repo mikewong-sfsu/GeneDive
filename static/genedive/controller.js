@@ -196,5 +196,3 @@ class Controller {
 }
 
 let GeneDive = new Controller();
-
-

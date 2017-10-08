@@ -12,8 +12,8 @@ class TableSummaryArticle extends ResultsTable {
     this.drawBody();
 
     this.table.tablesorter({ 
-      headers: { 3: { sorter: false }, 5: { sorter: false }, 6: { sorter: false } }, 
-      sortList: [[4,1],] } // [index, asc/desc]
+      headers: { 0: { sorter: false }, 4: { sorter: false }, 6: { sorter: false }, 7: { sorter: false } }, 
+      sortList: [[5,1],] } // [index, asc/desc]
     ); 
   }
   
@@ -23,13 +23,14 @@ class TableSummaryArticle extends ResultsTable {
     let tr = $(document.createElement("tr"));
     thead.append(tr);
 
-    tr.append( $(document.createElement("th")).text( "Article" ) );
-    tr.append( $(document.createElement("th")).text( "Genes" ).addClass("numeric") );
-    tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric") );
-    tr.append( $(document.createElement("th")).text( "P. Distribution" ) );
+    tr.append( $(document.createElement("th")).text( "" ).css("width","4%") );
+    tr.append( $(document.createElement("th")).text( "Article" ).addClass("numeric").css("width","10%") );
+    tr.append( $(document.createElement("th")).text( "# Genes" ).addClass("numeric").css("width","10%") );
+    tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric").css("width","12%") );
+    tr.append( $(document.createElement("th")).text( "P. Distribution" ).css("width","10%") );
     tr.append( $(document.createElement("th")).text( "Max Probability" ).addClass("numeric") );
-    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ) );
-    tr.append( $(document.createElement("th")).text( "" ) );
+    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width","40%") );
+
 
     this.table.append(thead);
   }
@@ -63,13 +64,13 @@ class TableSummaryArticle extends ResultsTable {
 
       let genecount = _.uniq( this.interactions[group].map( i => i.geneids1 ).concat( this.interactions[group].map( i => i.geneids2 ) ) ).length;
 
-      tr.append( $(document.createElement("td")).text( row.pubmed_id ) );
+      tr.append( $(document.createElement("td")).html( "<i class='fa fa-plus'></i>" ).addClass("zoom") );
+      tr.append( $(document.createElement("td")).text( row.pubmed_id ).addClass("numeric") );
       tr.append( $(document.createElement("td")).text( genecount ).addClass("numeric") );
       tr.append( $(document.createElement("td")).text( this.interactions[group].length ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( excerpt ) );
-      tr.append( $(document.createElement("td")).html( "<i class='fa fa-caret-right'></i>" ).addClass("zoom") );
       tbody.append(tr);
     }
 

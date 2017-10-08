@@ -1,5 +1,9 @@
 /* TABLE */
 
+.table-view .table {
+  table-layout: fixed;
+}
+
 .table-view .table tr.grouped {
   cursor:pointer;
 }
