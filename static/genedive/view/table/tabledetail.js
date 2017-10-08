@@ -48,9 +48,8 @@ class TableDetail extends ResultsTable {
 
       let tr = $(document.createElement("tr"));
 
-      // If any of the group's interactions are a highlight match, highlight the summary row
-      if ( this.interactions[group].some( i => i.highlight ) ) {
-        tr.addClass( "highlight-row" );
+      if ( i.highlight ) {
+        tr.addClass("highlight-row");
       }
 
       let excerpt = this.styleExcerpt( i.context, i.mention1, i.mention1_color );
