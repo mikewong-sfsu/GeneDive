@@ -268,7 +268,7 @@ class Search {
   }
 
   memberOf( id ) {
-    return this.sets.filter( s => s.ids.includes( Number( id ) ) ).map( s => s.id );
+    return this.sets.filter( s => s.ids.includes( String( id ) ) ).map( s => s.id );
   }
 
 }

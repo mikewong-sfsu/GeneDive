@@ -108,6 +108,7 @@ class GraphView {
   }
 
   bindSetStyles ( stylesheet, sets ) {
+
     let index = 1;
 
     sets.forEach( s =>  {
