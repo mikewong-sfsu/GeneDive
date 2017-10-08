@@ -143,7 +143,7 @@
         </div>
       </div>
       <div class="no-results">
-        <p>No Results Found</p>
+        <h3>No Results Found</h3>
       </div>
     </div>
 

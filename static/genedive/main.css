@@ -150,6 +150,12 @@ h5 {
 
 .no-results {
   display: none;
+  width: 100%;
+  padding-top:40px;
+}
+
+.no-results h3 {
+  text-align: center;
 }
 
 /* Help Sections */
