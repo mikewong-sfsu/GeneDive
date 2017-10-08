@@ -210,7 +210,7 @@ let GENEDIVE_CYTOSCAPE_STYLESHEET = [
   {
     selector: 'edge',
     style: {
-      'line-color': ele => ele.data('highlight') ? '#99e9f2' : '#bbbbbb',
+      'line-color': ele => ele.data('highlight') ? '#ff0000' : '#bbbbbb',
       'width': ele => {
         let count = ele.data('count');
         count /= 10;

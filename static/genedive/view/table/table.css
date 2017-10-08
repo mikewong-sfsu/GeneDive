@@ -68,6 +68,11 @@
   color: #337ab7;
 }
 
+.table-view .results .group-card .count .articles {
+  font-weight: bold;
+  color: rgb(60,60,60);
+}
+
 .table-view .results .group-card .excerpt {
   grid-area: excerpt;
   padding: 12px;
@@ -114,9 +119,15 @@
   background-color: #ffe5e5;
 }
 
+.table-view .results .group-card .detail .detail-row .article {
+  padding: 0;
+  width: 25%;
+  word-break: break-all;
+}
+
 .table-view .results .group-card .detail .detail-row .excerpt {
   padding: 0;
-  width: 75%;
+  width: 50%;
 }
 
 .table-view .results .group-card .detail .detail-row .probability {

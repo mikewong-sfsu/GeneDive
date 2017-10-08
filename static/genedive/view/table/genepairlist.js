@@ -25,7 +25,7 @@
     group = group.sort( (a,b) => a.probability >= b.probability ? -1 : 1 );
 
     card.append(this.buildTitle( group[0] ));
-    card.append(this.buildCount( group.length ));
+    card.append(this.buildCount( group.length, _.uniq(group.map( g => g.article_id)).length ));
     card.append(this.buildExcerpt( group[0] ));
     card.append(this.buildHistogram( key ));
     card.append(this.buildProbabilities( group[0].probability, group[group.length - 1].probability ));
@@ -61,12 +61,12 @@
     return div;
   }
 
-  buildCount ( count ) {
+  buildCount ( count, articles ) {
     let div = $("<div/>")
       .addClass("count");
 
     let p = $("<p/>")
-      .html(`<span class="interactions">${count}</span> Interaction(s)`);
+      .html(`<span class="interactions">${count}</span> Interaction(s) in <span class="articles">${articles}</span> Article(s)`);
 
     div.append(p);
 
@@ -110,6 +110,16 @@
   buildDetail ( group ) {
     let div = $("<div/>")
       .addClass("detail");
+
+    let header = $("<div/>")
+      .addClass("detail-row")
+      .append( $("<span/>").html("Article").addClass("article") )        
+      .append( $("<span/>").html("Excerpt").addClass("excerpt").css("margin-left","40px") )
+      .append( $("<span/>").html("Probability").addClass("probability") )
+      .append( $("<span/>").html("PubmedLink").addClass("pubmed") );
+
+    div.append(header);
+
     group.forEach( g => {
       let excerpt = this.styleExcerpt( g.context, g.mention1, g.mention1_color );
         excerpt = this.styleExcerpt( excerpt, g.mention2, g.mention2_color );
@@ -117,6 +127,7 @@
       let row = $("<div/>")
         .addClass("detail-row")
         .addClass( g.highlight ? "highlight" : "" )
+        .append( $("<span/>").html(g.article_id).addClass("article") )        
         .append( $("<span/>").html(excerpt).addClass("excerpt") )
         .append( $("<span/>").html(g.probability).addClass("probability") )
         .append( $("<span/>").html(this.buildPubmedLink( g.pubmed_id )).addClass("pubmed") );
@@ -160,7 +171,7 @@
   sort ( order ) {
     switch ( order ) {
       case "probability":
-        this.groups.sort( (a,b) => _.max(this.interactions[a].map( i => i.probability )) >= _.max(this.interactions[a].map( i => i.probability )) ? -1 : 1 );
+        this.groups.sort( (a,b) => _.max(this.interactions[a].map( i => i.probability )) >= _.max(this.interactions[b].map( i => i.probability )) ? -1 : 1 );
         break;
       case "interactions":
         this.groups.sort( (a,b) => this.interactions[a].length >= this.interactions[b].length ? -1 : 1 );
