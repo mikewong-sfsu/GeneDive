@@ -62,14 +62,14 @@
   <div class="row">
     <div class="col-md-6">
       <p>
-        Mallory et al. 2016 have developed an approach to extract gene-gene and protein-protein interactions from text and applied this system to over 100,000 full text PLOS articles.  GeneDive is a web application developed in collaboration with San Francisco State University researchers to facilitate discovery based on the large number of extracted interactions (over 1.6M).  GeneDive users can search for gene interactions, prioritize probable relationships, compile supporting literature evidence, and discover biopathways to direct new curation investigations and potentially new discoveries.
+        Mallory et al. 2016 have developed an approach to extract gene-gene and protein-protein interactions from text and applied this system to over 150,000 full text PLOS and PMC articles.  GeneDive is a web application developed in collaboration with San Francisco State University researchers to facilitate discovery based on the large number of extracted interactions (over 2.6M).  GeneDive users can search for gene interactions, prioritize probable relationships, compile supporting literature evidence, and discover biopathways to direct new curation investigations and potentially new discoveries.
       </p>
       <p>
         “Large-scale extraction of gene interactions from full-text literature using DeepDive” Emily K Mallory, Ce Zhang, Chris Ré, Russ B Altman Bioinformatics. 2016 Jan 1;32(1):106-13
       </p>
       <h3>Features and functionalities supported by GeneDive</h3>
       <ol>
-        <li>Search a database of over 1.6 million gene-gene interactions.</li>
+        <li>Search a database of over 2.6 million gene-gene interactions.</li>
         <li>Browse the results in either tabular or graph view.</li>
         <li>Refine searches with grouping and combinative filtering.</li>
         <li>Easily view geneset memberships with multi-color coding.</li>
@@ -86,7 +86,7 @@
         SFSU Collaborators: Brook Thomas, Paul Previde, Mike Wong, Anagha Kulkarni, Dragutin Petkovic.
       </p>
       <p>
-        Contacts: emily.mallory@stanford.edu, mikewong@sfsu.edu, ak@sfsu.edu
+        Contact: <a href="email:mikewong@sfsu.edu">mikewong@sfsu.edu</a>
       </p>
     </div>
     <div class="col-md-6">
