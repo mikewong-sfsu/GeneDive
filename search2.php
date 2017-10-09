@@ -168,21 +168,28 @@
         <h3>Using the Graph</h3>
         <div class="modes">
           <div class="mode">
+            <i class="fa fa-arrows" aria-hidden="true"></i>
             <h4>Navigate</h4>
-            <p>Click and drag on any whitespace to move. Zoom with your mousewheel, touchpad, or pinch.</p>
+            <p>Click and drag on whitespace to move around.</p>
           </div>
           <div class="mode">
+            <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
             <h4>Manipulate</h4>
-            <p>Click and drag nodes to move them.</p>
+            <p>Click and drag genes to move them around. Genes will stay where you leave them.</p>
+          </div>
+        </div>
+        <div class="modes">
+          <div class="mode">
+            <i class="fa fa-search-plus" aria-hidden="true"></i>
+            <h4>Shift-Click Gene to Add</h4>
+            <p>Shift-Click on genes to add them to the search. Releasing shift will start a new search.</p>
           </div>
           <div class="mode">
-            <h4>Shift-Click to Add</h4>
-            <p>Shift-Click on nodes to add them to the search set. Releaseing shift starts a new search.</p>
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <h4>Ctrl-Click Gene to Start New Search</h4>
+            <p>Ctrl-Click on a gene to start a new search with only that gene.</p>
           </div>
-          <div class="mode">
-            <h4>Ctrl-Click to Replace</h4>
-            <p>Ctrl-Click on a node to replace all current search items with the clicked node and start a new search.</p>
-          </div>
+        </div>
         </div>
       </div>
     </div>
