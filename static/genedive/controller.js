@@ -43,6 +43,13 @@ class Controller {
       return;
     } 
 
+    let topology = GeneDive.search.selectedTopology();
+    if ( this.search.sets.length < 2 && ( topology == "2hop" || topology == "3hop" ) ) {
+      alertify.notify("2-Hop / 3-Hop requires 2+ Genes", "", "3");
+      this.showNoResults();
+      return;
+    }
+
     let minProb = this.probfilter.getMinimumProbability();
     let ids = this.search.getIds( minProb );
 

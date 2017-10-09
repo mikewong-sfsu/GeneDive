@@ -43,6 +43,10 @@
   color: rgb(128,128,128);
 }
 
+.table-view .table i {
+  color: #337ab7;
+}
+
 /* D3 Histogram */
 
 .bars rect {
