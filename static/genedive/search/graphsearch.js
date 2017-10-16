@@ -59,6 +59,10 @@ class GraphSearch {
 
   /* Internal depth-first-search method used by the nHop search wrapper */
   _dfs ( chain, destination, n ) {
+    if ( chain.includes(84525) && _.last(chain) == destination ) {
+      debugger;
+    }
+
     if ( _.last(chain) == destination ) {
       chain.forEach( i => this.genes.add( i ) );
       return;

@@ -112,7 +112,7 @@ h5 {
 .about-module {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   padding-bottom:8px;
 }
 

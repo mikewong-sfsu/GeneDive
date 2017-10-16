@@ -12,10 +12,10 @@
     <div class="module search-module">
       <div class="topology-row">
         <div class="btn-group topology-selector" style="width:100%;" role="group" aria-label="...">
-          <button style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
-          <button style="width:25%;" type="button" class="btn btn-default" data-type="2hop">2-Hop</button>
-          <button style="width:25%;" type="button" class="btn btn-default" data-type="3hop">3-Hop</button>
-          <button style="width:25%;" type="button" class="btn btn-default" data-type="clique">Clique</button>
+          <button data-toggle="tooltip" title="Provide one gene to view all interactions with that gene. Provide multiple genes or genesets to view interactions between all input genes." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
+          <button data-toggle="tooltip" title="Provide two genes as input. GeneDive will show interactions between the two genes through up to 1 (one) intermediary gene." style="width:25%;" type="button" class="btn btn-default" data-type="2hop">2-Hop</button>
+          <button data-toggle="tooltip" title="Provide two genes as input. GeneDive will show interactions between the two genes through up to 2 (two) intermediary genes." style="width:25%;" type="button" class="btn btn-default" data-type="3hop">3-Hop</button>
+          <button data-toggle="tooltip" title="Provide one gene as input. GeneDive will show those genes that interact with the input gene as well as one other input interactant." style="width:25%;" type="button" class="btn btn-default" data-type="clique">Clique</button>
         </div>
       </div>
 
@@ -99,9 +99,9 @@
     </div>
 
     <div class="module about-module">
-      <a href="">Terms and Conditions</a>
-      <a href="/privacy.html" target="_blank">Privacy Policy</a>
+      <a href="/privacy.html" target="_blank">T&C/Privacy</a>
       <a href="/help.html" target="_blank">Help</a>
+      <a href="/about.html" target="_blank">About</a>
     </div>
   </div>
 
@@ -123,22 +123,22 @@
           <div class="mode">
             <h4>1-Hop</h4>
             <img src="/static/genedive/images/help/1hop.png" class="img-responsive">
-            <p>View direct interactions with the genes you search.</p>
+            <p>Provide one gene (blue) to view all interactions with that gene. Provide multiple genes or genesets to view interactions between all input genes.</p>
           </div>
           <div class="mode">
             <h4>2-Hop</h4>
             <img src="/static/genedive/images/help/2hop.png" class="img-responsive">
-            <p>Given two genes (blue), view genes (orange) that interact with both.</p>
+            <p>Provide two genes (blue) as input. GeneDive will show interactions between the two genes through up to one intermediary gene (orange).</p>
           </div>
           <div class="mode">
             <h4>3-Hop</h4>
             <img src="/static/genedive/images/help/3hop.png" class="img-responsive">
-            <p>Given two genes (blue), view genes (orange) that interact with both through up to one intermediary.</p>
+            <p>Provide two genes (blue) as input. GeneDive will show interactions between the two genes through up to two intermediary genes (orange).</p>
           </div>
           <div class="mode">
             <h4>Clique</h4>
             <img src="/static/genedive/images/help/clique.png" class="img-responsive">
-            <p>Given a single gene (blue), view genes (orange) that interact with the gene and at least one other interactant.</p>
+            <p>Provide one gene (blue) as input. GeneDive will show genes (orange) that interact with the input gene as well as one other input interactant.</p>
           </div>
         </div>
       </div>

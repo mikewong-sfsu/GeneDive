@@ -1,19 +1,31 @@
-<?php
-  include_once "session.php";
-?>
+<?php include_once "session.php" ?>
 
-<?php include "header.php" ?>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>GeneDive</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/genedive/index.css">
+</head>
+<body>
 
-<!-- Titlecard and User Login/Reg/Forgot -->
-<div class="announce container-fluid">
-  <div class="row">
-    <div class="unit-left col-md-6">
-      <h1>GeneDive</h1>
-      <h3>Gene Relationship Discovery</h3>
+<div class="landing-cover">
+</div>
+
+<div class="landing">
+
+  <div class="strip">
+    <div class="about">
+      <h2>GeneDive</h2>
+      <h4>Gene Interaction Search and Visualization Tool</h4>
+      <p>GeneDive helps researchers search, sort, group, filter, visualize and download from a dataset of 2.6mm gene interactions culled from PLOS One, PMC, and more.</p>
+      <p>GeneDive is a collaborative project between the San Francisco State University Department of Computer Science and Stanford Bioengineering.</p>
     </div>
 
-    <div class="unit-right col-md-4 offset-md-1">
-      <h4>Login</h4>
+    <div class="login">
       <form action="login.php" method="post">
         <div class="form-group">
           <label for="email">Email Address</label>
@@ -55,54 +67,8 @@
       ?>
     </div>
   </div>
+
 </div>
 
-<!-- GeneDive Info/Pitch/About -->
-<div class="description container-fluid">
-  <div class="row">
-    <div class="col-md-6">
-      <p>
-        Mallory et al. 2016 have developed an approach to extract gene-gene and protein-protein interactions from text and applied this system to over 150,000 full text PLOS and PMC articles.  GeneDive is a web application developed in collaboration with San Francisco State University researchers to facilitate discovery based on the large number of extracted interactions (over 2.6M).  GeneDive users can search for gene interactions, prioritize probable relationships, compile supporting literature evidence, and discover biopathways to direct new curation investigations and potentially new discoveries.
-      </p>
-      <p>
-        “Large-scale extraction of gene interactions from full-text literature using DeepDive” Emily K Mallory, Ce Zhang, Chris Ré, Russ B Altman Bioinformatics. 2016 Jan 1;32(1):106-13
-      </p>
-      <h3>Features and functionalities supported by GeneDive</h3>
-      <ol>
-        <li>Search a database of over 2.6 million gene-gene interactions.</li>
-        <li>Browse the results in either tabular or graph view.</li>
-        <li>Refine searches with grouping and combinative filtering.</li>
-        <li>Easily view geneset memberships with multi-color coding.</li>
-        <li>Reveal hidden connections with Clique, 1-Hop, and more.</li>
-        <li>Download both search/filter state and results.</li>
-      </ol>
-      <h3>Architecture</h3>
-      <img src="/static/genedive/images/architecture.png" class="img-responsive">
-      <br>
-      <p>
-        GeneDive is a single-page web application following the model-view-controller (MVC) architecture. User account management and web services are implemented in PHP. As shown above, the web service comprises a RESTful API layer to a SQLite relational database containing complete interaction and gene data, extracted from Entrez/NCBI, Reactome, KEGG, and DeepDive-identified GGI data. All gene references are mapped to Entrez gene IDs, and all gene sets are filtered using the GGI data; if a gene in a set does not have a DeepDive-identified interaction with any other gene in the same set, that gene is removed from the set. To improve responsiveness, most of the processing is done client-side through modules connected in serial, assisted by cached lookup tables. The modules manage filtering, coloring, synonym tagging, highlighting, grouping, and view rendering. Compressed caches include a GGI adjacency matrix with probabilities, and gene and gene set lookup tables for auto-complete.
-      </p>
-      <p>
-        SFSU Collaborators: Brook Thomas, Paul Previde, Mike Wong, Anagha Kulkarni, Dragutin Petkovic.
-      </p>
-      <p>
-        Contact: <a href="email:mikewong@sfsu.edu">mikewong@sfsu.edu</a>
-      </p>
-    </div>
-    <div class="col-md-6">
-      <img src="static/genedive/images/table.png" class="img-responsive">
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class='logo-grid'>
-        <img src='/static/genedive/images/ccls.png'>
-        <img src='/static/genedive/images/sfsu.jpg'>
-        <img src='/static/genedive/images/helix.png'>
-       </div>
-    </div>
-  </div>
-</div>
-
-
-<?php include "footer.php" ?>
+</body>
+</html>

@@ -1,65 +1,69 @@
 /* index.css */
-
-.announce {
-  padding:40px 20px;
-  background-color:#5184a2;
-  color:white;
-}
-
-.announce .row {
+.landing {
+  position: absolute;
   display: flex;
-  flex-direction: row;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: url("/static/genedive/images/landing_background.png");
+  background-size: cover;
   align-items: center;
+  font-family: "Open Sans", sans-serif;
 }
 
-.announce .unit-left {
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: "Roboto", "serif";
+.landing-cover {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color:rgba(255,255,255,0.82);
+  z-index: 20;
 }
 
-.announce .unit-left h1 {
-  font-size: 4em;
-}
 
-.announce .unit-right {
-  padding:10px;
-  border-radius:4px;
-}
-
-.announce .unit-right .alert {
-  margin-top:10px;
-}
-
-.announce .unit-right a {
-  color:#5ece29;
-  text-decoration: underline;
-}
-
-.description {
-  padding:40px 20px;
-  margin-left:15px;
-}
-
-.description .logo-grid {
+.landing .strip {
+  position: relative;
+  padding: 40px 0;
   display: flex;
-  flex-wrap:wrap;
-}
-
-.description .logo-grid img {
-  padding-left:20px;
-  height:50px;
-}
-
-.registration-form {
-  margin: 40px 0px;
-}
-
-.logo-grid {
   width: 100%;
-  padding:30px 0;
+  background-color: rgba(0,0,0,0.79);
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  z-index: 30;
+}
+
+.landing .strip .about {
+  color: white;
+  width: 40%;
+}
+
+.landing .strip .login {
+  color: white;
+  width: 30%;
+}
+
+.landing .strip .about h4 {
+  color: #68c7ff;
+}
+
+.landing .strip .about p {
+  font-size: 1em;
+}
+
+/* For Narrow / Mobile */
+@media (max-width: 1024px) {
+  .landing .strip {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .landing .strip .about, .landing .strip .login {
+    width: 80%;
+  }
+
+  .landing .strip .login {
+    margin-top: 30px;
+  }
 }

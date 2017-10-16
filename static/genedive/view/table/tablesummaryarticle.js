@@ -3,11 +3,13 @@ class TableSummaryArticle extends ResultsTable {
   constructor ( table, interactions ) {
     super( table, interactions );   
     this.interactions_count = this.interactions.length; 
+    this.highlight_count = _.reduce(_.map( this.interactions, i => i.highlight ? 1 : 0 ), (acc,i) => acc + i );
     this.interactions = GeneDive.grouper.group( interactions );
 
-    this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` );
+    this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions
+                          (<span class="figure">${this.highlight_count}</span> Highlighted)
+                          in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` );
     this.hideBackButton();
-
     this.drawHeaders();
     this.drawBody();
 

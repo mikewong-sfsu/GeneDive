@@ -44,8 +44,14 @@ class Controller {
     } 
 
     let topology = GeneDive.search.selectedTopology();
-    if ( this.search.sets.length < 2 && ( topology == "2hop" || topology == "3hop" ) ) {
-      alertify.notify("2-Hop / 3-Hop requires 2+ Genes", "", "3");
+    if ( this.search.sets.length != 2 && ( topology == "2hop" || topology == "3hop" ) ) {
+      alertify.notify("2-Hop / 3-Hop requires 2 Genes", "", "3");
+      this.showNoResults();
+      return;
+    }
+
+    if ( topology == "clique" && ( this.search.sets.length > 1 || this.search.sets[0].ids.length > 1 ) ) {
+      alertify.notify("Clique search requires a single gene.", "", "3");
       this.showNoResults();
       return;
     }
@@ -203,3 +209,7 @@ class Controller {
 }
 
 let GeneDive = new Controller();
+
+$(document).on('ready', function () {
+  $('[data-toggle="tooltip"]').tooltip(); 
+});

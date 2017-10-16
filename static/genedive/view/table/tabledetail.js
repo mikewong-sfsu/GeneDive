@@ -3,8 +3,9 @@ class TableDetail extends ResultsTable {
   constructor ( table, interactions, group ) {
     super( table, interactions );
     this.interactions = GeneDive.grouper.group( interactions )[group];
-
-    this.updateMessage( `Viewing <span class="figure">${Object.keys(this.interactions).length}</span> Interactions` );
+    this.highlight_count = _.reduce(_.map( this.interactions, i => i.highlight ? 1 : 0 ), (acc,i) => acc + i );
+    this.updateMessage( `Viewing <span class="figure">${Object.keys(this.interactions).length}</span> Interactions
+                         (<span class="figure">${this.highlight_count}</span> Highlighted)` );
     this.showBackButton();
 
     this.drawHeaders();
