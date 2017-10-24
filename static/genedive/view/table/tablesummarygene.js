@@ -7,10 +7,13 @@ class TableSummaryGene extends ResultsTable {
     this.interactions = GeneDive.grouper.group( this.interactions );
     this.row_id = 1;
 
-    // Topbar management
-    this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions
-                          (<span class="figure">${this.highlight_count}</span> Highlighted)
-                          in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` );
+    // Update topbar - with or without highlight count
+    if ( this.highlight_count > 0 ) {
+      this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions with <span class="figure">${this.highlight_count}</span> Highlighted in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` );
+    } else {
+     this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` ); 
+    }
+    
     this.hideBackButton();
 
     this.drawHeaders();

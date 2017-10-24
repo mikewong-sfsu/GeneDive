@@ -4,9 +4,14 @@ class TableDetail extends ResultsTable {
     super( table, interactions );
     this.interactions = GeneDive.grouper.group( interactions )[group];
     this.highlight_count = _.reduce(_.map( this.interactions, i => i.highlight ? 1 : 0 ), (acc,i) => acc + i );
-    this.updateMessage( `Viewing <span class="figure">${Object.keys(this.interactions).length}</span> Interactions
-                         (<span class="figure">${this.highlight_count}</span> Highlighted)` );
     this.showBackButton();
+
+    // Update topbar - with or without highlight count
+    if ( this.highlight_count > 0 ) {
+      this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions with <span class="figure">${this.highlight_count}</span> Highlighted` );
+    } else {
+     this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions` ); 
+    }
 
     this.drawHeaders();
     this.drawBody();

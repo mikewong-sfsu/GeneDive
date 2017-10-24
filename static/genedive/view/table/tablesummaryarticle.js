@@ -6,9 +6,13 @@ class TableSummaryArticle extends ResultsTable {
     this.highlight_count = _.reduce(_.map( this.interactions, i => i.highlight ? 1 : 0 ), (acc,i) => acc + i );
     this.interactions = GeneDive.grouper.group( interactions );
 
-    this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions
-                          (<span class="figure">${this.highlight_count}</span> Highlighted)
-                          in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` );
+    // Update topbar - with or without highlight count
+    if ( this.highlight_count > 0 ) {
+      this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions with <span class="figure">${this.highlight_count}</span> Highlighted in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` );
+    } else {
+     this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` ); 
+    }
+
     this.hideBackButton();
     this.drawHeaders();
     this.drawBody();
