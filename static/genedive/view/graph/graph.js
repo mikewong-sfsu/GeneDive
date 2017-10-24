@@ -51,12 +51,16 @@ class GraphView {
     let nodes = {};
 
     interactions.forEach( i => {
+      let i1name = i.mention1 + ( i.mention1_synonym != null ? `[aka ${i.mention1_synonym}]` : "");
+      let i2name = i.mention2 + ( i.mention2_synonym != null ? `[aka ${i.mention2_synonym}]` : "");
+
+
       if ( !nodes.hasOwnProperty( i.geneids1 ) ) {
-        nodes[i.geneids1] = { group: 'nodes', data: { id: i.geneids1, name: i.mention1, color: i.mention1_color } };
+        nodes[i.geneids1] = { group: 'nodes', data: { id: i.geneids1, name: i1name, color: i.mention1_color } };
       }
 
       if ( !nodes.hasOwnProperty( i.geneids2 ) ) {
-        nodes[i.geneids2] = { group: 'nodes', data: { id: i.geneids2, name: i.mention2, color: i.mention2_color } };
+        nodes[i.geneids2] = { group: 'nodes', data: { id: i.geneids2, name: i2name, color: i.mention2_color } };
       }
     });
 

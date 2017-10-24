@@ -2,45 +2,33 @@
 .landing {
   position: absolute;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   background: url("/static/genedive/images/graph6.png");
-  background-position: top left;
-  background-size: 1000px;
+  background-position: center center;
+  background-size: 1200px;
   background-repeat: no-repeat;
-  align-items: center;
   font-family: "Open Sans", sans-serif;
 }
 
 @media (max-width: 1024px) {
   .landing {
-    background-position: top center;
-    background-size:400px;
+    background-position: center center;
+    background-size: cover;
   }
 }
-
-/*
-.landing-cover {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  filter: opacity(0.0);
-  z-index: 20;
-}
-*/
-
 
 .landing .strip {
   position: relative;
   padding: 40px 0;
   display: flex;
   width: 100%;
-  background-color: rgba(0,0,0,0.95);
+  background-color: rgba(60,60,60,1);
   display: flex;
   justify-content: space-around;
   z-index: 30;
@@ -78,4 +66,13 @@
   .landing .strip .login {
     margin-top: 30px;
   }
+}
+
+.landing .footer {
+  position: absolute;
+  bottom: 12px;
+}
+
+.landing .footer a {
+  margin: 0 12px;
 }
