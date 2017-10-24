@@ -44,7 +44,7 @@ class GraphSearch {
   nHop( origin, destination, n, support ) {
     this.genes.clear();
 
-    this._dfs( [origin], destination, n );
+    this._dfs( [Number(origin)], destination, n );
 
     let intermediaries = _.without( Array.from(this.genes), origin, destination );
 
@@ -59,16 +59,16 @@ class GraphSearch {
 
   /* Internal depth-first-search method used by the nHop search wrapper */
   _dfs ( chain, destination, n ) {
-    if ( chain.includes(84525) && _.last(chain) == destination ) {
-      debugger;
-    }
+
+    // Prevent loopback
+    if ( _.uniq(chain).length < chain.length ) return;
 
     if ( _.last(chain) == destination ) {
       chain.forEach( i => this.genes.add( i ) );
       return;
     }
 
-    if ( n == 0 ) { return; }
+    if ( n == 0 ) return;
 
     //  When we get interactants, exclude the parent or we'll backtrack at every step
     let interactants = _.without( this.getInteractants( _.last(chain) ), [ _.last(chain) ] )
