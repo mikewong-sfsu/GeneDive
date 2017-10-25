@@ -169,12 +169,17 @@
         <div class="modes">
           <div class="mode">
             <i class="fa fa-arrows" aria-hidden="true"></i>
-            <h4>Navigate</h4>
+            <h4>Pan</h4>
             <p>Click and drag on whitespace to move around.</p>
           </div>
           <div class="mode">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <h4>Zoom</h4>
+            <p>Use your mousewheel or trackpad to zoom in and out.</p>
+          </div>
+          <div class="mode">
             <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
-            <h4>Manipulate</h4>
+            <h4>Move Genes</h4>
             <p>Click and drag genes to move them around. Genes will stay where you leave them.</p>
           </div>
         </div>
