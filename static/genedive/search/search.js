@@ -199,21 +199,26 @@ class Search {
     });
     geneset.initialize();
 
-    /*
-    var drugs = new Bloodhound({
-      local: AUTOCOMPLETE_DRUG,
+    var chemical = new Bloodhound({
+      local: AUTOCOMPLETE_CHEMICAL,
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });
-    drugs.initialize();
-    */
+    chemical.initialize();
 
+    var disease = new Bloodhound({
+      local: AUTOCOMPLETE_DISEASE,
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace
+    });
+    disease.initialize();
 
     this.input.typeahead(
       { minLength: 1, highlight: true, hint: false },
       { name: 'Genes', source: genes, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }  },
+      { name: 'Chemicals', source: chemical, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Chemicals</h4>" } },
+      { name: 'Diseases', source: disease, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Diseases</h4>" } },
       { name: 'Genesets', source: geneset, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } },
-      /*{ name: 'Drugs', source: drugs, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Drugs</h4>" } } */
     );
 
     $('.twitter-typeahead').css('width','100%');
@@ -223,6 +228,7 @@ class Search {
       $('.tt-suggestion').first().addClass('tt-cursor');
     });
 
+    // The action we take when a typeahead element is selected
     this.input.on('typeahead:selected', ( event, item ) => {
 
       // Case: Gene w/ Disambiguation
@@ -280,5 +286,18 @@ class SearchSet {
     this.type = ids.length > 1 ? "set" : "gene";
     this.ids = ids.map( i => String(i) );
     this.color = "#cccccc";
+    this.entity = "";
+
+    switch ( this.ids[0][0] ) {
+      case "C":
+        this.entity = "chemical";
+        break;
+
+      case "D":
+        this.entity = "disease";
+
+      default:
+        this.entity = "gene";
+    }
   }
 }

@@ -44,7 +44,7 @@ class GraphSearch {
   nHop( origin, destination, n, support ) {
     this.genes.clear();
 
-    this._dfs( [Number(origin)], destination, n );
+    this._dfs( [origin], destination, n );
 
     let intermediaries = _.without( Array.from(this.genes), origin, destination );
 
@@ -81,7 +81,7 @@ class GraphSearch {
   // This also applies the filter constraint from FilterControls.
   getInteractants( gene ) {
     let min_probability = (GeneDive.probfilter.getMinimumProbability()) * 1000;
-    let interactants = Object.getOwnPropertyNames( adjacency_matrix[gene] ).map( i => Number(i) );
+    let interactants = Object.getOwnPropertyNames( adjacency_matrix[gene] );
     interactants = interactants.filter( i => adjacency_matrix[gene][i].some( x => x >= min_probability ) );
     return interactants;
   }

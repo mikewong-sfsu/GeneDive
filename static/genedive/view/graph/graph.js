@@ -54,7 +54,6 @@ class GraphView {
       let i1name = i.mention1 + ( i.mention1_synonym != null ? `[aka ${i.mention1_synonym}]` : "");
       let i2name = i.mention2 + ( i.mention2_synonym != null ? `[aka ${i.mention2_synonym}]` : "");
 
-
       if ( !nodes.hasOwnProperty( i.geneids1 ) ) {
         nodes[i.geneids1] = { group: 'nodes', data: { id: i.geneids1, name: i1name, color: i.mention1_color } };
       }
@@ -64,6 +63,26 @@ class GraphView {
       }
     });
 
+    // Assign node shape
+    for ( let n in nodes ) {
+      let node = nodes[n];
+      let firstChar = node.data.id.substring(0,1);
+
+      switch( firstChar ) {
+        case "C":
+          node.data.shape = 'triangle';
+          break;
+
+        case "D":
+          node.data.shape = 'square';
+          break;
+
+        default:
+          node.data.shape = 'ellipse';
+          break;
+      }
+    }
+    
     return nodes;
   }
 
@@ -202,6 +221,7 @@ let GENEDIVE_CYTOSCAPE_STYLESHEET = [
     style: {
       'background-color': ele => ele.data('color'),
       'label': ele => ele.data('name'),
+      'shape': ele => ele.data('shape'),
       'font-size': '16px',
       'text-halign': 'center',
       'text-valign': 'center',
