@@ -212,4 +212,23 @@ let GeneDive = new Controller();
 
 $(document).on('ready', function () {
   $('[data-toggle="tooltip"]').tooltip(); 
+
+  // Mirror Adjacency Matrix
+  for ( let gene in adjacency_matrix ) {
+    for ( let interactant in adjacency_matrix[gene] ) {
+
+      if ( !(interactant in adjacency_matrix) ) {
+        adjacency_matrix[interactant] = {};
+      }
+
+      if ( !(gene in adjacency_matrix[interactant]) ) {
+        adjacency_matrix[interactant][gene] = true;
+      }
+
+    }
+  }
+
+
+
+
 });

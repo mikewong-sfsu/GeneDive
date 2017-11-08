@@ -2,3 +2,4 @@ data/users.sqlite
 data/*.bak
 data/data.sqlite
 sessions/
+static/genedive/json/adjacency_matrix.js

@@ -14,8 +14,6 @@
 
     <!-- Typeahead Files / Adjacency Matrix -->
     <script src="static/genedive/json/gene_id.json"></script>
-    <script src="static/genedive/json/chemical_id.json"></script>
-    <script src="static/genedive/json/disease_id.json"></script>
     <script src="static/genedive/json/symbol_id_sets.json"></script>
 
     <!-- Fonts -->
