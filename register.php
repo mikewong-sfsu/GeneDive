@@ -2,9 +2,6 @@
 
   include_once "session.php";
 
-  // Registration disabled for now
-  exit;
-
   // Make sure user didn't reach this accidentally - or maliciously?
   if ( ! isset($_POST['register-submit']) ) { return; }
 
