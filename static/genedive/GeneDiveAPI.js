@@ -5,6 +5,7 @@ var GeneDiveAPI =
   /// @param {String} a comma-seperated list of gene ids
   interactions: function (ids, minProb, callback) {
     ids = this._wrapIDs( ids );
+
     $.ajax({
       type: "GET",
       url: `/api/interactions.php?ids=${ids}&minProb=${minProb}`,
