@@ -16,7 +16,6 @@
     <script src="static/genedive/json/gene_id.json"></script>
     <script src="static/genedive/json/chemical_id.json"></script>
     <script src="static/genedive/json/disease_id.json"></script>
-    <script src="static/genedive/json/symbol_id_sets.json"></script>
 
     <!-- Fonts -->
    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
