@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['disambiguation',['Disambiguation',['../class_disambiguation.html',1,'']]],
-  ['download',['Download',['../class_download.html',1,'']]]
+  ['color',['Color',['../class_color.html',1,'']]],
+  ['connection',['Connection',['../class_connection.html',1,'']]],
+  ['consolemessage',['ConsoleMessage',['../class_console_message.html',1,'']]],
+  ['controller',['Controller',['../class_controller.html',1,'']]]
 ];

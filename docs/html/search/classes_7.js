@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['search',['Search',['../class_search.html',1,'']]],
-  ['searchset',['SearchSet',['../class_search_set.html',1,'']]],
-  ['synonym',['Synonym',['../class_synonym.html',1,'']]]
+  ['jshandle',['JSHandle',['../class_j_s_handle.html',1,'']]],
+  ['jsoutline',['JSOutline',['../class_j_s_outline.html',1,'']]]
 ];
