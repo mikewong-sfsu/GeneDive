@@ -1,5 +1,11 @@
 <?php
 
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\SMTP;
+  use PHPMailer\PHPMailer\Exception;
+  require_once 'PHPMailer/src/PHPMailer.php';
+  require_once 'PHPMailer/src/SMTP.php';
+
   include_once "session.php";
 
   // Make sure user didn't reach this accidentally - or maliciously?
@@ -48,9 +54,33 @@
 
   $stmt->execute();
 
+
+  /* SENDMAIL */
+  $message = "Hi {$_POST['name']},<br><br> Thanks for registering a GeneDive account.<br><br><br>-GeneDive Team";
+
+  $mail             = new PHPMailer();
+  $mail->IsSMTP();                            
+  $mail->Host       = "mail.yourdomain.com"; 
+
+  $mail->SMTPAuth   = true;                  
+  $mail->SMTPSecure = "tls";                 
+  $mail->Host       = "smtp.gmail.com";      
+  $mail->Port       = 587;                   
+  $mail->Username   = "user"; 
+  $mail->Password   = "pass";      
+
+  $mail->SetFrom('genedive@gmail.com', 'GeneDive');
+  $mail->Subject    = "GeneDive Registration";
+  $mail->MsgHTML($message);
+
+  $mail->AddAddress($_POST['email'], $_POST['name']);
+
+  $mail->Send();
+
+
+
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $_POST['email'];
-
   $_SESSION[ 'message' ] = "Registration successful. Welcome!";
 
   header("Location: index.php");

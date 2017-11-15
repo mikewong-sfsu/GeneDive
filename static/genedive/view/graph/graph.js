@@ -134,11 +134,18 @@ class GraphView {
 
     let index = 1;
 
-    sets.forEach( s =>  {
+    debugger;
+
+    for ( let s of sets ) {
+
+      if ( s.entity == "chemical" || s.entity == "disease" )
+        continue;
+
       stylesheet[0].style[`pie-${index}-background-color`] = s.color;
       stylesheet[0].style[`pie-${index}-background-size`] = `mapData(${s.id}, 0, 100, 0, 100)`;  
       index++;
-    });
+
+    }
 
     return stylesheet;
   }
