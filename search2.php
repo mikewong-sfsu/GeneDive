@@ -100,7 +100,7 @@
 
     <div class="module about-module">
       <a href="/privacy.html" target="_blank">T&C/Privacy</a>
-      <a href="/help.html" target="_blank">Help</a>
+      <a href="/help.php" target="_blank">Help</a>
       <a href="/about.html" target="_blank">About</a>
     </div>
   </div>
@@ -118,29 +118,7 @@
         </div>
       </div>
       <div class="help table-help">
-        <h3>Search Modes</h3>
-        <div class="modes">
-          <div class="mode">
-            <h4>1-Hop</h4>
-            <img src="/static/genedive/images/help/1hop.png" class="img-responsive">
-            <p>Provide one gene (blue) to view all interactions with that gene. Provide multiple genes or genesets to view interactions between all input genes.</p>
-          </div>
-          <div class="mode">
-            <h4>2-Hop</h4>
-            <img src="/static/genedive/images/help/2hop.png" class="img-responsive">
-            <p>Provide two genes (blue) as input. GeneDive will show interactions between the two genes through up to one intermediary gene (orange).</p>
-          </div>
-          <div class="mode">
-            <h4>3-Hop</h4>
-            <img src="/static/genedive/images/help/3hop.png" class="img-responsive">
-            <p>Provide two genes (blue) as input. GeneDive will show interactions between the two genes through up to two intermediary genes (orange).</p>
-          </div>
-          <div class="mode">
-            <h4>Clique</h4>
-            <img src="/static/genedive/images/help/clique.png" class="img-responsive">
-            <p>Provide one gene (blue) as input. GeneDive will show genes (orange) that interact with the input gene as well as one other input interactant.</p>
-          </div>
-        </div>
+        <?php include "help-search.php"; ?>
       </div>
       <div class="no-results">
         <h3>No Results Found</h3>
@@ -165,38 +143,9 @@
         </div>
       </div>
       <div class="help graph-help">
-        <h3>Using the Graph</h3>
-        <div class="modes">
-          <div class="mode">
-            <i class="fa fa-arrows" aria-hidden="true"></i>
-            <h4>Pan</h4>
-            <p>Click and drag on whitespace to move around.</p>
-          </div>
-          <div class="mode">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            <h4>Zoom</h4>
-            <p>Use your mousewheel or trackpad to zoom in and out.</p>
-          </div>
-          <div class="mode">
-            <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
-            <h4>Move Genes</h4>
-            <p>Click and drag genes to move them around. Genes will stay where you leave them.</p>
-          </div>
-        </div>
-        <div class="modes">
-          <div class="mode">
-            <i class="fa fa-search-plus" aria-hidden="true"></i>
-            <h4>Shift-Click Gene to Add</h4>
-            <p>Shift-Click on genes to add them to the search. Releasing shift will start a new search.</p>
-          </div>
-          <div class="mode">
-            <i class="fa fa-search" aria-hidden="true"></i>
-            <h4>Ctrl-Click Gene to Start New Search</h4>
-            <p>Ctrl-Click on a gene to start a new search with only that gene.</p>
-          </div>
-        </div>
-        </div>
+        <?php include "help-graph.php"; ?>
       </div>
+    </div>
     </div>
   </div>
 </div>
