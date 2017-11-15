@@ -57,7 +57,7 @@
 
 
   /* SENDMAIL */
-  $message = "Hi {$_POST['name']},<br><br> Thanks for registering a GeneDive account.<br><br><br>-GeneDive Team";
+  $message = "Hi {$_POST['name']},<br><br> Thanks for registering a GeneDive account.<br><br>Use {$_POST['email']} to sign in to your account.<br>-GeneDive Team";
 
   $mail             = new PHPMailer();
   $mail->IsSMTP();                            
