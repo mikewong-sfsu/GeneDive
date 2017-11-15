@@ -1,4 +1,5 @@
 *.bak
+data/credentials.php
 data/users.sqlite
 data/data.sqlite
 sessions/

@@ -7,6 +7,7 @@
   require_once 'PHPMailer/src/SMTP.php';
 
   include_once "session.php";
+  include_once "data/credentials.php";
 
   // Make sure user didn't reach this accidentally - or maliciously?
   if ( ! isset($_POST['register-submit']) ) { return; }
@@ -60,14 +61,14 @@
 
   $mail             = new PHPMailer();
   $mail->IsSMTP();                            
-  $mail->Host       = "mail.yourdomain.com"; 
+  $mail->Host       = "www.genedive.net"; 
 
   $mail->SMTPAuth   = true;                  
   $mail->SMTPSecure = "tls";                 
   $mail->Host       = "smtp.gmail.com";      
   $mail->Port       = 587;                   
-  $mail->Username   = "user"; 
-  $mail->Password   = "pass";      
+  $mail->Username   = $SMTP_USER; 
+  $mail->Password   = $SMTP_PASS;      
 
   $mail->SetFrom('genedive@gmail.com', 'GeneDive');
   $mail->Subject    = "GeneDive Registration";
