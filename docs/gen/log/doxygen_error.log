@@ -1,0 +1,160 @@
+G:/School/Graduate Project/GeneDive/static/genedive/grouper/grouper.js:1: warning: Compound Grouper is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:1: warning: Compound GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/highlight/highlight.js:1: warning: Compound Highlight is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tablesummarygene.js:1: warning: Compound TableSummaryGene is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/graphsearch.js:94: warning: Compound GraphResult is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/graphsearch.js:8: warning: Compound GraphSearch is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tablesummaryarticle.js:1: warning: Compound TableSummaryArticle is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:284: warning: Compound SearchSet is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/probabilityfilter.js:1: warning: Compound ProbabilityFilter is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/color/color.js:3: warning: Compound Color is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tabledetail.js:1: warning: Compound TableDetail is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:1: warning: Compound ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/help/help.js:1: warning: Compound Help is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/textfilter.js:155: warning: Compound FilterSet is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/textfilter.js:2: warning: Compound TextFilter is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/synonym/synonym.js:1: warning: Compound Synonym is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:1: warning: Compound Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/download/download.js:1: warning: Compound Download is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:3: warning: Compound Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/disambiguation.js:1: warning: Compound Disambiguation is not documented.
+G:/School/Graduate Project/GeneDive/docs/gen/generate.js:10: warning: Member OXYGEN_CONFIG_FILE (variable) of file generate.js is not documented.
+G:/School/Graduate Project/GeneDive/docs/gen/generate.js:11: warning: Member SCREENSHOTS_PHANTOMJS_FILE (variable) of file generate.js is not documented.
+G:/School/Graduate Project/GeneDive/docs/gen/generate.js:12: warning: Member CONFIG_DIRECTORY (variable) of file generate.js is not documented.
+G:/School/Graduate Project/GeneDive/docs/gen/generate.js:13: warning: Member LOG_DIRECTORY (variable) of file generate.js is not documented.
+G:/School/Graduate Project/GeneDive/docs/gen/generate.js:14: warning: Member const (variable) of file generate.js is not documented.
+G:/School/Graduate Project/GeneDive/docs/gen/screenshots.js:11: warning: Member log(CONFIG_DIRECTORY) (function) of file screenshots.js is not documented.
+G:/School/Graduate Project/GeneDive/docs/gen/screenshots.js:14: warning: Member open('http:page.render('github.png');phantom.exit();}) (function) of file screenshots.js is not documented.
+G:/School/Graduate Project/GeneDive/docs/gen/screenshots.js:9: warning: Member fs (variable) of file screenshots.js is not documented.
+G:/School/Graduate Project/GeneDive/docs/gen/screenshots.js:10: warning: Member CONFIG_DIRECTORY (variable) of file screenshots.js is not documented.
+G:/School/Graduate Project/GeneDive/docs/gen/screenshots.js:13: warning: Member page (variable) of file screenshots.js is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/color/color.js:5: warning: Member constructor() (function) of class Color is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/color/color.js:10: warning: Member reset() (function) of class Color is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/color/color.js:15: warning: Member getColor(id) (function) of class Color is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/color/color.js:19: warning: Member setColor(ids, color) (function) of class Color is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/color/color.js:27: warning: Member allocateColor(ids) (function) of class Color is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/color/color.js:33: warning: Member colorInteractions(interactions) (function) of class Color is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:3: warning: Member constructor() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:22: warning: Member runSearch() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:87: warning: Member filterInteractions() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:98: warning: Member colorInteractions() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:104: warning: Member addSynonyms() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:110: warning: Member highlightInteractions() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:122: warning: Member drawTable() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:144: warning: Member drawGraph() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:151: warning: Member hideTable() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:156: warning: Member showTable() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:161: warning: Member hideGraph() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:165: warning: Member showGraph() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:169: warning: Member showSpinners() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:173: warning: Member hideTableSpinner() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:177: warning: Member hideGraphSpinner() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:181: warning: Member showHelp() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:185: warning: Member hideHelp() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:189: warning: Member showNoResults() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:193: warning: Member hideNoResults() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:197: warning: Member showGraphLegend() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:201: warning: Member hideGraphLegend() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/controller.js:205: warning: Member hideGraphAbsent() (function) of class Controller is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/disambiguation.js:3: warning: Member constructor() (function) of class Disambiguation is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/disambiguation.js:39: warning: Member prepareForm(symbol, geneData) (function) of class Disambiguation is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/disambiguation.js:58: warning: Member resolveIds(symbol, ids) (function) of class Disambiguation is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/download/download.js:3: warning: Member constructor(button) (function) of class Download is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/download/download.js:32: warning: Member buildTermsAndCondtions() (function) of class Download is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/download/download.js:37: warning: Member buildInteractionsData() (function) of class Download is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/download/download.js:48: warning: Member buildStateFile() (function) of class Download is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/download/download.js:57: warning: Member fetchGraphImage() (function) of class Download is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/textfilter.js:156: warning: Member constructor(attribute, is, value) (function) of class FilterSet is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/graphsearch.js:95: warning: Member constructor(interactants, non_interactants) (function) of class GraphResult is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/graphsearch.js:10: warning: Member constructor() (function) of class GraphSearch is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/graphsearch.js:14: warning: Member clique(geneid, minProb) (function) of class GraphSearch is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/graphsearch.js:44: warning: Member nHop(origin, destination, n, support) (function) of class GraphSearch is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/graphsearch.js:61: warning: Member _dfs(chain, destination, n) (function) of class GraphSearch is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/graphsearch.js:82: warning: Member getInteractants(gene) (function) of class GraphSearch is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/graphsearch.js:89: warning: Member hasInteraction(gene, candidates) (function) of class GraphSearch is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:3: warning: Member constructor(viewport) (function) of class GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:16: warning: Member draw(interactions, sets) (function) of class GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:50: warning: Member createNodes(interactions) (function) of class GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:89: warning: Member createEdges(interactions) (function) of class GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:111: warning: Member bindSetMembership(nodes, sets) (function) of class GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:133: warning: Member bindSetStyles(stylesheet, sets) (function) of class GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:146: warning: Member storeAbsentNodes(nodes, sets) (function) of class GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:158: warning: Member showAbsentNodes() (function) of class GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:175: warning: Member centerGraph() (function) of class GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/graph/graph.js:181: warning: Member checkGraphSize() (function) of class GraphView is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/grouper/grouper.js:3: warning: Member constructor(selector) (function) of class Grouper is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/grouper/grouper.js:16: warning: Member selected() (function) of class Grouper is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/grouper/grouper.js:20: warning: Member group(interactions) (function) of class Grouper is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/grouper/grouper.js:38: warning: Member _sortGroups(groups) (function) of class Grouper is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/help/help.js:3: warning: Member constructor(units) (function) of class Help is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/help/help.js:11: warning: Member launchHelpUnit(unit) (function) of class Help is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/highlight/highlight.js:3: warning: Member constructor(input) (function) of class Highlight is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/highlight/highlight.js:13: warning: Member highlight(interactions) (function) of class Highlight is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/probabilityfilter.js:3: warning: Member constructor(slider, value_display) (function) of class ProbabilityFilter is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/probabilityfilter.js:24: warning: Member getMinimumProbability() (function) of class ProbabilityFilter is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:3: warning: Member constructor(table, interactions) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:12: warning: Member buildPubmedLink(pubmedID) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:20: warning: Member updateMessage(message) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:24: warning: Member hideBackButton() (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:28: warning: Member showBackButton() (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:33: warning: Member addSynonym(gene, synonym) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:38: warning: Member styleExcerpt(excerpt, symbol, color) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:42: warning: Member initHistogram(group, probabilities) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:5: warning: Member constructor(input, topology, display, color) (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:26: warning: Member selectedTopology() (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:30: warning: Member addSearchSet(name, ids, deferRunSearch=false) (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:64: warning: Member removeSearchSet(identifier, deferRunSearch=false) (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:74: warning: Member clearSearch() (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:79: warning: Member getIds(minProb) (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:101: warning: Member search1Hop() (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:109: warning: Member search2Hop() (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:120: warning: Member search3Hop() (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:132: warning: Member searchClique(minProb) (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:143: warning: Member renderDisplay() (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:186: warning: Member initTypeahead() (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:251: warning: Member getGraphData() (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:274: warning: Member hasSearchSet(name) (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:278: warning: Member memberOf(id) (function) of class Search is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/search/search.js:285: warning: Member constructor(name, ids) (function) of class SearchSet is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/synonym/synonym.js:3: warning: Member buildIdSymbolMap(search_set) (function) of class Synonym is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/synonym/synonym.js:13: warning: Member findSynonyms(search_set, interactions) (function) of class Synonym is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tabledetail.js:3: warning: Member constructor(table, interactions, group) (function) of class TableDetail is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tabledetail.js:33: warning: Member drawHeaders() (function) of class TableDetail is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tabledetail.js:51: warning: Member drawBody() (function) of class TableDetail is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:3: warning: Member constructor(table, interactions) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:12: warning: Member buildPubmedLink(pubmedID) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:20: warning: Member updateMessage(message) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:24: warning: Member hideBackButton() (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:28: warning: Member showBackButton() (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:33: warning: Member addSynonym(gene, synonym) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:38: warning: Member styleExcerpt(excerpt, symbol, color) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:42: warning: Member initHistogram(group, probabilities) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tablesummaryarticle.js:3: warning: Member constructor(table, interactions) (function) of class TableSummaryArticle is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tablesummaryarticle.js:26: warning: Member drawHeaders() (function) of class TableSummaryArticle is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tablesummaryarticle.js:44: warning: Member drawBody() (function) of class TableSummaryArticle is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:3: warning: Member constructor(table, interactions) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:12: warning: Member buildPubmedLink(pubmedID) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:20: warning: Member updateMessage(message) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:24: warning: Member hideBackButton() (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:28: warning: Member showBackButton() (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:33: warning: Member addSynonym(gene, synonym) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:38: warning: Member styleExcerpt(excerpt, symbol, color) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:42: warning: Member initHistogram(group, probabilities) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tablesummarygene.js:3: warning: Member constructor(table, interactions) (function) of class TableSummaryGene is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tablesummarygene.js:30: warning: Member drawHeaders() (function) of class TableSummaryGene is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/tablesummarygene.js:46: warning: Member drawBody() (function) of class TableSummaryGene is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:3: warning: Member constructor(table, interactions) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:12: warning: Member buildPubmedLink(pubmedID) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:20: warning: Member updateMessage(message) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:24: warning: Member hideBackButton() (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:28: warning: Member showBackButton() (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:33: warning: Member addSynonym(gene, synonym) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:38: warning: Member styleExcerpt(excerpt, symbol, color) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/view/table/resultstable.js:42: warning: Member initHistogram(group, probabilities) (function) of class ResultsTable is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/textfilter.js:4: warning: Member constructor(attribute, is, valueText, valueDropdown, submit, display) (function) of class TextFilter is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/textfilter.js:46: warning: Member createFilterValueLists(interactions) (function) of class TextFilter is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/textfilter.js:60: warning: Member addFilter() (function) of class TextFilter is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/textfilter.js:65: warning: Member addFilterSet(attribute, is, value) (function) of class TextFilter is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/textfilter.js:71: warning: Member removeFilterSet(identifier) (function) of class TextFilter is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/textfilter.js:77: warning: Member renderDisplay() (function) of class TextFilter is not documented.
+G:/School/Graduate Project/GeneDive/static/genedive/filter/textfilter.js:96: warning: Member filterInteractions(interactions) (function) of class TextFilter is not documented.
