@@ -2,10 +2,18 @@
 
   include_once "session.php";
 
+  if ( !file_exists("./data/credentials.php") ) {
+    $_SESSION[ 'is_auth' ] = false;
+    $_SESSION[ 'message' ] = "Registration is currently disabled.";
+
+    header("Location: index.php");
+  }
+
 ?>
 
 <html>
   <head>
+  
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
