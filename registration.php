@@ -4,7 +4,7 @@
 
   if ( !file_exists("./data/credentials.php") ) {
     $_SESSION[ 'is_auth' ] = false;
-    $_SESSION[ 'message' ] = "Registration is currently disabled.";
+    $_SESSION[ 'error' ] = "Registration is currently disabled.";
 
     header("Location: index.php");
   }
