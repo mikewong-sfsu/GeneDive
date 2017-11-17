@@ -1,8 +1,8 @@
 <?php 
 
-  include_once "session.php";
+  include_once "../session.php";
 
-  if ( !file_exists("data/credentials.php") ) {
+  if ( !file_exists("../data/credentials.php") ) {
     $_SESSION[ 'is_auth' ] = false;
     $_SESSION[ 'error' ] = "Reset is currently disabled.";
 
@@ -19,8 +19,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fonts/font-awesome.min.css">
   </head>
 
   <body>
@@ -39,7 +39,7 @@
             }
           ?>
 
-          <form action="sendresetpass.php" method="post">
+          <form action="sendresetlink.php" method="post">
             <div class="form-group">
               <label for="email">Email Address</label>
               <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required>

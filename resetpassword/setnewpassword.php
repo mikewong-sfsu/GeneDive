@@ -1,16 +1,16 @@
 <?php
 
-  include_once "session.php";
+  include_once "../session.php";
 
   if ( !isset($_GET['email']) || !isset($_GET['email']) ) {
-    header("Location: index.php");
+    header("Location: ../index.php");
     return;
   }
 
   $email = $_GET['email'];
   $token = $_GET['token'];
 
-  $pdo  = new PDO( 'sqlite:data/users.sqlite' ) or die( "Cannot connect to the database." );
+  $pdo  = new PDO( 'sqlite:../data/users.sqlite' ) or die( "Cannot connect to the database." );
 
   $stmt = $pdo->prepare( "SELECT reset_token, reset_expiry FROM user WHERE email = :email" );
   $stmt->bindValue( ':email', $email, PDO::PARAM_STR );
@@ -20,7 +20,7 @@
   // If no account || bad token || past expiry
   if ( $row == false || $token != $row['reset_token'] || time() > $row['reset_expiry'] ) {
     $_SESSION['error'] = "Reset Link Invalid or Expired";
-    header("Location: index.php");
+    header("Location: ../index.php");
   }
 
 ?>
@@ -33,8 +33,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fonts/font-awesome.min.css">
   </head>
 
   <body>
@@ -44,7 +44,7 @@
 
           <h2>Set a New GeneDive Password</h2>
 
-          <form action="processpassreset.php" method="post">
+          <form action="updatepass.php" method="post">
             <div class="form-group">
               <label for="password">New Password</label>
               <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>

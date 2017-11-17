@@ -3,11 +3,11 @@
   use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\SMTP;
   use PHPMailer\PHPMailer\Exception;
-  require_once 'PHPMailer/src/PHPMailer.php';
-  require_once 'PHPMailer/src/SMTP.php';
+  require_once '../PHPMailer/src/PHPMailer.php';
+  require_once '../PHPMailer/src/SMTP.php';
 
-  include_once "session.php";
-  include_once "data/credentials.php";
+  include_once "../session.php";
+  include_once "../data/credentials.php";
 
   // Some basic validation - we got a valid email and a password?
   $incomplete = !( isset( $_POST[ 'email' ] ) );
@@ -19,7 +19,7 @@
 
   // Looks good - continue
 
-  $pdo  = new PDO( 'sqlite:data/users.sqlite' ) or die( "Cannot connect to the database." );
+  $pdo  = new PDO( 'sqlite:../data/users.sqlite' ) or die( "Cannot connect to the database." );
 
   $email = $_POST['email'];
   
@@ -45,7 +45,7 @@
   $stmt->execute();
 
   // Build message
-  $resetlink = "<a href=\"$BASE_URL/resetpass.php?email=$email&token=$token\">here</a>";
+  $resetlink = "<a href=\"$BASE_URL/resetpassword/setnewpassword.php?email=$email&token=$token\">here</a>";
   $message = "Reset your GeneDive password $resetlink. <br>This link expires in 30 minutes.<br><br>-GeneDive Team";
 
   $mail             = new PHPMailer();

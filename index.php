@@ -35,7 +35,7 @@
         <div class="actions">
           <button type="submit" name="login-submit" class="btn btn-primary">Login</button>
           <a href="registration.php" style="color:#33cc33; font-weight: bold;">Register</a>
-          <a href="forgotpass.php">Forgot Password?</a>
+          <a href="/resetpassword/forgotpass.php">Forgot Password?</a>
         </div>
       </form>
 
