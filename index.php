@@ -32,7 +32,11 @@
           <label for="password">Password</label>
           <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
         </div>
-        <button type="submit" name="login-submit" class="btn btn-primary">Login</button> or <a href="registration.php">Register</a>
+        <div class="actions">
+          <button type="submit" name="login-submit" class="btn btn-primary">Login</button>
+          <a href="registration.php" style="color:#33cc33; font-weight: bold;">Register</a>
+          <a href="forgotpass.php">Forgot Password?</a>
+        </div>
       </form>
 
       <!--  Display Success Message -->

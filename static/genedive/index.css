@@ -68,6 +68,10 @@
   }
 }
 
+.login .actions * {
+  margin-right: 14px;
+}
+
 .landing .footer {
   position: absolute;
   bottom: 12px;
