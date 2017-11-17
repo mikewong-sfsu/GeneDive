@@ -29,6 +29,9 @@
     <script src="static/genedive/json/adjacency_matrix.js"></script>
     <!-- <script src="static/genedive/json/test_adjacency.js"></script> -->
 
+    <!-- ResizeSensor -->
+    <script src="static/resizesensor/ResizeSensor.js"></script>
+
     <!-- JSZip -->
     <script src="static/jszip/jszip.min.js"></script>
 

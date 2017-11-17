@@ -133,9 +133,7 @@ class GraphView {
   bindSetStyles ( stylesheet, sets ) {
 
     let index = 1;
-
-    debugger;
-
+    
     for ( let s of sets ) {
 
       if ( s.entity == "chemical" || s.entity == "disease" )

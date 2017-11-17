@@ -107,7 +107,7 @@
 
   <div class="table-graph-holder">
     <!-- Table View -->
-    <div class="table-view ui-widget-content">
+    <div class="table-view ui-widget-content" id="table-view">
       <div class="messaging-and-controls">
         <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
         <span class="metadata"></span>
@@ -126,7 +126,7 @@
     </div>
 
     <!-- Graph View -->
-    <div class="graph-view">
+    <div class="graph-view" id="graph-view">
       <div class="absent">
         <div>View Absent Nodes List</div>
       </div>

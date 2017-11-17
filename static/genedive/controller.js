@@ -228,7 +228,11 @@ $(document).on('ready', function () {
     }
   }
 
-
-
-
 });
+
+new ResizeSensor(document.getElementById("table-view"), () => {
+  delay( function () {
+   GeneDive.runSearch(); 
+  }, 300);
+});
+
