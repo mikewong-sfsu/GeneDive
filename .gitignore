@@ -1,6 +1,5 @@
+*.sqlite
 *.bak
 data/credentials.php
-data/users.sqlite
-data/data.sqlite
 sessions/
 static/genedive/json/adjacency_matrix.js

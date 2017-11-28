@@ -1,10 +1,11 @@
 <?php
 
+  require_once 'PHPMailer/src/PHPMailer.php';
+  require_once 'PHPMailer/src/SMTP.php';
+  require_once 'PHPMailer/src/Exception.php';
   use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\SMTP;
   use PHPMailer\PHPMailer\Exception;
-  require_once 'PHPMailer/src/PHPMailer.php';
-  require_once 'PHPMailer/src/SMTP.php';
 
   include_once "session.php";
   include_once "data/credentials.php";
@@ -70,7 +71,7 @@
   $mail->Username   = $SMTP_USER; 
   $mail->Password   = $SMTP_PASS;      
 
-  $mail->SetFrom('genedive@gmail.com', 'GeneDive');
+  $mail->SetFrom( 'admin@www.genedive.net', 'GeneDive');
   $mail->Subject    = "GeneDive Registration";
   $mail->MsgHTML($message);
 
@@ -78,12 +79,10 @@
 
   $mail->Send();
 
-
-
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $_POST['email'];
   $_SESSION[ 'message' ] = "Registration successful. Welcome!";
 
-  header("Location: index.php");
+  header("Location: search2.php");
 
 ?>
