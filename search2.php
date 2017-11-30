@@ -12,10 +12,10 @@
     <div class="module search-module">
       <div class="topology-row">
         <div class="btn-group topology-selector" style="width:100%;" role="group" aria-label="...">
-          <button data-toggle="tooltip" title="Provide one gene to view all interactions with that gene. Provide multiple genes or genesets to view interactions between all input genes." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
-          <button data-toggle="tooltip" title="Provide two genes as input. GeneDive will show interactions between the two genes through up to 1 (one) intermediary gene." style="width:25%;" type="button" class="btn btn-default" data-type="2hop">2-Hop</button>
-          <button data-toggle="tooltip" title="Provide two genes as input. GeneDive will show interactions between the two genes through up to 2 (two) intermediary genes." style="width:25%;" type="button" class="btn btn-default" data-type="3hop">3-Hop</button>
-          <button data-toggle="tooltip" title="Provide one gene as input. GeneDive will show those genes that interact with the input gene as well as one other input interactant." style="width:25%;" type="button" class="btn btn-default" data-type="clique">Clique</button>
+          <button data-toggle="tooltip" data-placement="right"  title="Provide one gene to view all interactions with that gene. Provide multiple genes or genesets to view interactions between all input genes." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
+          <button data-toggle="tooltip" data-placement="right"  title="Provide two genes as input. GeneDive will show interactions between the two genes through up to 1 (one) intermediary gene." style="width:25%;" type="button" class="btn btn-default" data-type="2hop">2-Hop</button>
+          <button data-toggle="tooltip" data-placement="right"  title="Provide two genes as input. GeneDive will show interactions between the two genes through up to 2 (two) intermediary genes." style="width:25%;" type="button" class="btn btn-default" data-type="3hop">3-Hop</button>
+          <button data-toggle="tooltip" data-placement="right"  title="Provide one gene as input. GeneDive will show those genes that interact with the input gene as well as one other input interactant." style="width:25%;" type="button" class="btn btn-default" data-type="clique">Clique</button>
         </div>
       </div>
 
