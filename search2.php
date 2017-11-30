@@ -72,7 +72,7 @@
     <!-- Highlight Module -->
     <div class="module highlight-module">
       <div class="title">
-        <h5><!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->Highlight Rows</h5>
+        <h5><!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->Highlight Excerpts Containing</h5>
       </div>
       <input type="text" placeholder="highlight term..." class="form-control highlight-input">
     </div>
