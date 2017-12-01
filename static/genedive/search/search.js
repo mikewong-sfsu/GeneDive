@@ -147,6 +147,26 @@ class Search {
       let item = undefined;
 
       if ( set.type == "gene" ) {
+
+        // Now that we handle genes, chemicals, and diseases we need to do some disambiguation
+        let identifier = set.ids[0];
+        let prefix = identifier.substring(0,1);
+        let linkout = "";
+
+
+        if ( prefix == "C" ) {
+          // PGKB Chemical
+          identifier = "PA" + identifier.substring(1);
+          linkout = `https://www.pharmgkb.org/chemical/${identifier}`;
+        } else if ( prefix == "D" ) {
+          // PGKB Disease
+          identifier = "PA" + identifier.substring(1);
+          linkout = `https://www.pharmgkb.org/disease/${identifier}`;
+        } else {
+          // NCBI Gene ID
+          linkout = `https://www.ncbi.nlm.nih.gov/gene/${identifier}`; 
+        }
+
         item = $("<div/>")
           .addClass("search-item")
           .css("background-color", set.color)
@@ -155,10 +175,10 @@ class Search {
             $("<i/>").addClass("fa fa-question ncbi-linkout")
               .data("ncbi", set.ids[0])
               .attr("data-toggle", "tooltip")
-              .attr("title", "Open NCBI Datasheet In New Tab")
+              .attr("title", "Open Datasheet In New Tab")
               .on('click', ( event ) => { 
                 let ncbi_id = $(event.target).data("ncbi");
-                window.open(`https://www.ncbi.nlm.nih.gov/gene/${ncbi_id}`); 
+                window.open(linkout); 
               })
           )
           .append( 

@@ -1,5 +1,7 @@
 <?php include_once "auth.php"; ?>
 
+<?php include_once "session.php"; ?>
+
 <?php include "header.php"; ?>
 
 <div class="main-display">

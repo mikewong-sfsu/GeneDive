@@ -82,6 +82,7 @@
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $_POST['email'];
   $_SESSION[ 'message' ] = "Registration successful. Welcome!";
+  $_SESSION[ 'just_registered' ] = true;
 
   header("Location: search2.php");
 
