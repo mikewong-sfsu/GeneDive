@@ -133,11 +133,8 @@
         <div>View Absent Nodes List</div>
       </div>
       <div class="legend">
-        <!--<h4>Colors</h4>
-          Gray
-          Orange
-          Blue
-          Other -->
+        <div class="colors">
+        </div>
         <h4>Controls</h4>
         <p>Click To Drag</p>
         <p>Shift-Click to Add</p>

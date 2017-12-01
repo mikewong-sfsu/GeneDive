@@ -45,6 +45,9 @@ class GraphView {
 
     // Notify user of set members that don't appear in search results 
     this.storeAbsentNodes ( nodes, sets );
+
+    // Update color legend based on search topology
+    this.updateLegendColors();
   }
 
   createNodes ( interactions ) {
@@ -189,6 +192,29 @@ class GraphView {
 
     $(".graph-view").height(total - table);
     $("#graph").height(total-table);
+  }
+
+  updateLegendColors() {
+    let topology = GeneDive.search.selectedTopology();
+    let text = "";
+
+    switch ( topology ) {
+      case "2hop":
+      case "3hop":
+        text = "<h4>Colors</h4><p style='color:#fb7e2a;'>Pathway Interactants</p><p style='color:gray;'>Non-Pathway Interactants</p>";
+        break;
+
+      case "clique":
+        text = "<h4>Colors</h4><p style='color:#fb7e2a;'>Clique Interactants</p><p style='color:gray;'>Non-Clique Interactants</p>";
+        break;
+
+      case "1hop":
+      default:
+        break;
+
+    }
+
+    $(".graph-view .legend .colors").html(text);  
   }
 
 }
