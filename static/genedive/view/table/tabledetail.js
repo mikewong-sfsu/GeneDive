@@ -36,13 +36,13 @@ class TableDetail extends ResultsTable {
     let tr = $(document.createElement("tr"));
     thead.append(tr);
 
-    tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
-    tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
-    tr.append( $(document.createElement("th")).text("Journal").css("width","8%") );
-    tr.append( $(document.createElement("th")).text( "Article ID" ).addClass("numeric").css("width","8%") );
-    tr.append( $(document.createElement("th")).text( "Section" ).css("width","8%") );
-    tr.append( $(document.createElement("th")).text( "Probability" ).addClass("numeric").css("width","10%") );
-    tr.append( $(document.createElement("th")).text( "Excerpt" ).css("width","40%") );
+    tr.append( $(document.createElement("th")).text( "Gene" ) );
+    tr.append( $(document.createElement("th")).text( "Gene" ) );
+    tr.append( $(document.createElement("th")).text("Journal") );
+    tr.append( $(document.createElement("th")).text( "Article ID" ).addClass("numeric") );
+    tr.append( $(document.createElement("th")).text( "Section" ) );
+    tr.append( $(document.createElement("th")).text( "Probability" ).addClass("numeric") );
+    tr.append( $(document.createElement("th")).text( "Excerpt" ) );
     tr.append( $(document.createElement("th")).text( "Pubmed" ) );
 
     this.table.append(thead);
@@ -62,6 +62,8 @@ class TableDetail extends ResultsTable {
       let excerpt = this.styleExcerpt( i.context, i.mention1, i.mention1_color );
           excerpt = this.styleExcerpt( excerpt, i.mention2, i.mention2_color );
 
+      let pubmed = i.pubmed_id != "Unknown" ? this.buildPubmedLink( i.pubmed_id ) : "Unknown";
+
       tr.append( $(document.createElement("td")).html( i.mention1 ) );
       tr.append( $(document.createElement("td")).html( i.mention2 ) );
       tr.append( $(document.createElement("td")).html( i.journal ) );
@@ -69,7 +71,7 @@ class TableDetail extends ResultsTable {
       tr.append( $(document.createElement("td")).text( i.section ) );
       tr.append( $(document.createElement("td")).text( Number(i.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( excerpt ) );
-      tr.append( $(document.createElement("td")).html( this.buildPubmedLink( i.pubmed_id ) ) );
+      tr.append( $(document.createElement("td")).html( pubmed ) );
 
       tbody.append(tr);
     }
