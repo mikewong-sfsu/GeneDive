@@ -7,9 +7,9 @@
   $query = NULL;
 
   if ( strpos( $gid, ',' ) ) {
-    $query = "SELECT * FROM interactions WHERE geneids1 IN ( $gid ) AND geneids2 IN ( $gid ) AND probability > $minProb;";
+    $query = "SELECT * FROM interactions WHERE geneids1 IN ( $gid ) AND geneids2 IN ( $gid ) AND probability >= $minProb;";
   } else {
-    $query = "SELECT * FROM interactions WHERE (geneids1 = $gid OR geneids2 = $gid) AND probability > $minProb;";
+    $query = "SELECT * FROM interactions WHERE (geneids1 = $gid OR geneids2 = $gid) AND probability >= $minProb;";
   }
 
   $stmt = $pdo->prepare($query);
