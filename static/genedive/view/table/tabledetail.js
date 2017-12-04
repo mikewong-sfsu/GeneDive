@@ -62,16 +62,17 @@ class TableDetail extends ResultsTable {
       let excerpt = this.styleExcerpt( i.context, i.mention1, i.mention1_color );
           excerpt = this.styleExcerpt( excerpt, i.mention2, i.mention2_color );
 
-      let pubmed = i.pubmed_id != "None" ? this.buildPubmedLink( i.pubmed_id ) : i.pubmed_id;
+      let pubmed_display = i.pubmed_id != null ? i.pubmed_id  : "None";
+      let pubmed_link = i.pubmed_id != null ? this.buildPubmedLink( i.pubmed_id ) : "None";
 
       tr.append( $(document.createElement("td")).html( i.mention1 ) );
       tr.append( $(document.createElement("td")).html( i.mention2 ) );
       tr.append( $(document.createElement("td")).html( i.journal ) );
-      tr.append( $(document.createElement("td")).text( i.pubmed_id ).addClass("numeric") );
+      tr.append( $(document.createElement("td")).text( pubmed_display ).addClass("numeric") );
       tr.append( $(document.createElement("td")).text( i.section ) );
       tr.append( $(document.createElement("td")).text( Number(i.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( excerpt ) );
-      tr.append( $(document.createElement("td")).html( pubmed ) );
+      tr.append( $(document.createElement("td")).html( pubmed_link ) );
 
       tbody.append(tr);
     }
