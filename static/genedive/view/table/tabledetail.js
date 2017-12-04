@@ -62,7 +62,7 @@ class TableDetail extends ResultsTable {
       let excerpt = this.styleExcerpt( i.context, i.mention1, i.mention1_color );
           excerpt = this.styleExcerpt( excerpt, i.mention2, i.mention2_color );
 
-      let pubmed = i.pubmed_id != "Unknown" ? this.buildPubmedLink( i.pubmed_id ) : "Unknown";
+      let pubmed = i.pubmed_id != "None" ? this.buildPubmedLink( i.pubmed_id ) : i.pubmed_id;
 
       tr.append( $(document.createElement("td")).html( i.mention1 ) );
       tr.append( $(document.createElement("td")).html( i.mention2 ) );
