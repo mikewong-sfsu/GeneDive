@@ -4,3 +4,4 @@ data/credentials.php
 sessions/
 static/genedive/json/adjacency_matrix.js
 docs/doxygen_*.tmp
+docs/gen/screenshot_generation.json
