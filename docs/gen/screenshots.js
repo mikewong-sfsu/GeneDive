@@ -74,13 +74,21 @@ if (!fs.existsSync(SCREENSHOTS_FOLDER)){
 			await page.click("input#password");
 			await page.keyboard.type(action.password);
 			await page.click("button");
-			// ------------- TODO: Add a test to see if the login was successful ----------- //
+			/* ------------- 
+			
+			TODO: Add a test to see if the login was successful 
+			
+			-----------*/
 			await page.waitForSelector('img');
 		}
 		// This will click on the search, input some parameters, and then make the search.
 		else if(action.type === "SEARCH")
 		{
-			// ------------- TODO: Add the ability to search more parameters ----------- //
+			/* ------------- 
+			
+			TODO: Add the ability to search more parameters 
+			
+			-----------*/
 			page.click(".search-input");
 			await page.keyboard.type(action.text);
 			await page.waitFor(1000);

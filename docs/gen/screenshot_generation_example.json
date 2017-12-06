@@ -9,13 +9,12 @@
       "filename": "login_page.png",
       "description": "Takes a screenshot of the login page",
       "element" : "body"
-      
     }
     ,{
       "type": "LOGIN",
-      "description": "Logins in as Brook",
-      "login": "brookthomas@gmail.com",
-      "password": "asdf"  
+      "description": "Logs in as whomever",
+      "login": "somedude@fakesite.com",
+      "password": "hunter2"  
     }
     ,{
       "type": "RESIZE",
