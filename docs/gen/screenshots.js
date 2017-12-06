@@ -57,7 +57,7 @@ if (!fs.existsSync(SCREENSHOTS_FOLDER)){
 	for(var i = 0; i < json_data.actions.length; i++)
 	{
 		action = json_data.actions[i];
-		console.log("Executing " + action.type + ": " + action.description);
+		console.log(action.type + ": " + action.description);
 
 		// Takes a screenshot of a specific element and saves it
 		if(action.type === "SCREENSHOT")
@@ -89,7 +89,7 @@ if (!fs.existsSync(SCREENSHOTS_FOLDER)){
 			TODO: Add the ability to search more parameters 
 			
 			-----------*/
-			page.click(".search-input");
+			await page.click(".search-input");
 			await page.keyboard.type(action.text);
 			await page.waitFor(1000);
 			// The search box has to be clicked again after inputting the text for some reason
