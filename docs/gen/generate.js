@@ -1,9 +1,9 @@
 /**
 	@brief		Documentation Generation Script
 	@file		generate.js
-	@author		Jack Cole jcole2@sfsu.edu
+	@author		Jack Cole jcole2@mail.sfsu.edu
 	@date		2017-11-09
-	@details	This file will generate all the documentation for the GeneDrive project.
+	@details	This file will generate all the documentation for the GeneDive project.
 				It is programmed in NoseJS, and uses Doxygen and PhantomJS for the sub scripts.
 */
 
@@ -43,8 +43,8 @@ function log_something(file, text){
 
 /**
 	@name		Doxygen execution stage	
-	@details	This will create the actual html files for all the source code in the GeneDrive program.
-	@post		html documentation updated in the GeneDrive/docs/html/ folder
+	@details	This will create the actual html files for all the source code in the GeneDive program.
+	@post		html documentation updated in the GeneDive/docs/html/ folder
 				<br>Two log files outputted: *doxygen_output.log* *doxygen_error.log*
 	@{
 */
