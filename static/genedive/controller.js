@@ -13,10 +13,17 @@ class Controller {
     this.graph          = new GraphView("graph");
     this.download       = new Download(".download-module button.download");
 
-    this.tablestate = { zoomed: false, zoomgroup: null }; 
-    this.firstsearch = true;
-    this.interactions = null;
-    this.filtrate = null; 
+    this.tablestate     = { zoomed: false, zoomgroup: null }; 
+    this.firstsearch    = true;
+    this.interactions   = null;
+    this.filtrate       = null; 
+
+    $( function() {
+      $(".panel-top").resizable({
+        handleSelector: ".splitter-horizontal",
+        resizeWidth: false
+      });
+    });
   }
 
   runSearch() {

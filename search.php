@@ -108,7 +108,7 @@
   <div class="views">
 
     <!-- Table View -->
-    <div class="table-view ui-widget-content">
+    <div class="table-view ui-widget-content panel-top">
       <div class="messaging-and-controls">
         <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
         <span class="metadata"></span>
@@ -148,9 +148,10 @@
       </div>
     </div>
 
+    <div class="splitter-horizontal"></div>
 
     <!-- Graph View -->
-    <div class="graph-view">
+    <div class="graph-view panel-bottom">
       <div class="absent">
         <div>View Absent Nodes List</div>
       </div>

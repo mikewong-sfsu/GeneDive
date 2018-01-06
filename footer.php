@@ -35,6 +35,9 @@
     <!-- FileSaver -->
     <script src="static/filesaver/filesaver.min.js"></script>
 
+    <!-- jQuery Resizeable -->
+	<script src="static/jquery/add-ons/jquery-resizable.min.js"></script>
+
     <!-- Cytoscape -->
     <script src="static/cytoscape/cytoscape.min.js"></script>
     <script src="static/cytoscape/cytoscape-euler.js"></script>
