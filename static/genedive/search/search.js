@@ -199,7 +199,7 @@ class Search {
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });
     geneset.initialize();
-    
+
     var chemical = new Bloodhound({
       local: AUTOCOMPLETE_CHEMICAL,
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
