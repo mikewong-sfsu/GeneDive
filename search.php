@@ -105,7 +105,8 @@
     </div>
   </div>
 
-  <div class="table-graph-holder">
+  <div class="views">
+
     <!-- Table View -->
     <div class="table-view ui-widget-content">
       <div class="messaging-and-controls">
@@ -146,6 +147,7 @@
         <h3>No Results Found</h3>
       </div>
     </div>
+
 
     <!-- Graph View -->
     <div class="graph-view">
@@ -198,6 +200,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </div>
 

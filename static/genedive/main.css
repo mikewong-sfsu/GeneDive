@@ -27,14 +27,14 @@ body {
   background-color: rgb(247,247,247);
 }
 
-.table-graph-holder {
+.views {
   flex-direction: column;
   flex-grow: 1;
 }
 
 .table-view {
   border-bottom:1px solid gray;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 50%;
   resize: vertical;
 }
