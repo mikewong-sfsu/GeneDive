@@ -200,7 +200,6 @@ class Search {
     });
     geneset.initialize();
     
-    /*
     var chemical = new Bloodhound({
       local: AUTOCOMPLETE_CHEMICAL,
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
@@ -214,14 +213,13 @@ class Search {
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });
     disease.initialize();
-    */
 
     this.input.typeahead(
       { minLength: 1, highlight: true, hint: false },
-      { name: 'Genes', source: genes, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }  },
-      //{ name: 'Chemicals', source: chemical, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Chemicals</h4>" } },
-      //{ name: 'Diseases', source: disease, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Diseases</h4>" } },
-      { name: 'Genesets', source: geneset, limit: 3, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } },
+      { name: 'Genes',     source: genes,    limit: 10000, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }  },
+      { name: 'Chemicals', source: chemical, limit: 10000, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Chemicals</h4>" } },
+      { name: 'Diseases',  source: disease,  limit: 10000, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Diseases</h4>" } },
+      { name: 'Genesets',  source: geneset,  limit: 10000, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } },
     );
 
     $('.twitter-typeahead').css('width','100%');
