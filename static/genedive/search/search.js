@@ -24,7 +24,9 @@ class Search {
   }
 
   selectedTopology() {
-    return this.topology.children("button.active").attr("data-type");
+    let selected = this.topology.children("button.active");
+    selected.tooltip( 'hide' );
+    return selected.attr("data-type");
   }
 
   addSearchSet ( name, ids, deferRunSearch = false ) {

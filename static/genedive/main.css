@@ -206,3 +206,9 @@ h5 {
   font-size: 2.2em;
   color:rgb(128,128,128);
 }
+
+/* Typeahead listbox */
+.tt-menu {
+  max-height: 400px;
+  overflow-y: auto;
+}
