@@ -63,7 +63,8 @@ class TableSummaryArticle extends ResultsTable {
           tr.addClass( "highlight-row" );
         }
 
-      let row = this.interactions[group][0];
+      let rows = this.interactions[ group ];
+      let row  = this.interactions[ group ][ rows.length - 1 ];
 
       let excerpt = this.styleExcerpt( row.context, row.mention1, row.mention1_color );
           excerpt = this.styleExcerpt( excerpt, row.mention2, row.mention2_color );

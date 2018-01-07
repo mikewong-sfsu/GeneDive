@@ -63,7 +63,8 @@ class TableSummaryGene extends ResultsTable {
           tr.addClass( "highlight-row" );
         }
 
-      let row = this.interactions[group][0];
+      let rows = this.interactions[group];
+      let row  = rows[ rows.length - 1 ];
 
       // Synonym styling
       let mention1 = row.mention1_synonym ? this.addSynonym(row.mention1, row.mention1_synonym) : row.mention1;
