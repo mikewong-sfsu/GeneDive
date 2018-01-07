@@ -20,8 +20,8 @@ class TableSummaryGene extends ResultsTable {
     this.drawBody();
 
     this.table.tablesorter({ 
-      headers: { 0: { sorter: false }, 4: { sorter: false }, 6: { sorter: false } }, 
-      sortList: [[5,1],] } // [index, asc/desc]
+      headers: { 0: { sorter: false }, 5: { sorter: false }, 7: { sorter: false } }, 
+      sortList: [[6,2],] } // [index, asc/desc]
     ); 
 
 
@@ -29,13 +29,14 @@ class TableSummaryGene extends ResultsTable {
   
   drawHeaders ( ) {
     let thead = $(document.createElement("thead"));
-    let tr = $(document.createElement("tr"));
+    let tr    = $(document.createElement("tr"));
     thead.append(tr);
 
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%") );
     tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
     tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
     tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric") );
+    tr.append( $(document.createElement("th")).text( "# Articles" ).addClass("numeric header") ); // MW TODO: Why do I need to manually add header?
     tr.append( $(document.createElement("th")).text( "P. Distribution" ) );
     tr.append( $(document.createElement("th")).text( "Max Probability" ).addClass("numeric") );
     tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width","40%") );
@@ -66,6 +67,9 @@ class TableSummaryGene extends ResultsTable {
       let rows = this.interactions[group];
       let row  = rows[ rows.length - 1 ];
 
+      // Compile number of unique articles
+      row.articles = Object.keys( rows.reduce(( acc, cur ) => { let article = cur.article_id; if( ! defined( article )) { return acc; } acc[ article ] = true; return acc; }, {})).length;
+
       // Synonym styling
       let mention1 = row.mention1_synonym ? this.addSynonym(row.mention1, row.mention1_synonym) : row.mention1;
       let mention2 = row.mention2_synonym ? this.addSynonym(row.mention2, row.mention2_synonym) : row.mention2;
@@ -77,6 +81,7 @@ class TableSummaryGene extends ResultsTable {
       tr.append( $(document.createElement("td")).html( mention1 ) );
       tr.append( $(document.createElement("td")).html( mention2 ) );
       tr.append( $(document.createElement("td")).html( `${this.interactions[group].length}` ).addClass("numeric") );
+      tr.append( $(document.createElement("td")).html( row.articles ).addClass( "numeric" ));
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( excerpt ) );
