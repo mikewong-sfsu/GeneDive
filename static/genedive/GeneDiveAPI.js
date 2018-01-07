@@ -1,10 +1,13 @@
+function defined( x ) { return ((typeof( x ) !== 'undefined') && (x !== null)); }
 var GeneDiveAPI = {};
 
 /// @function GeneDiveAPI._stringifyIDs
 /// Given a list of IDs, forces quoted string interpretation of each ID
 /// @param {Array} a list of gene ids as Strings
 GeneDiveAPI._stringifyIDs = function ( ids ) {
-  return ids.map( i => `'${i}'` ).toString();
+  if( ! defined( ids )) { return ''; }
+  if( Array.isArray( ids )       ) { return ids.map( i => `'${i}'` ).toString(); } else 
+  if( typeof( ids ) === 'string' ) { return ids; }
 };
 
 /// @function GeneDiveAPI.interactions
