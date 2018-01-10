@@ -2,21 +2,28 @@ class Controller {
   
   constructor () {
 
-    this.color = new Color();
-    this.help = new Help(".module-help");
-    this.search = new Search( ".search-input", ".topology-selector", ".search-sets", this.color );
+    this.color          = new Color();
+    this.help           = new Help(".module-help");
+    this.search         = new Search( ".search-input", ".topology-selector", ".search-sets", this.color );
     this.disambiguation = new Disambiguation();
-    this.probfilter = new ProbabilityFilter( ".min-prob-slider", ".min-prob-slider-value" );
-    this.textfilter = new TextFilter( ".filter-select", ".filter-is-not .is", ".filter-text", ".filter-dropdown", ".add-filter", ".filters");
-    this.highlighter = new Highlight( ".highlight-input" );
-    this.grouper = new Grouper( ".grouper-module .table-grouping" );
-    this.graph = new GraphView("graph");
-    this.download = new Download(".download-module button.download");
+    this.probfilter     = new ProbabilityFilter( ".min-prob-slider", ".min-prob-slider-value" );
+    this.textfilter     = new TextFilter( ".filter-select", ".filter-is-not .is", ".filter-text", ".filter-dropdown", ".add-filter", ".filters");
+    this.highlighter    = new Highlight( ".highlight-input" );
+    this.grouper        = new Grouper( ".grouper-module .table-grouping" );
+    this.graph          = new GraphView("graph");
+    this.download       = new Download(".download-module button.download");
 
-    this.tablestate = { zoomed: false, zoomgroup: null }; 
-    this.firstsearch = true;
-    this.interactions = null;
-    this.filtrate = null; 
+    this.tablestate     = { zoomed: false, zoomgroup: null }; 
+    this.firstsearch    = true;
+    this.interactions   = null;
+    this.filtrate       = null; 
+
+    $( function() {
+      $(".panel-top").resizable({
+        handleSelector: ".splitter-horizontal",
+        resizeWidth: false
+      });
+    });
   }
 
   runSearch() {

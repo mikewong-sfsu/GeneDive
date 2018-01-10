@@ -15,7 +15,7 @@
   display: none;
   text-align: right;
   right: 0;
-  bottom: 0;
+  top: 0;
 }
 
 .graph-view .absent {

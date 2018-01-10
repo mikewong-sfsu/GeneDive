@@ -25,15 +25,18 @@
     <!-- Lodash -->
     <script src="static/lodash/lodash.js"></script>
 
-    <!-- Adjacency Matrix -->
-    <script src="static/genedive/json/adjacency_matrix.js"></script>
-    <!-- <script src="static/genedive/json/test_adjacency.js"></script> -->
-
     <!-- JSZip -->
     <script src="static/jszip/jszip.min.js"></script>
+    <script src="static/jszip/jszip-utils.min.js"></script>
+
+    <!-- Adjacency Matrix -->
+    <script src="static/genedive/adjacency_matrix.js"></script>
 
     <!-- FileSaver -->
     <script src="static/filesaver/filesaver.min.js"></script>
+
+    <!-- jQuery Resizeable -->
+	<script src="static/jquery/add-ons/jquery-resizable.min.js"></script>
 
     <!-- Cytoscape -->
     <script src="static/cytoscape/cytoscape.min.js"></script>

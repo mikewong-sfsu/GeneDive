@@ -27,20 +27,38 @@ body {
   background-color: rgb(247,247,247);
 }
 
-.table-graph-holder {
+.views {
   flex-direction: column;
   flex-grow: 1;
 }
 
 .table-view {
   border-bottom:1px solid gray;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 50%;
-  resize: vertical;
+  /* resize: vertical; */
 }
 
 .graph-view {
-  height:50%;
+  height: 100%;
+}
+
+
+.panel-top {
+  flex: 0 0 auto;
+  /* only manually resize */
+}
+
+.splitter-horizontal {
+  flex: 0 0 auto;
+  height: 10px;
+  background: url(images/hsizegrip.png) center center no-repeat #ccc;
+  cursor: row-resize;
+}
+
+.panel-bottom {
+  flex: 1 1 auto;
+  /* resizable */
 }
 
 h5 {
@@ -187,4 +205,10 @@ h5 {
   text-align: center;
   font-size: 2.2em;
   color:rgb(128,128,128);
+}
+
+/* Typeahead listbox */
+.tt-menu {
+  max-height: 400px;
+  overflow-y: auto;
 }

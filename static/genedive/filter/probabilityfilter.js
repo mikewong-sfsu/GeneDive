@@ -8,15 +8,12 @@ class ProbabilityFilter {
     // Initialize Bootstrap Slider on element
     this.slider.slider();
 
-    // Update class and view when slider is moved
-    this.slider.on("slide", ( event ) => {
+    // Slider will always call slideStop at the end of user interaction with
+    // the slider, so use this event exclusively. Because min prob is sent to
+    // the database, we have to run an entirely new search on every change.
+    this.slider.on( "slideStop", ( event ) => {
       this.minimum = event.value;
-      this.value_display.text( this.minimum);
-    });
-
-    // Because min prob is sent to the database, we have to
-    // run an entirely new search on every change.
-    this.slider.on("slideStop", ( event ) => {
+      this.value_display.text( this.minimum );
       GeneDive.runSearch();
     });
   }

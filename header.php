@@ -1,6 +1,6 @@
 <?php
-  ini_set('display_errors', 1);
-  ini_set('display_startup_errors', 1);
+  ini_set( 'display_errors',         1 );
+  ini_set( 'display_startup_errors', 1 );
 ?>
 
 <!doctype html>
@@ -12,10 +12,12 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Typeahead Files / Adjacency Matrix -->
+    <!-- Typeahead Files -->
     <script src="static/genedive/json/gene_id.json"></script>
     <script src="static/genedive/json/chemical_id.json"></script>
     <script src="static/genedive/json/disease_id.json"></script>
+    <script src="static/genedive/json/symbol_id.json"></script>
+    <!-- see footer.php for all other JS source -->
 
     <!-- Fonts -->
    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
