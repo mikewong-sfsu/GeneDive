@@ -1,0 +1,51 @@
+{
+  "global_data": {
+    "domain": "https://www.genedive.net/",
+    "search_page" : "search2.php",
+    "start_width": 800,
+    "start_height": 600,
+    "screenshots_folder": "../img/gen/"
+  },
+  "actions": [
+    {
+      "type": "Screenshot",
+      "description": "Takes a screenshot of the login page",
+      "data": {
+        "filename": "login_page.png",
+        "element": "html"
+      }
+    },
+    {
+      "type": "Login",
+      "description": "Login as Brook",
+      "data": {
+        "login": "LOGIN_PLACEHOLDER",
+        "password": "PASSWORD_PLACEHOLDER"
+      }
+    },
+    {
+      "type": "Resize",
+      "description": "Sets browser size to 1080p desktop resolution",
+      "data": {
+        "width": 1920,
+        "height": 880
+      }
+    },
+    {
+      "type": "Search",
+      "description": "Searches for htr and selects the first result",
+      "data": {
+        "element": ".table-view.ui-widget-content",
+        "text": "htr"
+      }
+    },
+    {
+      "type": "Screenshot",
+      "description": "Takes a screenshot of the gene list",
+      "data": {
+        "filename": "screenshot1.png",
+        "element": ".table-view.ui-widget-content"
+      }
+    }
+  ]
+}
