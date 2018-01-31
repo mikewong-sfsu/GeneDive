@@ -11,6 +11,16 @@ class GraphView {
     $(".graph-view .absent").on("click", () => {
       this.showAbsentNodes();
     });
+
+
+    // Calls the resize method to resize the graph whenever the splitter is moved.
+    // Fixes Issue #6: "Changing the height of the map makes the mouse not click properly"
+    // TODO: Call unbind() from the splitter when a search with no results is called
+    const GRAPH_CONST = this.graph;
+    $(".splitter-horizontal").unbind().mouseup(function(){
+      GRAPH_CONST.resize();
+    });
+
   }
 
   draw( interactions, sets ) {
