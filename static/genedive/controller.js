@@ -78,12 +78,10 @@ class Controller {
 
     GeneDiveAPI.interactions( ids, minProb, ( interactions ) => {
       this.interactions = JSON.parse( interactions );
-      if ( this.interactions.length == 0 ) { 
-        this.hideTableSpinner();
-        this.hideGraphSpinner();
-        this.showNoResults();
-        return; 
-      }
+
+      // Check to see if there are any results
+      if(this.noResultsFound())
+        return;
 
       this.filterInteractions();
     });
@@ -131,6 +129,10 @@ class Controller {
     $('.table-view table').remove();
     $('.table-view').append($("<table/>").addClass("table table-hover"));
 
+    // Check to see if there are any results
+    if(this.noResultsFound())
+      return;
+
     // First check for zoom condition
     if ( this.tablestate.zoomed ) {
       new TableDetail( ".table-view table", this.filtrate, this.tablestate.zoomgroup );
@@ -146,6 +148,18 @@ class Controller {
     }
 
     this.hideTableSpinner();
+  }
+
+  // This will return true if no results are found, and false if some results are found.
+  // This will also hide the graphs and tables if no results are found
+  noResultsFound(){
+    if ( this.interactions.length == 0 ) { 
+      this.hideTableSpinner();
+      this.hideGraphSpinner();
+      this.showNoResults();
+      return true; 
+    }
+    return false
   }
 
   drawGraph() {
