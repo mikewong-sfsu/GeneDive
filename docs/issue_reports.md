@@ -56,6 +56,7 @@
 **Solution/workaround:** Call the resize() method on the graph everytime the splitter is moved.
 **Time spent:** 1.5 hours
 
+
 **IssueURL:** https://github.com/brookthomas/GeneDive/issues/7
 **Issue:** Console produces errors when changing filters or highlighting rows for no results
 **Date:** 2018-01-30
@@ -68,3 +69,13 @@
   1. Under Filter Results, add any filter like "Excerpt is 123", or type anything into Highlight Rows
 **Solution/workaround:** None Yet
 **Time spent:** 10 minutes
+
+
+**IssueURL:** https://github.com/brookthomas/GeneDive/issues/8
+**Issue:** Graph is zoomed in too close when searching
+**Date:** 2018-01-31
+**URL:** https://www.genedive.net/template.php
+**Severity:** low
+**Frequency:** consistent
+**Steps to reproduce:** 
+  1. Do a search with at least 1 result
