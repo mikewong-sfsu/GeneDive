@@ -1,3 +1,4 @@
+**IssueURL:** https://github.com/brookthomas/GeneDive/issues/3
 **Issue:** Page hangs when loading search suggestions
 **Date:** 2018-01-27
 **URL:** https://www.genedive.net/search.php
@@ -10,6 +11,8 @@
 **Solution/workaround:** None attempted.
 **Time spent:** 10 Minutes
 
+
+**IssueURL:** https://github.com/brookthomas/GeneDive/issues/4
 **Issue:** Stuck loading
 **Date:** 2018-01-27
 **URL:** https://www.genedive.net/search.php
@@ -24,6 +27,7 @@
 **Time spent:** 20 Minutes
 
 
+**IssueURL:** https://github.com/brookthomas/GeneDive/issues/5
 **Issue:** Changing filters or Highlights while No Results Found shows previous results
 **Date:** 2018-01-27
 **URL:** https://www.genedive.net/search.php
@@ -34,11 +38,11 @@
   1. Change the Minimum Probability to 1
   1. Several things can be done to trigger this problem: type in "123" into Highlight Rows, or click on Gene Pair or Article under Group Tables By.
 
-**Solution/workaround:** Perform new search or change the search parameters to stop the loading
-**Time spent:** 15 Minutes
+**Solution/workaround:** Added to controller.js the method noResultsFound() that checks for results and hides elements, and had it called in two places
+**Time spent:** 2 hours
 
 
-
+**IssueURL:** https://github.com/brookthomas/GeneDive/issues/6
 **Issue:** Changing the height of the map makes the mouse not click properly
 **Date:** 2018-01-27
 **URL:** https://www.genedive.net/search.php
@@ -49,5 +53,18 @@
   1. Click and drag the results divider up or down
   1. Hold shift and left click in the graph. Take note of where the click confirmation appears.
 
-**Solution/workaround:** None attempted.
-**Time spent:** 5 Minutes
+**Solution/workaround:** Call the resize() method on the graph everytime the splitter is moved.
+**Time spent:** 1.5 hours
+
+**IssueURL:** https://github.com/brookthomas/GeneDive/issues/7
+**Issue:** Console produces errors when changing filters or highlighting rows for no results
+**Date:** 2018-01-30
+**URL:** https://www.genedive.net/template.php
+**Severity:** low
+**Frequency:** consistent
+**Steps to reproduce:** 
+  1. Search for gene ABCA1 with 1-Hop
+  1. Set Minimum Probability to 1. There should be no results.
+  1. Under Filter Results, add any filter like "Excerpt is 123", or type anything into Highlight Rows
+**Solution/workaround:** None Yet
+**Time spent:** 10 minutes
