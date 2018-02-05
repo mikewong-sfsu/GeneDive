@@ -216,12 +216,13 @@ class Search {
     });
     disease.initialize();
 
+    const TYPE_AHEAD_LIMIT = 10;
     this.input.typeahead(
-      { minLength: 1, highlight: true, hint: false },
-      { name: 'Genes',     source: genes,    limit: 10000, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }  },
-      { name: 'Chemicals', source: chemical, limit: 10000, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Chemicals</h4>" } },
-      { name: 'Diseases',  source: disease,  limit: 10000, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Diseases</h4>" } },
-      { name: 'Genesets',  source: geneset,  limit: 10000, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } },
+      { minLength: 1, highlight: true, hint: false, },
+      { name: 'Genes',     source: genes,    limit: TYPE_AHEAD_LIMIT, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }  },
+      { name: 'Chemicals', source: chemical, limit: TYPE_AHEAD_LIMIT, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Chemicals</h4>" } },
+      { name: 'Diseases',  source: disease,  limit: TYPE_AHEAD_LIMIT, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Diseases</h4>" } },
+      { name: 'Genesets',  source: geneset,  limit: TYPE_AHEAD_LIMIT, display: 'symbol', templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" } },
     );
 
     $('.twitter-typeahead').css('width','100%');
