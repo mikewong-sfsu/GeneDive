@@ -119,8 +119,13 @@ class Controller {
       this.showSpinners(); 
     }
     this.filtrate = this.highlighter.highlight( this.filtrate );
-    this.drawTable();
-    this.drawGraph();
+   
+    // Check to see if there are any results
+    if(this.noResultsFound() == false)
+    {
+      this.drawTable();
+      this.drawGraph();
+    }
     this.spinneractive = false;
   }
 
@@ -129,9 +134,6 @@ class Controller {
     $('.table-view table').remove();
     $('.table-view').append($("<table/>").addClass("table table-hover"));
 
-    // Check to see if there are any results
-    if(this.noResultsFound())
-      return;
 
     // First check for zoom condition
     if ( this.tablestate.zoomed ) {
@@ -153,13 +155,16 @@ class Controller {
   // This will return true if no results are found, and false if some results are found.
   // This will also hide the graphs and tables if no results are found
   noResultsFound(){
-    if ( this.interactions.length == 0 ) { 
+
+    // If there are no interactions, or if there are interactions but the filters return zero results, hide the graphs and tables.
+    if ( this.interactions.length === 0 || (this.filtrate !== null && this.filtrate.length === 0))
+    { 
       this.hideTableSpinner();
       this.hideGraphSpinner();
       this.showNoResults();
       return true; 
     }
-    return false
+    return false;
   }
 
   drawGraph() {
