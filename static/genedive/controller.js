@@ -170,7 +170,7 @@ class Controller {
   drawGraph() {
     this.graph.draw( this.filtrate, this.search.sets );
     this.hideGraphSpinner();
-    $('#graph').show();
+    this.showGraph();
     this.showGraphLegend();
   }
 

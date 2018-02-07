@@ -12,6 +12,8 @@ class GraphView {
       this.showAbsentNodes();
     });
 
+    // Temporary, to allow interaction with the graph via the console
+    window.DEBUGgraph = this.graph;
 
     // Calls the resize method to resize the graph whenever the splitter is moved.
     // Fixes Issue #6: "Changing the height of the map makes the mouse not click properly"
@@ -51,8 +53,10 @@ class GraphView {
 
     this.centerGraph();
 
+
     // Notify user of set members that don't appear in search results 
     this.storeAbsentNodes ( nodes, sets );
+
   }
 
   createNodes ( interactions ) {
@@ -183,8 +187,9 @@ class GraphView {
   centerGraph() {
     let vert = ($(".graph-view").height() / 4);
     let horz = ($(".graph-view").width() / 2);
-    this.graph.viewport({ zoom: 0, pan: { x: horz, y: vert } });
+    this.graph.viewport({ zoom: 0, pan: { x: horz, y: vert } }); 
   }
+
 }
 
 var nodeClickBehavior = function ( event ) {

@@ -1,5 +1,6 @@
 .graph-view {
   position: relative;
+  overflow: hidden;
 }
 
 .graph-view #graph {

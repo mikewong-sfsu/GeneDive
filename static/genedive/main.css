@@ -30,12 +30,14 @@ body {
 .views {
   flex-direction: column;
   flex-grow: 1;
+  display: flex;
 }
 
 .table-view {
   border-bottom:1px solid gray;
   overflow-y: auto;
   height: 50%;
+  min-width: 0px;
   /* resize: vertical; */
 }
 
@@ -57,7 +59,8 @@ body {
 }
 
 .panel-bottom {
-  flex: 1 1 auto;
+  /*flex: 1 1 auto;*/
+  flex-grow: 1;
   /* resizable */
 }
 
