@@ -1,5 +1,5 @@
 <?php
-
+  exit("Registration disabled.");
   include_once "session.php";
 
   // Make sure user didn't reach this accidentally - or maliciously?
