@@ -2,6 +2,8 @@ class Controller {
   
   constructor () {
 
+    window.DEBUGcontroller = this;
+
     this.color          = new Color();
     this.help           = new Help(".module-help");
     this.search         = new Search( ".search-input", ".topology-selector", ".search-sets", this.color );
@@ -164,7 +166,9 @@ class Controller {
       this.showNoResults();
       return true; 
     }
+    this.hideNoResults();
     return false;
+    
   }
 
   drawGraph() {
