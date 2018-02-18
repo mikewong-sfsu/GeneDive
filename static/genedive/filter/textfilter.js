@@ -44,12 +44,12 @@ class TextFilter {
   }
 
   createFilterValueLists ( interactions ) {
-    let values = { "Article": new Set(), "Gene": new Set(), "Journal": new Set(), "Section": new Set() };
+    let values = { "Article": new Set(), "DGD": new Set(), "Journal": new Set(), "Section": new Set() };
 
     interactions.forEach( i => {
       values["Article"].add( i.pubmed_id );
-      values["Gene"].add( i.mention1 );
-      values["Gene"].add( i.mention2 );
+      values["DGD"].add( i.mention1 );
+      values["DGD"].add( i.mention2 );
       values["Journal"].add( i.journal );
       values["Section"].add( i.section );
     });
@@ -124,7 +124,7 @@ class TextFilter {
           }
           break;
 
-        case "Gene":
+        case "DGD":
           if ( filter.is ) {
             interactions = interactions.filter( ( i ) => {
               return ( new RegExp(filter.value,"i").test(i.mention1) || new RegExp(filter.value,"i").test(i.mention2) )

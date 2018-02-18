@@ -31,7 +31,7 @@ class TableSummaryArticle extends ResultsTable {
 
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%") );
     tr.append( $(document.createElement("th")).text( "Article" ).addClass("numeric").css("width","10%") );
-    tr.append( $(document.createElement("th")).text( "# Genes" ).addClass("numeric").css("width","10%") );
+    tr.append( $(document.createElement("th")).text( "# DGDs" ).addClass("numeric").css("width","10%") );
     tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric").css("width","12%") );
     tr.append( $(document.createElement("th")).text( "P. Distribution" ).css("width","10%") );
     tr.append( $(document.createElement("th")).text( "Max Probability" ).addClass("numeric") );

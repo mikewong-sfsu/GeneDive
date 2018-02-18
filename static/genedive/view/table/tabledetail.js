@@ -36,8 +36,8 @@ class TableDetail extends ResultsTable {
     let tr = $(document.createElement("tr"));
     thead.append(tr);
 
-    tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
-    tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
+    tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%") );
+    tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%") );
     tr.append( $(document.createElement("th")).text("Journal").css("width","8%") );
     tr.append( $(document.createElement("th")).text( "Article ID" ).addClass("numeric").css("width","8%") );
     tr.append( $(document.createElement("th")).text( "Section" ).css("width","8%") );

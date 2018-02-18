@@ -12,14 +12,14 @@
     <div class="module search-module">
       <div class="topology-row">
         <div class="btn-group topology-selector" style="width:100%;" role="group" aria-label="...">
-          <button data-toggle="tooltip" data-placement="bottom" title="Provide one gene to view all interactions with that gene. Provide multiple genes or genesets to view interactions between all input genes." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
-          <button data-toggle="tooltip" data-placement="bottom" title="Provide two genes as input. GeneDive will show interactions between the two genes through up to 1 (one) intermediary gene."                 style="width:25%;" type="button" class="btn btn-default"        data-type="2hop">2-Hop</button>
-          <button data-toggle="tooltip" data-placement="bottom" title="Provide two genes as input. GeneDive will show interactions between the two genes through up to 2 (two) intermediary genes."                style="width:25%;" type="button" class="btn btn-default"        data-type="3hop">3-Hop</button>
-          <button data-toggle="tooltip" data-placement="bottom" title="Provide one gene as input. GeneDive will show those genes that interact with the input gene as well as one other input interactant."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
+          <button data-toggle="tooltip" data-placement="bottom" title="Provide one DGD (blue) to view all interactions with that DGD. Provide multiple DGDs or DGD sets to view interactions between all input DGDs." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
+          <button data-toggle="tooltip" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 1 (one) intermediary DGD."                 style="width:25%;" type="button" class="btn btn-default"        data-type="2hop">2-Hop</button>
+          <button data-toggle="tooltip" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 2 (two) intermediary DGDs."                style="width:25%;" type="button" class="btn btn-default"        data-type="3hop">3-Hop</button>
+          <button data-toggle="tooltip" data-placement="bottom" title="Provide one DGD as input. GeneDive will show those DGDs that interact with the input DGD as well as one other input interactant."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
         </div>
       </div>
 
-      <input type="text" placeholder="enter a gene symbol..." class="form-control search-input">
+      <input type="text" placeholder="enter a Disease-Gene-Drug entity (DGD)..." class="form-control search-input">
 
       <!-- Search Sets displays current search objects -->
       <div class="search-sets">
@@ -42,7 +42,7 @@
           <select class="filter-select">
             <option>Article</option>
             <option selected="selected">Excerpt</option>
-            <option>Gene</option>
+            <option>DGD</option>
             <option>Journal</option>
             <option>Section</option>
           </select>
@@ -86,7 +86,7 @@
       </div>
 
       <div class="btn-group table-grouping" style="width:100%;" role="group" aria-label="...">
-        <button style="width:50%;" type="button" class="btn btn-default active" data-type="gene">Gene Pair</button>
+        <button style="width:50%;" type="button" class="btn btn-default active" data-type="gene">DGD Pair</button>
         <button style="width:50%;" type="button" class="btn btn-default" data-type="article">Article</button>
       </div>
     </div>
@@ -124,22 +124,22 @@
           <div class="mode">
             <h4>1-Hop</h4>
             <img src="/static/genedive/images/help/1hop.png" class="img-responsive">
-            <p>Provide one gene (blue) to view all interactions with that gene. Provide multiple genes or genesets to view interactions between all input genes.</p>
+            <p>Provide one <span class="dgd-blue">Disease-Gene-Drug entitiy (DGD)</span> to view all interactions with that <span class="dgd-blue">DGD</span>. Provide multiple <span class="dgd-blue">DGDs</span> or <span class="dgd-blue">DGD</span> sets to view interactions between all input <span class="dgd-blue">DGDs</span>.</p>
           </div>
           <div class="mode">
             <h4>2-Hop</h4>
             <img src="/static/genedive/images/help/2hop.png" class="img-responsive">
-            <p>Provide two genes (blue) as input. GeneDive will show interactions between the two genes through up to one intermediary gene (orange).</p>
+            <p>Provide two <span class="dgd-blue">Disease-Gene-Drug entities (DGDs)</span> as input. GeneDive will show interactions between the two <span class="dgd-blue">DGDs</span> through up to one intermediary <span class="dgd-orange">DGD</span>.</p>
           </div>
           <div class="mode">
             <h4>3-Hop</h4>
             <img src="/static/genedive/images/help/3hop.png" class="img-responsive">
-            <p>Provide two genes (blue) as input. GeneDive will show interactions between the two genes through up to two intermediary genes (orange).</p>
+            <p>Provide two <span class="dgd-blue">Disease-Gene-Drug entities (DGDs)</span> as input. GeneDive will show interactions between the two <span class="dgd-blue">DGDs</span> through up to two intermediary <span class="dgd-orange">DGDs</span>.</p>
           </div>
           <div class="mode">
             <h4>Clique</h4>
             <img src="/static/genedive/images/help/clique.png" class="img-responsive">
-            <p>Provide one gene (blue) as input. GeneDive will show genes (orange) that interact with the input gene as well as one other input interactant.</p>
+            <p>Provide one <span class="dgd-blue">Disease-Gene-Drug entities (DGDs)</span> as input. GeneDive will show <span class="dgd-orange">DGDs</span> that interact with the input <span class="dgd-blue">DGD</span> as well as one other input interactant.</p>
           </div>
         </div>
       </div>
@@ -182,20 +182,20 @@
           </div>
           <div class="mode">
             <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
-            <h4>Move Genes</h4>
-            <p>Click and drag genes to move them around. Genes will stay where you leave them.</p>
+            <h4>Move DGDs</h4>
+            <p>Click and drag DGDs to move them around. DGDs will stay where you leave them.</p>
           </div>
         </div>
         <div class="modes">
           <div class="mode">
             <i class="fa fa-search-plus" aria-hidden="true"></i>
-            <h4>Shift-Click Gene to Add</h4>
-            <p>Shift-Click on genes to add them to the search. Releasing shift will start a new search.</p>
+            <h4>Shift-Click DGD to Add</h4>
+            <p>Shift-Click on DGDs to add them to the search. Releasing shift will start a new search.</p>
           </div>
           <div class="mode">
             <i class="fa fa-search" aria-hidden="true"></i>
-            <h4>Ctrl-Click Gene to Start New Search</h4>
-            <p>Ctrl-Click on a gene to start a new search with only that gene.</p>
+            <h4>Ctrl-Click DGD to Start New Search</h4>
+            <p>Ctrl-Click on a DGD to start a new search with only that DGD.</p>
           </div>
         </div>
         </div>

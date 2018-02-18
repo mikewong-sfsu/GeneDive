@@ -210,6 +210,15 @@ h5 {
   color:rgb(128,128,128);
 }
 
+.help .dgd-blue{
+  color: #47abfa;
+}
+
+.help .dgd-orange{
+  color: #fd7e14;
+}
+
+
 /* Typeahead listbox */
 .tt-menu {
   max-height: 400px;

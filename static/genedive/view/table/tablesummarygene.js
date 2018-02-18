@@ -33,8 +33,8 @@ class TableSummaryGene extends ResultsTable {
     thead.append(tr);
 
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%") );
-    tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
-    tr.append( $(document.createElement("th")).text( "Gene" ).css("width","8%") );
+    tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%") );
+    tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%") );
     tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric") );
     tr.append( $(document.createElement("th")).text( "# Articles" ).addClass("numeric header") ); // MW TODO: Why do I need to manually add header?
     tr.append( $(document.createElement("th")).text( "P. Distribution" ) );
