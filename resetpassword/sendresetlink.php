@@ -1,13 +1,10 @@
 <?php
 
-error_reporting(-1);
-ini_set('display_errors', 'On');
-
-  /*use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\SMTP;
   use PHPMailer\PHPMailer\Exception;
   require_once '../PHPMailer/src/PHPMailer.php';
-  require_once '../PHPMailer/src/SMTP.php';*/
+  require_once '../PHPMailer/src/SMTP.php';
 
   include_once "../session.php";
   include_once "../data/credentials.php";
