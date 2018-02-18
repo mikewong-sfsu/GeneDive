@@ -38,7 +38,7 @@ class TableDetail extends ResultsTable {
 
     tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%") );
     tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%") );
-    tr.append( $(document.createElement("th")).text("Journal").css("width","8%") );
+    tr.append( $(document.createElement("th")).text( "Journal").css("width","8%") );
     tr.append( $(document.createElement("th")).text( "Article ID" ).addClass("numeric").css("width","8%") );
     tr.append( $(document.createElement("th")).text( "Section" ).css("width","8%") );
     tr.append( $(document.createElement("th")).text( "Probability" ).addClass("numeric").css("width","10%") );
@@ -61,15 +61,22 @@ class TableDetail extends ResultsTable {
 
       let excerpt = this.styleExcerpt( i.context, i.mention1, i.mention1_color );
           excerpt = this.styleExcerpt( excerpt, i.mention2, i.mention2_color );
+      let pubmed_link = "", displayedID=i.pubmed_id;
+
+      if(displayedID === "0")
+        displayedID = "N/A";
+      else
+        pubmed_link = this.buildPubmedLink( displayedID )
 
       tr.append( $(document.createElement("td")).html( i.mention1 ) );
       tr.append( $(document.createElement("td")).html( i.mention2 ) );
       tr.append( $(document.createElement("td")).html( i.journal ) );
-      tr.append( $(document.createElement("td")).text( i.pubmed_id ).addClass("numeric") );
+      tr.append( $(document.createElement("td")).text( displayedID ).addClass("numeric") );
       tr.append( $(document.createElement("td")).text( i.section ) );
       tr.append( $(document.createElement("td")).text( Number(i.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( excerpt ) );
-      tr.append( $(document.createElement("td")).html( this.buildPubmedLink( i.pubmed_id ) ) );
+      if(i.pubmed_id !== "0")
+      tr.append( $(document.createElement("td")).html( pubmed_link ) );
 
       tbody.append(tr);
     }
