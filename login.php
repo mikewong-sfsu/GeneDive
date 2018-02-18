@@ -1,6 +1,7 @@
 <?php
 
   include "session.php";
+  define("FORGOT_PASS_LINK", '<a href="resetpassword/forgotpass.php">Forgot your password?</a>');
 
   // User shouldn't be here ... ?
   if ( ! isset($_POST[ 'login-submit' ])) { return; }
@@ -28,7 +29,7 @@
   $unknown_user = $row == false;
   $bad_password = $row[ 'password' ] !== $password;
   if ( $unknown_user || $bad_password ) {
-    $_SESSION[ 'error' ] = "Invalid email or password. Please try again.";
+    $_SESSION[ 'error' ] = "Invalid email or password. ".FORGOT_PASS_LINK;
     header("Location: index.php");
     exit;
   }
