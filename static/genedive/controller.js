@@ -16,7 +16,6 @@ class Controller {
     this.download       = new Download(".download-module button.download");
 
     this.tablestate     = { zoomed: false, zoomgroup: null }; 
-    this.firstsearch    = true;
     this.interactions   = null;
     this.filtrate       = null; 
 
@@ -38,19 +37,13 @@ class Controller {
     this.hideTableSpinner();
     this.hideGraphSpinner();
 
-    // Some control modules are hidden until the first search is run. Expose them.
-    if ( this.firstsearch ) {
-      this.firstsearch = false;
-      $('.table-view .messaging-and-controls').css('visibility', 'visible');
-      $('.module').css('visibility', 'visible');
-      $('.divider').css('visibility', 'visible');
-    }
-
-    // If the user has cleared the last search items, go to HELP state
+    // If the user has cleared the last search items, go to HELP state and hide filters. Otherwise, show the filters
     if ( this.search.sets.length == 0 ) { 
       this.showHelp();
+      this.hideFilters();
       return;
-    } 
+    }
+    this.showFilters();
 
     let topology = GeneDive.search.selectedTopology();
     if ( this.search.sets.length != 2 && ( topology == "2hop" || topology == "3hop" ) ) {
@@ -194,6 +187,7 @@ class Controller {
 
   showGraph() {
     $('#graph').show();
+    this.graph.fit(10);
   }
 
   showSpinners() {
@@ -235,6 +229,16 @@ class Controller {
   hideGraphAbsent() {
     $(".graph-view .absent").hide();
   }
+
+  showFilters(){
+      $('.table-view .messaging-and-controls, .module:not(".search-module"), .divider').css('visibility', 'visible');
+  }
+
+  hideFilters(){
+     $('.table-view .messaging-and-controls, .module:not(".search-module"), .divider').css('visibility', 'hidden');
+  }
+
+
 
 }
 
