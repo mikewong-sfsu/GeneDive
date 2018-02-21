@@ -23,7 +23,7 @@ class TableDetail extends ResultsTable {
     ); 
 
     // Bind zoom out behavior
-    $('.table-view .messaging-and-controls .go-back').on('click', function () {
+    $('.table-view .messaging-and-controls .go-back') .off( 'click' ) .click( function () {
       GeneDive.tablestate.zoomed = false;
       GeneDive.runSearch();
     });
