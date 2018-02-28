@@ -2,7 +2,7 @@ class Controller {
   
   constructor () {
 
-    window.DEBUGcontroller = this;
+    window.controller = this;
 
     this.color          = new Color();
     this.help           = new Help(".module-help");
@@ -18,6 +18,8 @@ class Controller {
     this.tablestate     = { zoomed: false, zoomgroup: null }; 
     this.interactions   = null;
     this.filtrate       = null; 
+
+    this.stateHistory = [];
 
     $( function() {
       $(".panel-top").resizable({
@@ -74,11 +76,12 @@ class Controller {
     GeneDiveAPI.interactions( ids, minProb, ( interactions ) => {
       this.interactions = JSON.parse( interactions );
 
+      this.cleanUpData();
+      this.filterInteractions();
+
       // Check to see if there are any results
       if(this.noResultsFound())
         return;
-
-      this.filterInteractions();
     });
   }
 
@@ -90,6 +93,8 @@ class Controller {
       this.hideGraph();
       this.showSpinners(); 
     }
+
+
     this.filtrate = this.textfilter.filterInteractions( this.interactions );
     this.colorInteractions();
   }
@@ -128,6 +133,8 @@ class Controller {
     // We want to create a new table for each iteration as the old one will have prior listener/config/bindings
     $('.table-view table').remove();
     $('.table-view').append($("<table/>").addClass("table table-hover"));
+
+
 
 
     // First check for zoom condition
@@ -239,6 +246,89 @@ class Controller {
   }
 
 
+  cleanUpData(){
+    for(let i = 0; i < this.interactions.length; i++)
+    {
+      if(this.interactions[i].pubmed_id === "0")
+      {
+        this.interactions[i].pubmed_id = "N/A";
+        this.interactions[i].article_id = "N/A";
+      }
+
+      if(this.interactions[i].section.trim().length === 0)
+      {
+        this.interactions[i].section = "Unknown";
+      }
+    }
+  }
+
+  // State management
+
+
+
+  saveCurrentState(){
+    let state = {};
+
+    // All interactions
+    state.interactions = this.interactions;
+
+    // Table
+    state.table = {
+      "tablestate" : this.tablestate,
+      "filtrate" : this.filtrate,
+    }
+
+    // Save Search
+    state.search = {
+      "sets" : this.search.sets,
+      "probability" : this.probfilter.minimum,
+    }
+
+    // Save Filter
+    state.textfilter = {
+      "filterValues" : this.textfilter.filterValues ,
+    }
+
+    // Save Graph state
+
+
+    return JSON.stringify(state)
+  }
+
+  saveCurrentStateToHistory(){
+    this.stateHistory.push(this.saveCurrentState());
+  }
+
+  setState(jsonString){
+    let state = JSON.parse(jsonString);
+
+    this.hideHelp();
+    this.hideTable();
+    this.hideGraph();
+    this.hideGraphLegend();
+    this.hideGraphAbsent();
+    this.hideNoResults();
+    this.hideTableSpinner();
+    this.hideGraphSpinner();
+
+    // Set table state
+    this.tablestate = state.table.tablestate;
+    this.filtrate = state.table.filtrate;
+    this.drawTable();
+
+    // Set Search and Filter state
+
+
+    // Set Graph state
+  }
+
+  goBack(){
+
+  }
+
+  goForward(){
+
+  }
 
 }
 

@@ -190,6 +190,10 @@ class GraphView {
     this.graph.viewport({ zoom: 0, pan: { x: horz, y: vert } }); 
   }
 
+  fit(margin){
+    this.graph.fit(margin);
+  }
+
 }
 
 var nodeClickBehavior = function ( event ) {

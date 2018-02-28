@@ -72,8 +72,8 @@ class TableSummaryArticle extends ResultsTable {
       let genecount = _.uniq( this.interactions[group].map( i => i.geneids1 ).concat( this.interactions[group].map( i => i.geneids2 ) ) ).length;
 
       let displayedID = row.pubmed_id;
-      if(displayedID === "0")
-        displayedID = "N/A";
+      // if(displayedID === "0")
+      //   displayedID = "N/A";
 
       tr.append( $(document.createElement("td")).html( "<i class='fa fa-plus'></i>" ).addClass("zoom") );
       tr.append( $(document.createElement("td")).text( displayedID ).addClass("numeric") );

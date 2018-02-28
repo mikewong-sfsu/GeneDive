@@ -59,7 +59,7 @@ class TextFilter {
 
   addFilter ( ) {
     this.addFilterSet( this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val() );
-    this.currentValueInput.val("");
+    //this.currentValueInput.val($("option:eq(0)",this.currentValueInput).val());
   }
 
   addFilterSet ( attribute, is, value ) {
