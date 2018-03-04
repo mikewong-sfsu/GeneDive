@@ -1,6 +1,6 @@
 /**
-	@brief		Documentation Generation Script
 	@file		generate.js
+	@brief		Documentation Generation Script
 	@author		Jack Cole jcole2@mail.sfsu.edu
 	@date		2017-11-09
 	@details	This file will generate all the documentation for the GeneDive project.
@@ -12,7 +12,7 @@ const SCREENSHOTS_PHANTOMJS_FILE = "screenshots.js";
 const CONFIG_DIRECTORY = __dirname;
 const LOG_DIRECTORY = CONFIG_DIRECTORY + "\\log";
 const { exec } = require('child_process');
-
+const log_files = require('fs');
 
 /**
 	@name		Log outputter
@@ -22,19 +22,33 @@ const { exec } = require('child_process');
 	@param[in]	text	The string to write to the file
 	
 */
-function log_something(file, text){
-	var log_files = require('fs');
+
+function prepare_log_file(file)
+{
+
 
 	if (!log_files.existsSync(LOG_DIRECTORY)){
 		log_files.mkdirSync(LOG_DIRECTORY);
 	}
 
-	log_files.writeFile(LOG_DIRECTORY+"\\"+file, text, { flag: 'w'}, function(err) {
+	log_files.writeFile(LOG_DIRECTORY+"\\"+file, "", { flag: 'w'}, function(err) {
 		if(err) {
 			console.log(err);
 		}
 		else{
-			console.log(file+' was saved!');
+			console.log(file+' was emptied');
+		}
+		});
+}
+
+function append_log(file, text){
+
+	log_files.appendFile(LOG_DIRECTORY+"\\"+file, text, { flag: 'w'}, function(err) {
+		if(err) {
+			console.log(err);
+		}
+		else{
+			console.log(file+' was appended');
 		}
 		});
 }
@@ -49,18 +63,23 @@ function log_something(file, text){
 	@{
 */
 console.log("Starting Doxygen process");
-exec('doxygen ' + OXYGEN_CONFIG_FILE, 
-	{cwd: CONFIG_DIRECTORY },
-	(err, stdout, stderr) => {
-	if (err) {
-	// node couldn't execute the command
-		console.log("Doxygen process error: " + err);
-		return;
-	}
 
-	log_something("doxygen_output.log", stdout);
-	log_something("doxygen_error.log", stderr);
-	console.log("Doxygen process complete");
+var doxygen_exec = exec('doxygen ' + OXYGEN_CONFIG_FILE,
+	{cwd: CONFIG_DIRECTORY })
+
+prepare_log_file("doxygen_output.log");
+prepare_log_file("doxygen_error.log");
+
+doxygen_exec.stdout.on('data', function (data) {
+	append_log("doxygen_output.log", data);
+});
+
+doxygen_exec.stderr.on('data', function (data) {
+	append_log("doxygen_error.log", data);
+});
+
+doxygen_exec.on('close', function (code) {
+    console.log("Doxygen process exited with " + code);
 });
 
 ///@}
@@ -75,19 +94,25 @@ exec('doxygen ' + OXYGEN_CONFIG_FILE,
 	@{
 */
 console.log("Starting Screenshots process");
-exec('node ' + SCREENSHOTS_PHANTOMJS_FILE, 
-	{cwd: CONFIG_DIRECTORY },
-	(err, stdout, stderr) => {
-	if (err) {
-	// node couldn't execute the command
-		console.log("Screenshots process error: " + err);
-		return;
-	}
+var phantom_exec = exec('node ' + SCREENSHOTS_PHANTOMJS_FILE, 
+	{cwd: CONFIG_DIRECTORY })
 
-	log_something("screenshots_output.log", stdout);
-	log_something("screenshots_error.log", stderr);
-	console.log("Screenshots process complete");
+prepare_log_file("screenshots_output.log");
+prepare_log_file("screenshots_error.log");
+
+phantom_exec.stdout.on('data', function (data) {
+	append_log("screenshots_output.log", data);
 });
+
+phantom_exec.stderr.on('data', function (data) {
+	append_log("screenshots_error.log", data);
+});
+
+phantom_exec.on('close', function (code) {
+    console.log("Doxygen process exited with " + code);
+});
+
+
 
 ///@}
 
