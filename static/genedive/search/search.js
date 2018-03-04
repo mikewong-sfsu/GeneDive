@@ -19,7 +19,8 @@ class Search {
       $(event.currentTarget).addClass("active");
 
       this.input.val("");
-      GeneDive.runSearch();
+      console.debug("Search a");
+      GeneDive.onSelectSearchType();
     });
   }
 
@@ -58,7 +59,8 @@ class Search {
     this.renderDisplay();
 
     if ( !deferRunSearch ) {
-      GeneDive.runSearch();
+      console.debug("Search b");
+      GeneDive.onAddDGD();
     }
     
   }
@@ -69,7 +71,8 @@ class Search {
     this.renderDisplay();
 
     if ( !deferRunSearch ) {
-      GeneDive.runSearch();
+      console.debug("Search c");
+      GeneDive.onRemoveDGD();
     }
   }
 

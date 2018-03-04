@@ -1,8 +1,13 @@
+/**
+  @class      Controller
+  @brief      Handles all user input
+  @details    This class is the main handler for all the interactions by the user on the website.
+  Whenevr a user types or clicks on something, their actions result in calls into the controller.
+  @callergraph
+*/
 class Controller {
   
   constructor () {
-
-    window.controller = this;
 
     this.color          = new Color();
     this.help           = new Help(".module-help");
@@ -29,6 +34,54 @@ class Controller {
     });
   }
 
+  onSelectSearchType(){
+    this.runSearch();
+  }
+
+  onAddDGD(){
+    this.runSearch();
+  }
+  
+  onRemoveDGD(){
+    this.runSearch();
+  }
+
+  onProbabilitySliderChange(){
+    this.runSearch();
+  }
+
+  onAddFilter(){
+    this.filterInteractions();
+  }
+  onRemoveFilter(){
+    this.filterInteractions();
+  }
+  onTableGroupingSelect()
+  {
+    this.drawTable();
+  }
+
+  onHighlightKeyup(){
+    this.highlightInteractions();
+  }
+
+  onNodeGraphClick(){
+    this.runSearch();
+  }
+
+  onBackClick(){
+    this.runSearch();
+  }
+
+  onTableElementClick(){
+    this.drawTable();
+  }
+
+  /**
+    @fn       Controller.runSearch
+    @brief    Searchs for DGD Interactions
+    @callergraph
+  */
   runSearch() {
     this.hideHelp();
     this.hideTable();
@@ -79,14 +132,21 @@ class Controller {
       this.cleanUpData();
       this.filterInteractions();
 
+
       // Check to see if there are any results
       if(this.noResultsFound())
         return;
     });
   }
 
-  /* Returns new array of interactions passing the text filters */
-  /* IMPORTANT - use this.filtrate, not this.interactions hereafter */
+
+  /**
+    @fn       Controller.filterInteractions
+    @brief    Searchs for DGD Interactions
+    @details  Returns new array of interactions passing the text filters
+              <b>IMPORTANT - use this.filtrate, not this.interactions hereafter</b>
+    @callergraph
+  */  
   filterInteractions() {
     if ( !this.spinneractive ) { 
       this.hideTable();
@@ -97,21 +157,36 @@ class Controller {
 
     this.filtrate = this.textfilter.filterInteractions( this.interactions );
     this.colorInteractions();
+    
   }
 
-  /* Figures out the color(s) for each gene based on topology */
+  /**
+    @fn       Controller.colorInteractions
+    @brief    
+    @details  Figures out the color(s) for each gene based on topology
+    @callergraph
+  */
   colorInteractions() {
     this.filtrate = this.color.colorInteractions( this.filtrate );
     this.addSynonyms();
   }
-
-  /* Synonym static method will add mention1_synonym and mention2_synonym to interactions as synonym or null if none needed. */
+  /**
+    @fn       Controller.addSynonyms
+    @brief    
+    @details  Synonym static method will add mention1_synonym and mention2_synonym to interactions as synonym or null if none needed.
+    @callergraph
+  */
   addSynonyms() {
     this.filtrate = Synonym.findSynonyms( this.search.sets, this.filtrate );  // Static class
     this.highlightInteractions();
   }
 
-  /* Highlight class adds a highlight property to interactions */
+  /**
+    @fn       Controller.highlightInteractions
+    @brief    
+    @details  Highlight class adds a highlight property to interactions
+    @callergraph
+  */
   highlightInteractions() {
     if ( !this.spinneractive ) { 
       this.hideTable();
@@ -153,9 +228,13 @@ class Controller {
 
     this.hideTableSpinner();
   }
-
-  // This will return true if no results are found, and false if some results are found.
-  // This will also hide the graphs and tables if no results are found
+  /**
+    @fn       Controller.noResultsFound
+    @brief    
+    @details  This will return true if no results are found, and false if some results are found.
+              This will also hide the graphs and tables if no results are found
+    @callergraph
+  */
   noResultsFound(){
 
     // If there are no interactions, or if there are interactions but the filters return zero results, hide the graphs and tables.
@@ -249,13 +328,13 @@ class Controller {
   cleanUpData(){
     for(let i = 0; i < this.interactions.length; i++)
     {
-      if(this.interactions[i].pubmed_id === "0")
+      if(this.interactions[i].pubmed_id === null || this.interactions[i].pubmed_id === "0")
       {
         this.interactions[i].pubmed_id = "N/A";
         this.interactions[i].article_id = "N/A";
       }
 
-      if(this.interactions[i].section.trim().length === 0)
+      if(this.interactions[i].section === null || this.interactions[i].section.trim().length === 0)
       {
         this.interactions[i].section = "Unknown";
       }

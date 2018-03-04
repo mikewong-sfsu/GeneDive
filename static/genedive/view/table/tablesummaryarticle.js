@@ -55,7 +55,7 @@ class TableSummaryArticle extends ResultsTable {
         .on("click", ( event ) => { 
           GeneDive.tablestate.zoomed = true;
           GeneDive.tablestate.zoomgroup = $( event.currentTarget ).data( "group" );
-          GeneDive.drawTable();
+          GeneDive.onTableElementClick();
         });
 
         // If any of the group's interactions are a highlight match, highlight the summary row

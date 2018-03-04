@@ -65,13 +65,13 @@ class TextFilter {
   addFilterSet ( attribute, is, value ) {
     this.sets.push( new FilterSet( attribute, is, value ) );
     this.renderDisplay();
-    GeneDive.filterInteractions();
+    GeneDive.onAddFilter();
   }
 
   removeFilterSet ( identifier ) {
     this.sets = this.sets.filter( ( set ) => set.id != identifier );
     this.renderDisplay();
-    GeneDive.filterInteractions();
+    GeneDive.onRemoveFilter();
   }
 
   renderDisplay () {

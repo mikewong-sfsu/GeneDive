@@ -5,7 +5,7 @@ class Highlight {
 
     this.input.on("keyup", ( e ) => {
       delay( function () {
-       GeneDive.highlightInteractions(); 
+       GeneDive.onHighlightKeyup(); 
       }, 300);
     });
   }

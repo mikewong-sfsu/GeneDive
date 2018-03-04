@@ -8,7 +8,7 @@ class Grouper {
       $(event.currentTarget).addClass("active");
 
       GeneDive.tablestate.zoomed = false;
-      GeneDive.drawTable();
+      GeneDive.onTableGroupingSelect();
     });
     
   }

@@ -14,7 +14,7 @@ class ProbabilityFilter {
     this.slider.on( "slideStop", ( event ) => {
       this.minimum = event.value;
       this.value_display.text( this.minimum );
-      GeneDive.runSearch();
+      GeneDive.onProbabilitySliderChange();
     });
   }
 

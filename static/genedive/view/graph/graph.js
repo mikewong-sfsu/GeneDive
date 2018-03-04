@@ -213,7 +213,7 @@ var nodeClickBehavior = function ( event ) {
       $(document).on('keyup', function ( event ) {
         $(document).unbind('keyup');
         this.shiftListenerActive = false;
-        GeneDive.runSearch();
+        GeneDive.onNodeGraphClick();
       });
 
       this.shiftListenerActive = true;
