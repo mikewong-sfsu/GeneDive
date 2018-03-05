@@ -2,7 +2,10 @@
   @class      Controller
   @brief      Handles all user input
   @details    This class is the main handler for all the interactions by the user on the website.
-  Whenevr a user types or clicks on something, their actions result in calls into the controller.
+  Whenever a user types or clicks on something, their actions result in calls into the controller.
+  @authors    Mike Wong mikewong@sfsu.edu
+              Jack Cole jcole2@mail.sfsu.edu
+              
   @callergraph
 */
 class Controller {
@@ -34,48 +37,243 @@ class Controller {
     });
   }
 
+  /**
+    @fn       Controller.onSelectSearchType
+    @brief    Called when 1-Hop, 2-Hop, 3-Hop, or Clique is selected.
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onSelectSearchType(){
+    this.loadSpinners();
     this.runSearch();
   }
 
+  /**
+    @fn       Controller.onAddDGD
+    @brief    Called when a DGD is added
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onAddDGD(){
+    this.loadSpinners();
     this.runSearch();
   }
   
+  /**
+    @fn       Controller.onRemoveDGD
+    @brief    Called when a DGD is removed
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onRemoveDGD(){
+    this.loadSpinners();
     this.runSearch();
   }
 
+  /**
+    @fn       Controller.onProbabilitySliderChange
+    @brief    Called when a the Probability slider value is changed
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onProbabilitySliderChange(){
+    this.loadSpinners();
     this.runSearch();
   }
 
+  /**
+    @fn       Controller.onAddFilter
+    @brief    Called when a filter is added
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onAddFilter(){
+    this.loadSpinners();
     this.filterInteractions();
+    this.colorInteractions();
+    this.addSynonyms();
+    this.highlightInteractions();
+    this.loadTableAndGraphPage();
   }
+
+  /**
+    @fn       Controller.onRemoveFilter
+    @brief    Called when a filter is removed
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onRemoveFilter(){
+    this.loadSpinners();
     this.filterInteractions();
+    this.colorInteractions();
+    this.addSynonyms();
+    this.highlightInteractions();
+    this.loadTableAndGraphPage();
   }
+
+  /**
+    @fn       Controller.onTableGroupingSelect
+    @brief    Called when DGD Pair or Article buttons are selected
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onTableGroupingSelect()
   {
-    this.drawTable();
+    this.loadTableAndGraphPage(true, false);
   }
 
+  /**
+    @fn       Controller.onHighlightKeyup
+    @brief    Called when a user types into Highlight Rows field
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onHighlightKeyup(){
+    this.loadSpinners();
     this.highlightInteractions();
+    this.loadTableAndGraphPage();
   }
 
+  /**
+    @fn       Controller.onNodeGraphClick
+    @brief    Called a Graph node is CTRL+Clicked
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onNodeGraphClick(){
+    this.loadSpinners();
     this.runSearch();
   }
 
+  /**
+    @fn       Controller.onBackClick
+    @brief    Called when the Back button is clicked in the details page
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onBackClick(){
-    this.runSearch();
+    this.loadTableAndGraphPage(true, false);
   }
 
+  /**
+    @fn       Controller.onTableElementClick
+    @brief    Called when a entry in the Table is clicked
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
   onTableElementClick(){
-    this.drawTable();
+    this.loadTableAndGraphPage(true, false);
   }
+
+  /**
+    @fn       Controller.onInteractionsLoaded
+    @brief    Parses the data after a search is made
+    @details  
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @param    interactions The results from GeneDiveAPI.interactions
+    @callergraph
+  */
+  onInteractionsLoaded(interactions){
+      this.interactions = JSON.parse( interactions );
+      this.cleanUpData();
+      this.filterInteractions();
+      this.colorInteractions();
+      this.addSynonyms();
+      this.highlightInteractions();
+      this.loadTableAndGraphPage();
+
+  }
+
+  /**
+    @fn       Controller.loadSpinners
+    @brief    Hides the views while data is loading
+    @details  This is called at the start of any changes to the page that involve API calls, and thus might take some time to complete
+              Its goal is to inform the user that the program is in fact doing something.
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
+  loadSpinners(){
+    if ( !this.spinneractive ) { 
+        this.hideHelp();
+        this.hideGraphLegend();
+        this.hideGraphAbsent();
+        this.hideTable();
+        this.hideGraph();
+        this.hideNoResults();
+        this.showSpinners();
+        this.spinneractive = true;
+      }
+  }
+
+  /**
+    @fn       Controller.loadLandingPage
+    @brief    Hides the spinners and filters and loads the landing page
+    @details  This loads the landing page for GeneDive.
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @callergraph
+  */
+  loadLandingPage(){
+    this.showHelp();
+    this.hideFilters();
+    this.hideTableSpinner();
+    this.hideGraphSpinner();
+    this.spinneractive = false;
+
+  }
+
+  /**
+    @fn       Controller.loadTableAndGraphPage
+    @brief    Hides any spinners and loads the table and graph views
+    @details  Once the data has been loaded, this will hide all the
+              spinners and load the table and graph. Or if no results are
+              found, it will instead display No Results
+    @author   Jack Cole jcole2@mail.sfsu.edu
+    @param    redrawTable If true, then the Table will be redrawn from the data.
+              If false, it will simply be unhidden and unaltered.
+    @param    redrawGraph If true, then the Graph will be redrawn from the data.
+              If false, it will simply be unhidden and unaltered.
+    @callergraph
+  */
+  loadTableAndGraphPage(redrawTable = true, redrawGraph = true){
+    this.showFilters();
+    this.hideTableSpinner();
+    this.hideGraphSpinner();
+    if ( this.resultsFound())
+    { 
+      this.hideNoResults();
+
+      if(redrawTable)
+        this.drawTable();
+      else
+        this.showTable();
+
+      if(redrawGraph)
+        this.drawGraph();
+      else
+        this.showGraph();
+
+    }else{
+      this.hideTable();
+      this.hideGraph();
+      this.showNoResults();
+    }
+
+    this.spinneractive = false;
+  }
+
+
+
 
   /**
     @fn       Controller.runSearch
@@ -83,33 +281,23 @@ class Controller {
     @callergraph
   */
   runSearch() {
-    this.hideHelp();
-    this.hideTable();
-    this.hideGraph();
-    this.hideGraphLegend();
-    this.hideGraphAbsent();
-    this.hideNoResults();
-    this.hideTableSpinner();
-    this.hideGraphSpinner();
 
-    // If the user has cleared the last search items, go to HELP state and hide filters. Otherwise, show the filters
+    // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if ( this.search.sets.length == 0 ) { 
-      this.showHelp();
-      this.hideFilters();
+      this.loadLandingPage();
       return;
     }
-    this.showFilters();
 
     let topology = GeneDive.search.selectedTopology();
     if ( this.search.sets.length != 2 && ( topology == "2hop" || topology == "3hop" ) ) {
       alertify.notify("2-Hop / 3-Hop requires 2 Genes", "", "3");
-      this.showNoResults();
+      this.loadTableAndGraphPage(false, false);
       return;
     }
 
     if ( topology == "clique" && ( this.search.sets.length > 1 || this.search.sets[0].ids.length > 1 ) ) {
       alertify.notify("Clique search requires a single gene.", "", "3");
-      this.showNoResults();
+      this.loadTableAndGraphPage(false, false);
       return;
     }
 
@@ -118,24 +306,16 @@ class Controller {
 
     // It's possible that no results were found from the adjacency matrix
     if ( !ids || ids.length == 0 ) {
-      this.showNoResults();
+      this.loadTableAndGraphPage(false, false);
       return;
     };
 
     // This resets the table view to default
     this.tablestate.zoomed = false;
-    this.showSpinners();
+    // this.showSpinners();
 
     GeneDiveAPI.interactions( ids, minProb, ( interactions ) => {
-      this.interactions = JSON.parse( interactions );
-
-      this.cleanUpData();
-      this.filterInteractions();
-
-
-      // Check to see if there are any results
-      if(this.noResultsFound())
-        return;
+      this.onInteractionsLoaded(interactions);
     });
   }
 
@@ -148,15 +328,7 @@ class Controller {
     @callergraph
   */  
   filterInteractions() {
-    if ( !this.spinneractive ) { 
-      this.hideTable();
-      this.hideGraph();
-      this.showSpinners(); 
-    }
-
-
     this.filtrate = this.textfilter.filterInteractions( this.interactions );
-    this.colorInteractions();
     
   }
 
@@ -168,7 +340,7 @@ class Controller {
   */
   colorInteractions() {
     this.filtrate = this.color.colorInteractions( this.filtrate );
-    this.addSynonyms();
+    // this.addSynonyms();  DISABLED FOR UNESTING
   }
   /**
     @fn       Controller.addSynonyms
@@ -178,7 +350,7 @@ class Controller {
   */
   addSynonyms() {
     this.filtrate = Synonym.findSynonyms( this.search.sets, this.filtrate );  // Static class
-    this.highlightInteractions();
+    // this.highlightInteractions();  DISABLED FOR UNESTING
   }
 
   /**
@@ -188,20 +360,16 @@ class Controller {
     @callergraph
   */
   highlightInteractions() {
-    if ( !this.spinneractive ) { 
-      this.hideTable();
-      this.hideGraph();
-      this.showSpinners(); 
-    }
+
     this.filtrate = this.highlighter.highlight( this.filtrate );
    
-    // Check to see if there are any results
-    if(this.noResultsFound() == false)
-    {
-      this.drawTable();
-      this.drawGraph();
-    }
-    this.spinneractive = false;
+    // // Check to see if there are any results 
+    // if(this.noResultsFound() == false)   DISABLED FOR UNESTING
+    // {
+    //   this.drawTable();
+    //   this.drawGraph();
+    // }
+    // this.spinneractive = false;
   }
 
   drawTable() {
@@ -215,7 +383,6 @@ class Controller {
     // First check for zoom condition
     if ( this.tablestate.zoomed ) {
       new TableDetail( ".table-view table", this.filtrate, this.tablestate.zoomgroup );
-      this.hideTableSpinner();
       return;
     } 
 
@@ -225,28 +392,18 @@ class Controller {
     } else {
       new TableSummaryArticle( ".table-view table", this.filtrate, ".table-view .topbar .back" );
     }
-
-    this.hideTableSpinner();
   }
   /**
-    @fn       Controller.noResultsFound
-    @brief    
-    @details  This will return true if no results are found, and false if some results are found.
-              This will also hide the graphs and tables if no results are found
+    @fn       Controller.resultsFound
+    @brief    Checks if there are any results for the table
+    @details  This will return true if there is more than 0 interactions with no filters,
+              or true if there are filters and they haven't completely filtered out everything
     @callergraph
   */
-  noResultsFound(){
+  resultsFound(){
 
-    // If there are no interactions, or if there are interactions but the filters return zero results, hide the graphs and tables.
-    if ( this.interactions.length === 0 || (this.filtrate !== null && this.filtrate.length === 0))
-    { 
-      this.hideTableSpinner();
-      this.hideGraphSpinner();
-      this.showNoResults();
-      return true; 
-    }
-    this.hideNoResults();
-    return false;
+    // If there are interactions, and either the filtrate is null or it has filtered results.
+    return this.interactions.length > 0 && (this.filtrate === null || this.filtrate.length > 0)
     
   }
 
@@ -273,7 +430,6 @@ class Controller {
 
   showGraph() {
     $('#graph').show();
-    this.graph.fit(10);
   }
 
   showSpinners() {
