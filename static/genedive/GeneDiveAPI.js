@@ -12,11 +12,13 @@ GeneDiveAPI._stringifyIDs = function ( ids ) {
 
 /// @function GeneDiveAPI.interactions
 /// Given a set of gene ids, will return all known interactions
-/// @param {String} a comma-seperated list of gene ids
+/// @param {String} a comma-separated list of gene ids
+/// @return jqXHR The ajax request made, so you can call abort() or other methods
+/// @author jcole2@mail.sfsu.edu
 GeneDiveAPI.interactions = function (ids, minProb, callback) {
   ids = GeneDiveAPI._stringifyIDs( ids );
 
-  $.ajax({
+  return $.ajax({
     type: "GET",
     url: `/api/interactions.php?ids=${ids}&minProb=${minProb}`,
     cache: true,
@@ -26,7 +28,9 @@ GeneDiveAPI.interactions = function (ids, minProb, callback) {
 
 /// @function GeneDiveAPI.geneDetails
 /// Given one or more gene ids, returns additional gene data for disambiguation
-/// @param {String} a comma-seperated string of gene ids
+/// @param {String} a comma-separated string of gene ids
+/// @return jqXHR The ajax request made, so you can call abort() or other methods
+/// @author jcole2@mail.sfsu.edu
 GeneDiveAPI.geneDetails = function (ids, callback) {
   ids = GeneDiveAPI._stringifyIDs( ids );
   $.ajax({
@@ -39,7 +43,7 @@ GeneDiveAPI.geneDetails = function (ids, callback) {
 
 /// @function GeneDiveAPI.geneNames
 /// Given one or more gene ids, returns the NCBI names
-/// @param {String} a comma-seperated string of gene ids
+/// @param {String} a comma-separated string of gene ids
 GeneDiveAPI.geneNames = ( ids ) => new Promise( ( resolve, reject ) => {
   ids = GeneDiveAPI._stringifyIDs( ids );
   const request = new XMLHttpRequest();

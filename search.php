@@ -86,7 +86,7 @@
       </div>
 
       <div class="btn-group table-grouping" style="width:100%;" role="group" aria-label="...">
-        <button style="width:50%;" type="button" class="btn btn-default active" data-type="gene">DGD Pair</button>
+        <button style="width:50%;" type="button" class="btn btn-default active" data-type="dgd">DGD Pair</button>
         <button style="width:50%;" type="button" class="btn btn-default" data-type="article">Article</button>
       </div>
     </div>
