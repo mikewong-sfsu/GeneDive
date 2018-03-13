@@ -42,6 +42,8 @@
     <!-- GeneDive -->
     <link rel=stylesheet type=text/css href="static/genedive/index.css">
     <link rel=stylesheet type=text/css href="static/genedive/main.css">
+
+      <link rel=stylesheet type=text/css href="static/genedive/controls/controls.css">
     <link rel=stylesheet type=text/css href="static/genedive/search/search.css">
     <link rel=stylesheet type=text/css href="static/genedive/filter/filter.css">
     <link rel=stylesheet type=text/css href="static/genedive/view/table/table.css">

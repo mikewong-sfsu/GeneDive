@@ -7,6 +7,11 @@
 
     <div class="titlebar"><a href="/">GeneDive</a>
     </div>
+    <!-- Other Controls -->
+    <div class="module control-module">
+        <div class="undo disabled"></div>
+        <div class="redo disabled"></div>
+    </div>
 
     <!-- Search Controls -->
     <div class="module search-module">

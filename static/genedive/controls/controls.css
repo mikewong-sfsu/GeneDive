@@ -1,0 +1,50 @@
+.control-module {
+    padding-top: 0px;
+    padding-bottom: 2px;
+    background-color: rgb(230, 230, 230);
+    height: 40px;
+    min-height: 40px;
+}
+
+.control-module .undo, .control-module .redo {
+    font-family: FontAwesome;
+    font-size: 2em;
+    display: inline-block;
+    cursor: pointer;
+    color: rgb(128, 128, 128);
+    transition-duration: 1s;
+}
+
+.control-module .undo {
+    float: left;
+}
+
+.control-module .undo::after {
+    content: "\f0e2";
+}
+
+.control-module .redo {
+    float: right;
+}
+
+.control-module .redo::after {
+    content: "\f01e";
+}
+
+.control-module .undo:not(.disabled):hover {
+    transform: rotate(-90deg);
+}
+
+.control-module .redo:not(.disabled):hover {
+    transform: rotate(90deg);
+
+}
+
+.control-module .undo:not(.disabled):active, .control-module .redo:not(.disabled):active {
+
+}
+
+.control-module .disabled {
+    opacity: 0.2 !important;
+    cursor: default;
+}

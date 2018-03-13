@@ -25,7 +25,6 @@ class ProbabilityFilter {
     @fn       ProbabilityFilter.setMinimumProbability
     @brief    Sets the probability of the slider
     @details  This sets the probability and the display. Primarily used for state setting.
-    @author   Jack Cole jcole2@mail.sfsu.edu
     @param    value Min 0.0, Max 1.0. The amount to set.
     @callergraph
   */

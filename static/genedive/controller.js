@@ -1,9 +1,10 @@
 /**
  @class      Controller
- @brief      Handles all user input
+ @brief      Main controller for user interactions
  @details    This class is the main handler for all the interactions by the user on the website.
  Whenever a user types or clicks on something, their actions result in calls into the controller.
  @authors    Mike Wong mikewong@sfsu.edu
+ Brook Thomas brookthomas@gmail.com
  Jack Cole jcole2@mail.sfsu.edu
  @callergraph
  */
@@ -21,6 +22,7 @@ class Controller {
     this.grouper = new Grouper(".grouper-module .table-grouping");
     this.graph = new GraphView("graph");
     this.download = new Download(".download-module button.download");
+    this.controls = new Controls(".control-module .undo", ".control-module .redo",);
 
     this.tablestate = {zoomed: false, zoomgroup: null};
     this.interactions = null;
@@ -45,7 +47,6 @@ class Controller {
    @fn       Controller.onSelectSearchType
    @brief    Called when 1-Hop, 2-Hop, 3-Hop, or Clique is selected.
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   onSelectSearchType() {
@@ -57,7 +58,6 @@ class Controller {
    @fn       Controller.onAddDGD
    @brief    Called when a DGD is added
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   onAddDGD() {
@@ -69,7 +69,6 @@ class Controller {
    @fn       Controller.onRemoveDGD
    @brief    Called when a DGD is removed
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   onRemoveDGD() {
@@ -81,7 +80,6 @@ class Controller {
    @fn       Controller.onProbabilitySliderChange
    @brief    Called when a the Probability slider value is changed
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   onProbabilitySliderChange() {
@@ -93,7 +91,6 @@ class Controller {
    @fn       Controller.onAddFilter
    @brief    Called when a filter is added
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   onAddFilter() {
@@ -110,7 +107,6 @@ class Controller {
    @fn       Controller.onRemoveFilter
    @brief    Called when a filter is removed
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   onRemoveFilter() {
@@ -127,7 +123,6 @@ class Controller {
    @fn       Controller.onTableGroupingSelect
    @brief    Called when DGD Pair or Article buttons are selected
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   onTableGroupingSelect() {
@@ -139,7 +134,6 @@ class Controller {
    @fn       Controller.onHighlightKeyup
    @brief    Called when a user types into Highlight Rows field
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   onHighlightKeyup() {
@@ -153,7 +147,6 @@ class Controller {
    @fn       Controller.onNodeGraphCTRLClick
    @brief    Called a Graph node is CTRL+Clicked
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @param    name The name of the node clicked on
    @param    id The id of the node clicked on
    @callergraph
@@ -166,25 +159,33 @@ class Controller {
   }
 
   /**
-   @fn       Controller.onNodeGraphSHIFTClick
-   @brief    Called a Graph node is SHIFT+Clicked
+   @fn       Controller.onNodeGraphShiftClickHold
+   @brief    Called when after the shift key is held while clicking graph nodes
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
-  onNodeGraphShiftClick() {
+  onNodeGraphShiftClickHold(name, id, deferRunSearch) {
+    this.search.addSearchSet(name, id, deferRunSearch)
+  }
+
+  /**
+   @fn       Controller.onNodeGraphShiftClickRelease
+   @brief    Called when after the shift key is released when SHIFT+Clicking graph nodes
+   @details
+   @callergraph
+   */
+  onNodeGraphShiftClickRelease() {
     this.loadSpinners();
     this.runSearch();
   }
 
   /**
    @fn       Controller.onMoveGraphNode
-   @brief    Called a Graph node moved
+   @brief    Called a Graph node moved, zoomed, or panned
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
-  onMoveGraphNode() {
+  onGraphAltered() {
     this.saveCurrentStateToHistory();
   }
 
@@ -192,7 +193,6 @@ class Controller {
    @fn       Controller.onBackClick
    @brief    Called when the Back button is clicked in the details page
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   onBackClick() {
@@ -204,7 +204,6 @@ class Controller {
    @fn       Controller.onTableElementClick
    @brief    Called when a entry in the Table is clicked
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   onTableElementClick() {
@@ -216,7 +215,6 @@ class Controller {
    @fn       Controller.onInteractionsLoaded
    @brief    Parses the data after a search is made
    @details
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @param    interactions The results from GeneDiveAPI.interactions
    @callergraph
    */
@@ -237,7 +235,6 @@ class Controller {
    @brief    Hides the views while data is loading
    @details  This is called at the start of any changes to the page that involve API calls, and thus might take some time to complete
    Its goal is to inform the user that the program is in fact doing something.
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   loadSpinners() {
@@ -257,7 +254,6 @@ class Controller {
    @fn       Controller.loadLandingPage
    @brief    Hides the spinners and filters and loads the landing page
    @details  This loads the landing page for GeneDive.
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   loadLandingPage() {
@@ -275,7 +271,6 @@ class Controller {
    @details  Once the data has been loaded, this will hide all the
    spinners and load the table and graph. Or if no results are
    found, it will instead display No Results
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @param    redrawTable If true, then the Table will be redrawn from the data.
    If false, it will simply be unhidden and unaltered.
    @param    redrawGraph If true, then the Graph will be redrawn from the data.
@@ -299,6 +294,7 @@ class Controller {
       else
         this.showGraph();
 
+
       this.showGraphLegend();
 
     } else {
@@ -314,27 +310,26 @@ class Controller {
   /**
    @fn       Controller.runSearch
    @brief    Searchs for DGD Interactions
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   runSearch() {
 
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
-    if (this.search.sets.length === 0) {
+    if (this.search.amountOfDGDsSearched() === 0) {
       this.loadLandingPage();
       this.saveCurrentStateToHistory();
       return;
     }
 
     let topology = GeneDive.search.selectedTopology();
-    if (this.search.sets.length !== 2 && (topology == "2hop" || topology == "3hop")) {
+    if (this.search.amountOfDGDsSearched() !== 2 && (topology === "2hop" || topology === "3hop")) {
       alertify.notify("2-Hop / 3-Hop requires 2 DGDs", "", "3");
       this.loadTableAndGraphPage(false, false);
       this.saveCurrentStateToHistory();
       return;
     }
 
-    if (topology == "clique" && (this.search.sets.length > 1 || this.search.sets[0].ids.length > 1)) {
+    if (topology === "clique" && (this.search.amountOfDGDsSearched() > 1 || this.search.sets[0].ids.length > 1)) {
       alertify.notify("Clique search requires a single DGD.", "", "3");
       this.loadTableAndGraphPage(false, false);
       this.saveCurrentStateToHistory();
@@ -452,9 +447,10 @@ class Controller {
   }
 
   drawGraph() {
-    this.graph.draw(this.filtrate, this.search.sets);
+    this.graph.update(this.filtrate, this.search.sets);
     this.hideGraphSpinner();
     this.showGraph();
+
   }
 
   hideTable() {
@@ -473,6 +469,7 @@ class Controller {
 
   showGraph() {
     $('#graph').show();
+    this.graph.refitIfNeeded();
   }
 
   showSpinners() {
@@ -516,11 +513,11 @@ class Controller {
   }
 
   showFilters() {
-    $('.table-view .messaging-and-controls, .module:not(".search-module"), .divider').css('visibility', 'visible');
+    $('.table-view .messaging-and-controls, .module:not(".search-module"):not(".control-module"), .divider').css('visibility', 'visible');
   }
 
   hideFilters() {
-    $('.table-view .messaging-and-controls, .module:not(".search-module"), .divider').css('visibility', 'hidden');
+    $('.table-view .messaging-and-controls, .module:not(".search-module"):not(".control-module"), .divider').css('visibility', 'hidden');
   }
 
   /**
@@ -529,7 +526,6 @@ class Controller {
    @details  In the data, some values are null, or zero, or blank. Having different values for essentially what is
    "Not available" causes problems in filtering, so we assign them all to "N/A" or "Unknown", keeping them the same
    for whatever index they're under.
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   cleanUpData() {
@@ -557,7 +553,6 @@ class Controller {
    and convert it to a JSON string which will then be returned.
    The state is based off the the variables that describe the Table, the Graph,
    the Filters, and the Search.
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @return   string The state in JSON form
    @callergraph
    */
@@ -581,6 +576,9 @@ class Controller {
       "filtrate": this.filtrate,
     };
 
+    //Highlighter
+    state.highlighter = this.highlighter.exportHighlightState();
+
     // Graph state
     state.graph = this.graph.exportGraphState();
 
@@ -592,21 +590,20 @@ class Controller {
    @fn       Controller.saveCurrentStateToHistory
    @brief    Adds the current state to History
    @details  This will add a new item to the state history, while removing any stats ahead of the current state.
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   saveCurrentStateToHistory() {
     this.stateHistory = this.stateHistory.slice(0, this.currentStateIndex + 1);
     this.stateHistory.push(this.saveCurrentState());
     this.currentStateIndex += 1;
-
+    console.debug(`Saved state ${this.currentStateIndex}`)
+    this.controls.checkButtonStates();
   }
 
   /**
    @fn       Controller.setState
    @brief    Sets the state from JSON
    @details  This will set the state of the entire GeneDive program based on the JSON string passed in
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @param    stateJSONString The JSON that was generated by Controller.saveCurrentState()
    @callergraph
    */
@@ -629,17 +626,26 @@ class Controller {
     this.probfilter.setMinimumProbability(state.probfilter);
     this.textfilter.importFilterState(state.textfilter);
 
+    //Highlighter
+    this.highlighter.importHighlightState(state.highlighter);
+
     // Set Graph state
     this.graph.importGraphState(state.graph, this.search.sets);
 
-    this.loadTableAndGraphPage(true, false);
+    // Set the state controls
+    this.controls.checkButtonStates();
+
+    if(this.search.amountOfDGDsSearched() === 0)
+      this.loadLandingPage();
+    else
+      this.loadTableAndGraphPage(true, false);
   }
 
   /**
    @fn       Controller.setStateFromHistory
    @brief    Adds the current state to History
    @details  This will add a new item to the state history, while removing any stats ahead of the current state.
-   @author   Jack Cole jcole2@mail.sfsu.edu
+
    @param    stateIndex The index in the Controller.stateHistory array to set the state to
    @callergraph
    */
@@ -648,13 +654,13 @@ class Controller {
       throw `OutOfBoundsError: Could not set the state from index value ${stateIndex} because it would be outside the bounds of stateHistory[${this.stateHistory.length}]`;
     this.currentStateIndex = stateIndex;
     this.setState(this.stateHistory[stateIndex]);
+    console.debug(`Set state to ${stateIndex}/${this.stateHistory.length - 1}`)
   }
 
   /**
    @fn       Controller.goBackInStateHistory
    @brief    Loads the state previous of the current state
    @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex - 1
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   goBackInStateHistory() {
@@ -665,11 +671,30 @@ class Controller {
    @fn       Controller.goForwardInStateHistory
    @brief    Loads the state after the current state
    @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex + 1
-   @author   Jack Cole jcole2@mail.sfsu.edu
    @callergraph
    */
   goForwardInStateHistory() {
     this.setStateFromHistory(this.currentStateIndex + 1);
+  }
+
+  /**
+   @fn       Controller.canGoBackInStateHistory
+   @brief    Loads the state previous of the current state
+   @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex - 1
+   @callergraph
+   */
+  canGoBackInStateHistory() {
+    return this.currentStateIndex > 0;
+  }
+
+  /**
+   @fn       Controller.canGoForwardInStateHistory
+   @brief    Loads the state after the current state
+   @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex + 1
+   @callergraph
+   */
+  canGoForwardInStateHistory() {
+    return this.stateHistory.length - this.currentStateIndex > 1;
   }
 
 }
