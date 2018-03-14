@@ -22,35 +22,30 @@ const log_files = require('fs');
 	@param[in]	text	The string to write to the file
 	
 */
+logs = {};
 
-function prepare_log_file(file)
-{
+function append_log(file, text){
 
+	if(logs[file] === undefined)
+		logs[file] = text;
+	else
+		logs[file] += text;
+}
 
+function write_file(file)
+{	
 	if (!log_files.existsSync(LOG_DIRECTORY)){
 		log_files.mkdirSync(LOG_DIRECTORY);
 	}
 
-	log_files.writeFile(LOG_DIRECTORY+"\\"+file, "", { flag: 'w'}, function(err) {
+	log_files.appendFile(LOG_DIRECTORY+"\\"+file, logs[file], {'flags' : 'w'}, function(err) {
 		if(err) {
-			console.log(err);
+			throw err;
 		}
 		else{
-			console.log(file+' was emptied');
+			console.log(file+' was written');
 		}
-		});
-}
-
-function append_log(file, text){
-
-	log_files.appendFile(LOG_DIRECTORY+"\\"+file, text, { flag: 'w'}, function(err) {
-		if(err) {
-			console.log(err);
-		}
-		else{
-			console.log(file+' was appended');
-		}
-		});
+	});
 }
 
 
@@ -67,9 +62,6 @@ console.log("Starting Doxygen process");
 var doxygen_exec = exec('doxygen ' + OXYGEN_CONFIG_FILE,
 	{cwd: CONFIG_DIRECTORY })
 
-prepare_log_file("doxygen_output.log");
-prepare_log_file("doxygen_error.log");
-
 doxygen_exec.stdout.on('data', function (data) {
 	append_log("doxygen_output.log", data);
 });
@@ -80,6 +72,8 @@ doxygen_exec.stderr.on('data', function (data) {
 
 doxygen_exec.on('close', function (code) {
     console.log("Doxygen process exited with " + code);
+    write_file("doxygen_output.log");
+	write_file("doxygen_error.log");
 });
 
 ///@}
@@ -93,12 +87,10 @@ doxygen_exec.on('close', function (code) {
 				<br>Two log files outputted: *screenshots_output.log* *screenshots_error.log*
 	@{
 */
+
 console.log("Starting Screenshots process");
 var phantom_exec = exec('node ' + SCREENSHOTS_PHANTOMJS_FILE, 
 	{cwd: CONFIG_DIRECTORY })
-
-prepare_log_file("screenshots_output.log");
-prepare_log_file("screenshots_error.log");
 
 phantom_exec.stdout.on('data', function (data) {
 	append_log("screenshots_output.log", data);
@@ -109,7 +101,9 @@ phantom_exec.stderr.on('data', function (data) {
 });
 
 phantom_exec.on('close', function (code) {
-    console.log("Doxygen process exited with " + code);
+    console.log("Screenshots process exited with " + code);
+    write_file("screenshots_output.log");
+	write_file("screenshots_error.log");
 });
 
 
