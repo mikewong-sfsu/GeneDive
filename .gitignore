@@ -3,6 +3,6 @@
 data/users.sqlite
 data/data.sqlite
 data/master/
-data/pharmagkb/
+data/pharmgkb/
 sessions/
 static/genedive/json/adjacency_matrix.js
