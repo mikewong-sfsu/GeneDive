@@ -2,5 +2,7 @@
 .idea/
 data/users.sqlite
 data/data.sqlite
+data/master/
+data/pharmagkb/
 sessions/
 static/genedive/json/adjacency_matrix.js
