@@ -165,13 +165,14 @@
         <p>Shift-Click to Add</p>
         <p>Ctrl-Click to Replace</p>
       </div>
+    <div class="spinner graph-rendering-spinner">
+        <div>
+            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+        </div>
+    </div>
       <div id="graph">
       </div>
-      <div class="spinner graph-rendering-spinner">
-        <div>
-          <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
-        </div>
-      </div>
+
       <div class="help graph-help">
         <h3>Using the Graph</h3>
         <div class="modes">

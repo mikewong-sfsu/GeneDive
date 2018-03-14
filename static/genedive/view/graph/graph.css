@@ -6,7 +6,7 @@
 .graph-view #graph {
   width:100%;
   height:100%;
-  display: none;
+  opacity: 0;
 }
 
 .graph-view .legend {

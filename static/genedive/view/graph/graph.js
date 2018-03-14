@@ -12,6 +12,7 @@ class GraphView {
   constructor(viewport) {
 
     this.graph = cytoscape({container: document.getElementById(viewport)});
+    this.graphContainer = $(".graph-view");
     this.shiftListenerActive = false;
     this.graph
       .on('tap', 'node', nodeClickBehavior)
@@ -35,6 +36,7 @@ class GraphView {
     $(".graph-view .absent").on("click", () => {
       this.showAbsentNodes();
     })
+
 
 
     // Calls the resize method to resize the graph whenever the splitter is moved.
@@ -86,10 +88,12 @@ class GraphView {
     // this.centerGraph();
     this.needsFitting = true;
 
+
     // Notify user of set members that don't appear in search results
     this.storeAbsentNodes(nodes, sets);
 
   }
+
   /**
    @fn        GraphView.update
    @brief     Updates the elements in the graph
@@ -307,8 +311,8 @@ class GraphView {
   }
 
   centerGraph() {
-    let vert = ($(".graph-view").height() / 4);
-    let horz = ($(".graph-view").width() / 2);
+    let vert = (this.graphContainer.height() / 4);
+    let horz = (this.graphContainer.width() / 2);
     this.graph.viewport({zoom: 0, pan: {x: horz, y: vert}});
   }
 
@@ -318,12 +322,15 @@ class GraphView {
    @details  This is intended to call the fit method when needed. The reason is we only want to call fit after
    redrawing the graph, but not when just updating it. It needs to be called when the graph is visible, so this has to
    be called very late in the rendering of the page state.
+   @returns  boolean True if the graph was refit, false if it wasn't
    */
   refitIfNeeded(margin = 10) {
     if (this.needsFitting) {
       this.needsFitting = false;
       this.fit(margin);
+      return true;
     }
+    return false;
   }
 
   /**
@@ -347,7 +354,7 @@ class GraphView {
       "graph": this.graph.json(),
       "shiftListenerActive": this.shiftListenerActive,
       "absentNodes": this.absentNodes,
-      "currentSetsID" : this.currentSetsID,
+      "currentSetsID": this.currentSetsID,
       "hiddenNodes": this.hiddenNodes,
 
     };

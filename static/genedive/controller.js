@@ -279,8 +279,6 @@ class Controller {
    */
   loadTableAndGraphPage(redrawTable = true, redrawGraph = true) {
     this.showFilters();
-    this.hideTableSpinner();
-    this.hideGraphSpinner();
     if (this.resultsFound()) {
       this.hideNoResults();
 
@@ -302,7 +300,8 @@ class Controller {
       this.hideGraph();
       this.showNoResults();
     }
-
+    this.hideTableSpinner();
+    this.hideGraphSpinner();
     this.spinneractive = false;
   }
 
@@ -464,12 +463,13 @@ class Controller {
   }
 
   hideGraph() {
-    $('#graph').hide();
+    $('#graph').css("opacity", 0);
   }
 
   showGraph() {
-    $('#graph').show();
-    this.graph.refitIfNeeded();
+    $('#graph').css("opacity", 1);
+    GeneDive.graph.refitIfNeeded();
+
   }
 
   showSpinners() {
@@ -589,10 +589,13 @@ class Controller {
   /**
    @fn       Controller.saveCurrentStateToHistory
    @brief    Adds the current state to History
-   @details  This will add a new item to the state history, while removing any stats ahead of the current state.
+   @details  This will add a new item to the state history, while removing any stats ahead of the current state
+   If the view is currently loading, dictated by the spinneractive variable, then the state will not be saved.
    @callergraph
    */
   saveCurrentStateToHistory() {
+    if(this.spinneractive)
+      return; // Saving a state while loading is a bad idea
     this.stateHistory = this.stateHistory.slice(0, this.currentStateIndex + 1);
     this.stateHistory.push(this.saveCurrentState());
     this.currentStateIndex += 1;
