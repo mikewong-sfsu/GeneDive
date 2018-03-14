@@ -639,6 +639,7 @@ class Controller {
       this.loadLandingPage();
     else
       this.loadTableAndGraphPage(true, false);
+
   }
 
   /**
@@ -650,6 +651,7 @@ class Controller {
    @callergraph
    */
   setStateFromHistory(stateIndex) {
+
     if (stateIndex < 0 || stateIndex >= this.stateHistory.length)
       throw `OutOfBoundsError: Could not set the state from index value ${stateIndex} because it would be outside the bounds of stateHistory[${this.stateHistory.length}]`;
     this.currentStateIndex = stateIndex;
@@ -664,6 +666,7 @@ class Controller {
    @callergraph
    */
   goBackInStateHistory() {
+
     this.setStateFromHistory(this.currentStateIndex - 1);
   }
 
