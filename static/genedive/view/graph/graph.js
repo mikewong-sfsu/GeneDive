@@ -19,6 +19,9 @@ class GraphView {
       .on('zoom', onGraphAltered)
       .on('vmouseup', onGraphAltered);
 
+    // Timeout to track when the window is resized
+    this.windowResizeEventTimeout = null;
+
 
     this.absentNodes = [];
 
@@ -36,7 +39,6 @@ class GraphView {
     $(".graph-view .absent").on("click", () => {
       this.showAbsentNodes();
     })
-
 
 
     // Calls the resize method to resize the graph whenever the splitter is moved.
@@ -310,6 +312,13 @@ class GraphView {
       });
   }
 
+  /**
+   @fn       GraphView.centerGraph
+   @brief    Centers the elements of the graph
+   @details  This old method was used to center the graph. Previously, the fit() command didn't work due to the fact
+   that if you called fit() on a graph right after calling show() on its container, it would take a while to render and
+   so fit() would have no affect.
+   */
   centerGraph() {
     let vert = (this.graphContainer.height() / 4);
     let horz = (this.graphContainer.width() / 2);
@@ -327,27 +336,76 @@ class GraphView {
   refitIfNeeded(margin = 10) {
     if (this.needsFitting) {
       this.needsFitting = false;
-      this.fit(margin);
+      this.graph.fit(margin);
       return true;
     }
     return false;
   }
 
+
   /**
-   @fn       GraphView.fit
-   @brief    Fits all the nodes in the graph area
-   @details
+   @fn       GraphView.hideGraphView
+   @brief    Hides the Graph view
+   @details  This hide's the graph by making it transparent. The graph is normally hidden by other elements pushing
+   it down, in order to prevent complete re-rendering of the graph.
    */
-  fit(margin = 0) {
-    this.graph.fit(margin);
+  hideGraphView() {
+    $('#graph').css("opacity", 0);
   }
 
   /**
-   @fn       GraphView.exportGraphState
-   @brief    Returns the current state of the graph
-   @details  This saves the whole state of the graph, and some variables of the GraphView class.
-   @return   Object An Object representation of the graph's state
+   @fn       GraphView.showGraphView
+   @brief    Shows the Graph view
+   @details  Makes the graph visible. It will also call refitIfNeeded, in case the Graph has been redrawn and needs
+   all its elements recentered and fit.
    */
+  showGraphView() {
+    $('#graph').css("opacity", 1);
+    GeneDive.graph.refitIfNeeded();
+
+  }
+
+  /**
+   @fn       GraphView.showGraphLegend
+   @brief    Shows the Graph legend
+   @details
+   */
+  showGraphLegend() {
+    $(".graph-view .legend").show();
+  }
+
+
+  /**
+   @fn       GraphView.hideGraphLegend
+   @brief    Hides the Graph legend
+   @details
+   */
+  hideGraphLegend() {
+    $(".graph-view .legend").hide();
+  }
+
+
+  hideGraphSpinner() {
+    $(".graph-rendering-spinner").hide();
+  }
+
+
+  hideGraphAbsent() {
+    $(".graph-view .absent").hide();
+  }
+
+  /**
+   @fn       GraphView.resetGraphViewSize
+   @brief    Resets the graph view size
+   @details  During usage of the site, the graph might expand too wide, resulting
+   */
+  resetGraphViewSize() {
+    this.graphContainer.hide();
+    this.graph.resize();
+    this.graphContainer.show();
+    this.graph.resize();
+  }
+
   exportGraphState() {
     let returnData = {
 

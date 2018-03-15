@@ -41,6 +41,9 @@ class Controller {
         resizeWidth: false
       });
     });
+
+    // Every pixel change in window size will call this method
+    window.onresize = this.onWindowResized;
   }
 
   /**
@@ -231,6 +234,24 @@ class Controller {
   }
 
   /**
+   @fn       Controller.onWindowResized
+   @brief    The function called when the Window is Resized
+   @details  This function is made equal to window.onresize. There is a timeout inside it to wait for the window to
+   stop resizing after a specific amount of time
+   @callergraph
+   */
+  onWindowResized() {
+
+    if (window.onWindowResizedTimeout !== undefined)
+      window.clearTimeout(window.onWindowResizedTimeout);
+    window.onWindowResizedTimeout = window.setTimeout(function () {
+      GeneDive.graph.resetGraphViewSize();
+      delete window.onWindowResizedTimeout;
+    }, 500);
+
+  }
+
+  /**
    @fn       Controller.loadSpinners
    @brief    Hides the views while data is loading
    @details  This is called at the start of any changes to the page that involve API calls, and thus might take some time to complete
@@ -240,10 +261,10 @@ class Controller {
   loadSpinners() {
     if (!this.spinneractive) {
       this.hideHelp();
-      this.hideGraphLegend();
-      this.hideGraphAbsent();
+      this.graph.hideGraphLegend();
+      this.graph.hideGraphAbsent();
       this.hideTable();
-      this.hideGraph();
+      this.graph.hideGraphView();
       this.hideNoResults();
       this.showSpinners();
       this.spinneractive = true;
@@ -260,7 +281,7 @@ class Controller {
     this.showHelp();
     this.hideFilters();
     this.hideTableSpinner();
-    this.hideGraphSpinner();
+    this.graph.hideGraphSpinner();
     this.spinneractive = false;
 
   }
@@ -290,18 +311,18 @@ class Controller {
       if (redrawGraph)
         this.drawGraph();
       else
-        this.showGraph();
+        this.graph.showGraphView();
 
 
-      this.showGraphLegend();
+      this.graph.showGraphLegend();
 
     } else {
       this.hideTable();
-      this.hideGraph();
+      this.graph.hideGraphView();
       this.showNoResults();
     }
     this.hideTableSpinner();
-    this.hideGraphSpinner();
+    this.graph.hideGraphSpinner();
     this.spinneractive = false;
   }
 
@@ -447,8 +468,8 @@ class Controller {
 
   drawGraph() {
     this.graph.update(this.filtrate, this.search.sets);
-    this.hideGraphSpinner();
-    this.showGraph();
+    this.graph.hideGraphSpinner();
+    this.graph.showGraphView();
 
   }
 
@@ -462,15 +483,6 @@ class Controller {
     $('.table').show();
   }
 
-  hideGraph() {
-    $('#graph').css("opacity", 0);
-  }
-
-  showGraph() {
-    $('#graph').css("opacity", 1);
-    GeneDive.graph.refitIfNeeded();
-
-  }
 
   showSpinners() {
     $(".spinner").show().css("display", "flex");
@@ -480,9 +492,6 @@ class Controller {
     $(".table-rendering-spinner").hide();
   }
 
-  hideGraphSpinner() {
-    $(".graph-rendering-spinner").hide();
-  }
 
   showHelp() {
     $(".help").show();
@@ -500,17 +509,6 @@ class Controller {
     $(".no-results").hide();
   }
 
-  showGraphLegend() {
-    $(".graph-view .legend").show();
-  }
-
-  hideGraphLegend() {
-    $(".graph-view .legend").hide();
-  }
-
-  hideGraphAbsent() {
-    $(".graph-view .absent").hide();
-  }
 
   showFilters() {
     $('.table-view .messaging-and-controls, .module:not(".search-module"):not(".control-module"), .divider').css('visibility', 'visible');
@@ -594,7 +592,7 @@ class Controller {
    @callergraph
    */
   saveCurrentStateToHistory() {
-    if(this.spinneractive)
+    if (this.spinneractive)
       return; // Saving a state while loading is a bad idea
     this.stateHistory = this.stateHistory.slice(0, this.currentStateIndex + 1);
     this.stateHistory.push(this.saveCurrentState());
@@ -638,7 +636,7 @@ class Controller {
     // Set the state controls
     this.controls.checkButtonStates();
 
-    if(this.search.amountOfDGDsSearched() === 0)
+    if (this.search.amountOfDGDsSearched() === 0)
       this.loadLandingPage();
     else
       this.loadTableAndGraphPage(true, false);
