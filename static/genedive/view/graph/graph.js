@@ -16,8 +16,9 @@ class GraphView {
     this.shiftListenerActive = false;
     this.graph
       .on('tap', 'node', nodeClickBehavior)
-      .on('zoom', onGraphAltered)
-      .on('vmouseup', onGraphAltered);
+      // These are made as function calls because the GeneDive constant isn't set until later.
+      .on('viewport', ()=>{GeneDive.onGraphPanOrZoomed();})
+      .on('free',   ()=>{GeneDive.onGraphNodeMoved();});
 
     // Timeout to track when the window is resized
     this.windowResizeEventTimeout = null;
@@ -35,6 +36,8 @@ class GraphView {
 
     // This boolean will be examined when the graph is finished drawing, and used to decide to call the fit() method
     this.needsFitting = true;
+
+    this.graphVisible = false;
 
     $(".graph-view .absent").on("click", () => {
       this.showAbsentNodes();
@@ -79,13 +82,7 @@ class GraphView {
     this.graph.add(nodes);
     this.graph.add(edges);
 
-    this.graph.layout({
-      name: 'euler',
-      springLength: edge => 120,
-      springCoeff: edge => 0.002,
-      mass: node => 4,
-      gravity: -3
-    }).run();
+    this.setNodePositions();
 
     // this.centerGraph();
     this.needsFitting = true;
@@ -313,6 +310,21 @@ class GraphView {
   }
 
   /**
+   @fn       GraphView.setNodePositions
+   @brief    Puts the nodes into their proper positions
+   @details
+   */
+  setNodePositions(){
+    this.graph.layout({
+      name: 'euler',
+      springLength: edge => 120,
+      springCoeff: edge => 0.002,
+      mass: node => 4,
+      gravity: -3
+    }).run();
+  }
+
+  /**
    @fn       GraphView.centerGraph
    @brief    Centers the elements of the graph
    @details  This old method was used to center the graph. Previously, the fit() command didn't work due to the fact
@@ -351,6 +363,7 @@ class GraphView {
    */
   hideGraphView() {
     $('#graph').css("opacity", 0);
+    this.graphVisible = false;
   }
 
   /**
@@ -361,7 +374,9 @@ class GraphView {
    */
   showGraphView() {
     $('#graph').css("opacity", 1);
+    this.graphVisible = true;
     GeneDive.graph.refitIfNeeded();
+
 
   }
 
@@ -442,6 +457,10 @@ class GraphView {
 
   }
 
+  isVisible(){
+    return this.graphVisible;
+  }
+
 
 }
 
@@ -475,17 +494,6 @@ const nodeClickBehavior = function (event) {
 
   }
 };
-
-/**
- @fn       onGraphAltered
- @brief    Called a Graph node moved, zoomed, or panned
- @details  This is used to inform the Controller that something on the graph that doesn't involve adding or removing nodes
- , so we still want to save the state.
- */
-const onGraphAltered = function () {
-  GeneDive.onGraphAltered();
-};
-
 
 let GENEDIVE_CYTOSCAPE_STYLESHEET = [
   {

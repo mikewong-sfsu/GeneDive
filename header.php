@@ -27,7 +27,8 @@
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap-slider/bootstrap-slider.min.css">
 
     <!-- FontAwesome -->
-    <link rel="stylesheet" href="static/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="static/fonts/css/fontawesome.min.css">
+    <link rel="stylesheet" href="static/fonts/css/fa-solid.min.css">
 
     <!-- TableSorter -->
     <link rel="stylesheet" href="static/tablesorter/tablesorter.css">

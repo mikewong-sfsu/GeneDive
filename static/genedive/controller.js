@@ -22,7 +22,7 @@ class Controller {
     this.grouper = new Grouper(".grouper-module .table-grouping");
     this.graph = new GraphView("graph");
     this.download = new Download(".download-module button.download");
-    this.controls = new Controls(".control-module .undo", ".control-module .redo",);
+    this.controls = new Controls(".control-module .undo", ".control-module .redo", ".control-module .reset-graph");
 
     this.tablestate = {zoomed: false, zoomgroup: null};
     this.interactions = null;
@@ -44,6 +44,9 @@ class Controller {
 
     // Every pixel change in window size will call this method
     window.onresize = this.onWindowResized;
+
+    // This will prevent auto saving states from triggering while the state is being updated.
+    this.stateIsBeingUpdated = false;
   }
 
   /**
@@ -183,13 +186,35 @@ class Controller {
   }
 
   /**
-   @fn       Controller.onMoveGraphNode
-   @brief    Called a Graph node moved, zoomed, or panned
-   @details
+   @fn       Controller.onGraphNodeMoved
+   @brief    Called a Graph node moved
+   @details  This saves the state when a node in the graph is moved.
    @callergraph
    */
-  onGraphAltered() {
-    this.saveCurrentStateToHistory();
+  onGraphNodeMoved() {
+    GeneDive.saveCurrentStateToHistory();
+  }
+
+  /**
+   @fn       Controller.onGraphPanOrZoomed
+   @brief    Called a Graph node zoomed or panned
+   @details  This saves to state history when the graph is panned or zoomed. This can be called many times during what
+   a user might perceive as a single move, so there is a 500ms period after the last pans or zoom before the state is saved.
+
+   Another issue is that this is called even when the state of the graph is updated. So when the state of the graph is
+   being updated we need to set a flag that verifies that when this is called, it's not being called from a graph state
+   update.
+   @callergraph
+   */
+  onGraphPanOrZoomed() {
+    if(this.stateIsBeingUpdated === true)
+      return;
+    if (window.onSaveStateTimeout !== undefined)
+      window.clearTimeout(window.onSaveStateTimeout);
+    window.onSaveStateTimeout = window.setTimeout(function () {
+      GeneDive.saveCurrentStateToHistory();
+      delete window.onSaveStateTimeout;
+    }, 500);
   }
 
   /**
@@ -249,6 +274,41 @@ class Controller {
       delete window.onWindowResizedTimeout;
     }, 500);
 
+  }
+
+  /**
+   @fn       Controller.onUndoClick
+   @brief    Called when clicking the Undo button
+   @details
+   @callergraph
+   */
+  onUndoClick() {
+    if(this.canGoBackInStateHistory())
+      this.goBackInStateHistory();
+
+  }
+
+  /**
+   @fn       Controller.onRedoClick
+   @brief    Called when clicking the Redo button
+   @details
+   @callergraph
+   */
+  onRedoClick() {
+    if(this.canGoForwardInStateHistory())
+      this.goForwardInStateHistory();
+
+  }
+
+  /**
+   @fn       Controller.onReloadClick
+   @brief    Called when clicking the Reload button
+   @details
+   @callergraph
+   */
+  onReloadClick() {
+    this.graph.setNodePositions();
+    this.saveCurrentStateToHistory();
   }
 
   /**
@@ -594,6 +654,11 @@ class Controller {
   saveCurrentStateToHistory() {
     if (this.spinneractive)
       return; // Saving a state while loading is a bad idea
+
+    // There could be a timeout waiting to save a state. We need to cancel that to prevent unpredictable behavior
+    if (window.onSaveStateTimeout !== undefined)
+      window.clearTimeout(window.onSaveStateTimeout);
+
     this.stateHistory = this.stateHistory.slice(0, this.currentStateIndex + 1);
     this.stateHistory.push(this.saveCurrentState());
     this.currentStateIndex += 1;
@@ -610,6 +675,7 @@ class Controller {
    */
   setState(stateJSONString) {
     this.loadSpinners();
+    this.stateIsBeingUpdated = true; // Prevents any callbacks that update state from being triggered.
     let state = JSON.parse(stateJSONString);
 
     // Grouper
@@ -633,14 +699,16 @@ class Controller {
     // Set Graph state
     this.graph.importGraphState(state.graph, this.search.sets);
 
-    // Set the state controls
-    this.controls.checkButtonStates();
 
     if (this.search.amountOfDGDsSearched() === 0)
       this.loadLandingPage();
     else
       this.loadTableAndGraphPage(true, false);
 
+    this.stateIsBeingUpdated = false; // Resumes callbacks
+
+    // Set the state controls
+    this.controls.checkButtonStates();
   }
 
   /**
@@ -703,7 +771,7 @@ class Controller {
 
 }
 
-let GeneDive = new Controller();
+const GeneDive = new Controller();
 
 $(document).on('ready', function () {
   $('[data-toggle="tooltip"]').tooltip();

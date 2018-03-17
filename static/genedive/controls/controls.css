@@ -6,21 +6,32 @@
     min-height: 40px;
 }
 
-.control-module .undo, .control-module .redo {
+.control-module div {
     font-family: FontAwesome;
     font-size: 2em;
     display: inline-block;
     cursor: pointer;
     color: rgb(128, 128, 128);
-    transition-duration: 1s;
+    transition: 300ms linear all;
 }
 
 .control-module .undo {
     float: left;
+  animation-play-state: paused;
 }
 
 .control-module .undo::after {
     content: "\f0e2";
+}
+
+
+.control-module .reset-graph{
+    float: left;
+    margin-left: calc(50% - 28px - 14px);
+}
+
+.control-module .reset-graph::after{
+    content: "\f021";
 }
 
 .control-module .redo {
@@ -32,12 +43,27 @@
 }
 
 .control-module .undo:not(.disabled):hover {
-    transform: rotate(-90deg);
+  animation: rotate-cc 2s infinite linear;
+
 }
 
 .control-module .redo:not(.disabled):hover {
-    transform: rotate(90deg);
+  animation: rotate-c 2s infinite linear;
 
+}
+
+.control-module .reset-graph:not(.disabled):hover {
+  animation: rotate-c 2s infinite linear;
+}
+
+@keyframes rotate-c {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
+@keyframes rotate-cc {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(-360deg);}
 }
 
 .control-module .undo:not(.disabled):active, .control-module .redo:not(.disabled):active {

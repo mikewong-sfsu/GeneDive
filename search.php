@@ -10,6 +10,7 @@
     <!-- Other Controls -->
     <div class="module control-module">
         <div class="undo disabled"></div>
+        <div class="reset-graph disabled"></div>
         <div class="redo disabled"></div>
     </div>
 

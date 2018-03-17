@@ -8,43 +8,34 @@
  */
 
 class Controls {
-  constructor(undo, redo) {
+
+  /**
+   @fn       Controls.constructor
+   @brief    Binds the handles to the controls
+   @details
+   @callergraph
+   */
+  constructor(undo, redo, reload) {
     this.undo = $(undo);
     this.redo = $(redo);
+    this.reload = $(reload);
 
 
-    this.undo.on('click', i => {
-      if(GeneDive.canGoBackInStateHistory())
-        this.onUndoClick();
+    this.undo.on('click', () => {
+      GeneDive.onUndoClick();
     });
 
-    this.redo.on('click', i => {
-      if(GeneDive.canGoForwardInStateHistory())
-        this.onRedoClick();
+    this.redo.on('click', () => {
+      GeneDive.onRedoClick();
+    });
+
+    this.reload.on('click', () =>{
+      GeneDive.onReloadClick();
     });
   }
 
-  /**
-   @fn       Controls.onUndoClick
-   @brief    Called when clicking the Undo button
-   @details
-   @callergraph
-   */
-  onUndoClick() {
-    GeneDive.goBackInStateHistory();
 
-  }
 
-  /**
-   @fn       Controls.onRedoClick
-   @brief    Called when clicking the Redo button
-   @details
-   @callergraph
-   */
-  onRedoClick() {
-    GeneDive.goForwardInStateHistory();
-
-  }
 
   /**
    @fn       Controls.checkButtonStates
@@ -53,14 +44,23 @@ class Controls {
    @callergraph
    */
   checkButtonStates() {
+
     if (GeneDive.canGoBackInStateHistory())
       this.undoShow();
     else
       this.undoHide();
+
     if (GeneDive.canGoForwardInStateHistory())
       this.redoShow();
     else
       this.redoHide();
+
+    if(GeneDive.graph.isVisible())
+      this.reloadShow();
+    else
+      this.reloadHide();
+
+
   }
   /**
    @fn       Controls.undoHide
@@ -99,5 +99,25 @@ class Controls {
   redoShow() {
     this.redo.removeClass("disabled");;
   }
+
+  /**
+   @fn       Controls.reloadHide
+   @brief    Hide Reload Button
+   @details
+   @callergraph
+   */
+  reloadHide() {
+    this.reload.addClass("disabled");
+  }
+  /**
+   @fn       Controls.reloadShow
+   @brief    Show Reload Button
+   @details
+   @callergraph
+   */
+  reloadShow() {
+    this.reload.removeClass("disabled");;
+  }
+
 
 }
