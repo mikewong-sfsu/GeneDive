@@ -43,7 +43,8 @@ class Controller {
     });
 
     // Every pixel change in window size will call this method
-    window.onresize = this.onWindowResized;
+    window.onresize = ()=>{GeneDive.onWindowResized();}
+    this.onWindowResizedTimeout = undefined;
 
     // This will prevent auto saving states from triggering while the state is being updated.
     this.stateIsBeingUpdated = false;
@@ -266,13 +267,14 @@ class Controller {
    @callergraph
    */
   onWindowResized() {
-
-    if (window.onWindowResizedTimeout !== undefined)
-      window.clearTimeout(window.onWindowResizedTimeout);
-    window.onWindowResizedTimeout = window.setTimeout(function () {
-      GeneDive.graph.resetGraphViewSize();
-      delete window.onWindowResizedTimeout;
-    }, 500);
+    console.debug("Called onWindowResized", this);
+    if (this.onWindowResizedTimeout !== undefined)
+      window.clearTimeout(this.onWindowResizedTimeout);
+    this.onWindowResizedTimeout = window.setTimeout(function (geneDiveObj) {
+      console.debug("Resized", geneDiveObj);
+      geneDiveObj.graph.resetGraphViewSize();
+      delete geneDiveObj.onWindowResizedTimeout;
+    }, 500, this);
 
   }
 
