@@ -99,9 +99,10 @@
 
     <div class="divider"></div>
 
-    <!-- Download -->
+    <!-- Download and Upload -->
     <div class="module download-module">
       <button style="width:100%;" type="button" class="btn btn-default download">Download Results</button>
+      <button style="width:100%;" type="button" class="btn btn-default upload disabled">Upload Results</button>
     </div>
 
     <div class="module about-module">

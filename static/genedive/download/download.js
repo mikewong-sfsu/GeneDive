@@ -46,12 +46,14 @@ class Download {
   }
 
   buildStateFile() {
-    let state = {};
-    state["search"] = GeneDive.search.sets;
-    state["minimumProbability"] = GeneDive.probfilter.getMinimumProbability();
-    state["filters"] = GeneDive.textfilter.sets;
-    state["highlighting"] = GeneDive.highlighter.input.val();
-    return state;
+    // let state = {};
+    // state["search"] = GeneDive.search.sets;
+    // state["minimumProbability"] = GeneDive.probfilter.getMinimumProbability();
+    // state["filters"] = GeneDive.textfilter.sets;
+    // state["highlighting"] = GeneDive.highlighter.input.val();
+    // return state;
+
+    return GeneDive.exportEntireProgramStates();
   }
 
   fetchGraphImage() {
