@@ -307,6 +307,7 @@ class Controller {
    @callergraph
    */
   onReloadClick() {
+    this.graph.resetHiddenNodes();
     this.graph.setNodePositions();
     this.saveCurrentStateToHistory();
   }

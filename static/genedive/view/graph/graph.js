@@ -28,8 +28,7 @@ class GraphView {
 
     // Stores nodes that were hidden due to filtering, probability changes, or other things.
     // They can be brought back if changes to searches allow
-    // { "node": graphElement.json(), "edges" : [graphElement.json()] }
-    this.hiddenNodes = {};
+    this.resetHiddenNodes();
 
     // If this changes, then we know new DGDs were added or removed so we have to redraw the graph
     this.currentSetsID = {};
@@ -63,7 +62,7 @@ class GraphView {
    */
   draw(interactions, sets) {
 
-    this.hiddenNodes = {};
+    this.resetHiddenNodes();
     this.currentSetsID = SearchSet.getIDOfSearchSetArray(sets);
 
     let nodes = this.createNodes(interactions);
@@ -322,6 +321,15 @@ class GraphView {
       mass: node => 4,
       gravity: -3
     }).run();
+  }
+
+  /**
+   @fn       GraphView.resetHiddenNodes
+   @brief    Deletes all the hidden nodes
+   @details
+   */
+  resetHiddenNodes(){
+    this.hiddenNodes = {};
   }
 
   /**
