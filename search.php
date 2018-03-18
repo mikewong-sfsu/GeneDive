@@ -8,10 +8,19 @@
     <div class="titlebar"><a href="/">GeneDive</a>
     </div>
     <!-- Other Controls -->
-    <div class="module control-module">
+    <!-- <div class="module control-module">
         <div class="undo disabled"></div>
         <div class="reset-graph disabled"></div>
         <div class="redo disabled"></div>
+    </div>-->
+
+    <!-- Other Controls -->
+    <div class="module control-module">
+            <div class="btn-group" style="width: 100%">
+                <button type="button" class="btn btn-default undo disabled" data-toggle="tooltip" data-placement="bottom" title="Undo the last action you made"></button>
+                <button type="button" class="btn btn-default reset-graph disabled" data-toggle="tooltip" data-placement="bottom" title="Regenerate the positions of the graph nodes"></button>
+                <button type="button" class="btn btn-default redo disabled" data-toggle="tooltip" data-placement="bottom" title="Redo the last action you made"></button>
+            </div>
     </div>
 
     <!-- Search Controls -->

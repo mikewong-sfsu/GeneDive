@@ -800,7 +800,8 @@ class Controller {
 const GeneDive = new Controller();
 
 $(document).on('ready', function () {
-  $('[data-toggle="tooltip"]').tooltip();
+  // intialize tooltips, and set the tooltip to only appear when hovering.
+  $('[data-toggle="tooltip"]').tooltip({trigger : 'hover'});
 
   // Mirror Adjacency Matrix
   for (let gene in adjacency_matrix) {

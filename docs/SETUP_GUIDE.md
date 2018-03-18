@@ -38,6 +38,9 @@ Generates all the documentation from the source code.
 Creates graphs for function calls.
 3. **NodeJS**: https://nodejs.org/en/  
 Automated scripts we made were written in NodeJS to keep everything in Javascript
+3. **Puppeteer**: https://github.com/GoogleChrome/puppeteer  
+Chrome browser virtualizer allowing for automated testing and screenshots
+*Note: Make sure to install it globally, and not in the current project, using the global flag like so:* `npm -g install puppeteer`
 
 ### Execution
 

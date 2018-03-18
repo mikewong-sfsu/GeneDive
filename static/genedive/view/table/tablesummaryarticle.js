@@ -93,7 +93,7 @@ class TableSummaryArticle extends ResultsTable {
     }
 
     // Init hover tooltip
-    $('tr.grouped').tooltip();
+    $('tr.grouped').tooltip({trigger : 'hover'});
 
   }
   

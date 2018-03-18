@@ -2,61 +2,62 @@
     padding-top: 0px;
     padding-bottom: 2px;
     background-color: rgb(230, 230, 230);
-    height: 40px;
-    min-height: 40px;
+    /*height: 40px;
+    min-height: 40px;*/
 }
 
-.control-module div {
+.control-module button {
     font-family: FontAwesome;
-    font-size: 2em;
+    font-size: 1em;
     display: inline-block;
     cursor: pointer;
     color: rgb(128, 128, 128);
     transition: 300ms linear all;
+    width: calc(100%/3);
 }
 
 .control-module .undo {
-    float: left;
-  animation-play-state: paused;
+/*    float: left;
+  animation-play-state: paused;*/
 }
 
-.control-module .undo::after {
+.control-module .undo::before {
     content: "\f0e2";
 }
 
 
 .control-module .reset-graph{
-    float: left;
-    margin-left: calc(50% - 28px - 14px);
+/*    float: left;
+    margin-left: calc(50% - 28px - 14px);*/
 }
 
-.control-module .reset-graph::after{
+.control-module .reset-graph::before{
     content: "\f021";
 }
 
 .control-module .redo {
-    float: right;
+/*    float: right;*/
 }
 
-.control-module .redo::after {
+.control-module .redo::before {
     content: "\f01e";
 }
 
 .control-module .undo:not(.disabled):hover {
-  animation: rotate-cc 2s infinite linear;
+  /*animation: rotate-cc 2s infinite linear;*/
 
 }
 
 .control-module .redo:not(.disabled):hover {
-  animation: rotate-c 2s infinite linear;
+  /*animation: rotate-c 2s infinite linear;*/
 
 }
 
 .control-module .reset-graph:not(.disabled):hover {
-  animation: rotate-c 2s infinite linear;
+  /*animation: rotate-c 2s infinite linear;*/
 }
 
-@keyframes rotate-c {
+/*@keyframes rotate-c {
   from {transform: rotate(0deg);}
   to {transform: rotate(360deg);}
 }
@@ -64,13 +65,13 @@
 @keyframes rotate-cc {
   from {transform: rotate(0deg);}
   to {transform: rotate(-360deg);}
-}
+}*/
 
 .control-module .undo:not(.disabled):active, .control-module .redo:not(.disabled):active {
 
 }
 
-.control-module .disabled {
+/*.control-module .disabled {
     opacity: 0.2 !important;
     cursor: default;
-}
+}*/
