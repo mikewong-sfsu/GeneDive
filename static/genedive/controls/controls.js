@@ -23,14 +23,17 @@ class Controls {
 
     this.undo.on('click', () => {
       GeneDive.onUndoClick();
+      this.undo.blur();
     });
 
     this.redo.on('click', () => {
       GeneDive.onRedoClick();
+      this.redo.blur();
     });
 
     this.reload.on('click', () =>{
       GeneDive.onReloadClick();
+      this.reload.blur();
     });
   }
 
