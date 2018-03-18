@@ -7,19 +7,13 @@
 
     <div class="titlebar"><a href="/">GeneDive</a>
     </div>
-    <!-- Other Controls -->
-    <!-- <div class="module control-module">
-        <div class="undo disabled"></div>
-        <div class="reset-graph disabled"></div>
-        <div class="redo disabled"></div>
-    </div>-->
 
     <!-- Other Controls -->
     <div class="module control-module">
             <div class="btn-group" style="width: 100%">
-                <button type="button" class="btn btn-default undo disabled" data-toggle="tooltip" data-placement="bottom" title="Undo the last action you made"></button>
-                <button type="button" class="btn btn-default reset-graph disabled" data-toggle="tooltip" data-placement="bottom" title="Regenerate the positions of the graph nodes"></button>
-                <button type="button" class="btn btn-default redo disabled" data-toggle="tooltip" data-placement="bottom" title="Redo the last action you made"></button>
+                <button type="button" class="btn btn-default undo disabled" data-toggle="tooltip-initial" data-placement="bottom" title="Undo the last action you made"></button>
+                <button type="button" class="btn btn-default reset-graph disabled" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes"></button>
+                <button type="button" class="btn btn-default redo disabled" data-toggle="tooltip-initial" data-placement="bottom" title="Redo the last action you undid"></button>
             </div>
     </div>
 
@@ -27,10 +21,10 @@
     <div class="module search-module">
       <div class="topology-row">
         <div class="btn-group topology-selector" style="width:100%;" role="group" aria-label="...">
-          <button data-toggle="tooltip" data-placement="bottom" title="Provide one DGD (blue) to view all interactions with that DGD. Provide multiple DGDs or DGD sets to view interactions between all input DGDs." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
-          <button data-toggle="tooltip" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 1 (one) intermediary DGD."                 style="width:25%;" type="button" class="btn btn-default"        data-type="2hop">2-Hop</button>
-          <button data-toggle="tooltip" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 2 (two) intermediary DGDs."                style="width:25%;" type="button" class="btn btn-default"        data-type="3hop">3-Hop</button>
-          <button data-toggle="tooltip" data-placement="bottom" title="Provide one DGD as input. GeneDive will show those DGDs that interact with the input DGD as well as one other input interactant."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD (blue) to view all interactions with that DGD. Provide multiple DGDs or DGD sets to view interactions between all input DGDs." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 1 (one) intermediary DGD."                 style="width:25%;" type="button" class="btn btn-default"        data-type="2hop">2-Hop</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 2 (two) intermediary DGDs."                style="width:25%;" type="button" class="btn btn-default"        data-type="3hop">3-Hop</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD as input. GeneDive will show those DGDs that interact with the input DGD as well as one other input interactant."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
         </div>
       </div>
 
@@ -110,7 +104,7 @@
 
     <!-- Download and Upload -->
     <div class="module download-module">
-      <button style="width:100%;" type="button" class="btn btn-default download">Download Results</button>
+      <button style="width:100%;" type="button" data-toggle="tooltip-initial" data-placement="top" class="btn btn-default download">Download Results</button>
       <button style="width:100%;" type="button" class="btn btn-default upload disabled">Upload Results</button>
     </div>
 
