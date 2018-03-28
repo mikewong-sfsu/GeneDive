@@ -17,8 +17,12 @@ class GraphView {
     this.graph
       .on('tap', 'node', nodeClickBehavior)
       // These are made as function calls because the GeneDive constant isn't set until later.
-      .on('viewport', ()=>{GeneDive.onGraphPanOrZoomed();})
-      .on('free',   ()=>{GeneDive.onGraphNodeMoved();});
+      .on('viewport', () => {
+        GeneDive.onGraphPanOrZoomed();
+      })
+      .on('free', () => {
+        GeneDive.onGraphNodeMoved();
+      });
 
     // Timeout to track when the window is resized
     this.windowResizeEventTimeout = null;
@@ -110,17 +114,23 @@ class GraphView {
 
     let newHiddenNodes = {};
 
-    // Produce a set of unique DGDs in the interactions list
-    let interactionDGDs = new Set(
-      interactions.map(i => {
-        return i.geneids1;
-      })
-        .concat(interactions.map(i => {
-          return i.geneids2;
-        })));
+    // Produce a set of unique DGDs from the interactions list
+    let interactionDGDs = {};
+    for(let i in interactions)
+    {
+      let interaction = interactions[i];
+      interactionDGDs[interaction.geneids1] = {
+        color: interaction.mention1_color,
+        shape:this.getShapeFromId(interaction.geneids1),
+      };
+      interactionDGDs[interaction.geneids2] = {
+        color: interaction.mention2_color,
+        shape:this.getShapeFromId(interaction.geneids2),
+      };
+    }
 
     // Check if there are new nodes not in the hiddenNodes or graph itself. If so, redraw the graph.
-    for (let dgd of  Array.from(interactionDGDs)) {
+    for (let dgd in interactionDGDs) {
       if (this.hiddenNodes[dgd] === undefined && (this.graph.hasElementWithId(dgd) === false)) {
         this.draw(interactions, sets);
         return;
@@ -136,7 +146,7 @@ class GraphView {
         continue;
       let isNode = element.isNode();
       let elementDataID = element.data().id;
-      let notInDGDList = !interactionDGDs.has(elementDataID);
+      let notInDGDList = interactionDGDs[elementDataID] === undefined;
       if (isNode && notInDGDList) {
         let removedElements = element.remove();
         newHiddenNodes[elementDataID] = {};
@@ -153,7 +163,7 @@ class GraphView {
     // Add any hidden nodes in the interactions
     for (let nodeID in this.hiddenNodes) {
       // The node should be the first element`
-      if (interactionDGDs.has(nodeID)) {
+      if (interactionDGDs[nodeID] !== undefined) {
 
         if (this.graph.hasElementWithId(nodeID)) {
           console.error(`Tried to add the hidden element ${nodeID}, but it's already there! This shouldn't happen.`);
@@ -170,6 +180,23 @@ class GraphView {
         if (delete this.hiddenNodes[nodeID] === false)
           console.error(`Unable to delete ${nodeID} from hiddenNodes`);
       }
+    }
+
+    // Update the color and the shape of the visible nodes
+    let currentGraphNodes = this.graph.nodes();
+    for (let elementID in currentGraphNodes) {
+      let node = currentGraphNodes[parseInt(elementID)];
+      if(node === undefined)
+        continue;
+      let nodeData = node.data();
+      let expectedColor = interactionDGDs[nodeData.id].color;
+      let expectedShape = interactionDGDs[nodeData.id].shape;
+
+      if(node.style("background-color") !== expectedColor)
+        node.style("background-color", expectedColor);
+
+      if(node.style("shape") !== expectedShape)
+        node.style("shape", expectedShape);
     }
     this.graph.edges().remove();
     this.graph.add(_.values(this.createEdges(interactions)));
@@ -199,24 +226,30 @@ class GraphView {
     // Assign node shape
     for (let n in nodes) {
       let node = nodes[n];
-      let firstChar = node.data.id.substring(0, 1);
-
-      switch (firstChar) {
-        case "C":
-          node.data.shape = 'triangle';
-          break;
-
-        case "D":
-          node.data.shape = 'square';
-          break;
-
-        default:
-          node.data.shape = 'ellipse';
-          break;
-      }
+      node.data.shape = this.getShapeFromId(node.data.id);
     }
-
     return nodes;
+  }
+
+  /**
+   @fn        GraphView.getShapeFromId
+   @brief     Returns the shape based on the geneid provided
+   @details   This will give a shape based on the geneid provided.
+   @param     id From interactions, either a geneids1 or geneids2
+   @return    A string with the shape name.
+   @callergraph
+   */
+  getShapeFromId(id)
+  {
+    let firstChar = id.substring(0, 1);
+    switch (firstChar) {
+      case "C":
+        return 'triangle';
+      case "D":
+        return 'square';
+      default:
+        return 'ellipse';
+    }
   }
 
   createEdges(interactions) {
@@ -224,6 +257,7 @@ class GraphView {
 
     interactions.forEach(i => {
       let key = [i.geneids1, i.geneids2].sort().join("_");
+
       if (!edges.hasOwnProperty(key)) {
         edges[key] = {
           group: 'edges',
@@ -313,7 +347,7 @@ class GraphView {
    @brief    Puts the nodes into their proper positions
    @details
    */
-  setNodePositions(){
+  setNodePositions() {
     this.graph.layout({
       name: 'euler',
       springLength: edge => 120,
@@ -328,7 +362,7 @@ class GraphView {
    @brief    Deletes all the hidden nodes
    @details
    */
-  resetHiddenNodes(){
+  resetHiddenNodes() {
     this.hiddenNodes = {};
   }
 
@@ -337,7 +371,7 @@ class GraphView {
    @brief    Deletes all the hidden nodes
    @details
    */
-  clearData(){
+  clearData() {
     this.resetHiddenNodes();
     this.graph.nodes().remove();
     this.absentNodes = [];
@@ -477,7 +511,7 @@ class GraphView {
 
   }
 
-  isVisible(){
+  isVisible() {
     return this.graphVisible;
   }
 
