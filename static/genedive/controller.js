@@ -810,4 +810,18 @@ $(document).ready(function () {
   // Initialize tooltips, and set the tooltip to only appear when hovering.
   $('[data-toggle="tooltip-initial"]').tooltip({trigger : 'hover'});
 
+  // Mirror Adjacency Matrix
+  for ( let gene in adjacency_matrix ) {
+    for ( let interactant in adjacency_matrix[gene] ) {
+
+      if ( !(interactant in adjacency_matrix) ) {
+        adjacency_matrix[interactant] = {};
+      }
+
+      if ( !(gene in adjacency_matrix[interactant]) ) {
+        adjacency_matrix[interactant][gene] = true;
+      }
+
+    }
+  }
 });
