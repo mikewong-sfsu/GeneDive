@@ -190,19 +190,23 @@ class Search {
       let item = undefined;
 
       if (set.type == "gene") {
+        let url = "";
+        if (set.entity === "chemical")
+          url =`https://www.pharmgkb.org/search?connections&query=${set.name}`;
+        else
+          url = `https://www.ncbi.nlm.nih.gov/gene/${set.ids[0]}`;
+
         item = $("<div/>")
           .addClass("search-item")
           .css("background-color", set.color)
           .append($("<span/>").addClass("name").text(set.name))
           .append(
-            $("<i/>").addClass("fa fa-question ncbi-linkout")
+            $("<a/>").addClass("fa fa-question ncbi-linkout")
               .data("ncbi", set.ids[0])
               .attr("data-toggle", "tooltip")
               .attr("title", "Open NCBI Datasheet In New Tab")
-              .on('click', (event) => {
-                let ncbi_id = $(event.target).data("ncbi");
-                window.open(`https://www.ncbi.nlm.nih.gov/gene/${ncbi_id}`);
-              })
+              .attr("href", url)
+              .attr("target", "_blank")
           )
           .append(
             $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
@@ -227,7 +231,7 @@ class Search {
     }
 
     // Initialize tooltips
-    $('[data-toggle="tooltip"]').tooltip({trigger : 'hover'});
+    $('[data-toggle="tooltip"]').tooltip({trigger: 'hover'});
   }
 
   initTypeahead() {
@@ -360,7 +364,7 @@ class Search {
   exportSearchState() {
     return {
       "sets": this.sets,
-      "topology" : this.selectedTopology(),
+      "topology": this.selectedTopology(),
     };
   }
 
@@ -384,7 +388,7 @@ class Search {
    @details
    @callergraph
    */
-  amountOfDGDsSearched(){
+  amountOfDGDsSearched() {
     return this.sets.length;
   }
 
@@ -411,6 +415,7 @@ class SearchSet {
         this.entity = "gene";
     }
   }
+
   /**
    @fn       SearchSet.getIDOfSearchSetArray
    @brief    Gets ID of SearchSet Array
@@ -418,8 +423,10 @@ class SearchSet {
    @param    sets A SearchSet Array
    @callergraph
    */
-  static getIDOfSearchSetArray(sets){
-    return sha256(sets.map(set=>{return set.id}).join("")).slice(0, 30);
+  static getIDOfSearchSetArray(sets) {
+    return sha256(sets.map(set => {
+      return set.id
+    }).join("")).slice(0, 30);
   }
 
 }

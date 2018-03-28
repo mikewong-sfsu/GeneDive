@@ -29,10 +29,18 @@
   cursor:pointer;
 }
 
+.search-module .search-item .ncbi-linkout:focus {
+  outline:none;
+  outline-offset:0;
+  text-decoration: none;
+}
+
 .search-module .search-item .remove:hover {
   color:#920907;
   cursor: pointer;
 }
+
+
 
 /* Typeahead Styling */
 
