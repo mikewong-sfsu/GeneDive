@@ -464,7 +464,7 @@ class Controller {
    @callergraph
    */
   colorInteractions() {
-    this.filtrate = this.color.colorInteractions(this.filtrate);
+    this.filtrate = this.color.colorInteractions(this.filtrate, this.search.selectedTopology());
   }
 
   /**

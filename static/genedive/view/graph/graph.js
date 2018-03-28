@@ -198,6 +198,7 @@ class GraphView {
       if(node.style("shape") !== expectedShape)
         node.style("shape", expectedShape);
     }
+
     this.graph.edges().remove();
     this.graph.add(_.values(this.createEdges(interactions)));
 

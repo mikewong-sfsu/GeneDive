@@ -113,13 +113,13 @@ class Search {
         return this.search1Hop();
 
       case "2hop":
-        if (this.sets.length == 1) {
+        if (this.sets.length === 1) {
           return [];
         }
         return this.search2Hop();
 
       case "3hop":
-        if (this.sets.length == 1) {
+        if (this.sets.length === 1) {
           return [];
         }
         return this.search3Hop();
@@ -145,10 +145,10 @@ class Search {
 
     // Re-render Search Display with Colors
     this.sets.forEach(s => {
-      s.color = "#4dadf7";
+      s.color = GeneDive.color.COLOR.BLUE;
       this.color.setColor(s.ids, s.color);
     });
-    this.color.setColor(nhop.interactants, "#fd7e14");
+    this.color.setColor(nhop.interactants, GeneDive.color.COLOR.ORANGE);
     this.renderDisplay();
 
     return _.flattenDeep([this.sets.map(s => s.ids), nhop.interactants]);
@@ -159,10 +159,10 @@ class Search {
 
     // Re-render Search Display with Colors
     this.sets.forEach(s => {
-      s.color = "#4dadf7";
+      s.color = GeneDive.color.COLOR.BLUE;
       this.color.setColor(s.ids, s.color);
     });
-    this.color.setColor(nhop.interactants, "#fd7e14");
+    this.color.setColor(nhop.interactants, GeneDive.color.COLOR.ORANGE);
     this.renderDisplay();
 
     return _.flattenDeep([this.sets.map(s => s.ids), nhop.interactants]);
@@ -174,10 +174,10 @@ class Search {
 
     // Re-render Search Display with Colors
     this.sets.forEach(s => {
-      s.color = "#4dadf7";
+      s.color = GeneDive.color.COLOR.BLUE;
       this.color.setColor(s.ids, s.color);
     });
-    this.color.setColor(clique.interactants, "#fd7e14");
+    this.color.setColor(clique.interactants, GeneDive.color.COLOR.ORANGE);
     this.renderDisplay();
 
     return _.flattenDeep([this.sets.map(s => s.ids), clique.interactants, clique.non_interactants]);
