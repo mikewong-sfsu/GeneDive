@@ -202,6 +202,8 @@ class GraphView {
     this.graph.edges().remove();
     this.graph.add(_.values(this.createEdges(interactions)));
 
+  // Notify user of set members that don't appear in search results
+    this.storeAbsentNodes(_.values(this.createNodes(interactions)), sets);
 
     // merge the new hidden nodes with the previous hidden nodes
     this.hiddenNodes = Object.assign(this.hiddenNodes, newHiddenNodes)
