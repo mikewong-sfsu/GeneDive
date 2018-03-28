@@ -307,7 +307,9 @@ class GraphView {
 
     sets.forEach(s => {
       stylesheet[0].style[`pie-${index}-background-color`] = s.color;
-      stylesheet[0].style[`pie-${index}-background-size`] = `mapData(${s.id}, 0, 100, 0, 100)`;
+
+      // Issue: This was causing shapes to be stuck as an ellipse. Not sure what this is used for.
+      //stylesheet[0].style[`pie-${index}-background-size`] = `mapData(${s.id}, 0, 100, 0, 100)`;
       index++;
     });
 
