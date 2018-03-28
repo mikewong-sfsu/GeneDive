@@ -333,6 +333,18 @@ class GraphView {
   }
 
   /**
+   @fn       GraphView.clearData()
+   @brief    Deletes all the hidden nodes
+   @details
+   */
+  clearData(){
+    this.resetHiddenNodes();
+    this.graph.nodes().remove();
+    this.absentNodes = [];
+  }
+
+
+  /**
    @fn       GraphView.centerGraph
    @brief    Centers the elements of the graph
    @details  This old method was used to center the graph. Previously, the fit() command didn't work due to the fact

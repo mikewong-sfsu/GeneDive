@@ -399,6 +399,7 @@ class Controller {
 
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGDsSearched() === 0) {
+      this.clearData();
       this.loadLandingPage();
       this.saveCurrentStateToHistory();
       return;
@@ -407,6 +408,7 @@ class Controller {
     let topology = GeneDive.search.selectedTopology();
     if (this.search.amountOfDGDsSearched() !== 2 && (topology === "2hop" || topology === "3hop")) {
       alertify.notify("2-Hop / 3-Hop requires 2 DGDs", "", "3");
+      this.clearData();
       this.loadTableAndGraphPage(false, false);
       this.saveCurrentStateToHistory();
       return;
@@ -414,6 +416,7 @@ class Controller {
 
     if (topology === "clique" && (this.search.amountOfDGDsSearched() > 1 || this.search.sets[0].ids.length > 1)) {
       alertify.notify("Clique search requires a single DGD.", "", "3");
+      this.clearData();
       this.loadTableAndGraphPage(false, false);
       this.saveCurrentStateToHistory();
       return;
@@ -462,7 +465,6 @@ class Controller {
    */
   colorInteractions() {
     this.filtrate = this.color.colorInteractions(this.filtrate);
-    // this.addSynonyms();  DISABLED FOR UNESTING
   }
 
   /**
@@ -473,7 +475,6 @@ class Controller {
    */
   addSynonyms() {
     this.filtrate = Synonym.findSynonyms(this.search.sets, this.filtrate);  // Static class
-    // this.highlightInteractions();  DISABLED FOR UNESTING
   }
 
   /**
@@ -485,14 +486,6 @@ class Controller {
   highlightInteractions() {
 
     this.filtrate = this.highlighter.highlight(this.filtrate);
-
-    // // Check to see if there are any results 
-    // if(this.noResultsFound() == false)   DISABLED FOR UNESTING
-    // {
-    //   this.drawTable();
-    //   this.drawGraph();
-    // }
-    // this.spinneractive = false;
   }
 
   drawTable() {
@@ -525,7 +518,7 @@ class Controller {
   resultsFound() {
 
     // If there are interactions, and either the filtrate is null or it has filtered results.
-    return this.interactions.length > 0 && (this.filtrate === null || this.filtrate.length > 0)
+    return this.interactions !== null && this.interactions.length > 0 && (this.filtrate === null || this.filtrate.length > 0)
 
   }
 
@@ -604,8 +597,21 @@ class Controller {
     }
   }
 
-  // State management
 
+  /**
+   @fn       Controller.clearData
+   @brief    Clears all the data except state history
+   @details  This deletes all the data relavent to graph and table generation, so there is no weird occurances where
+   the previous search's results are displayed when a new, invalid search is made.
+   @callergraph
+   */
+  clearData() {
+    this.interactions = null;
+    this.filtrate = null;
+    this.graph.clearData();
+  }
+
+  // State management
 
   /**
    @fn       Controller.saveCurrentState
@@ -803,5 +809,5 @@ const GeneDive = new Controller();
 $(document).ready(function () {
   // Initialize tooltips, and set the tooltip to only appear when hovering.
   $('[data-toggle="tooltip-initial"]').tooltip({trigger : 'hover'});
-  
+
 });
