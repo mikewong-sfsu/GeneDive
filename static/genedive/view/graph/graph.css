@@ -43,7 +43,13 @@
   height: 12.5em;
   overflow-y: scroll;
 }
-
+.absent-gene-message table {
+  margin: 0 auto;
+}
+.absent-gene-message table thead {
+  text-align: center;
+  font-weight: bold;
+}
 .absent-gene-message .absent-name {
   padding-left: 2em;
 }

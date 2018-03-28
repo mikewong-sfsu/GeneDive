@@ -334,11 +334,12 @@ class GraphView {
       .then(names => {
         let header = `<h4>${this.absentNodes.length} genes in the search set(s) had no matching results:</h4>`;
         let message = "";
-
+        message+= "<table><thead><tr><td>ID</td><td>Key</td></tr></thead><tbody>";
         names.forEach(n => {
-          message += `<p><span>${n.id}</span><span class='absent-name'>${n.primary}</span></p>`;
+          message += `<tr><td>${n.id}</td><td class='absent-name'>${n.primary}</td></tr>`;
         });
 
+        message+= "</tbody></table>";
         message = `<div class='absent-gene-message'>${message}</div>`;
 
         alertify.alert("Absent Nodes", header + message);
