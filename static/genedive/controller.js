@@ -43,7 +43,9 @@ class Controller {
     });
 
     // Every pixel change in window size will call this method
-    window.onresize = ()=>{GeneDive.onWindowResized();}
+    window.onresize = () => {
+      GeneDive.onWindowResized();
+    }
     this.onWindowResizedTimeout = undefined;
 
     // This will prevent auto saving states from triggering while the state is being updated.
@@ -57,8 +59,12 @@ class Controller {
    @callergraph
    */
   onSelectSearchType() {
-    this.loadSpinners();
-    this.runSearch();
+    try {
+      this.loadSpinners();
+      this.runSearch();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -68,8 +74,12 @@ class Controller {
    @callergraph
    */
   onAddDGD() {
-    this.loadSpinners();
-    this.runSearch();
+    try {
+      this.loadSpinners();
+      this.runSearch();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -79,8 +89,12 @@ class Controller {
    @callergraph
    */
   onRemoveDGD() {
-    this.loadSpinners();
-    this.runSearch();
+    try {
+      this.loadSpinners();
+      this.runSearch();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -90,8 +104,12 @@ class Controller {
    @callergraph
    */
   onProbabilitySliderChange() {
-    this.loadSpinners();
-    this.runSearch();
+    try {
+      this.loadSpinners();
+      this.runSearch();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -101,13 +119,17 @@ class Controller {
    @callergraph
    */
   onAddFilter() {
-    this.loadSpinners();
-    this.filterInteractions();
-    this.colorInteractions();
-    this.addSynonyms();
-    this.highlightInteractions();
-    this.loadTableAndGraphPage();
-    this.saveCurrentStateToHistory();
+    try {
+      this.loadSpinners();
+      this.filterInteractions();
+      this.colorInteractions();
+      this.addSynonyms();
+      this.highlightInteractions();
+      this.loadTableAndGraphPage();
+      this.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -117,13 +139,17 @@ class Controller {
    @callergraph
    */
   onRemoveFilter() {
-    this.loadSpinners();
-    this.filterInteractions();
-    this.colorInteractions();
-    this.addSynonyms();
-    this.highlightInteractions();
-    this.loadTableAndGraphPage();
-    this.saveCurrentStateToHistory();
+    try {
+      this.loadSpinners();
+      this.filterInteractions();
+      this.colorInteractions();
+      this.addSynonyms();
+      this.highlightInteractions();
+      this.loadTableAndGraphPage();
+      this.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -133,8 +159,12 @@ class Controller {
    @callergraph
    */
   onTableGroupingSelect() {
-    this.loadTableAndGraphPage(true, false);
-    this.saveCurrentStateToHistory();
+    try {
+      this.loadTableAndGraphPage(true, false);
+      this.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -144,10 +174,15 @@ class Controller {
    @callergraph
    */
   onHighlightKeyup() {
-    this.loadSpinners();
-    this.highlightInteractions();
-    this.loadTableAndGraphPage();
-    this.saveCurrentStateToHistory();
+    try {
+
+      this.loadSpinners();
+      this.highlightInteractions();
+      this.loadTableAndGraphPage();
+      this.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -159,10 +194,15 @@ class Controller {
    @callergraph
    */
   onNodeGraphCTRLClick(name, id) {
-    this.loadSpinners();
-    this.search.clearSearch();
-    this.search.addSearchSet(name, id, true);
-    this.runSearch();
+    try {
+
+      this.loadSpinners();
+      this.search.clearSearch();
+      this.search.addSearchSet(name, id, true);
+      this.runSearch();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -172,7 +212,12 @@ class Controller {
    @callergraph
    */
   onNodeGraphShiftClickHold(name, id, deferRunSearch) {
-    this.search.addSearchSet(name, id, deferRunSearch)
+    try {
+
+      this.search.addSearchSet(name, id, deferRunSearch)
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -182,8 +227,13 @@ class Controller {
    @callergraph
    */
   onNodeGraphShiftClickRelease() {
-    this.loadSpinners();
-    this.runSearch();
+    try {
+
+      this.loadSpinners();
+      this.runSearch();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -193,7 +243,12 @@ class Controller {
    @callergraph
    */
   onGraphNodeMoved() {
-    GeneDive.saveCurrentStateToHistory();
+    try {
+
+      GeneDive.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -208,14 +263,19 @@ class Controller {
    @callergraph
    */
   onGraphPanOrZoomed() {
-    if(this.stateIsBeingUpdated === true)
-      return;
-    if (window.onSaveStateTimeout !== undefined)
-      window.clearTimeout(window.onSaveStateTimeout);
-    window.onSaveStateTimeout = window.setTimeout(function () {
-      GeneDive.saveCurrentStateToHistory();
-      delete window.onSaveStateTimeout;
-    }, 500);
+    try {
+
+      if (this.stateIsBeingUpdated === true)
+        return;
+      if (window.onSaveStateTimeout !== undefined)
+        window.clearTimeout(window.onSaveStateTimeout);
+      window.onSaveStateTimeout = window.setTimeout(function () {
+        GeneDive.saveCurrentStateToHistory();
+        delete window.onSaveStateTimeout;
+      }, 500);
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -225,8 +285,13 @@ class Controller {
    @callergraph
    */
   onBackClick() {
-    this.loadTableAndGraphPage(true, false);
-    this.saveCurrentStateToHistory();
+    try {
+
+      this.loadTableAndGraphPage(true, false);
+      this.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -236,8 +301,13 @@ class Controller {
    @callergraph
    */
   onTableElementClick() {
-    this.loadTableAndGraphPage(true, false);
-    this.saveCurrentStateToHistory();
+    try {
+
+      this.loadTableAndGraphPage(true, false);
+      this.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -248,15 +318,20 @@ class Controller {
    @callergraph
    */
   onInteractionsLoaded(interactions) {
-    this.interactions = JSON.parse(interactions);
-    this.cleanUpData();
-    this.filterInteractions();
-    this.colorInteractions();
-    this.addSynonyms();
-    this.highlightInteractions();
-    this.textfilter.updateSelectedFilter();
-    this.loadTableAndGraphPage();
-    this.saveCurrentStateToHistory();
+    try {
+
+      this.interactions = JSON.parse(interactions);
+      this.cleanUpData();
+      this.filterInteractions();
+      this.colorInteractions();
+      this.addSynonyms();
+      this.highlightInteractions();
+      this.textfilter.updateSelectedFilter();
+      this.loadTableAndGraphPage();
+      this.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -267,14 +342,18 @@ class Controller {
    @callergraph
    */
   onWindowResized() {
-    console.debug("Called onWindowResized", this);
-    if (this.onWindowResizedTimeout !== undefined)
-      window.clearTimeout(this.onWindowResizedTimeout);
-    this.onWindowResizedTimeout = window.setTimeout(function (geneDiveObj) {
-      console.debug("Resized", geneDiveObj);
-      geneDiveObj.graph.resetGraphViewSize();
-      delete geneDiveObj.onWindowResizedTimeout;
-    }, 500, this);
+    try {
+
+      if (this.onWindowResizedTimeout !== undefined)
+        window.clearTimeout(this.onWindowResizedTimeout);
+      this.onWindowResizedTimeout = window.setTimeout(function (geneDiveObj) {
+        console.debug("Resized", geneDiveObj);
+        geneDiveObj.graph.resetGraphViewSize();
+        delete geneDiveObj.onWindowResizedTimeout;
+      }, 500, this);
+    } catch (e) {
+      this.handleException(e);
+    }
 
   }
 
@@ -285,8 +364,13 @@ class Controller {
    @callergraph
    */
   onUndoClick() {
-    if(this.canGoBackInStateHistory())
-      this.goBackInStateHistory();
+    try {
+
+      if (this.canGoBackInStateHistory())
+        this.goBackInStateHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
 
   }
 
@@ -297,8 +381,13 @@ class Controller {
    @callergraph
    */
   onRedoClick() {
-    if(this.canGoForwardInStateHistory())
-      this.goForwardInStateHistory();
+    try {
+
+      if (this.canGoForwardInStateHistory())
+        this.goForwardInStateHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
 
   }
 
@@ -309,9 +398,13 @@ class Controller {
    @callergraph
    */
   onReloadClick() {
-    this.graph.resetHiddenNodes();
-    this.graph.setNodePositions();
-    this.saveCurrentStateToHistory();
+    try {
+      this.graph.resetHiddenNodes();
+      this.graph.setNodePositions();
+      this.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -365,7 +458,6 @@ class Controller {
     this.showFilters();
     if (this.resultsFound()) {
       this.hideNoResults();
-
       if (redrawTable)
         this.drawTable();
       else
@@ -396,6 +488,8 @@ class Controller {
    @callergraph
    */
   runSearch() {
+
+
 
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGDsSearched() === 0) {
@@ -453,8 +547,11 @@ class Controller {
    @callergraph
    */
   filterInteractions() {
-    this.filtrate = this.textfilter.filterInteractions(this.interactions);
-
+    try {
+      this.filtrate = this.textfilter.filterInteractions(this.interactions);
+    } catch (e) {
+      this.handleException(e);
+    }
   }
 
   /**
@@ -489,10 +586,10 @@ class Controller {
   }
 
   drawTable() {
+
     // We want to create a new table for each iteration as the old one will have prior listener/config/bindings
     $('.table-view table').remove();
     $('.table-view').append($("<table/>").addClass("table table-hover"));
-
 
     // First check for zoom condition
     if (this.tablestate.zoomed) {
@@ -506,6 +603,7 @@ class Controller {
     } else {
       new TableSummaryArticle(".table-view table", this.filtrate, ".table-view .topbar .back");
     }
+
   }
 
   /**
@@ -572,6 +670,14 @@ class Controller {
 
   hideFilters() {
     $('.table-view .messaging-and-controls, .module:not(".search-module"):not(".control-module"), .divider').css('visibility', 'hidden');
+  }
+
+  showError() {
+    $('.graph-error, .table-error').show();
+  }
+
+  hideError() {
+    $('.graph-error, .table-error').hide();
   }
 
   /**
@@ -711,7 +817,7 @@ class Controller {
     if (this.search.amountOfDGDsSearched() === 0)
       this.loadLandingPage();
     else
-      this.loadTableAndGraphPage(true, false);
+      this.loadTableAndGraphPage(true, true);
 
     this.stateIsBeingUpdated = false; // Resumes callbacks
 
@@ -764,8 +870,8 @@ class Controller {
    */
   exportEntireProgramStates() {
     return {
-      "stateHistory" : this.stateHistory,
-      "currentStateIndex" : this.currentStateIndex,
+      "stateHistory": this.stateHistory,
+      "currentStateIndex": this.currentStateIndex,
     }
   }
 
@@ -801,6 +907,25 @@ class Controller {
     return this.stateHistory.length - this.currentStateIndex > 1;
   }
 
+  /**
+   @fn       Controller.handleException
+   @brief    Displays an error message
+   @details  This will display an error message for the user to see.
+   @param    exception Exception e
+   @callergraph
+   */
+  handleException(exception) {
+    alertify.error(exception.toString());
+    console.error(exception);
+    this.hideTable();
+    this.graph.hideGraphView();
+    this.hideNoResults();
+    this.hideTableSpinner();
+    this.graph.hideGraphSpinner();
+    this.spinneractive = false;
+
+  }
+
 }
 
 const GeneDive = new Controller();
@@ -808,20 +933,21 @@ const GeneDive = new Controller();
 
 $(document).ready(function () {
   // Initialize tooltips, and set the tooltip to only appear when hovering.
-  $('[data-toggle="tooltip-initial"]').tooltip({trigger : 'hover'});
+  $('[data-toggle="tooltip-initial"]').tooltip({trigger: 'hover'});
 
   // Mirror Adjacency Matrix
-  for ( let gene in adjacency_matrix ) {
-    for ( let interactant in adjacency_matrix[gene] ) {
+  for (let gene in adjacency_matrix) {
+    for (let interactant in adjacency_matrix[gene]) {
 
-      if ( !(interactant in adjacency_matrix) ) {
+      if (!(interactant in adjacency_matrix)) {
         adjacency_matrix[interactant] = {};
       }
 
-      if ( !(gene in adjacency_matrix[interactant]) ) {
+      if (!(gene in adjacency_matrix[interactant])) {
         adjacency_matrix[interactant][gene] = true;
       }
 
     }
   }
+
 });

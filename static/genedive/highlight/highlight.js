@@ -35,7 +35,6 @@ class Highlight {
    */
   exportHighlightState() {
     let highlightData = this.input.val();
-
     return highlightData;
   }
 
