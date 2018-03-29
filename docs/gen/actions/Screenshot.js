@@ -16,7 +16,8 @@ class Screenshot extends Action {
 
         const element = await page.$(action_data.element);
         let last_action = element.screenshot({path: path});
-        console.log("\t" + action_data.filename + " saved.")
+        await last_action;
+        console.log("\t" + action_data.filename + " saved.");
         return last_action;
     }
 

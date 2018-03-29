@@ -10,7 +10,7 @@ class Reload extends Action {
 
     async execute(page) {
         let global_data = this.global_data;
-        return page.goto(global_data.domain + global_data.search_page, {waitUntil: 'networkidle2'});
+        return page.goto(global_data.domain + global_data.search_page, {waitUntil: 'networkidle0'});
     }
 }
 

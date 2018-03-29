@@ -19,11 +19,13 @@ class Search extends Action {
         -----------*/
         await page.click(".search-input");
         await page.keyboard.type(action_data.text);
-        await page.waitFor(1000);
+        await page.waitForSelector('.tt-menu');
         // The search box has to be clicked again after inputting the text for some reason
-        await page.click(".search-input");
+        //await page.click(".search-input");
         await page.keyboard.press('Enter');
         await page.waitFor(1000);
+
+
         return page.$(action_data.element);
 
     }
