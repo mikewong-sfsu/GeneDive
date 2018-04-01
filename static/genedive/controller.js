@@ -21,7 +21,7 @@ class Controller {
     this.highlighter = new Highlight(".highlight-input");
     this.grouper = new Grouper(".grouper-module .table-grouping");
     this.graph = new GraphView("graph");
-    this.download = new Download(".download-module button.download");
+    this.download = new DownloadUpload(".download-module button.download", ".download-module button.upload");
     this.controls = new Controls(".control-module .undo", ".control-module .redo", ".control-module .reset-graph");
 
     this.tablestate = {zoomed: false, zoomgroup: null};
@@ -908,15 +908,16 @@ class Controller {
   }
 
   /**
-   @fn       Controller.handleException
-   @brief    Displays an error message
-   @details  This will display an error message for the user to see.
-   @param    exception Exception e
-   @callergraph
+   * @fn       Controller.handleException
+   * @brief    Displays an error message
+   * @details  This will display an error message for the user to see. It will also print the error to console. You can
+   * pass in mutliple arguments and they will be sent to the console as an error.
+   * @param    exception This will be the message displayed. Usually the exception itself is passed.
+   * @callergraph
    */
   handleException(exception) {
     alertify.error(exception.toString());
-    console.error(exception);
+    console.error.apply(null, arguments);
     this.hideTable();
     this.graph.hideGraphView();
     this.hideNoResults();
