@@ -104,8 +104,8 @@
 
     <!-- Download and Upload -->
     <div class="module download-module">
-      <button style="width:100%;" type="button" data-toggle="tooltip-initial" data-placement="top" title="Download the current graph image, the current state, state history, and a CSV of the interactions." class="btn btn-default download">Download Results</button>
-      <button style="width:100%;" type="button" class="btn btn-default upload">Upload Results</button>
+      <button type="button" data-toggle="tooltip-initial" data-placement="top" title="Download the current graph image, the current state, state history, and a CSV of the interactions." class="btn btn-default download" disabled>Download Results</button>
+      <button type="button" class="btn btn-default upload">Upload Results</button>
     </div>
 
     <div class="module about-module">

@@ -4,12 +4,15 @@ class DownloadUpload {
     this.downloadButton = $(download);
     this.uploadButton = $(upload);
     this.genediveStateFileName = "state.genedive";
+    this.fileBeingAnalyzed = false;
 
     this.downloadButton.on("click", (event) => {
+      $(event.target).blur();
       this.onDownloadClick();
     });
 
     this.uploadButton.on("click", (event) => {
+      $(event.target).blur();
       this.onUploadClick();
     });
   }
@@ -47,15 +50,25 @@ class DownloadUpload {
    * @callergraph
    */
   onDownloadClick() {
+    let date = new Date();
+    let dateTimeString = date.getFullYear()
+      + (date.getMonth()).pad(2)
+      + (date.getDate()).pad(2)
+      + "-"
+      + (date.getHours()).pad(2)
+      + (date.getMinutes()).pad(2)
+      + (date.getSeconds()).pad(2);
+    let filename = `GeneDive-${dateTimeString}.zip`
 
     /* Get user input */
     alertify.prompt(
-      "Download Results", // Title
+      `Download Results <span class="filename">${filename}</span>`, // Title
       "Enter a note to store in Readme.MD", // Subtitle
       "", // Initial field value
       // OK
       (button, val) => {
-        this.saveZipFile(val);
+        this.saveZipFile(val, filename);
+
       }
       // Cancel
       , (err) => {
@@ -75,7 +88,7 @@ class DownloadUpload {
    * @callergraph
    */
 
-  saveZipFile(comment) {
+  saveZipFile(comment, filename) {
     try {
       let zip = new JSZip();
 
@@ -97,17 +110,10 @@ class DownloadUpload {
       let csv = this.buildInteractionsData();
       zip.file("interactions.csv", csv);
 
-      let date = new Date();
-      let datetime = date.getFullYear();
-      datetime += (date.getMonth()).pad(2);
-      datetime += (date.getDate()).pad(2);
-      datetime += "-";
-      datetime += (date.getHours()).pad(2);
-      datetime += (date.getMinutes()).pad(2);
-      datetime += (date.getSeconds()).pad(2);
+
       zip.generateAsync({type: "blob"})
         .then(function (content) {
-          saveAs(content, `GeneDive-${datetime}.zip`); // via filesaver.js
+          saveAs(content, filename); // via filesaver.js
         });
     } catch (e) {
       this.handleException(e);
@@ -122,67 +128,95 @@ class DownloadUpload {
    * @callergraph
    */
   onUploadClick() {
-    alertify.alert(
+    let alert = alertify.alert(
       "Upload GeneDive zip", // Title
       `<input type="file" id="files" name="files[]"/>`, // Content
-      () => {
-        this.openZipFile($("#files"));
-      },
     )
+      .set('label', 'Cancel');
+    ;
+
+    // Immediately open the file upon the user uploading it, instead of waiting for the user to hit OK
+    $("#files").on("change", () => {
+      alert.close();
+      let upload = $("#files");
+      if (upload.length > 0 && upload[0].value.length > 0)
+        this.openZipFile(upload);
+    });
   }
 
   /**
    * @fn       DownloadUpload.openZipFile
    * @brief     Apply zip file to GeneDive state
    * @details
-   * @param uploadField
+   * @param uploadField A jQuery Object of the upload file field.
    * @callergraph
    */
 
   openZipFile(uploadField) {
-    GeneDive.spinneractive = true;
-    GeneDive.showSpinners();
+    GeneDive.loadSpinners();
     try {
-      let files = uploadField[0].files;
+      // Copy the file data so when we clear the upload field, we don't lose the data.
+      let files = {};
+      $.extend(true, files,uploadField[0].files);
+      this.clearUploadField(uploadField);
+
       let thisDownloadUpload = this;
       let new_zip = new JSZip();
-      console.debug("openZipFile", uploadField);
+      console.debug("openZipFile", uploadField, files);
       new_zip.loadAsync(files[0])
         .then(
           // Success
           (zip) => {
-          try {
-            // If state file isn't found, return error
-            if (zip.files[thisDownloadUpload.genediveStateFileName] === undefined)
-              return GeneDive.handleException(new Error(`${thisDownloadUpload.genediveStateFileName} was not found in the zip file.`));
+            try {
+              // If state file isn't found, return error
+              if (zip.files[thisDownloadUpload.genediveStateFileName] === undefined)
+                return GeneDive.handleException(new Error(`${thisDownloadUpload.genediveStateFileName} was not found in the zip file.`));
 
-            // Read the file then set the program state
-            zip.files[thisDownloadUpload.genediveStateFileName].async("string").then((text) => {
+              // Read the file then set the program state
+              zip.files[thisDownloadUpload.genediveStateFileName].async("string").then((text) => {
 
-              let textObj = JSON.parse(text);
-              console.debug(textObj);
-              GeneDive.stateHistory = textObj.stateHistory;
-              GeneDive.setStateFromHistory(textObj.currentStateIndex);
-            })
-          } catch (e) {
-            thisDownloadUpload.handleException(e);
-          }finally {
-            uploadField[0].value = "";
-          }
-        },
-        // Failure
-      (e) => {
-        thisDownloadUpload.handleException(e);
-        uploadField[0].value = "";
-        });
+                let textObj = JSON.parse(text);
+                console.debug(textObj);
+                GeneDive.importEntireProgramStates(textObj);
+              })
+            } catch (e) {
+              thisDownloadUpload.handleException(e);
+            }
+          },
+          // Failure
+          (e) => {
+            thisDownloadUpload.handleException(`Error reading ${files[0].name}`, e);
+
+          });
 
     } catch (e) {
       this.handleException(e);
-    }finally {
-      uploadField[0].value = "";
     }
 
   }
+
+  disableDownload() {
+    $(".download-module button.download")[0].disabled = true;
+  }
+
+  enableDownload() {
+    $(".download-module button.download")[0].disabled = false;
+  }
+
+  enableUpload() {
+
+    $(".download-module button.upload")[0].disabled = true;
+  }
+
+  disableUpload() {
+    $(".download-module button.upload")[0].disabled = false;
+  }
+
+  clearUploadField(field) {
+    if (!this.fileBeingAnalyzed)
+      field[0].value = "";
+  }
+
 
   /**
    * @fn       DownloadUpload.handleException

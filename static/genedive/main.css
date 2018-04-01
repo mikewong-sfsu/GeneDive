@@ -93,21 +93,28 @@ h5 {
 }
 
 .filter-module {
-  visibility: hidden;
+  /*visibility: hidden;*/
+  display:none;
 }
 
 .highlight-module {
-  visibility: hidden;
+  /*visibility: hidden;*/
+  display:none;
 }
 
 .grouper-module {
-  visibility: hidden;
+  /*visibility: hidden;*/
+  display:none;
 }
 
 .download-module {
-  visibility: hidden;
+  /*visibility: hidden;*/
   text-align: center;
   flex-grow: 1;
+}
+
+.download-module button{
+  width: 100%;
 }
 
 .module .title {

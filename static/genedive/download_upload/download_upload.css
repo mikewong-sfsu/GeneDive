@@ -1,0 +1,9 @@
+.zip_icon{
+    height: 25pt;
+    margin-left: 21px;
+}
+
+.filename{
+    font-family: monospace;
+    display: block;
+}

@@ -435,6 +435,7 @@ class Controller {
    */
   loadLandingPage() {
     this.showHelp();
+    this.download.disableDownload();
     this.hideFilters();
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
@@ -476,6 +477,7 @@ class Controller {
       this.graph.hideGraphView();
       this.showNoResults();
     }
+    this.download.enableDownload();
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
@@ -665,11 +667,11 @@ class Controller {
 
 
   showFilters() {
-    $('.table-view .messaging-and-controls, .module:not(".search-module"):not(".control-module"), .divider').css('visibility', 'visible');
+    $('.table-view .messaging-and-controls, .module:not(".search-module"):not(".control-module"):not(".download-module"), .divider').show();
   }
 
   hideFilters() {
-    $('.table-view .messaging-and-controls, .module:not(".search-module"):not(".control-module"), .divider').css('visibility', 'hidden');
+    $('.table-view .messaging-and-controls, .module:not(".search-module"):not(".control-module"):not(".download-module"), .divider').hide();
   }
 
   showError() {
@@ -883,7 +885,7 @@ class Controller {
    */
   importEntireProgramStates(importData) {
     this.stateHistory = importData.stateHistory;
-    this.setStateFromHistory(this.currentStateIndex)
+    this.setStateFromHistory(importData.currentStateIndex)
 
   }
 
