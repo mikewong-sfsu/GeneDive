@@ -504,7 +504,6 @@ class Controller {
     if (this.search.amountOfDGDsSearched() === 0) {
       this.clearData();
       this.loadLandingPage();
-      this.saveCurrentStateToHistory();
       return;
     }
 
@@ -607,7 +606,7 @@ class Controller {
     }
 
     // Otherwise show the appropriate summary view
-    if (this.grouper.selected() == "dgd") {
+    if (this.grouper.selected() === "dgd") {
       new TableSummaryGene(".table-view .table", this.filtrate, ".table-view .topbar .back");
     } else {
       new TableSummaryArticle(".table-view table", this.filtrate, ".table-view .topbar .back");
@@ -723,7 +722,11 @@ class Controller {
   clearData() {
     this.interactions = null;
     this.filtrate = null;
+    this.stateHistory = [];
+    this.currentStateIndex = -1;
     this.graph.clearData();
+
+    this.controls.checkButtonStates();
   }
 
   // State management
