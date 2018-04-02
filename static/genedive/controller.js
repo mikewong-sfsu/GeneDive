@@ -727,6 +727,8 @@ class Controller {
     this.stateHistory = [];
     this.currentStateIndex = -1;
     this.graph.clearData();
+    this.probfilter.reset();
+    this.textfilter.reset();
 
     this.controls.checkButtonStates();
   }

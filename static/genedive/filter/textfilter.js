@@ -52,7 +52,7 @@ class TextFilter {
   }
 
   removeFilterSet(identifier) {
-    this.sets = this.sets.filter((set) => set.id != identifier);
+    this.sets = this.sets.filter((set) => set.id !== identifier);
     this.renderDisplay();
     GeneDive.onRemoveFilter();
   }
@@ -196,6 +196,12 @@ class TextFilter {
 
     this.renderDisplay();
     this.updateSelectedFilter();
+  }
+
+  reset(){
+    this.sets = [];
+    this.filterValues = [];
+    this.renderDisplay();
   }
 
 }

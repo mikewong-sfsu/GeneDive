@@ -30,11 +30,15 @@ class ProbabilityFilter {
   */
   setMinimumProbability(value){
     // Checks if the value is valid
-    if(typeof(value) != typeof(0.0) || value < 0.0 || value > 1.0)
+    if(typeof(value) !== typeof(0.0) || value < 0.0 || value > 1.0)
       throw "ValueError: value must be from 0.0 to 1.0";
 
     this.minimum = value;
     this.value_display.text( this.minimum );
     this.slider.slider('setValue', value)
+  }
+
+  reset(){
+    this.setMinimumProbability(0.7);
   }
 }
