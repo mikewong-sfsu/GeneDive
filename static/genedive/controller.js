@@ -707,7 +707,7 @@ class Controller {
         this.interactions[i].article_id = BLANK_ARTICLE_ID;
       }
 
-      if (this.interactions[i].section === null || this.interactions[i].section.trim().length === 0) {
+      if (this.interactions[i].section === null || this.interactions[i].section.trim().length === 0 || this.interactions[i].section === "Unknown") {
         this.interactions[i].section = BLANK_SECTION;
       }
     }
