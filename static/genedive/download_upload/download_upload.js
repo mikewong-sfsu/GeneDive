@@ -51,7 +51,7 @@ class DownloadUpload {
    */
   onDownloadClick() {
 
-    if(GeneDive.spinneractive)
+    if (GeneDive.spinneractive)
       return;
 
     let date = new Date();
@@ -132,15 +132,15 @@ class DownloadUpload {
    * @callergraph
    */
   onUploadClick() {
-    if(GeneDive.spinneractive)
+    if (GeneDive.spinneractive)
       return;
 
     let alert = alertify.alert(
       "Upload GeneDive zip", // Title
-      `<input type="file" id="files" name="files[]" accept="zip"/>`, // Content
+      `<input type="file" id="files" name="files[]" accept=".zip"/>`, // Content
     )
       .set('label', 'Cancel');
-    ;
+
 
     // Immediately open the file upon the user uploading it, instead of waiting for the user to hit OK
     $("#files").on("change", () => {
@@ -164,16 +164,16 @@ class DownloadUpload {
     try {
       // Copy the file data so when we clear the upload field, we don't lose the data.
       let files = {};
-      $.extend(true, files,uploadField[0].files);
+      $.extend(true, files, uploadField[0].files);
       this.clearUploadField(uploadField);
 
       let thisDownloadUpload = this;
       let new_zip = new JSZip();
       console.debug("openZipFile", uploadField, files);
 
-      if(files.length > 1)
+      if (files.length > 1)
         return GeneDive.handleException(new Error(`Multiple files uploaded. Only upload one file.`), files);
-      else if(files.length < 1)
+      else if (files.length < 1)
         return GeneDive.handleException(new Error(`No files were uploaded.`), files);
 
       new_zip.loadAsync(files[0])
