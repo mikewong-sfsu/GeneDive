@@ -334,9 +334,9 @@ class GraphView {
 
     GeneDiveAPI.geneNames(this.absentNodes)
       .then(names => {
-        let header = `<h4>${this.absentNodes.length} genes in the search set(s) had no matching results:</h4>`;
+        let header = `<h4>${this.absentNodes.length} DGDs in the search set(s) had no matching results:</h4>`;
         let message = "";
-        message+= "<table><thead><tr><td>ID</td><td>Key</td></tr></thead><tbody>";
+        message+= "<table><thead><tr><td>DGD ID</td><td>Symbol</td></tr></thead><tbody>";
         names.forEach(n => {
           message += `<tr><td>${n.id}</td><td class='absent-name'>${n.primary}</td></tr>`;
         });
