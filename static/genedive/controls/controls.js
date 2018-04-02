@@ -22,18 +22,15 @@ class Controls {
 
 
     this.undo.on('click', () => {
-      GeneDive.onUndoClick();
-      this.undo.blur();
+      GeneDive.onUndoClick(this.undo);
     });
 
     this.redo.on('click', () => {
-      GeneDive.onRedoClick();
-      this.redo.blur();
+      GeneDive.onRedoClick(this.redo);
     });
 
     this.reload.on('click', () =>{
-      GeneDive.onReloadClick();
-      this.reload.blur();
+      GeneDive.onReloadClick(this.reload);
     });
   }
 
@@ -72,7 +69,7 @@ class Controls {
    @callergraph
    */
   undoHide() {
-    this.undo.addClass("disabled");
+    this.undo[0].disabled = true;
   }
   /**
    @fn       Controls.undoShow
@@ -81,7 +78,7 @@ class Controls {
    @callergraph
    */
   undoShow() {
-    this.undo.removeClass("disabled");
+    this.undo[0].disabled = false;
   }
 
   /**
@@ -91,7 +88,7 @@ class Controls {
    @callergraph
    */
   redoHide() {
-    this.redo.addClass("disabled");
+    this.redo[0].disabled = true;
   }
   /**
    @fn       Controls.redoShow
@@ -100,7 +97,7 @@ class Controls {
    @callergraph
    */
   redoShow() {
-    this.redo.removeClass("disabled");;
+    this.redo[0].disabled = false;;
   }
 
   /**
@@ -110,7 +107,7 @@ class Controls {
    @callergraph
    */
   reloadHide() {
-    this.reload.addClass("disabled");
+    this.reload[0].disabled = true;
   }
   /**
    @fn       Controls.reloadShow
@@ -119,7 +116,7 @@ class Controls {
    @callergraph
    */
   reloadShow() {
-    this.reload.removeClass("disabled");;
+    this.reload[0].disabled = false;;
   }
 
 

@@ -361,11 +361,12 @@ class Controller {
    @fn       Controller.onUndoClick
    @brief    Called when clicking the Undo button
    @details
+   @param element The element that was clicked on.
    @callergraph
    */
-  onUndoClick() {
+  onUndoClick(element) {
     try {
-
+      element.blur();
       if (this.canGoBackInStateHistory())
         this.goBackInStateHistory();
     } catch (e) {
@@ -378,11 +379,12 @@ class Controller {
    @fn       Controller.onRedoClick
    @brief    Called when clicking the Redo button
    @details
+   @param element The element that was clicked on.
    @callergraph
    */
-  onRedoClick() {
+  onRedoClick(element) {
     try {
-
+      element.blur();
       if (this.canGoForwardInStateHistory())
         this.goForwardInStateHistory();
     } catch (e) {
@@ -395,10 +397,12 @@ class Controller {
    @fn       Controller.onReloadClick
    @brief    Called when clicking the Reload button
    @details
+   @param element The element that was clicked on.
    @callergraph
    */
-  onReloadClick() {
+  onReloadClick(element) {
     try {
+      element.blur();
       this.graph.resetHiddenNodes();
       this.graph.setNodePositions();
       this.saveCurrentStateToHistory();
