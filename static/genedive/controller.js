@@ -510,7 +510,6 @@ class Controller {
     let topology = GeneDive.search.selectedTopology();
     if (this.search.amountOfDGDsSearched() !== 2 && (topology === "2hop" || topology === "3hop")) {
       alertify.notify("2-Hop / 3-Hop requires 2 DGDs", "", "3");
-      this.clearData();
       this.loadTableAndGraphPage(false, false);
       this.saveCurrentStateToHistory();
       return;
@@ -518,7 +517,6 @@ class Controller {
 
     if (topology === "clique" && (this.search.amountOfDGDsSearched() > 1 || this.search.sets[0].ids.length > 1)) {
       alertify.notify("Clique search requires a single DGD.", "", "3");
-      this.clearData();
       this.loadTableAndGraphPage(false, false);
       this.saveCurrentStateToHistory();
       return;
