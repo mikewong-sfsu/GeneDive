@@ -456,28 +456,35 @@ class Controller {
    @callergraph
    */
   loadTableAndGraphPage(redrawTable = true, redrawGraph = true) {
-    this.showFilters();
-    if (this.resultsFound()) {
-      this.hideNoResults();
-      if (redrawTable)
-        this.drawTable();
-      else
-        this.showTable();
 
-      if (redrawGraph)
-        this.drawGraph();
-      else
-        this.graph.showGraphView();
-
-
-      this.graph.showGraphLegend();
-
+    if (this.search.amountOfDGDsSearched() === 0) {
+      this.hideFilters();
+      this.showHelp();
+      this.download.disableDownload();
     } else {
-      this.hideTable();
-      this.graph.hideGraphView();
-      this.showNoResults();
+      this.showFilters();
+      if (this.resultsFound()) {
+        this.hideNoResults();
+        if (redrawTable)
+          this.drawTable();
+        else
+          this.showTable();
+
+        if (redrawGraph)
+          this.drawGraph();
+        else
+          this.graph.showGraphView();
+
+
+        this.graph.showGraphLegend();
+
+      } else {
+        this.hideTable();
+        this.graph.hideGraphView();
+        this.showNoResults();
+      }
+      this.download.enableDownload();
     }
-    this.download.enableDownload();
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
