@@ -50,6 +50,10 @@ class DownloadUpload {
    * @callergraph
    */
   onDownloadClick() {
+
+    if(GeneDive.spinneractive)
+      return;
+
     let date = new Date();
     let dateTimeString = date.getFullYear()
       + (date.getMonth()).pad(2)
@@ -58,7 +62,7 @@ class DownloadUpload {
       + (date.getHours()).pad(2)
       + (date.getMinutes()).pad(2)
       + (date.getSeconds()).pad(2);
-    let filename = `GeneDive-${dateTimeString}.zip`
+    let filename = `GeneDive-${dateTimeString}.zip`;
 
     /* Get user input */
     alertify.prompt(
@@ -128,9 +132,12 @@ class DownloadUpload {
    * @callergraph
    */
   onUploadClick() {
+    if(GeneDive.spinneractive)
+      return;
+
     let alert = alertify.alert(
       "Upload GeneDive zip", // Title
-      `<input type="file" id="files" name="files[]"/>`, // Content
+      `<input type="file" id="files" name="files[]" accept="zip"/>`, // Content
     )
       .set('label', 'Cancel');
     ;
@@ -163,6 +170,12 @@ class DownloadUpload {
       let thisDownloadUpload = this;
       let new_zip = new JSZip();
       console.debug("openZipFile", uploadField, files);
+
+      if(files.length > 1)
+        return GeneDive.handleException(new Error(`Multiple files uploaded. Only upload one file.`), files);
+      else if(files.length < 1)
+        return GeneDive.handleException(new Error(`No files were uploaded.`), files);
+
       new_zip.loadAsync(files[0])
         .then(
           // Success
@@ -228,9 +241,9 @@ class DownloadUpload {
   handleException(exception) {
     alertify.error(exception.toString());
     console.error.apply(null, arguments);
-    GeneDive.hideTableSpinner();
-    GeneDive.graph.hideGraphSpinner();
-    GeneDive.spinneractive = false;
+    // GeneDive.hideTableSpinner();
+    // GeneDive.graph.hideGraphSpinner();
+    GeneDive.loadTableAndGraphPage(false, false);
   }
 
 }
