@@ -1,52 +1,52 @@
 /* TABLE */
 
 .table-view .table {
-  width: 100%;
-  table-layout: fixed;
-  word-wrap: break-word;
+    width: 100%;
+    table-layout: fixed;
+    word-wrap: break-word;
 }
 
 .table-view .table tr.grouped {
-  cursor:pointer;
+    cursor: pointer;
 }
 
 .table-view .table .tr.grouped:hover {
-  background-color:rgb(220,220,220);
+    background-color: rgb(220, 220, 220);
 }
 
 .table-view .table tr .gene {
-  padding:4px;
+    padding: 4px;
 }
 
 .table-view .table th {
-  font-weight:bold;
-  color:rgb(60,60,60);
-  text-align: left;
-  white-space: nowrap;
-  padding: 6px 14px;
+    font-weight: bold;
+    color: rgb(60, 60, 60);
+    text-align: left;
+    white-space: nowrap;
+    padding: 6px 14px;
 
 }
 
 .table-view .table td {
-  color:rgb(40,40,40);
-  text-align: left;
-  padding: 6px 14px;
-} 
+    color: rgb(40, 40, 40);
+    text-align: left;
+    padding: 6px 14px;
+}
 
 .table-view .table .numeric {
-  text-align: right;
+    text-align: right;
 }
 
 .table-view .table .highlight-row td {
-  background-color: #99e9f2;
+    background-color: #99e9f2;
 }
 
 .table-view .table tr td.zoom {
-  color: rgb(128,128,128);
+    color: rgb(128, 128, 128);
 }
 
 .table-view .table i {
-  color: #337ab7;
+    color: #337ab7;
 }
 
 /* D3 Histogram */
@@ -54,14 +54,15 @@
 .bars rect {
     fill: gray;
 }
+
 .axis path, .axis line {
-  fill: none;
-  stroke: rgb(200,200,200);
-  shape-rendering: crispEdges;
+    fill: none;
+    stroke: rgb(200, 200, 200);
+    shape-rendering: crispEdges;
 }
 
 .histogram svg {
-    overflow:visible;
+    overflow: visible;
 }
 
 .tick text {
@@ -71,35 +72,43 @@
 /* Table Messaging and Controls */
 
 .table-view .messaging-and-controls {
-  padding:6px 0px; 
-  display: none;
-  flex-direction: row;
-  justify-content: space-between;
-  font-weight: bold;
+    padding: 6px 0px;
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: bold;
 }
 
 .table-view .messaging-and-controls .go-back {
-  float: left;
-  color: #d84b2b;
-  visibility: hidden;
-  margin-left: 1em;
-  cursor: pointer;
+    float: left;
+    color: #d84b2b;
+    visibility: hidden;
+    margin-left: 1em;
+    cursor: pointer;
 }
 
 .table-view .messaging-and-controls .metadata {
-  float: right;
-  margin-right: 1em;
+    float: right;
+    margin-right: 1em;
 }
 
 .table-view .messaging-and-controls .metadata .figure {
-  color:#337ab7;
+    color: #337ab7;
 }
 
 td.embiggen {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .messaging-and-controls {
-  display: none;
+    display: none;
+}
+
+.pubmedLink {
+    text-decoration: none !important;
+}
+
+a.pubmedLink:hover i {
+    color: #f57c00;
 }

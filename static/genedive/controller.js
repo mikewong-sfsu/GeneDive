@@ -696,7 +696,7 @@ class Controller {
    */
   cleanUpData() {
     const BLANK_ARTICLE_ID = "N/A";
-    const BLANK_SECTION = "Unknown";
+    const BLANK_SECTION = "N/A";
     for (let i = 0; i < this.interactions.length; i++) {
       if (this.interactions[i].pubmed_id === null || this.interactions[i].pubmed_id === "0") {
         this.interactions[i].pubmed_id = BLANK_ARTICLE_ID;

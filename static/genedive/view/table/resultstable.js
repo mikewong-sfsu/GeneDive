@@ -10,11 +10,15 @@ class ResultsTable {
   
   // build pubmed link
   buildPubmedLink ( pubmedID ) {
-    return `
-      <a href='https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/' target='_blank'>
+    if(pubmedID === "N/A")
+      return "N/A";
+    else
+      return `
+      <a class="pubmedLink" href='https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/' target='_blank'>
         <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        <i class="fa fa-link" aria-hidden="true"></i>
       </a>`;
+
   }
 
   updateMessage ( message ) {

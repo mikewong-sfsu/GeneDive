@@ -61,12 +61,8 @@ class TableDetail extends ResultsTable {
 
       let excerpt = this.styleExcerpt( i.context, i.mention1, i.mention1_color );
           excerpt = this.styleExcerpt( excerpt, i.mention2, i.mention2_color );
-      let pubmed_link = "", displayedID=i.pubmed_id;
-
-      if(displayedID === "N/A")
-        displayedID = displayedID;
-      else
-        pubmed_link = this.buildPubmedLink( displayedID )
+      let pubmed_link = this.buildPubmedLink( i.pubmed_id )
+      let displayedID=i.pubmed_id;
 
       tr.append( $(document.createElement("td")).html( i.mention1 ) );
       tr.append( $(document.createElement("td")).html( i.mention2 ) );
