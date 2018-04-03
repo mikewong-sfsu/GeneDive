@@ -23,6 +23,7 @@ class Controls {
 
     this.undo.on('click', () => {
       GeneDive.onUndoClick(this.undo);
+
     });
 
     this.redo.on('click', () => {
@@ -70,6 +71,7 @@ class Controls {
    */
   undoHide() {
     this.undo[0].disabled = true;
+    this.undo.tooltip('hide');
   }
   /**
    @fn       Controls.undoShow
@@ -89,6 +91,7 @@ class Controls {
    */
   redoHide() {
     this.redo[0].disabled = true;
+    this.redo.tooltip('hide');
   }
   /**
    @fn       Controls.redoShow
@@ -108,6 +111,7 @@ class Controls {
    */
   reloadHide() {
     this.reload[0].disabled = true;
+    this.reload.tooltip('hide');
   }
   /**
    @fn       Controls.reloadShow
