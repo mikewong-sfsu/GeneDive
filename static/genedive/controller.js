@@ -705,7 +705,7 @@ class Controller {
     const SECTION_BLANK_VALUES = [null, 0, "", "Unknown"];
     for (let i = 0; i < this.interactions.length; i++) {
 
-      if (this.interactions[i].article_id in ARTICLE_ID_BLANK_VALUES) {
+      if (this.interactions[i].article_id in ARTICLE_ID_BLANK_VALUES  || this.interactions[i].pubmed_id in ARTICLE_ID_BLANK_VALUES) {
         this.interactions[i].pubmed_id = BLANK_STRING;
         this.interactions[i].article_id = BLANK_STRING;
       }
