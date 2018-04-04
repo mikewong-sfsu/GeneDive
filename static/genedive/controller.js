@@ -45,7 +45,8 @@ class Controller {
     // Every pixel change in window size will call this method
     window.onresize = () => {
       GeneDive.onWindowResized();
-    }
+    };
+
     this.onWindowResizedTimeout = undefined;
 
     // This will prevent auto saving states from triggering while the state is being updated.
