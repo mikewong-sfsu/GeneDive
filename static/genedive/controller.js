@@ -699,16 +699,18 @@ class Controller {
    @callergraph
    */
   cleanUpData() {
-    const BLANK_ARTICLE_ID = "N/A";
-    const BLANK_SECTION = "N/A";
+    const BLANK_STRING = "N/A";
+    const ARTICLE_ID_BLANK_VALUES = [null, 0, "", "Unknown"];
+    const SECTION_BLANK_VALUES = [null, 0, "", "Unknown"];
     for (let i = 0; i < this.interactions.length; i++) {
-      if (this.interactions[i].pubmed_id === null || this.interactions[i].pubmed_id === "0") {
-        this.interactions[i].pubmed_id = BLANK_ARTICLE_ID;
-        this.interactions[i].article_id = BLANK_ARTICLE_ID;
+
+      if (this.interactions[i].article_id in ARTICLE_ID_BLANK_VALUES) {
+        this.interactions[i].pubmed_id = BLANK_STRING;
+        this.interactions[i].article_id = BLANK_STRING;
       }
 
-      if (this.interactions[i].section === null || this.interactions[i].section.trim().length === 0 || this.interactions[i].section === "Unknown") {
-        this.interactions[i].section = BLANK_SECTION;
+      if (this.interactions[i].section.trim() in SECTION_BLANK_VALUES) {
+        this.interactions[i].section = BLANK_STRING;
       }
     }
   }
