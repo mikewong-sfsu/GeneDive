@@ -45,7 +45,8 @@ class Controller {
     // Every pixel change in window size will call this method
     window.onresize = () => {
       GeneDive.onWindowResized();
-    }
+    };
+
     this.onWindowResizedTimeout = undefined;
 
     // This will prevent auto saving states from triggering while the state is being updated.
@@ -704,7 +705,7 @@ class Controller {
     const SECTION_BLANK_VALUES = [null, 0, "", "Unknown"];
     for (let i = 0; i < this.interactions.length; i++) {
 
-      if (this.interactions[i].article_id in ARTICLE_ID_BLANK_VALUES) {
+      if (this.interactions[i].article_id in ARTICLE_ID_BLANK_VALUES  || this.interactions[i].pubmed_id in ARTICLE_ID_BLANK_VALUES) {
         this.interactions[i].pubmed_id = BLANK_STRING;
         this.interactions[i].article_id = BLANK_STRING;
       }
