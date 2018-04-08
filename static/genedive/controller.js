@@ -705,12 +705,12 @@ class Controller {
     const SECTION_BLANK_VALUES = [null, 0, "", "Unknown"];
     for (let i = 0; i < this.interactions.length; i++) {
 
-      if (this.interactions[i].article_id in ARTICLE_ID_BLANK_VALUES  || this.interactions[i].pubmed_id in ARTICLE_ID_BLANK_VALUES) {
+      if (ARTICLE_ID_BLANK_VALUES.includes(this.interactions[i].article_id )|| ARTICLE_ID_BLANK_VALUES.includes(this.interactions[i].pubmed_id)) {
         this.interactions[i].pubmed_id = BLANK_STRING;
         this.interactions[i].article_id = BLANK_STRING;
       }
 
-      if (this.interactions[i].section.trim() in SECTION_BLANK_VALUES) {
+      if (SECTION_BLANK_VALUES.includes(this.interactions[i].section.trim())) {
         this.interactions[i].section = BLANK_STRING;
       }
     }
