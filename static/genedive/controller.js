@@ -775,7 +775,7 @@ class Controller {
     state.graph = this.graph.exportGraphState();
 
 
-    return state;
+    return JSON.parse(JSON.stringify(state));
   }
 
   /**
