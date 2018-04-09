@@ -189,25 +189,26 @@ class Search {
     for (let set of this.sets) {
       let item = undefined;
 
-      if (set.type == "gene") {
-        let url = "";
-        if (set.entity === "chemical")
-          url =`https://www.pharmgkb.org/search?connections&query=${set.name}`;
-        else
-          url = `https://www.ncbi.nlm.nih.gov/gene/${set.ids[0]}`;
+      if (set.type === "gene") {
 
         item = $("<div/>")
           .addClass("search-item")
           .css("background-color", set.color)
           .append($("<span/>").addClass("name").text(set.name))
-          .append(
-            $("<a/>").addClass("fa fa-question ncbi-linkout")
-              .data("ncbi", set.ids[0])
+          .append($("<span/>").append(
+            $("<a/>").addClass("linkout ncbi-linkout")
               .attr("data-toggle", "tooltip")
               .attr("title", "Open NCBI Datasheet In New Tab")
-              .attr("href", url)
+              .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${set.ids[0]}`)
               .attr("target", "_blank")
-          )
+              .append("<img>"),
+            $("<a/>").addClass("linkout pharmgkb-linkout")
+              .attr("data-toggle", "tooltip")
+              .attr("title", "Open PharmGKB Datasheet In New Tab")
+              .attr("href", `https://www.pharmgkb.org/search?connections&query=${set.name}`)
+              .attr("target", "_blank")
+              .append("<img>"),
+          ))
           .append(
             $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
               .on('click', (event) => {

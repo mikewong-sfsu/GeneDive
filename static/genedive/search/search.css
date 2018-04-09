@@ -19,20 +19,41 @@
   flex-grow: 1;
 }
 
-.search-module .search-item .ncbi-linkout {
+.search-module .search-item .linkout {
   color: white;
-  margin:0 12px;
+  margin-right:18px;
 }
 
-.search-module .search-item .ncbi-linkout:hover {
+.search-module .search-item .linkout:hover {
   color: green;
   cursor:pointer;
 }
 
-.search-module .search-item .ncbi-linkout:focus {
+.search-module .search-item .linkout:focus {
   outline:none;
   outline-offset:0;
   text-decoration: none;
+}
+
+.search-module .search-item .linkout img {
+  height: 18px;
+}
+
+.search-module .search-item .ncbi-linkout img{
+  content:url("../images/linkout-ncbi.svg");
+}
+
+
+.search-module .search-item .ncbi-linkout:hover img{
+  content:url("../images/linkout-ncbi-hover.svg");
+}
+
+.search-module .search-item .pharmgkb-linkout img {
+  content:url("../images/linkout-pharmgkb.svg");
+}
+
+.search-module .search-item .pharmgkb-linkout:hover img {
+  content:url("../images/linkout-pharmgkb-hover.svg");
 }
 
 .search-module .search-item .remove:hover {
