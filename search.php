@@ -12,8 +12,8 @@
     <div class="module control-module">
             <div class="btn-group" style="width: 100%">
                 <button type="button" class="btn btn-default undo" data-toggle="tooltip-initial" data-placement="bottom" title="Undo the last action you made" disabled> Undo</button>
-                <button type="button" class="btn btn-default reset-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> Redraw Graph</button>
                 <button type="button" class="btn btn-default redo" data-toggle="tooltip-initial" data-placement="bottom" title="Redo the last action you undid" disabled> Redo</button>
+                <button type="button" class="btn btn-default redo disabled" data-toggle="tooltip-initial" data-placement="bottom" title="Redo the last action you undid"></button>
             </div>
     </div>
 
