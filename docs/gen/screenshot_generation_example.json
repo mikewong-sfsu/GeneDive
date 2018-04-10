@@ -35,7 +35,7 @@
       "type": "Search",
       "description": "Searches for htr and selects the first result",
       "data": {
-        "element": ".table-view.ui-widget-content",
+        "element": ".search-input",
         "text": "htr"
       }
     },
@@ -44,7 +44,7 @@
       "description": "Takes a screenshot of the gene list",
       "data": {
         "filename": "screenshot1.png",
-        "element": ".table-view.ui-widget-content"
+        "element": ".search-input"
       }
     }
   ]
