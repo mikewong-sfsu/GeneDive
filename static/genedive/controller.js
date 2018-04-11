@@ -775,6 +775,7 @@ class Controller {
     state.graph = this.graph.exportGraphState();
 
 
+    // Does a deep copy of the state
     return JSON.parse(JSON.stringify(state));
   }
 
@@ -809,6 +810,10 @@ class Controller {
    */
   setState(state) {
     this.loadSpinners();
+
+    // Does a deep copy of the state
+    state = JSON.parse(JSON.stringify(state));
+
     this.stateIsBeingUpdated = true; // Prevents any callbacks that update state from being triggered.
 
     // Grouper
