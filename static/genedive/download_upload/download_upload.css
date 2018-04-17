@@ -1,3 +1,48 @@
+.upload_file{
+}
+
+#file_upload{
+    display: none;
+}
+
+.upload_file #holder{
+    border: 2px dashed #ccc;
+    width: 500px;
+    height: 300px;
+    margin: 20px auto;
+    border-radius: 20px;
+    position: relative;
+}
+
+.upload_file #holder.hover{
+    border-color: #2b2b2b;
+}
+
+.upload_file #holder label{
+    height:100%;
+    width:100%;
+}
+
+.upload_file #holder .file_upload_label > span{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translate(0, -50%);
+    text-align: center;
+}
+
+.upload_file #holder .file_upload_label i{
+    font-size: 50px;
+    color: #ababab;
+    display: block;
+}
+
+.upload_file #holder .file_upload_label .upload-help{
+    font-size: 22px;
+    color: #ababab;
+    display: block;
+}
+
 .zip_icon{
     height: 25pt;
     margin-left: 21px;
