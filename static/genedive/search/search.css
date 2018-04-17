@@ -22,6 +22,7 @@
 .search-module .search-item .linkout {
   color: white;
   margin-right:18px;
+  display: inline-block;
 }
 
 .search-module .search-item .linkout:hover {
@@ -35,25 +36,20 @@
   text-decoration: none;
 }
 
-.search-module .search-item .linkout img {
-  height: 18px;
+.search-module .search-item .linkout svg {
+  height: 15px;
+  width: auto;
+  pointer-events: none;
 }
 
-.search-module .search-item .ncbi-linkout img{
-  content:url("../images/linkout-ncbi.svg");
+.search-module .search-item .linkout svg path{
+  fill: white;
 }
 
 
-.search-module .search-item .ncbi-linkout:hover img{
-  content:url("../images/linkout-ncbi-hover.svg");
-}
+.search-module .search-item .linkout:hover svg path{
+  fill: #008000;
 
-.search-module .search-item .pharmgkb-linkout img {
-  content:url("../images/linkout-pharmgkb.svg");
-}
-
-.search-module .search-item .pharmgkb-linkout:hover img {
-  content:url("../images/linkout-pharmgkb-hover.svg");
 }
 
 .search-module .search-item .remove:hover {
