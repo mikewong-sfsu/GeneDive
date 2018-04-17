@@ -20,6 +20,14 @@ class Search {
     this.graphsearch = new GraphSearch();
     this.sets = [];
 
+    // Load the SVG files
+    this.svgNCBI = "";
+    this.svgPharm = "";
+    (async function (thisElement) {
+      thisElement.svgNCBI = thisElement.loadFile("/static/genedive/images/linkout-ncbi.svg");
+      thisElement.svgPharm = thisElement.loadFile("/static/genedive/images/linkout-pharmgkb.svg");
+    }(this));
+
     this.initTypeahead();
 
     alertify.set('notifier', 'position', 'top-left');
@@ -52,37 +60,60 @@ class Search {
     button.addClass("active");
   }
 
+  /**
+   @fn       Search.loadFile
+   @brief    Loads the file and returns the response
+   @details
+   @param   url The url of the file to load. Can be relative
+   @callergraph
+   */
+  loadFile(url) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", url, false);
+    xhr.overrideMimeType("image/svg+xml");
+
+    xhr.send("");
+    if (xhr.status === 404)
+      GeneDive.handleException("Error: Couldn't load " + xhr.responseURL);
+    return xhr.response
+  }
+
   addSearchSet(name, ids, deferRunSearch = false) {
 
-    if (this.hasSearchSet(name)) {
-      alertify.notify("Gene already in search.", "", "3");
-      return;
-    }
+    try {
 
-    switch (this.selectedTopology()) {
+      if (this.hasSearchSet(name)) {
+        alertify.notify("Gene already in search.", "", "3");
+        return;
+      }
 
-      case "clique":
-        if (this.sets.length >= 1 || ids.length > 1) {
-          alertify.notify("Clique searches are limited to a single gene.", "", "3");
-          this.input.val("");
-          return;
-        }
+      switch (this.selectedTopology()) {
 
-        this.sets.push(new SearchSet(name, ids));
-        break;
+        case "clique":
+          if (this.sets.length >= 1 || ids.length > 1) {
+            alertify.notify("Clique searches are limited to a single gene.", "", "3");
+            this.input.val("");
+            return;
+          }
 
-      case "1hop":
-      case "2hop":
-      case "3hop":
-      default:
-        this.sets.push(new SearchSet(name, ids));
-        break;
-    }
+          this.sets.push(new SearchSet(name, ids));
+          break;
 
-    this.renderDisplay();
+        case "1hop":
+        case "2hop":
+        case "3hop":
+        default:
+          this.sets.push(new SearchSet(name, ids));
+          break;
+      }
 
-    if (!deferRunSearch) {
-      GeneDive.onAddDGD();
+      this.renderDisplay();
+
+      if (!deferRunSearch) {
+        GeneDive.onAddDGD();
+      }
+    } catch (error) {
+      GeneDive.handleException(error);
     }
 
   }
@@ -201,13 +232,17 @@ class Search {
               .attr("title", "Open NCBI Datasheet In New Tab")
               .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${set.ids[0]}`)
               .attr("target", "_blank")
-              .append("<img>"),
+              .append($("<svg>")
+                .append(this.svgNCBI)
+              ),
             $("<a/>").addClass("linkout pharmgkb-linkout")
               .attr("data-toggle", "tooltip")
               .attr("title", "Open PharmGKB Datasheet In New Tab")
               .attr("href", `https://www.pharmgkb.org/search?connections&query=${set.name}`)
               .attr("target", "_blank")
-              .append("<img>"),
+              .append($("<svg>")
+                .append(this.svgPharm)
+              ),
           ))
           .append(
             $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
