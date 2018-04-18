@@ -21,7 +21,8 @@ class GraphView {
         GeneDive.onGraphPanOrZoomed();
       })
       .on('free', () => {
-        GeneDive.onGraphNodeMoved();
+        if(!this.shiftListenerActive)
+          GeneDive.onGraphNodeMoved();
       });
 
     // Timeout to track when the window is resized
@@ -44,7 +45,7 @@ class GraphView {
 
     $(".graph-view .absent").on("click", () => {
       this.showAbsentNodes();
-    })
+    });
 
 
     // Calls the resize method to resize the graph whenever the splitter is moved.
@@ -531,6 +532,7 @@ class GraphView {
  */
 const nodeClickBehavior = function (event) {
 
+  const graphClass = GeneDive.graph;
 
   if (event.originalEvent.ctrlKey) {
     GeneDive.onNodeGraphCTRLClick(this.data('name'), [this.data('id')]);
@@ -541,15 +543,15 @@ const nodeClickBehavior = function (event) {
 
     GeneDive.onNodeGraphShiftClickHold(this.data('name'), [this.data('id')], true);
 
-    if (!this.shiftListenerActive) {
+    if (!graphClass.shiftListenerActive) {
       // Bind event - run search when shift is released
       $(document).on('keyup', function (event) {
         $(document).unbind('keyup');
-        this.shiftListenerActive = false;
+        graphClass.shiftListenerActive = false;
         GeneDive.onNodeGraphShiftClickRelease();
       });
 
-      this.shiftListenerActive = true;
+      graphClass.shiftListenerActive = true;
     }
 
   }
