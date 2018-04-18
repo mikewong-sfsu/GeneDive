@@ -18,8 +18,9 @@
     <div class="about">
       <h2>GeneDive</h2>
       <h4>Gene Interaction Search and Visualization Tool</h4>
-      <p>GeneDive helps researchers search, sort, group, filter, visualize and download from a dataset of 2.6mm gene interactions culled from PLOS One, PMC, and more.</p>
-      <p>GeneDive is a collaborative project between the San Francisco State University Department of Computer Science and Stanford Bioengineering.</p>
+      <p>GeneDive is a powerful but easy-to-use application that can search, sort, group, filter, highlight, and visualize interactions between drugs, genes, and diseases (DGD).  GeneDive also facilitates topology discovery through the various search modes that reveal direct and indirect interactions between DGD.  The search results, in textual and graphical form, can be downloaded along with the search settings to easily restart the session at later time.
+         Refer to <a href=“LINK TO THE PSB 2018 PAPER”>Previde et al., 2018</a> for more details.</p>
+      <p>GeneDive is a joint project between the Computer Science Department at San Francisco State University, and the Bioengineering Department at Stanford University.</p>
     </div>
 
     <div class="login">
@@ -67,9 +68,9 @@
 
   <div class="footer">
     <a href="about.html" target="_blank">About</a>
-    <a href="about" target="_blank">Contact</a>
-    <a href="privacy" target="_blank">Privacy / T&C</a>
-    <a href="about" target="_blank">Cite</a>
+    <a href="about.html" target="_blank">Contact</a>
+    <a href="privacy.html" target="_blank">Privacy / T&C</a>
+    <a href="about.html" target="_blank">Cite</a>
   </div>
 
 </div>
