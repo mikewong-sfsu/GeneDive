@@ -11,9 +11,9 @@
     <!-- Other Controls -->
     <div class="module control-module">
             <div class="btn-group" style="width: 100%">
-                <button type="button" class="btn btn-default undo" data-toggle="tooltip-initial" data-placement="bottom" title="Undo the last action you made" disabled> Undo</button>
-                <button type="button" class="btn btn-default redo" data-toggle="tooltip-initial" data-placement="bottom" title="Redo the last action you undid" disabled> Redo</button>
-                <button type="button" class="btn btn-default redo disabled" data-toggle="tooltip-initial" data-placement="bottom" title="Redo the last action you undid"></button>
+                <button type="button" class="btn btn-default undo" data-toggle="tooltip-initial" data-placement="bottom" title="Undo the last action you made" disabled> <span style="font-family: 'Open Sans', sans-serif;">Undo</span></button>
+                <button type="button" class="btn btn-default reset-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <span style="font-family: 'Open Sans', sans-serif;">Redraw Graph</span></button>
+                <button type="button" class="btn btn-default redo" data-toggle="tooltip-initial" data-placement="bottom" title="Redo the last action you undid" disabled> <span style="font-family: 'Open Sans', sans-serif;">Redo</span></button>
             </div>
     </div>
 
