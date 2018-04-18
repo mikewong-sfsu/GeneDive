@@ -1,15 +1,12 @@
 class Action {
 
-    constructor(action, global_data) {
-        this.action = action;
-        this.global_data = global_data
-        this.expected_data = [];
-        this.expected_global_data = [];
-    }
-
     async execute(page) {
         throw {name: "NotImplementedError", message: "This object must be inherited for implementation."};
     }
+
+    toString(){
+      return "Action class template";
+    };
 
     verifyData() {
         for (let i = 0; i < this.expected_data.length; i++) {
