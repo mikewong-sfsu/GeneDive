@@ -84,18 +84,19 @@ const save_test_success = (testName, result, success, test_results)=>{
   for(let key in tests)
   {
     let page = await browser.newPage();
-    let test = new tests[key](page, json_data);
-
-    console.log("Executing test",test.toString());
-    promises.push(test.execute()
-      .then((reason)=>{
-        // console.log(`Test ${key} succeeded: ${reason}`);
-        save_test_success(key, reason, true,test_results);
-      })
+    let singleTest = new tests[key](page, json_data);
+    singleTest.then((reason)=>{
+      console.error(`${test.toString()}: PASS`);
+      save_test_success(key, reason, true,test_results);
+    })
       .catch((reason )=>{
-        console.error(`Test ${key} failed: ${reason}`);
+        console.error(`${test.toString()}: FAIL\n\t${reason}`);
         save_test_success(key, reason, false, test_results);
-    }));
+      });
+
+    // console.log("Executing test",test.toString());
+    await test.execute();
+
   }
 
 
