@@ -1,84 +1,9 @@
 {
-  "global_data": {
-    "domain": "https://www.genedive.net/",
-    "search_page" : "search.php",
-    "start_width": 800,
-    "start_height": 600,
-    "screenshots_folder": "../img/gen/"
-  },
-  "actions": [
-    {
-      "type": "Screenshot",
-      "description": "Takes a screenshot of the login page",
-      "data": {
-        "filename": "login_page.png",
-        "element": "html"
-      }
-    },
-    {
-      "type": "Login",
-      "description": "Login as Brook",
-      "data": {
-        "login": "brookthomas@gmail.com",
-        "password": "asdf"
-      }
-    },
-    {
-      "type": "Resize",
-      "description": "Sets browser size to 1080p desktop resolution",
-      "data": {
-        "width": 1920,
-        "height": 880
-      }
-    },
-    {
-      "type": "Search",
-      "description": "Searches for htr and selects the first result",
-      "data": {
-        "element": ".table-view.ui-widget-content",
-        "text": "htr"
-      }
-    },
-    {
-      "type": "Screenshot",
-      "description": "Takes a screenshot of the gene list",
-      "data": {
-        "filename": "screenshot1.png",
-        "element": ".table-view.ui-widget-content"
-      }
-    },
-    {
-      "type": "Reload",
-      "description" : "Testing bug 'Previous results do not clear out test'"
-    },
-    {
-      "type": "ClickOnElement",
-      "description" : "Click on 2-Hop",
-      "data": {
-        "element": ".topology-selector button[data-type='2hop']"
-      }
-    },
-    {
-      "type": "Search",
-      "data": {
-        "element": ".table-view.ui-widget-content",
-        "text": "FOXP3"
-      }
-    },
-    {
-      "type": "Search",
-      "data": {
-        "element": ".table-view.ui-widget-content",
-        "text": "nephrotoxicity"
-      }
-    },
-    {
-      "type": "Screenshot",
-      "description": "Takes a screenshot of the Search",
-      "data": {
-        "filename": "2-hop-search.png",
-        "element": ".main-display"
-      }
-    }
-  ]
+  "domain": "http://localhost/",
+  "search_page": "search.php",
+  "default_width": 1920,
+  "default_height": 949,
+  "screenshots_folder": "../img/gen/",
+  "login": "brookthomas@gmail.com",
+  "password": "asdf"
 }
