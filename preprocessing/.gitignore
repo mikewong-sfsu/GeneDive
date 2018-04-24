@@ -1,0 +1,3 @@
+./sqlite_data/*.sqlite
+./sqlite_data/good_data/*.sqlite
+./tsv_data/*
