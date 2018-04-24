@@ -5,4 +5,5 @@ data/data.sqlite
 data/master/
 data/pharmgkb/
 sessions/
-static/genedive/json/adjacency_matrix.js
+static/genedive/json/*.json
+static/genedive/json/*.zip
