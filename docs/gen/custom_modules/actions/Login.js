@@ -14,6 +14,10 @@ async function Login(page, login, password) {
     -----------*/
     let next_page = page.click("button", {waitUntil: 'networkidle2'});
     await next_page;
+    if(page.url().split("/").pop() !=="search.php"){
+      reject("Was not redirected to search.php")
+
+    }
     resolve("Successfully logged in");
   })
 
