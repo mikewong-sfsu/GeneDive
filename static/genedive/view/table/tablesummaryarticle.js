@@ -31,7 +31,7 @@ class TableSummaryArticle extends ResultsTable {
 
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%") );
     tr.append( $(document.createElement("th")).text( "Article" ).addClass("numeric").css("width","10%") );
-    tr.append( $(document.createElement("th")).text( "# DGDs" ).addClass("numeric").css("width","10%") );
+    tr.append( $(document.createElement("th")).text( "# DGD Pairs" ).addClass("numeric").css("width","10%") );
     tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric").css("width","12%") );
     tr.append( $(document.createElement("th")).text( "P. Distribution" ).css("width","10%") );
     tr.append( $(document.createElement("th")).text( "Max Probability" ).addClass("numeric") );
@@ -70,7 +70,6 @@ class TableSummaryArticle extends ResultsTable {
           excerpt = this.styleExcerpt( excerpt, row.mention2, row.mention2_color );
 
       let genecount = _.uniq( this.interactions[group].map( i => i.geneids1 ).concat( this.interactions[group].map( i => i.geneids2 ) ) ).length;
-
       let displayedID = row.pubmed_id;
       // if(displayedID === "0")
       //   displayedID = "N/A";

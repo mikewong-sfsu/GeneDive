@@ -103,9 +103,9 @@ class TextFilter {
 
         case "Article":
           if (filter.is) {
-            interactions = interactions.filter((i) => new RegExp(filter.value, "i").test(i.article_id));
+            interactions = interactions.filter((i) => new RegExp(filter.value, "i").test(i.pubmed_id));
           } else {
-            interactions = interactions.filter((i) => !new RegExp(filter.value, "i").test(i.article_id));
+            interactions = interactions.filter((i) => !new RegExp(filter.value, "i").test(i.pubmed_id));
           }
           break;
 
