@@ -75,6 +75,7 @@ class Controller {
    @callergraph
    */
   onAddDGD() {
+
     try {
       this.loadSpinners();
       this.runSearch();
