@@ -67,8 +67,6 @@
   </div>
 
   <div class="footer">
-    <a href="about.html" target="_blank">About</a>
-    <a href="about.html" target="_blank">Contact</a>
     <a href="privacy.html" target="_blank">Privacy / T&C</a>
     <a href="about.html" target="_blank">Cite</a>
   </div>
