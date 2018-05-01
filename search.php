@@ -23,7 +23,7 @@
           <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD to view all interactions with that DGD. Provide multiple DGDs or DGD sets to view interactions between all input DGDs." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
           <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 1 (one) intermediary DGD."                 style="width:25%;" type="button" class="btn btn-default"        data-type="2hop">2-Hop</button>
           <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 2 (two) intermediary DGDs."                style="width:25%;" type="button" class="btn btn-default"        data-type="3hop">3-Hop</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD as input. GeneDive will show those DGDs that interact with the input DGD as well as one other input interactant."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD as input. GeneDive will show those DGDs that interact with input DGD and one of its interactants."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
         </div>
       </div>
 
