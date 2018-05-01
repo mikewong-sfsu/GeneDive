@@ -16,6 +16,12 @@
     width: calc(100%/3);
 }
 
+.control-module .button-text {
+    font-family: "Open Sans", sans-serif;
+    font-size:12px;
+    padding-left: 3px;
+}
+
 .control-module .undo {
 /*    float: left;
   animation-play-state: paused;*/
