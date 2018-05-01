@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <input type="text" placeholder="enter a Disease-Gene-Drug entity (DGD)..." class="form-control search-input">
+      <input type="text" placeholder="Enter a Disease, Gene, or Drug (DGD) name" class="form-control search-input">
 
       <!-- Search Sets displays current search objects -->
       <div class="search-sets">
@@ -161,6 +161,7 @@
 
     <!-- Graph View -->
     <div class="graph-view panel-bottom">
+                        <button type="button" class="module control-module btn-group btn btn-default reset-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <span class="button-text">Redraw Graph</span></button>
       <div class="absent">
         <div>View Absent Nodes List</div>
       </div>
