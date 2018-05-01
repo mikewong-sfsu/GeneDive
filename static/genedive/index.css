@@ -1,4 +1,8 @@
 /* index.css */
+#citation {
+  font-size: 0.75em;
+}
+
 .landing {
   position: absolute;
   display: flex;
