@@ -1,5 +1,4 @@
 <?php include_once "auth.php"; ?>
-
 <?php include "header.php"; ?>
 
 <div class="main-display">
@@ -11,9 +10,9 @@
     <!-- Other Controls -->
     <div class="module control-module">
             <div class="btn-group" style="width: 100%">
-                <button type="button" class="btn btn-default undo" data-toggle="tooltip-initial" data-placement="bottom" title="Undo the last action you made" disabled> <span style="font-family: 'Open Sans', sans-serif;">Undo</span></button>
-                <button type="button" class="btn btn-default reset-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <span style="font-family: 'Open Sans', sans-serif;">Redraw Graph</span></button>
-                <button type="button" class="btn btn-default redo" data-toggle="tooltip-initial" data-placement="bottom" title="Redo the last action you undid" disabled> <span style="font-family: 'Open Sans', sans-serif;">Redo</span></button>
+                <button type="button" class="btn btn-default undo" data-toggle="tooltip-initial" data-placement="bottom" title="Undo the last action you made" disabled><i class="fas fa-undo"></i><span class="button-text">Undo</span></button>
+                <!--<button type="button" class="btn btn-default reset-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <span class="button-text">Redraw Graph</span></button>-->
+                <button type="button" class="btn btn-default redo" data-toggle="tooltip-initial" data-placement="bottom" title="Redo the last action you undid" disabled><span class="button-text">Redo</span><i class="fas fa-redo"></i></button>
             </div>
     </div>
 
@@ -21,14 +20,14 @@
     <div class="module search-module">
       <div class="topology-row">
         <div class="btn-group topology-selector" style="width:100%;" role="group" aria-label="...">
-          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD (blue) to view all interactions with that DGD. Provide multiple DGDs or DGD sets to view interactions between all input DGDs." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD to view all direct interactions with the DGD. Provide multiple DGDs or DGD sets to view interactions between all input DGDs." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
           <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 1 (one) intermediary DGD."                 style="width:25%;" type="button" class="btn btn-default"        data-type="2hop">2-Hop</button>
           <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 2 (two) intermediary DGDs."                style="width:25%;" type="button" class="btn btn-default"        data-type="3hop">3-Hop</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD as input. GeneDive will show those DGDs that interact with the input DGD as well as one other input interactant."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD as input. GeneDive will show those DGDs that interact with input DGD and one of its interactants."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
         </div>
       </div>
 
-      <input type="text" placeholder="enter a Disease-Gene-Drug entity (DGD)..." class="form-control search-input">
+      <input type="text" placeholder="Enter a Disease, Gene, or Drug (DGD) name" class="form-control search-input">
 
       <!-- Search Sets displays current search objects -->
       <div class="search-sets">
@@ -162,6 +161,7 @@
 
     <!-- Graph View -->
     <div class="graph-view panel-bottom">
+                        <button type="button" class="module control-module btn-group btn btn-default reset-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <span class="button-text">Redraw Graph</span></button>
       <div class="absent">
         <div>View Absent Nodes List</div>
       </div>
