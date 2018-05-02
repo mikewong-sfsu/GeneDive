@@ -108,9 +108,7 @@
     </div>
 
     <div class="module about-module">
-      <a href="/privacy.html" target="_blank">T&C/Privacy</a>
       <a href="/help.html" target="_blank">Help</a>
-      <a href="/about.html" target="_blank">About</a>
     </div>
   </div>
 
