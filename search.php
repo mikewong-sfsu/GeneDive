@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <input type="text" placeholder="Enter a Disease, Gene, or Drug (DGD) name" class="form-control search-input">
+      <input type="text" placeholder="Enter a DGD name" class="form-control search-input">
 
       <!-- Search Sets displays current search objects -->
       <div class="search-sets">
