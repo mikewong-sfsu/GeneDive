@@ -22,7 +22,7 @@ class Controller {
     this.grouper = new Grouper(".grouper-module .table-grouping");
     this.graph = new GraphView("graph");
     this.download = new DownloadUpload(".download-module button.download", ".download-module button.upload");
-    this.controls = new Controls(".control-module .undo", ".control-module .redo", ".control-module .reset-graph");
+    this.controls = new Controls(".control-module button.undo", ".control-module button.redo", "button.reset-graph");
 
     this.tablestate = {zoomed: false, zoomgroup: null};
     this.interactions = null;
