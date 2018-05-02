@@ -5,7 +5,7 @@
   <div class="control-view">
 
     <div class="titlebar"><a href="/">GeneDive</a>
-    <span class="subtitle">Disease, Gene, Drug (DGD) Interaction Explorer</span>
+    <span class="subtitle">Disease, Gene, Drug (DGD)<br>Interaction Explorer</span>
     </div>
 
     <!-- Other Controls -->
