@@ -30,7 +30,7 @@ class Login extends Test {
     return new Promise(async (resolve, reject) => {
       try{
         // If any errors happen on the page, fail the test
-        await thisClass.hookToConsoleErrors(reject);
+        // thisClass.hookToConsoleErrors();
 
         console.log("Connecting to " + thisClass.DOMAIN);
         await PAGE.goto(thisClass.DOMAIN, {waitUntil: 'networkidle2'}).catch((reason)=>{reject(`Unable to connect. ${reason}`)});
