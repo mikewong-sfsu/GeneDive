@@ -40,7 +40,7 @@ class ResultsTable {
 
   // color excerpt
   styleExcerpt ( excerpt, symbol, color ) {
-    return excerpt.replace( new RegExp( `#${symbol}#`, 'i' ), `<span style="color:${color};">${symbol}</span>` );
+    return excerpt.replace( new RegExp( `#(${symbol})#`, 'i' ), `<span style="color:${color};">$1</span>` );
   }
 
   initHistogram ( group, probabilities ) {
