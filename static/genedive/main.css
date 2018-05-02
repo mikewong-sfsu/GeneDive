@@ -84,9 +84,17 @@ h5 {
   color:rgb(128,128,128);
 }
 
+.titlebar span.subtitle{
+  font-size: 14pt;
+  color: #666;
+  margin: 8px;
+  display: block;
+}
 .titlebar a:hover {
   text-decoration: none;
 }
+
+
 
 .module {
   padding: 24px 18px;
