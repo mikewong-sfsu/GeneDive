@@ -33,7 +33,7 @@ class ShiftClickGraph extends Test {
     return new Promise(async (resolve, reject) => {
       try{
         // If any errors happen on the page, fail the test
-        await thisClass.hookToConsoleErrors(reject);
+        // thisClass.hookToConsoleErrors();
 
         await thisClass.startAtSearchPage().catch((reason)=>{reject(reason)});
         await thisClass.searchDGDs([NODE_1], "1hop").catch((reason)=>{reject(reason)});

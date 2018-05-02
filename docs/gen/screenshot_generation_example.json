@@ -1,9 +1,0 @@
-{
-  "domain": "http://localhost/",
-  "search_page": "search.php",
-  "default_width": 1920,
-  "default_height": 949,
-  "screenshots_folder": "../img/gen/",
-  "login": "REDACTED",
-  "password": "REDACTED"
-}

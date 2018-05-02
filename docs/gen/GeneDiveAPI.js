@@ -5,7 +5,7 @@
 
 /**
  @brief      Screenshot Generation Script
- @file       screenshots.js
+ @file       GeneDiveAPI.js
  @author     Jack Cole jcole2@mail.sfsu.edu
  @date       2017-11-11
  @details    This script will generate screenshots of the website for the documentation.
@@ -15,11 +15,11 @@
  */
 const HEADLESS_MODE = false;
 const ARGUMENTS = process.argv;
-const JSON_FILE = "screenshot_generation.json";
+const JSON_FILE = "GeneDiveAPI_params.json";
 const tests = require('./custom_modules/tests/_import.js');
 const puppeteer = require('puppeteer');
 const test_results = [];
-const RESULTS_FILE = `./log/screenshots_results.json`;
+const RESULTS_FILE = `./log/GeneDiveAPI_results.json`;
 const COLOR = {
   Reset: "\x1b[0m",
   Bright: "\x1b[1m",
@@ -62,6 +62,8 @@ catch (err) {
 }
 
 
+
+
 // Make sure the screenshots folder exists
 const SCREENSHOTS_FOLDER = json_data.screenshots_folder;
 console.log("The screenshots will be saved to " + SCREENSHOTS_FOLDER);
@@ -74,6 +76,7 @@ if (!fs.existsSync(SCREENSHOTS_FOLDER)) {
 const save_test_success = (result) => {
   test_results.push(result);
 };
+
 
 
 // Processs a single test
@@ -132,10 +135,10 @@ for (let i = 0; i < ARGUMENTS.length; i++)
     }
 
 
-  await Promise.all(promises);
+  await Promise.all(promises).catch((reason)=>{console.error(`ERROR awaiting all promises: ${reason}`)});
 
   // Enabled for testing
-  console.log(test_results);
+  // console.log(test_results);
 
   // Save log
   fs.writeFileSync(RESULTS_FILE, JSON.stringify(test_results), 'utf8');
@@ -143,8 +146,7 @@ for (let i = 0; i < ARGUMENTS.length; i++)
 
   // Exit from Node
   browser.close();
-  process.exit(0);
 
 
-})();
+})().catch((reason)=>{console.error(`ERROR in main process: ${reason}`)});;
 

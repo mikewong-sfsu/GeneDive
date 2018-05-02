@@ -8,7 +8,7 @@
 */
 
 const OXYGEN_CONFIG_FILE = "doxygen.cfg";
-const SCREENSHOTS_PHANTOMJS_FILE = "screenshots.js";
+const SCREENSHOTS_PHANTOMJS_FILE = "GeneDiveAPI.js";
 const CONFIG_DIRECTORY = __dirname;
 const LOG_DIRECTORY = CONFIG_DIRECTORY + "\\log";
 const { exec } = require('child_process');
@@ -82,7 +82,7 @@ doxygen_exec.on('close', function (code) {
 
 /**
 	@name		Screenshots execution stage	
-	@details	This will generate screenshots using the code from screenshots.js using Puppeteer
+	@details	This will generate screenshots using the code from GeneDiveAPI.js using Puppeteer
 	@post		Screenshots taken and associated png files created
 				<br>Two log files outputted: *screenshots_output.log* *screenshots_error.log*
 	@{
