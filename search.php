@@ -133,7 +133,7 @@
           <div class="mode">
             <h4>1-Hop</h4>
             <img src="/static/genedive/images/help/1hop.png" class="img-responsive">
-            <p>Provide one <span class="dgd-blue">Disease-Gene-Drug entitiy (DGD)</span> to view all interactions with that <span class="dgd-blue">DGD</span>. Provide multiple <span class="dgd-blue">DGDs</span> or <span class="dgd-blue">DGD</span> sets to view interactions between all input <span class="dgd-blue">DGDs</span>.</p>
+            <p>Provide one <span class="dgd-blue">Disease-Gene-Drug entitiy (DGD)</span> to view all direct interactions with that <span class="dgd-blue">DGD</span>. Provide multiple <span class="dgd-blue">DGDs</span> or <span class="dgd-blue">DGD</span> sets to view interactions between all input <span class="dgd-blue">DGDs</span>.</p>
           </div>
           <div class="mode">
             <h4>2-Hop</h4>
@@ -148,7 +148,7 @@
           <div class="mode">
             <h4>Clique</h4>
             <img src="/static/genedive/images/help/clique.png" class="img-responsive">
-            <p>Provide one <span class="dgd-blue">Disease-Gene-Drug entities (DGDs)</span> as input. GeneDive will show <span class="dgd-orange">DGDs</span> that interact with the input <span class="dgd-blue">DGD</span> as well as one other input interactant.</p>
+            <p>Provide one <span class="dgd-blue">Disease-Gene-Drug entity (DGD)</span> as input. GeneDive will show those <span class="dgd-orange">DchiGDs</span> that interact with the input <span class="dgd-blue">DGD</span> and one of its interactants.</p>
           </div>
         </div>
       </div>
