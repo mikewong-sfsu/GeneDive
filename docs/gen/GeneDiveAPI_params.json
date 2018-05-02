@@ -1,9 +1,9 @@
 {
-  "domain": "http://localhost/",
+  "domain": "https://genedive.net/",
   "search_page": "search.php",
   "default_width": 1920,
   "default_height": 949,
   "screenshots_folder": "../img/gen/",
-  "login": "REDACTED",
-  "password": "REDACTED"
+  "login": "brookthomas@gmail.com",
+  "password": "asdf"
 }

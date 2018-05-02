@@ -37,7 +37,7 @@ class FiltersTest extends Test {
       try{
 
         // If any errors happen on the page, fail the test
-        await thisClass.hookToConsoleErrors(reject);
+        // thisClass.hookToConsoleErrors();
 
         await thisClass.startAtSearchPage().catch((reason)=>{reject(reason)});
         await thisClass.searchDGDs([DGD], "1hop").catch((reason)=>{reject(reason)});
@@ -57,9 +57,13 @@ class FiltersTest extends Test {
           for(let col = 0;col < FIELDS_TO_TEST.length;col++)
           {
 
+
             let text = table_contents[row][FIELDS_TO_TEST[col]];
             if(EXCERPT_COL === FIELDS_TO_TEST[col])
               text = text.split(" ")[0];
+
+            // Since the text field is regex compatible, escape regex characters
+            text = text.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");
             await thisClass.typeInFilter(text);
             await PAGE.waitFor(1000);
             if(!await thisClass.isRowHighlighted(row).catch((reason)=>{reject(reason)}))

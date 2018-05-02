@@ -61,20 +61,27 @@ class Test {
    * @param reject A reject function from a promise
    * @return {Promise}
    */
-  async hookToConsoleErrors(reject) {
-    await this.page.on("console", (msg) => {
-      if (msg.type() === "error")
-        reject({
-          error: "Error on page detected.",
-          description: msg.args()[0]._remoteObject.description,
-        })
+  hookToConsoleErrors() {
 
-    });
-    await this.page.on("pageerror", (msg) => {
-      reject({
-        error: "Uncaught Exception happened on page",
-        description: msg,
-      })
+    let thisClass = this;
+    new Promise((resolve, reject) => {
+      thisClass.page.on("console", (msg) => {
+        if (msg.type() === "error")
+          reject({
+            error: "Error on page detected.",
+            description: msg.args()[0]._remoteObject.description,
+          })
+
+      });
+      thisClass.page.on("pageerror", (msg) => {
+        reject({
+          error: "Uncaught Exception happened on page",
+          description: msg,
+        })
+      });
+
+      // Exit this promise if the page is done
+      thisClass.page.on('close', ()=>{resolve();});
     });
   }
 
@@ -231,7 +238,7 @@ class Test {
       resolve(`Node ${nodeName} clicked`)
     })
   }
-  
+
   typeInFilter(text, clear){
     const thisClass = this;
 
@@ -240,7 +247,7 @@ class Test {
     if(clear === undefined)
       clear = true;
 
-    
+
     return new Promise(async function (resolve, reject) {
 
       // Clear field
@@ -265,7 +272,7 @@ class Test {
         reject(`When typing in  "${text}", the final value in the field didn't match`);
       resolve("Correct value typed in filter");
     });
-    
+
   }
 
   getTableContents() {
@@ -290,8 +297,13 @@ class Test {
           else {
             let rowObj = {};
             for (let c = 0; c < rows[r].cells.length; c++) {
-              let text = rows[r].cells[c].textContent;
-              rowObj[tableHeaders[c]] = text;
+              let text ="";
+              // Only get the text in the cell, not text in children (temp fix for bug)
+              let element = rows[r].cells[c];
+              for (let i = 0; i < element.childNodes.length; ++i)
+                if (element.childNodes[i].nodeType === 3)
+                  text += element.childNodes[i].textContent;
+              rowObj[tableHeaders[c]] = text.trim();
             }
             returnTableValues.push(rowObj);
 
