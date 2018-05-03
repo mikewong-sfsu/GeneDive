@@ -18,8 +18,58 @@ class DownloadUpload {
   }
 
   get termsAndConditions() {
-    let date = new Date();
-    return "GeneDive. SFSU. Stanford. "+date.getFullYear();
+    // let date = new Date();
+    // return "GeneDive. SFSU. Stanford. "+date.getFullYear();
+
+    return `GeneDive Privacy Notice
+Effective Date: October 6, 2017
+
+This privacy notice discloses the privacy practices for our website; http://www.genedive.net. This privacy notice applies solely to information collected by this website, except where stated otherwise. It will notify you of the following:
+
+What information we collect;
+With whom it is shared;
+How it can be corrected;
+How it is secured;
+How policy changes will be communicated; and
+How to address concerns over misuse of personal data.
+Information Collection, Use, and Sharing
+We are the sole owners of the information collected on this site. We only have access to/collect information that you voluntarily give us via email or other direct contact from you. We will not sell or rent this information to anyone.
+
+Unless you ask us not to, we may contact you via email in the future to tell you about new features or changes to this privacy policy.
+
+Your Access to and Control Over Information
+You may opt out of any future contacts from us at any time. You can do the following at any time by contacting us via the email address provided on our website:
+
+See what data we have about you, if any.
+Change/correct any data we have about you.
+Have us delete any data we have about you.
+Express any concern you have about our use of your data
+Registration
+In order to use this website, a user must first complete the registration form. During registration, a user is required to give certain information about yourself (such as name and email address) and your courses (such as discipline and number of students). At your option, you may also provide additional information about yourself (such as gender or age) or your institution, but it is not required.
+
+Sharing
+With your permission, we share aggregated demographic information and deidentified, anonymized data with our partners and collaborators. This is not linked to any personal information that can identify any individual person.
+
+Security
+We take precautions to protect your information. When you submit sensitive information via the website, your information is protected both online and offline.
+
+We process classroom audio files in your own browser, so that no personally identifiable data is sent over the Internet. The information that we receive consists only of anonymized data such as decibel intensities. This information is transmitted to us in a secure way.
+
+We also protect your information offline. Only personnel who need the information to perform a specific job (e.g. maintenance or responses to inquiries) are granted access to personally identifiable information. The computers/servers on which we store personally identifiable information are kept in a secure environment.
+
+Cookies
+We use "cookies" on this site. A cookie is a piece of data stored on a site visitor's hard drive to help us improve your access to our site and identify repeat visitors to our site. For instance, when we use a cookie to identify you, you would not have to log in a password more than once, thereby saving time while on our site. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.
+
+Online Tracking
+We do not respond to Do Not Track (DNT) signals.
+
+Links
+This web site contains links to other sites. Please be aware that we are not responsible for the content or privacy practices of such other sites. We encourage our users to be aware when they leave our site and to read the privacy statements of any other site that collects personally identifiable information.
+
+Notification of Changes
+Whenever material changes are made to the privacy notice, we will contact you via email.
+
+If you feel that we are not abiding by this privacy policy, you should contact us immediately via email at genedive@sfsu.edu.`
   }
 
   buildInteractionsData() {
