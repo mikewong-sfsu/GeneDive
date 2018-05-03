@@ -19,6 +19,7 @@ class Search {
     this.color = color;
     this.graphsearch = new GraphSearch();
     this.sets = [];
+    this.settingState = false;
 
     // Load the SVG files
     this.svgNCBI = "";
@@ -37,7 +38,8 @@ class Search {
       $(event.currentTarget).addClass("active");
 
       this.input.val("");
-      GeneDive.onSelectSearchType();
+      if(!this.settingState)
+        GeneDive.onSelectSearchType();
     });
   }
 
@@ -229,6 +231,7 @@ class Search {
           .append($("<span/>").append(
             $("<a/>").addClass("linkout ncbi-linkout")
               .attr("data-toggle", "tooltip")
+              .attr("data-container", "body" )
               .attr("title", "Open NCBI Datasheet In New Tab")
               .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${set.ids[0]}`)
               .attr("target", "_blank")
@@ -237,6 +240,7 @@ class Search {
               ),
             $("<a/>").addClass("linkout pharmgkb-linkout")
               .attr("data-toggle", "tooltip")
+              .attr("data-container", "body" )
               .attr("title", "Open PharmGKB Datasheet In New Tab")
               .attr("href", `https://www.pharmgkb.org/search?connections&query=${set.name}`)
               .attr("target", "_blank")
@@ -267,7 +271,7 @@ class Search {
     }
 
     // Initialize tooltips
-    $('[data-toggle="tooltip"]').tooltip({trigger: 'hover'});
+    $('[data-toggle="tooltip"]').tooltip({trigger: 'hover',});
   }
 
   initTypeahead() {
@@ -413,9 +417,12 @@ class Search {
    @callergraph
    */
   importSearchState(searchObj) {
+    this.settingState = true;
     this.sets = searchObj.sets;
     this.setTopology(searchObj.topology);
     this.renderDisplay();
+    this.settingState = false;
+
   }
 
   /**

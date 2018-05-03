@@ -447,6 +447,7 @@ class Controller {
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
 
+
   }
 
   /**
@@ -494,6 +495,7 @@ class Controller {
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
+    this.search.settingState = false;
   }
 
 
@@ -504,7 +506,9 @@ class Controller {
    */
   runSearch() {
 
-
+    // Cancels the current request if the user makes another one before the first is complete
+    if (this.interactionsjqXHR !== null)
+      this.interactionsjqXHR.abort();
 
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGDsSearched() === 0) {
@@ -541,9 +545,7 @@ class Controller {
     // This resets the table view to default
     this.tablestate.zoomed = false;
 
-    // Cancels the current request if the user makes another one before the first is complete
-    if (this.interactionsjqXHR !== null)
-      this.interactionsjqXHR.abort();
+
     this.interactionsjqXHR = GeneDiveAPI.interactions(ids, minProb, (interactions) => {
       this.interactionsjqXHR = null;
       this.onInteractionsLoaded(interactions);
@@ -702,18 +704,18 @@ class Controller {
    */
   cleanUpData() {
     const BLANK_STRING = "N/A";
-    const ARTICLE_ID_BLANK_VALUES = [null, 0, "", "Unknown"];
-    const SECTION_BLANK_VALUES = [null, 0, "", "Unknown"];
+    const VALUES_TO_REPLACE = new Set([null, 0, "", "0", "Unknown"]);
     for (let i = 0; i < this.interactions.length; i++) {
 
-      if (ARTICLE_ID_BLANK_VALUES.includes(this.interactions[i].article_id )|| ARTICLE_ID_BLANK_VALUES.includes(this.interactions[i].pubmed_id)) {
-        this.interactions[i].pubmed_id = BLANK_STRING;
-        this.interactions[i].article_id = BLANK_STRING;
-      }
+      if (VALUES_TO_REPLACE.has(this.interactions[i].article_id))
+         this.interactions[i].article_id = BLANK_STRING;
 
-      if (SECTION_BLANK_VALUES.includes(this.interactions[i].section.trim())) {
+      if(VALUES_TO_REPLACE.has(this.interactions[i].pubmed_id))
+        this.interactions[i].pubmed_id = BLANK_STRING;
+
+      if (VALUES_TO_REPLACE.has(this.interactions[i].section.trim()))
         this.interactions[i].section = BLANK_STRING;
-      }
+
     }
   }
 
@@ -949,6 +951,7 @@ class Controller {
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
+    this.search.settingState = false;
 
   }
 
@@ -959,7 +962,7 @@ const GeneDive = new Controller();
 
 $(document).ready(function () {
   // Initialize tooltips, and set the tooltip to only appear when hovering.
-  $('[data-toggle="tooltip-initial"]').tooltip({trigger: 'hover'});
+  $('[data-toggle="tooltip-initial"]:not(".slider-handle")').tooltip({trigger: 'hover', container:'body'});
 
   // Mirror Adjacency Matrix
   for (let gene in adjacency_matrix) {
