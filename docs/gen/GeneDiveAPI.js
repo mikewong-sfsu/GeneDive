@@ -19,7 +19,7 @@ const JSON_FILE = "GeneDiveAPI_params.json";
 const tests = require('./custom_modules/tests/_import.js');
 const puppeteer = require('puppeteer');
 const test_results = [];
-const RESULTS_FILE = `./log/GeneDiveAPI_results.json`;
+const RESULTS_FILE = `./log/GeneDiveAPI-results-{timestamp}.json`;
 const COLOR = {
   Reset: "\x1b[0m",
   Bright: "\x1b[1m",
@@ -99,6 +99,23 @@ const do_test = async (test, browser, json_data) => {
   return promise;
 };
 
+/**
+ * @fn       Number.prototype.pad
+ * @brief    Takes a number and turns it into a String with padded zeroes
+ * @details  This takes a number, converts it to a String, and adds leading zeroes if the size is greater than the
+ * number of digits.
+ * @example  (57).pad(5); // 00057
+ * @size    Int The desired length of the String
+ * @callergraph
+ */
+Number.prototype.pad = function (size) {
+  let s = String(this);
+  while (s.length < (size || 2)) {
+    s = "0" + s;
+  }
+  return s;
+};
+
 // Process arguments
 let arguments_trimmed = [];
 for (let i = 0; i < ARGUMENTS.length; i++)
@@ -108,7 +125,7 @@ for (let i = 0; i < ARGUMENTS.length; i++)
   }
 
 // Start Puppeteer testing
-(async () => {
+(async (resolve, reject) => {
 
 
   let promises = [];
@@ -142,12 +159,29 @@ for (let i = 0; i < ARGUMENTS.length; i++)
   // console.log(test_results);
 
   // Save log
-  fs.writeFileSync(RESULTS_FILE, JSON.stringify(test_results), 'utf8');
+  let date =  new Date();
+  let timestamp = date.getFullYear()
+    + (date.getMonth()).pad(2)
+    + (date.getDate()).pad(2)
+    + "-"
+    + (date.getHours()).pad(2)
+    + (date.getMinutes()).pad(2)
+    + (date.getSeconds()).pad(2);
+  let filename = RESULTS_FILE.replace("{timestamp}", timestamp);
+  fs.writeFileSync(filename, JSON.stringify(test_results), 'utf8');
 
 
+  // Close Browser
+  browser.close().catch((reason)=>{console.error(`ERROR closing browser: ${reason}`)});
+
+  resolve("Data saved as ${filename}");
+
+
+})()
+  .catch((reason)=>{console.error(`ERROR in main process: ${reason}`)})
   // Exit from Node
-  browser.close();
-
-
-})().catch((reason)=>{console.error(`ERROR in main process: ${reason}`)});;
+  .then((reason)=>{
+    console.log(reason);
+    process.exit(0);
+  };
 
