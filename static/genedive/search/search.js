@@ -19,6 +19,7 @@ class Search {
     this.color = color;
     this.graphsearch = new GraphSearch();
     this.sets = [];
+    this.settingState = false;
 
     // Load the SVG files
     this.svgNCBI = "";
@@ -37,7 +38,8 @@ class Search {
       $(event.currentTarget).addClass("active");
 
       this.input.val("");
-      GeneDive.onSelectSearchType();
+      if(!this.settingState)
+        GeneDive.onSelectSearchType();
     });
   }
 
@@ -415,9 +417,12 @@ class Search {
    @callergraph
    */
   importSearchState(searchObj) {
+    this.settingState = true;
     this.sets = searchObj.sets;
     this.setTopology(searchObj.topology);
     this.renderDisplay();
+    this.settingState = false;
+
   }
 
   /**
