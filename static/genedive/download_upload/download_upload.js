@@ -17,9 +17,9 @@ class DownloadUpload {
     });
   }
 
-  buildTermsAndCondtions() {
-    const TERMS_AND_CONDITIONS = "GeneDive. SFSU. Stanford. 2017";
-    return TERMS_AND_CONDITIONS;
+  get termsAndConditions() {
+    let date = new Date();
+    return "GeneDive. SFSU. Stanford. "+date.getFullYear();
   }
 
   buildInteractionsData() {
@@ -104,7 +104,7 @@ class DownloadUpload {
       zip.file(this.genediveStateFileName, JSON.stringify(state));
 
       /* T&C File */
-      zip.file("terms_and_conditions.txt", this.buildTermsAndCondtions());
+      zip.file("terms_and_conditions.txt", this.termsAndConditions);
 
       /* Graph Image */
       let png = this.fetchGraphImage();
