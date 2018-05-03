@@ -959,7 +959,7 @@ const GeneDive = new Controller();
 
 $(document).ready(function () {
   // Initialize tooltips, and set the tooltip to only appear when hovering.
-  $('[data-toggle="tooltip-initial"]').tooltip({trigger: 'hover'});
+  $('[data-toggle="tooltip-initial"]:not(".slider-handle")').tooltip({trigger: 'hover', container:'body'});
 
   // Mirror Adjacency Matrix
   for (let gene in adjacency_matrix) {

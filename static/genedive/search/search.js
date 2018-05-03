@@ -229,6 +229,7 @@ class Search {
           .append($("<span/>").append(
             $("<a/>").addClass("linkout ncbi-linkout")
               .attr("data-toggle", "tooltip")
+              .attr("data-container", "body" )
               .attr("title", "Open NCBI Datasheet In New Tab")
               .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${set.ids[0]}`)
               .attr("target", "_blank")
@@ -237,6 +238,7 @@ class Search {
               ),
             $("<a/>").addClass("linkout pharmgkb-linkout")
               .attr("data-toggle", "tooltip")
+              .attr("data-container", "body" )
               .attr("title", "Open PharmGKB Datasheet In New Tab")
               .attr("href", `https://www.pharmgkb.org/search?connections&query=${set.name}`)
               .attr("target", "_blank")
@@ -267,7 +269,7 @@ class Search {
     }
 
     // Initialize tooltips
-    $('[data-toggle="tooltip"]').tooltip({trigger: 'hover'});
+    $('[data-toggle="tooltip"]').tooltip({trigger: 'hover',});
   }
 
   initTypeahead() {
