@@ -125,7 +125,7 @@ for (let i = 0; i < ARGUMENTS.length; i++)
   }
 
 // Start Puppeteer testing
-(async (resolve, reject) => {
+(async () => {
 
 
   let promises = [];
@@ -141,11 +141,11 @@ for (let i = 0; i < ARGUMENTS.length; i++)
   if (arguments_trimmed.length > 0)
   // Execute the tests passed in as arguments
     for (let key in arguments_trimmed) {
-    if(arguments_trimmed[key] !== "Login")
-      await do_test(tests[arguments_trimmed[key]], browser, json_data);
+      if(arguments_trimmed[key] !== "Login")
+        await do_test(tests[arguments_trimmed[key]], browser, json_data);
     }
   else
-    // Execute every test
+  // Execute every test
     for (let key in tests) {
       if (key === "Login")
         continue;
@@ -172,16 +172,20 @@ for (let i = 0; i < ARGUMENTS.length; i++)
 
 
   // Close Browser
-  browser.close().catch((reason)=>{console.error(`ERROR closing browser: ${reason}`)});
+  try{
+    browser.close().catch((reason)=>{console.error(`ERROR closing browser: ${reason}`)});
+  }catch (e) {
 
-  resolve("Data saved as ${filename}");
+  }
 
-
+  return "All tests finished."
 })()
-  .catch((reason)=>{console.error(`ERROR in main process: ${reason}`)})
+  .catch((reason)=>{
+    console.error(`ERROR in main process: ${reason}`);
+    process.exit(0);
+  })
   // Exit from Node
   .then((reason)=>{
-    console.log(reason);
+    console.log(`Program complete: ${reason}`);
     process.exit(0);
-  };
-
+  });
