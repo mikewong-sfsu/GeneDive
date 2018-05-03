@@ -949,6 +949,7 @@ class Controller {
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
+    this.search.settingState = false;
 
   }
 
