@@ -504,7 +504,9 @@ class Controller {
    */
   runSearch() {
 
-
+    // Cancels the current request if the user makes another one before the first is complete
+    if (this.interactionsjqXHR !== null)
+      this.interactionsjqXHR.abort();
 
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGDsSearched() === 0) {
@@ -541,9 +543,7 @@ class Controller {
     // This resets the table view to default
     this.tablestate.zoomed = false;
 
-    // Cancels the current request if the user makes another one before the first is complete
-    if (this.interactionsjqXHR !== null)
-      this.interactionsjqXHR.abort();
+
     this.interactionsjqXHR = GeneDiveAPI.interactions(ids, minProb, (interactions) => {
       this.interactionsjqXHR = null;
       this.onInteractionsLoaded(interactions);
