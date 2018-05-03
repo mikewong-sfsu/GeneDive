@@ -702,18 +702,18 @@ class Controller {
    */
   cleanUpData() {
     const BLANK_STRING = "N/A";
-    const ARTICLE_ID_BLANK_VALUES = [null, 0, "", "Unknown"];
-    const SECTION_BLANK_VALUES = [null, 0, "", "Unknown"];
+    const VALUES_TO_REPLACE = new Set([null, 0, "", "0", "Unknown"]);
     for (let i = 0; i < this.interactions.length; i++) {
 
-      if (ARTICLE_ID_BLANK_VALUES.includes(this.interactions[i].article_id )|| ARTICLE_ID_BLANK_VALUES.includes(this.interactions[i].pubmed_id)) {
-        this.interactions[i].pubmed_id = BLANK_STRING;
-        this.interactions[i].article_id = BLANK_STRING;
-      }
+      if (VALUES_TO_REPLACE.has(this.interactions[i].article_id))
+         this.interactions[i].article_id = BLANK_STRING;
 
-      if (SECTION_BLANK_VALUES.includes(this.interactions[i].section.trim())) {
+      if(VALUES_TO_REPLACE.has(this.interactions[i].pubmed_id))
+        this.interactions[i].pubmed_id = BLANK_STRING;
+
+      if (VALUES_TO_REPLACE.has(this.interactions[i].section.trim()))
         this.interactions[i].section = BLANK_STRING;
-      }
+
     }
   }
 
