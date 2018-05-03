@@ -112,11 +112,11 @@ class TextFilter {
         case "DGD":
           if (filter.is) {
             interactions = interactions.filter((i) => {
-              return (new RegExp(filter.value, "i").test(i.mention1) || new RegExp(filter.value, "i").test(i.mention2))
+              return (filter.value.toLowerCase() === i.mention1.toLowerCase()||filter.value.toLowerCase() === i.mention2.toLowerCase())
             });
           } else {
             interactions = interactions.filter((i) => {
-              return (!new RegExp(filter.value, "i").test(i.mention1) && !new RegExp(filter.value, "i").test(i.mention2))
+              return !(filter.value.toLowerCase() === i.mention1.toLowerCase()||filter.value.toLowerCase() === i.mention2.toLowerCase())
             });
           }
           break;
