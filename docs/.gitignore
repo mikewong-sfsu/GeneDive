@@ -1,5 +1,5 @@
 html/
-img/
+img/gen/*
 gen/log/
 gen/node_modules/
 doxygen_*.tmp

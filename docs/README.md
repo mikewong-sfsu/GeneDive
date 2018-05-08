@@ -1,6 +1,6 @@
-# GeneDrive User Documentation
+# GeneDive User Documentation
 
-This documentation is geared towards scientists who intend to use GeneDrive for their research purposes.
+This documentation is geared towards scientists who intend to use GeneDive for their research purposes.
 
 ![Overview of page](img/thc_wip_interaction.png)
 
@@ -18,7 +18,7 @@ This documentation is geared towards scientists who intend to use GeneDrive for 
 
 ### Gene Interaction Search and Visualization Tool
 
-GeneDrive is a web application designed to allow easy lookup, visualization, and exporting of gene, chemical, and disease relationships. The relationships are probabilities based on how closely they are connected grammatically in articles from PLOS One, PLOS Biology, and PLOS Genetics.
+GeneDive is a web application designed to allow easy lookup, visualization, and exporting of gene, chemical, and disease relationships. The relationships are probabilities based on how closely they are connected grammatically in articles from PLOS One, PLOS Biology, and PLOS Genetics.
 
 GeneDive is a collaborative project between the San Francisco State University Department of Computer Science and Stanford Bioengineering.
 
@@ -49,7 +49,7 @@ The four choices, 1-Hop, 2-Hop, 3-Hop, and Clique will determine the results tha
 **Clique:** Similar to 1-Hop, except only the results that are 1 jump away from the search that are related to one another will be presented. You are limited to one item at a time when in this search mode.  
 ![Different types of search modes](img/search_modes.png)
 
-**Search Bar:** This will accept any string input. Upon typing in your query, GeneDrive will lookup the query amongst genes, chemicals, diseases, and genesets, and present the findings below, which you can either click on or use the arrow keys and hit enter to select.  
+**Search Bar:** This will accept any string input. Upon typing in your query, GeneDive will lookup the query amongst genes, chemicals, diseases, and genesets, and present the findings below, which you can either click on or use the arrow keys and hit enter to select.  
 ![Search showing query autocomplete](img/search_autocomplete.png)
 
 More than one item can be selected from the list, but only if you are choosing 1, 2, or 3-Hops. Clique does not support mulitple item selection.  
