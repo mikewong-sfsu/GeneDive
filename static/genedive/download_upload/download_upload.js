@@ -85,7 +85,7 @@ If you feel that we are not abiding by this privacy policy, you should contact u
 
   buildStateFile() {
 
-    return GeneDive.exportEntireProgramStates();
+    return GeneDive.history.exportEntireProgramStates();
   }
 
   fetchGraphImage() {
@@ -266,6 +266,7 @@ If you feel that we are not abiding by this privacy policy, you should contact u
     GeneDive.loadSpinners();
     const acceptedFileTypes = {
       "application/x-zip-compressed": true,
+      "application/zip": true,
     };
     try {
       // Copy the file data so when we clear the upload field, we don't lose the data.
@@ -297,7 +298,7 @@ If you feel that we are not abiding by this privacy policy, you should contact u
 
                 let textObj = JSON.parse(text);
                 console.debug(textObj);
-                GeneDive.importEntireProgramStates(textObj);
+                GeneDive.history.importEntireProgramStates(textObj);
               })
             } catch (e) {
               thisDownloadUpload.handleException(e);

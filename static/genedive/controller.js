@@ -1,3 +1,7 @@
+/** @defgroup genedive GeneDive Application
+ *  This is the main application.
+ */
+
 /**
  @class      Controller
  @brief      Main controller for user interactions
@@ -23,13 +27,12 @@ class Controller {
     this.graph = new GraphView("graph");
     this.download = new DownloadUpload(".download-module button.download", ".download-module button.upload");
     this.controls = new Controls(".control-module button.undo", ".control-module button.redo", "button.reset-graph");
+    this.history = new History(this);
 
     this.tablestate = {zoomed: false, zoomgroup: null};
     this.interactions = null;
     this.filtrate = null;
 
-    this.stateHistory = [];
-    this.currentStateIndex = -1;
 
     // A user could cause another UI call to the interactions before the previous one has finished.
     // This variable stores whatever interaction API call is going on, so we can abort it if another request is made
@@ -50,7 +53,7 @@ class Controller {
     this.onWindowResizedTimeout = undefined;
 
     // This will prevent auto saving states from triggering while the state is being updated.
-    this.stateIsBeingUpdated = false;
+    this.history.stateIsBeingUpdated = false;
   }
 
   /**
@@ -128,7 +131,7 @@ class Controller {
       this.addSynonyms();
       this.highlightInteractions();
       this.loadTableAndGraphPage();
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -148,7 +151,7 @@ class Controller {
       this.addSynonyms();
       this.highlightInteractions();
       this.loadTableAndGraphPage();
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -163,7 +166,7 @@ class Controller {
   onTableGroupingSelect() {
     try {
       this.loadTableAndGraphPage(true, false);
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -181,7 +184,7 @@ class Controller {
       this.loadSpinners();
       this.highlightInteractions();
       this.loadTableAndGraphPage();
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -247,7 +250,7 @@ class Controller {
   onGraphNodeMoved() {
     try {
 
-      GeneDive.saveCurrentStateToHistory();
+      GeneDive.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -267,12 +270,12 @@ class Controller {
   onGraphPanOrZoomed() {
     try {
 
-      if (this.stateIsBeingUpdated === true)
+      if (this.history.stateIsBeingUpdated === true)
         return;
       if (window.onSaveStateTimeout !== undefined)
         window.clearTimeout(window.onSaveStateTimeout);
       window.onSaveStateTimeout = window.setTimeout(function () {
-        GeneDive.saveCurrentStateToHistory();
+        GeneDive.history.saveCurrentStateToHistory();
         delete window.onSaveStateTimeout;
       }, 500);
     } catch (e) {
@@ -290,7 +293,7 @@ class Controller {
     try {
 
       this.loadTableAndGraphPage(true, false);
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -306,7 +309,7 @@ class Controller {
     try {
 
       this.loadTableAndGraphPage(true, false);
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -330,7 +333,7 @@ class Controller {
       this.highlightInteractions();
       this.textfilter.updateSelectedFilter();
       this.loadTableAndGraphPage();
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -369,8 +372,8 @@ class Controller {
   onUndoClick(element) {
     try {
       element.blur();
-      if (this.canGoBackInStateHistory())
-        this.goBackInStateHistory();
+      if (this.history.canGoBackInStateHistory())
+        this.history.goBackInStateHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -387,8 +390,8 @@ class Controller {
   onRedoClick(element) {
     try {
       element.blur();
-      if (this.canGoForwardInStateHistory())
-        this.goForwardInStateHistory();
+      if (this.history.canGoForwardInStateHistory())
+        this.history.goForwardInStateHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -407,7 +410,7 @@ class Controller {
       element.blur();
       this.graph.resetHiddenNodes();
       this.graph.setNodePositions();
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -446,6 +449,7 @@ class Controller {
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
+
 
   }
 
@@ -494,6 +498,7 @@ class Controller {
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
+    this.search.settingState = false;
   }
 
 
@@ -510,7 +515,7 @@ class Controller {
 
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGDsSearched() === 0) {
-      this.clearData();
+      this.history.clearData();
       this.loadLandingPage();
       return;
     }
@@ -519,14 +524,14 @@ class Controller {
     if (this.search.amountOfDGDsSearched() !== 2 && (topology === "2hop" || topology === "3hop")) {
       alertify.notify("2-Hop / 3-Hop requires 2 DGDs", "", "3");
       this.loadTableAndGraphPage(false, false);
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
       return;
     }
 
     if (topology === "clique" && (this.search.amountOfDGDsSearched() > 1 || this.search.sets[0].ids.length > 1)) {
       alertify.notify("Clique search requires a single DGD.", "", "3");
       this.loadTableAndGraphPage(false, false);
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
       return;
     }
 
@@ -536,7 +541,7 @@ class Controller {
     // It's possible that no results were found from the adjacency matrix
     if (!ids || ids.length === 0) {
       this.loadTableAndGraphPage(false, false);
-      this.saveCurrentStateToHistory();
+      this.history.saveCurrentStateToHistory();
       return;
     }
 
@@ -718,219 +723,6 @@ class Controller {
   }
 
 
-  /**
-   @fn       Controller.clearData
-   @brief    Clears all the data except state history
-   @details  This deletes all the data relavent to graph and table generation, so there is no weird occurances where
-   the previous search's results are displayed when a new, invalid search is made.
-   @callergraph
-   */
-  clearData() {
-    this.interactions = null;
-    this.filtrate = null;
-    this.stateHistory = [];
-    this.currentStateIndex = -1;
-    this.graph.clearData();
-    this.probfilter.reset();
-    this.textfilter.reset();
-
-    this.controls.checkButtonStates();
-  }
-
-  // State management
-
-  /**
-   @fn       Controller.saveCurrentState
-   @brief    Saves the state of the GeneDive program
-   @details  This will take the current state of the GeneDive program,
-   and convert it to a an object.
-   The state is based off the the variables that describe the Table, the Graph,
-   the Filters, Search, and more.
-   @return   object The state of the GeneDive program
-   @callergraph
-   */
-  saveCurrentState() {
-    let state = {};
-
-    // Grouper
-    state.grouper = this.grouper.exportGrouperState();
-
-    // All interactions
-    state.interactions = this.interactions;
-
-    // Search, Probability, and Filter state
-    state.search = this.search.exportSearchState();
-    state.probfilter = this.probfilter.getMinimumProbability();
-    state.textfilter = this.textfilter.exportFilterState();
-
-    // Table
-    state.table = {
-      "tablestate": this.tablestate,
-      "filtrate": this.filtrate,
-    };
-
-    //Highlighter
-    state.highlighter = this.highlighter.exportHighlightState();
-
-    // Graph state
-    state.graph = this.graph.exportGraphState();
-
-
-    // Does a deep copy of the state
-    return JSON.parse(JSON.stringify(state));
-  }
-
-  /**
-   @fn       Controller.saveCurrentStateToHistory
-   @brief    Adds the current state to History
-   @details  This will add a new item to the state history, while removing any stats ahead of the current state
-   If the view is currently loading, dictated by the spinneractive variable, then the state will not be saved.
-   @callergraph
-   */
-  saveCurrentStateToHistory() {
-    if (this.spinneractive)
-      return; // Saving a state while loading is a bad idea
-
-    // There could be a timeout waiting to save a state. We need to cancel that to prevent unpredictable behavior
-    if (window.onSaveStateTimeout !== undefined)
-      window.clearTimeout(window.onSaveStateTimeout);
-
-    this.stateHistory = this.stateHistory.slice(0, this.currentStateIndex + 1);
-    this.stateHistory.push(this.saveCurrentState());
-    this.currentStateIndex += 1;
-    console.debug(`Saved state ${this.currentStateIndex}`)
-    this.controls.checkButtonStates();
-  }
-
-  /**
-   @fn       Controller.setState
-   @brief    Sets the state from a state object
-   @details  This will set the state of the entire GeneDive program based on the state object passed in
-   @param    state The state object that was generated by Controller.saveCurrentState()
-   @callergraph
-   */
-  setState(state) {
-    this.loadSpinners();
-
-    // Does a deep copy of the state
-    state = JSON.parse(JSON.stringify(state));
-
-    this.stateIsBeingUpdated = true; // Prevents any callbacks that update state from being triggered.
-
-    // Grouper
-    this.grouper.importGrouperState(state.grouper);
-
-    // Interactions
-    this.interactions = state.interactions;
-
-    // Table state
-    this.tablestate = state.table.tablestate;
-    this.filtrate = state.table.filtrate;
-
-    // Search, Probability, and Filter state
-    this.search.importSearchState(state.search);
-    this.probfilter.setMinimumProbability(state.probfilter);
-    this.textfilter.importFilterState(state.textfilter);
-
-    //Highlighter
-    this.highlighter.importHighlightState(state.highlighter);
-
-    // Set Graph state
-    this.graph.importGraphState(state.graph, this.search.sets);
-
-
-    if (this.search.amountOfDGDsSearched() === 0)
-      this.loadLandingPage();
-    else
-      this.loadTableAndGraphPage(true, true);
-
-    this.stateIsBeingUpdated = false; // Resumes callbacks
-
-    // Set the state controls
-    this.controls.checkButtonStates();
-  }
-
-  /**
-   @fn       Controller.setStateFromHistory
-   @brief    Adds the current state to History
-   @details  This will add a new item to the state history, while removing any stats ahead of the current state.
-   @param    stateIndex The index in the Controller.stateHistory array to set the state to
-   @callergraph
-   */
-  setStateFromHistory(stateIndex) {
-
-    if (stateIndex < 0 || stateIndex >= this.stateHistory.length)
-      throw `OutOfBoundsError: Could not set the state from index value ${stateIndex} because it would be outside the bounds of stateHistory[${this.stateHistory.length}]`;
-    this.currentStateIndex = stateIndex;
-    this.setState(this.stateHistory[stateIndex]);
-    console.debug(`Set state to ${stateIndex}/${this.stateHistory.length - 1}`)
-  }
-
-  /**
-   @fn       Controller.goBackInStateHistory
-   @brief    Loads the state previous of the current state
-   @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex - 1
-   @callergraph
-   */
-  goBackInStateHistory() {
-
-    this.setStateFromHistory(this.currentStateIndex - 1);
-  }
-
-  /**
-   @fn       Controller.goForwardInStateHistory
-   @brief    Loads the state after the current state
-   @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex + 1
-   @callergraph
-   */
-  goForwardInStateHistory() {
-    this.setStateFromHistory(this.currentStateIndex + 1);
-  }
-
-  /**
-   @fn       Controller.exportEntireProgramStates
-   @brief    Loads the state after the current state
-   @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex + 1
-   @callergraph
-   */
-  exportEntireProgramStates() {
-    return {
-      "stateHistory": this.stateHistory,
-      "currentStateIndex": this.currentStateIndex,
-    }
-  }
-
-  /**
-   @fn       Controller.exportEntireProgramStates
-   @brief    Loads the state after the current state
-   @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex + 1
-   @callergraph
-   */
-  importEntireProgramStates(importData) {
-    this.stateHistory = importData.stateHistory;
-    this.setStateFromHistory(importData.currentStateIndex)
-
-  }
-
-  /**
-   @fn       Controller.canGoBackInStateHistory
-   @brief    Loads the state previous of the current state
-   @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex - 1
-   @callergraph
-   */
-  canGoBackInStateHistory() {
-    return this.currentStateIndex > 0;
-  }
-
-  /**
-   @fn       Controller.canGoForwardInStateHistory
-   @brief    Loads the state after the current state
-   @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex + 1
-   @callergraph
-   */
-  canGoForwardInStateHistory() {
-    return this.stateHistory.length - this.currentStateIndex > 1;
-  }
 
   /**
    * @fn       Controller.handleException
@@ -949,6 +741,7 @@ class Controller {
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
+    this.search.settingState = false;
 
   }
 
