@@ -46,12 +46,12 @@ class Controls {
    */
   checkButtonStates() {
 
-    if (GeneDive.canGoBackInStateHistory())
+    if (GeneDive.history.canGoBackInStateHistory())
       this.undoShow();
     else
       this.undoHide();
 
-    if (GeneDive.canGoForwardInStateHistory())
+    if (GeneDive.history.canGoForwardInStateHistory())
       this.redoShow();
     else
       this.redoHide();
