@@ -141,8 +141,10 @@ for (let i = 0; i < ARGUMENTS.length; i++)
   if (arguments_trimmed.length > 0)
   // Execute the tests passed in as arguments
     for (let key in arguments_trimmed) {
+
       if(arguments_trimmed[key] !== "Login")
         await do_test(tests[arguments_trimmed[key]], browser, json_data);
+
     }
   else
   // Execute every test
