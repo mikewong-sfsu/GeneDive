@@ -12,6 +12,18 @@
   <link rel="stylesheet" href="static/fonts/css/font-awesome.min.css">
   
   <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
     .help .modes {
       display: flex;
       flex-direction: row;
@@ -87,6 +99,27 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
+        <h3>Text Filtering and Metacharacters</h3>
+        Text filtering can be applied to search terms by formatting search queries with certain metacharacters.  <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Writing_a_regular_expression_pattern'>Click here</a> to learn about common text filtering patterns and metacharacters.  Some metacharacter usages are described below.
+        <table>
+          <tr>
+            <th>.</th>
+            <td>Matches any single character except the newline character.
+              <br>For example, /.n/ matches 'an' and 'on' in "nay, an apple is on the tree", but not 'nay'.</td>
+          </tr>
+          <tr>
+            <th>*</th>
+            <td>Matches the preceding expression 0 or more times.
+            <br>For example, ab*c matches "ac", "abc", "abbbc", etc. </td>
+          </tr>
+          <tr>
+            <th>.*</th>
+            <td>Matches the preceding character, followed by zero or more other characters.
+            <br>For example, s.* matches "s" and "saw" and "seed".</td>
+          </tr>
+        </table>
     </div>
     <div class="row">
       <div class="col-xs-12">
