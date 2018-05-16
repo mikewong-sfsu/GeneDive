@@ -32,14 +32,14 @@ class TableSummaryGene extends ResultsTable {
     let tr    = $(document.createElement("tr"));
     thead.append(tr);
 
-    tr.append( $(document.createElement("th")).text( "" ).css("width","4%") );
-    tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%") );
-    tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%") );
-    tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric") );
-    tr.append( $(document.createElement("th")).text( "# Articles" ).addClass("numeric header") ); // MW TODO: Why do I need to manually add header?
-    tr.append( $(document.createElement("th")).text( "P. Distribution" ) );
-    tr.append( $(document.createElement("th")).text( "Max Probability" ).addClass("numeric") );
-    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width","40%") );
+    tr.append( $(document.createElement("th")).text( "" ).css("width","4%" ) );
+    tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%").attr({"toggle": "tooltip", "title": "lorem ipsum"}) );
+    tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%").attr({"toggle": "tooltip", "title": "lorem ipsum"}) );
+    tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric").attr({"toggle": "tooltip", "title": "lorem ipsum"}) );
+    tr.append( $(document.createElement("th")).text( "# Articles" ).addClass("numeric header").attr({"toggle": "tooltip", "title": "lorem ipsum"}) ); // MW TODO: Why do I need to manually add header?
+    tr.append( $(document.createElement("th")).text( "P. Distribution" ).attr({"toggle": "tooltip", "title": "lorem ipsum"}) );
+    tr.append( $(document.createElement("th")).text( "Max Probability" ).addClass("numeric").attr({"toggle": "tooltip", "title": "lorem ipsum"}) );
+    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width","40%").attr({"toggle": "tooltip", "title": "lorem ipsum"}) );
 
     this.table.append(thead);
   }
