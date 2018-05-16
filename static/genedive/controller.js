@@ -304,7 +304,6 @@ class Controller {
    */
   onTableElementClick() {
     try {
-
       this.loadTableAndGraphPage(true, false);
       this.saveCurrentStateToHistory();
     } catch (e) {
