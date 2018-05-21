@@ -44,7 +44,7 @@
       </div>
       <input id="exp1" class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7" style="width:100%">
       <div class="btn-group" style="width: 100%">
-      <button data-toggle="tooltip-initial" data-placement="bottom" title="Warning: May increase query response time.  Apply filter for interactions with confidence score of at least 0.70" class="low-button btn btn-default">Low</button>
+      <button data-toggle="tooltip-initial" data-placement="bottom" title="Apply filter for interactions with confidence score of at least 0.70.  WARNING: May increase query response time.  " class="low-button btn btn-default">Low</button>
       <button data-toggle="tooltip-initial" data-placement="bottom" title="Apply filter for interactions with confidence score of at least 0.85" class="medium-button btn btn-default">Medium</button>
       <button data-toggle="tooltip-initial" data-placement="bottom" title="Apply filter for interactions with confidence score of at least 0.95" class="high-button btn btn-default">High</button>
       </div>
