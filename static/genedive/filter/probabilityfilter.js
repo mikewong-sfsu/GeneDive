@@ -1,12 +1,31 @@
 class ProbabilityFilter {
 
-  constructor ( slider, value_display ) {
+  constructor ( slider, value_display, low_button, medium_button, high_button ) {
     this.slider = $(slider);
     this.value_display = $(value_display);
+    this.low_button = $(low_button);
+    this.medium_button = $(medium_button);
+    this.high_button = $(high_button)
     this.minimum = 0.7;
 
     // Initialize Bootstrap Slider on element
     this.slider.slider();
+
+    this.low_button.on("click", ( event ) => {
+      this.setMinimumProbability(0.7);
+      //console.log(this.slider.background);
+      GeneDive.onProbabilitySliderChange();
+    });
+
+      this.medium_button.on("click", ( event ) => {
+          this.setMinimumProbability(0.85);
+      GeneDive.onProbabilitySliderChange();
+  });
+
+      this.high_button.on("click", ( event ) => {
+          this.setMinimumProbability(0.95);
+      GeneDive.onProbabilitySliderChange();
+  });
 
     // Slider will always call slideStop at the end of user interaction with
     // the slider, so use this event exclusively. Because min prob is sent to
