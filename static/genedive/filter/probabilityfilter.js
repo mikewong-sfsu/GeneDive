@@ -41,7 +41,7 @@ class ProbabilityFilter {
   }
 
   setColor (value) {
-      if(value <= this.low)
+      if(value < this.medium)
           $('.slider-selection').css('background', 'red');
       else if (value < this.high)
           $('.slider-selection').css('background','yellow');
