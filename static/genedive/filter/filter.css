@@ -71,7 +71,12 @@
 }
 
 .slider-selection {
-  background: #9fcbe0;
+    /*background: #9fcbe0;*/
+    background: red;
+}
+
+.slider-handle {
+    background: #CCCCCC;
 }
 
 #add-filter {
