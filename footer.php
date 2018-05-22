@@ -64,6 +64,7 @@
     <script src="static/genedive/download_upload/download_upload.js"></script>
     <script src="static/genedive/delay.js"></script>
     <script src="static/genedive/controls/controls.js"></script>
+    <script src="static/genedive/history/history.js"></script>
 
     <!-- Core Controller -->
     <script src="static/genedive/controller.js"></script>

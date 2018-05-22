@@ -34,6 +34,29 @@ class Disambiguation {
 
         }
     }});
+      alertify.dialog('disambiguationPromptNoResults',function() {
+          return {
+              main:function( text ){
+                  this.text = text;
+              },
+              setup:function(){
+                  return {
+                      buttons:[
+                          {text: "OK", key:27}
+                      ],
+                      focus: { element:0 },
+                      options: {
+                          maximizable: false,
+                          resizable: false,
+                          closeable: false
+                      }
+                  };
+              },
+              prepare:function(){
+                  this.setContent( this.text );
+                  this.setHeader("Resolve Symbol");
+              },
+          }});
   }
 
   prepareForm ( symbol, geneData ) {
@@ -41,7 +64,6 @@ class Disambiguation {
     let form = $("<form/>").addClass("disambiguation-form");
     form.append("<p/>").text(`${symbol} resolves to several different genes.`);
     form.append("<br/>");
-    
     for ( let gene of geneData ) {
       let input = `<div class="disambiguation-row">
                     <input type='radio' value='${gene.id}' name='resolveId' data-name='${gene.primary}'>
@@ -57,7 +79,11 @@ class Disambiguation {
 
   resolveIds ( symbol, ids ) {
     GeneDiveAPI.geneDetails(ids.toString(), ( geneDetails ) => {
-      alertify.disambiguationPrompt( this.prepareForm( symbol, JSON.parse(geneDetails) ));
+      let details = JSON.parse(geneDetails);
+      if(details.length > 0)
+        alertify.disambiguationPrompt( this.prepareForm( symbol, details ));
+      else
+        alertify.disambiguationPromptNoResults( `No results found in NCBI DB for <i>${symbol}</i>.`);
     });
   }
 

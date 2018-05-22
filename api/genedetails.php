@@ -7,10 +7,13 @@
 
   $stmt = $pdo->prepare($query);
 
+
   if(!$stmt)
-      print($query);
+      print("[]");
+  else{
+      $stmt->execute(array($gid));
 
-  $stmt->execute(array($gid));
+      echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+  }
 
-  echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
 ?>

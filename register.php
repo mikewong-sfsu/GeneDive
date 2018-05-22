@@ -1,9 +1,10 @@
 <?php
-  exit("Registration disabled.");
-  include_once "session.php";
+//  exit("Registration disabled.");
+//  include_once "session.php";
 
   // Make sure user didn't reach this accidentally - or maliciously?
   if ( ! isset($_POST['register-submit']) ) { return; }
+
 
   // Some basic validation - we got a valid email and a password?
   $incomplete = !( isset( $_POST[ 'email' ] ) && isset( $_POST[ 'password' ] ));
