@@ -7,23 +7,25 @@ class ProbabilityFilter {
     this.medium_button = $(medium_button);
     this.high_button = $(high_button)
     this.minimum = 0.7;
+    this.low = 0.7;
+    this.medium = 0.85;
+    this.high = 0.95;
 
     // Initialize Bootstrap Slider on element
     this.slider.slider();
 
     this.low_button.on("click", ( event ) => {
-      this.setMinimumProbability(0.7);
-      //console.log(this.slider.background);
+      this.setMinimumProbability(this.low);
       GeneDive.onProbabilitySliderChange();
     });
 
       this.medium_button.on("click", ( event ) => {
-          this.setMinimumProbability(0.85);
+          this.setMinimumProbability(this.medium);
       GeneDive.onProbabilitySliderChange();
   });
 
       this.high_button.on("click", ( event ) => {
-          this.setMinimumProbability(0.95);
+          this.setMinimumProbability(this.high);
       GeneDive.onProbabilitySliderChange();
   });
 
@@ -32,9 +34,19 @@ class ProbabilityFilter {
     // the database, we have to run an entirely new search on every change.
     this.slider.on( "slideStop", ( event ) => {
       this.minimum = event.value;
+      this.setColor(event.value);
       this.value_display.text( this.minimum );
       GeneDive.onProbabilitySliderChange();
     });
+  }
+
+  setColor (value) {
+      if(value <= this.low)
+          $('.slider-selection').css('background', 'red');
+      else if (value < this.high)
+          $('.slider-selection').css('background','yellow');
+      else
+          $('.slider-selection').css('background','green');
   }
 
   getMinimumProbability () {
@@ -51,7 +63,7 @@ class ProbabilityFilter {
     // Checks if the value is valid
     if(typeof(value) !== typeof(0.0) || value < 0.0 || value > 1.0)
       throw "ValueError: value must be from 0.0 to 1.0";
-
+    this.setColor(value);
     this.minimum = value;
     this.value_display.text( this.minimum );
     this.slider.slider('setValue', value)
