@@ -15,18 +15,18 @@
 class Controller {
 
   constructor() {
-    this.color = new Color();
-    this.help = new Help(".module-help");
-    this.search = new Search(".search-input", ".topology-selector", ".search-sets", this.color);
+    this.color          = new Color();
+    this.help           = new Help( ".module-help" );
+    this.search         = new Search( ".search-input", ".topology-selector", ".search-sets", this.color );
     this.disambiguation = new Disambiguation();
-    this.probfilter = new ProbabilityFilter(".min-prob-slider", ".min-prob-slider-value", ".low-button", ".medium-button", ".high-button");
-    this.textfilter = new TextFilter(".filter-select", ".filter-is-not .is", ".filter-text", ".filter-dropdown", ".add-filter", ".filters");
-    this.highlighter = new Highlight(".highlight-input");
-    this.grouper = new Grouper(".grouper-module .table-grouping");
-    this.graph = new GraphView("graph");
-    this.download = new DownloadUpload(".download-module button.download", ".download-module button.upload");
-    this.controls = new Controls(".control-module button.undo", ".control-module button.redo", "button.reset-graph");
-    this.history = new History(this);
+    this.probfilter     = new ProbabilityFilter( ".min-prob-slider", ".min-prob-slider-value", "#confidence-cutoff" );
+    this.textfilter     = new TextFilter( ".filter-select", ".filter-is-not .is", ".filter-text", ".filter-dropdown", ".add-filter", ".filters" );
+    this.highlighter    = new Highlight( ".highlight-input" );
+    this.grouper        = new Grouper( ".grouper-module .table-grouping" );
+    this.graph          = new GraphView( "graph" );
+    this.download       = new DownloadUpload( ".download-module button.download", ".download-module button.upload" );
+    this.controls       = new Controls( ".control-module button.undo", ".control-module button.redo", "button.reset-graph" );
+    this.history        = new History( this );
 
     this.tablestate = {zoomed: false, zoomgroup: null};
     this.interactions = null;
