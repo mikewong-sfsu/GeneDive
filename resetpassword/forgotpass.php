@@ -31,7 +31,7 @@
           <h2>Reset Your GeneDive Password</h2>
 
           <?php
-            if ( $_SESSION['reset'] ) { 
+            if ( isset($_SESSION['reset']) && $_SESSION['reset'] ) {
               $_SESSION['reset'] = false;
               echo '<div class="alert alert-success" role="alert">';
               echo "<strong>If an account with that email exists, a reset code will be sent shortly.</strong>";
@@ -51,9 +51,6 @@
         </div>
       </div>
     </div>
-
-
-
 
   </body>
 </html>
