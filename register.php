@@ -4,9 +4,9 @@ include_once "session.php";
 //  exit("Registration disabled.");
 //  include_once "session.php";
 // Error checking
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
 
 function success($msg) {
     $_SESSION[ 'message' ] = "$msg";
