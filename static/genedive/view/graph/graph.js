@@ -6,6 +6,7 @@
  Brook Thomas brookthomas@gmail.com
  Jack Cole jcole2@mail.sfsu.edu
  @callergraph
+ @ingroup genedive
  */
 class GraphView {
 

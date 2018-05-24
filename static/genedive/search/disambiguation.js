@@ -1,4 +1,15 @@
+/**
+ @class      Disambiguation
+ @brief      Handles DGDs with multiple Symbol IDs
+ @details
+ @authors    Mike Wong mikewong@sfsu.edu
+ Brook Thomas brookthomas@gmail.com
+ Jack Cole jcole2@mail.sfsu.edu
+ @callergraph
+ @ingroup genedive
+ */
 class Disambiguation {
+
 
   constructor () {
     // Set Bootstrap Styles
@@ -27,7 +38,7 @@ class Disambiguation {
           this.setHeader("Resolve Symbol");
         },
         callback: function( closeEvent ) {
-          if ( closeEvent.index == 0 ) return;  // Cancel
+          if ( closeEvent.index === 0 ) return;  // Cancel
           let selected = $(".disambiguation-form input:checked");
 
           GeneDive.search.addSearchSet( selected.data("name"), [selected.val()] );
