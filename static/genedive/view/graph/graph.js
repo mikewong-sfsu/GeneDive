@@ -92,7 +92,6 @@ class GraphView {
     // this.centerGraph();
     this.needsFitting = true;
 
-
     // Notify user of set members that don't appear in search results
     this.storeAbsentNodes(nodes, sets);
 
@@ -294,6 +293,9 @@ class GraphView {
     });
 
     nodes.forEach(node => {
+    // Only change ellipse shapes
+    if(node.data.shape !== "ellipse")
+        return;
       let membership = GeneDive.search.memberOf(node.data.id);
       let partition_size = Math.floor(100 / membership.length);
 
@@ -317,8 +319,6 @@ class GraphView {
 
     sets.forEach(s => {
       stylesheet[0].style[`pie-${index}-background-color`] = s.color;
-
-
       stylesheet[0].style[`pie-${index}-background-size`] = `mapData(${s.id}, 0, 100, 0, 100)`;
       index++;
     });
