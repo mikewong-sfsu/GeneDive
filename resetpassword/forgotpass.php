@@ -37,8 +37,21 @@
               echo "<strong>If an account with that email exists, a reset code will be sent shortly.</strong>";
               echo '</div>';
             }
+
+          if ( isset($_SESSION[ 'error' ] ) ) {
+
+            $error = $_SESSION[ 'error' ];
+
+            echo '<div class="alert alert-danger" role="alert">';
+            echo "<strong>$error</strong>";
+            echo '</div>';
+
+            $_SESSION['error'] = NULL;
+          }
+
             $_SESSION['message'] = NULL;
             $_SESSION['error'] = NULL;
+            $_SESSION['reset'] = NULL;
           ?>
 
           <form action="sendresetlink.php" method="post">

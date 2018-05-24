@@ -1,13 +1,18 @@
 <?php
+//  ini_set('display_errors', 1);
+//  ini_set('display_startup_errors', 1);
+//  error_reporting(E_ALL);
 
   use PHPMailer\PHPMailer\PHPMailer;
-  use PHPMailer\PHPMailer\SMTP;
   use PHPMailer\PHPMailer\Exception;
-  require_once '../PHPMailer/src/PHPMailer.php';
-  require_once '../PHPMailer/src/SMTP.php';
+
+  require '../PHPMailer/src/Exception.php';
+  require '../PHPMailer/src/PHPMailer.php';
+  require '../PHPMailer/src/SMTP.php';
 
   include_once "../session.php";
   include_once "../data/credentials.php";
+
 
   // Some basic validation - we got a valid email and a password?
   $incomplete = !( isset( $_POST[ 'email' ] ) );
@@ -25,7 +30,7 @@
   }
 
   // Looks good - continue
-
+try{
   $pdo  = new PDO( 'sqlite:../data/users.sqlite' ) or die( "Cannot connect to the database." );
 
   $email = $_POST['email'];
@@ -75,6 +80,13 @@
   $mail->Send();
 
   $_SESSION['reset'] = true;
-  header("Location: forgotpass.php");
+} catch (phpmailerException $e) {
+  $_SESSION['reset'] = false;
+  $_SESSION['error'] = "Error resetting: ". $e->errorMessage();
+}catch(Exception $e){
+  $_SESSION['reset'] = false;
+  $_SESSION['error'] = "Error resetting: ". $e->getMessage();
+}
+header("Location: forgotpass.php");
 
 ?>
