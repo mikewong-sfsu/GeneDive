@@ -7,3 +7,9 @@ data/pharmgkb/
 sessions/
 static/genedive/json/*.json
 static/genedive/json/*.zip
+
+# Just in case we put new files containing sensitive data in the future
+*.sqlite
+*.tsv
+*.csv
+*.zip
