@@ -6,6 +6,7 @@
  Brook Thomas brookthomas@gmail.com
  Jack Cole jcole2@mail.sfsu.edu
  @callergraph
+ @ingroup genedive
  */
 class GraphView {
 
@@ -90,7 +91,6 @@ class GraphView {
 
     // this.centerGraph();
     this.needsFitting = true;
-
 
     // Notify user of set members that don't appear in search results
     this.storeAbsentNodes(nodes, sets);
@@ -293,6 +293,9 @@ class GraphView {
     });
 
     nodes.forEach(node => {
+    // Only change ellipse shapes
+    if(node.data.shape !== "ellipse")
+        return;
       let membership = GeneDive.search.memberOf(node.data.id);
       let partition_size = Math.floor(100 / membership.length);
 
@@ -304,15 +307,19 @@ class GraphView {
     return nodes;
   }
 
+    /**
+     @fn        GraphView.bindSetStyles
+     @brief     Gives multi set DGDs multiple colors
+     @details   This gives DGDs that belong to multiple sets different colors
+     @callergraph
+     */
   bindSetStyles(stylesheet, sets) {
 
     let index = 1;
 
     sets.forEach(s => {
       stylesheet[0].style[`pie-${index}-background-color`] = s.color;
-
-      // Issue: This was causing shapes to be stuck as an ellipse. Not sure what this is used for.
-      //stylesheet[0].style[`pie-${index}-background-size`] = `mapData(${s.id}, 0, 100, 0, 100)`;
+      stylesheet[0].style[`pie-${index}-background-size`] = `mapData(${s.id}, 0, 100, 0, 100)`;
       index++;
     });
 
