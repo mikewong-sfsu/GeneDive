@@ -19,9 +19,9 @@ class TableDetail extends ResultsTable {
 
     this.table.tablesorter({
         headers: {6: {sorter: false}, 7: {sorter: false}},
-        sortList: [[5, 1],]
-      } // [index, asc/desc]
-    );
+      sortList: [[1, 0],[2, 0] ], // Sort by DGD1 and then DGD2
+       // [index, asc/desc]
+    });
 
     // Bind zoom out behavior
     $('.table-view .messaging-and-controls .go-back').off('click').click(function () {

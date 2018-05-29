@@ -19,10 +19,10 @@ class TableSummaryGene extends ResultsTable {
     this.drawHeaders();
     this.drawBody();
 
-    this.table.tablesorter({ 
-      headers: { 0: { sorter: false }, 5: { sorter: false }, 7: { sorter: false } }, 
-      sortList: [[6,2],] } // [index, asc/desc]
-    ); 
+    this.table.tablesorter({
+      headers: {0: {sorter: false}, 5: {sorter: false}, 7: {sorter: false}},
+      sortList: [[1, 0], [2, 0]], // Sort by DGD1 and then DGD2
+    });
 
 
   }
