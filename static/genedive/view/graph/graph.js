@@ -110,10 +110,15 @@ class GraphView {
   update(interactions, sets) {
 
     // If it's a new search set, redraw graph. Concats all the searchset ids
-    if (this.currentSetsID !== SearchSet.getIDOfSearchSetArray(sets))
-      this.draw(interactions, sets);
+    // if (this.currentSetsID !== SearchSet.getIDOfSearchSetArray(sets))
+    //   this.draw(interactions, sets);
 
     let newHiddenNodes = {};
+
+    // Deselect any currently selected nodes. This is because shift, ctrl, or alt clicking a node can cause it to be selected,
+    // Resulting in strange behavior
+    this.graph.nodes().deselect();
+
 
     // Produce a set of unique DGDs from the interactions list
     let interactionDGDs = {};
@@ -199,6 +204,7 @@ class GraphView {
       if(node.style("shape") !== expectedShape)
         node.style("shape", expectedShape);
     }
+    this.graph.style(this.bindSetStyles(GENEDIVE_CYTOSCAPE_STYLESHEET, sets));
 
     this.graph.edges().remove();
     this.graph.add(_.values(this.createEdges(interactions)));

@@ -146,15 +146,9 @@ class Search {
         return this.search1Hop();
 
       case "2hop":
-        if (this.sets.length === 1) {
-          return [];
-        }
         return this.search2Hop();
 
       case "3hop":
-        if (this.sets.length === 1) {
-          return [];
-        }
         return this.search3Hop();
 
       case "clique":
@@ -174,11 +168,14 @@ class Search {
   }
 
   search2Hop() {
-    let nhop = this.graphsearch.nHop(this.sets[0].ids[0], this.sets[1].ids[0], 2, false);
+
+    let nhop = this.graphsearch.nHop(this.sets, 2, false);
 
     // Re-render Search Display with Colors
     this.sets.forEach(s => {
-      s.color = GeneDive.color.COLOR.BLUE;
+      // s.color = GeneDive.color.COLOR.BLUE;
+      let color = this.color.allocateColor(s.ids);
+      s.color = color;
       this.color.setColor(s.ids, s.color);
     });
     this.color.setColor(nhop.interactants, GeneDive.color.COLOR.ORANGE);
@@ -188,11 +185,18 @@ class Search {
   }
 
   search3Hop() {
-    let nhop = this.graphsearch.nHop(this.sets[0].ids[0], this.sets[1].ids[0], 3, false);
+    let second_set;
+    if(this.sets.length >= 2)
+        second_set = this.sets[1].ids;
+    else
+        second_set = this.sets[0].ids;
+    let nhop = this.graphsearch.nHop(this.sets, 3, false);
 
     // Re-render Search Display with Colors
     this.sets.forEach(s => {
-      s.color = GeneDive.color.COLOR.BLUE;
+      // s.color = GeneDive.color.COLOR.BLUE;
+      let color = this.color.allocateColor(s.ids);
+      s.color = color;
       this.color.setColor(s.ids, s.color);
     });
     this.color.setColor(nhop.interactants, GeneDive.color.COLOR.ORANGE);
@@ -223,6 +227,10 @@ class Search {
       let item = undefined;
 
       if (set.type === "gene") {
+        // IDs are prepended with C or D
+        let parsed_id = set.ids[0];
+        if(parsed_id[0] === "C" || parsed_id[0] === "D" )
+          parsed_id = parsed_id.substring(1);
 
         item = $("<div/>")
           .addClass("search-item")
@@ -233,7 +241,7 @@ class Search {
               .attr("data-toggle", "tooltip")
               .attr("data-container", "body" )
               .attr("title", "Open NCBI Datasheet In New Tab")
-              .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${set.ids[0]}`)
+              .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${parsed_id}`)
               .attr("target", "_blank")
               .append($("<svg>")
                 .append(this.svgNCBI)
@@ -243,6 +251,7 @@ class Search {
               .attr("data-container", "body" )
               .attr("title", "Open PharmGKB Datasheet In New Tab")
               .attr("href", `https://www.pharmgkb.org/search?connections&query=${set.name}`)
+              // .attr("href", `https://www.pharmgkb.org/chemical/${parsed_id}`)
               .attr("target", "_blank")
               .append($("<svg>")
                 .append(this.svgPharm)
@@ -433,6 +442,16 @@ class Search {
    */
   amountOfDGDsSearched() {
     return this.sets.length;
+  }
+
+  /**
+   @fn       Search.typesOfDGDsSearched
+   @brief    Produces an array of the type of DGDs searched
+   @details
+   @callergraph
+   */
+  typesOfDGDsSearched() {
+      return this.sets.map(set => set.type);
   }
 
 }
