@@ -70,12 +70,13 @@
   align-items: center;
 }
 
-.min-prob-slider {
-  display: none;
+.slider-selection {
+    /*background: #9fcbe0;*/
+    background: red;
 }
 
-.slider-selection {
-  background: #9fcbe0;
+.slider-handle {
+    background: #CCCCCC;
 }
 
 #add-filter {

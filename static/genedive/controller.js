@@ -16,12 +16,11 @@
 class Controller {
 
   constructor() {
-
     this.color = new Color();
     this.help = new Help(".module-help");
     this.search = new Search(".search-input", ".topology-selector", ".search-sets", this.color);
     this.disambiguation = new Disambiguation();
-    this.probfilter = new ProbabilityFilter(".min-prob-slider", ".min-prob-slider-value");
+    this.probfilter = new ProbabilityFilter(".min-prob-slider", ".min-prob-slider-value", ".low-button", ".medium-button", ".high-button");
     this.textfilter = new TextFilter(".filter-select", ".filter-is-not .is", ".filter-text", ".filter-dropdown", ".add-filter", ".filters");
     this.highlighter = new Highlight(".highlight-input");
     this.grouper = new Grouper(".grouper-module .table-grouping");
@@ -308,7 +307,6 @@ class Controller {
    */
   onTableElementClick() {
     try {
-
       this.loadTableAndGraphPage(true, false);
       this.history.saveCurrentStateToHistory();
     } catch (e) {

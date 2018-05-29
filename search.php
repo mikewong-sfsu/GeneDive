@@ -39,10 +39,15 @@
     <div class="module filter-module">
       <!-- Probability Filter Submodule -->
       <div class="min-prob-titlebar">
-        <h5>Minimum Probability</h5>
+        <h5>Minimum Confidence Score</h5>
         <span class="min-prob-slider-value">0.70</span>
       </div>
-      <input class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7" style="width:100%">
+      <input id="exp1" class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7" style="width:100%">
+      <div class="btn-group" style="width: 100%">
+      <button data-toggle="tooltip-initial" data-placement="bottom" title="Apply filter for interactions with confidence score of at least 0.70.  WARNING: May increase query response time.  " class="low-button btn btn-default">Low</button>
+      <button data-toggle="tooltip-initial" data-placement="bottom" title="Apply filter for interactions with confidence score of at least 0.85" class="medium-button btn btn-default">Medium</button>
+      <button data-toggle="tooltip-initial" data-placement="bottom" title="Apply filter for interactions with confidence score of at least 0.95" class="high-button btn btn-default">High</button>
+      </div>
 
       <!-- Text Filter Submodule -->
       <h5 class="h5-second">Filter Results</h5>
@@ -132,22 +137,22 @@
           <div class="mode">
             <h4>1-Hop</h4>
             <img src="/static/genedive/images/help/1hop.png" class="img-responsive">
-            <p>Provide one <span class="dgd-blue">Disease-Gene-Drug entitiy (DGD)</span> to view all direct interactions with that <span class="dgd-blue">DGD</span>. Provide multiple <span class="dgd-blue">DGDs</span> or <span class="dgd-blue">DGD</span> sets to view interactions between all input <span class="dgd-blue">DGDs</span>.</p>
+            <p>Provide one <span class="dgd-blue">Disease, Gene, or Drug entitiy (DGD)</span> to view all direct interactions with that <span class="dgd-blue">DGD</span>. Provide multiple <span class="dgd-blue">DGDs</span> or <span class="dgd-blue">DGD</span> sets to view interactions between all input <span class="dgd-blue">DGDs</span>.</p>
           </div>
           <div class="mode">
             <h4>2-Hop</h4>
             <img src="/static/genedive/images/help/2hop.png" class="img-responsive">
-            <p>Provide two <span class="dgd-blue">Disease-Gene-Drug entities (DGDs)</span> as input. GeneDive will show interactions between the two <span class="dgd-blue">DGDs</span> through up to one intermediary <span class="dgd-orange">DGD</span>.</p>
+            <p>Provide two <span class="dgd-blue">Disease, Gene, or Drug entities (DGDs)</span> as input. GeneDive will show interactions between the two <span class="dgd-blue">DGDs</span> through up to one intermediary <span class="dgd-orange">DGD</span>.</p>
           </div>
           <div class="mode">
             <h4>3-Hop</h4>
             <img src="/static/genedive/images/help/3hop.png" class="img-responsive">
-            <p>Provide two <span class="dgd-blue">Disease-Gene-Drug entities (DGDs)</span> as input. GeneDive will show interactions between the two <span class="dgd-blue">DGDs</span> through up to two intermediary <span class="dgd-orange">DGDs</span>.</p>
+            <p>Provide two <span class="dgd-blue">Disease, Gene, or Drug entities (DGDs)</span> as input. GeneDive will show interactions between the two <span class="dgd-blue">DGDs</span> through up to two intermediary <span class="dgd-orange">DGDs</span>.</p>
           </div>
           <div class="mode">
             <h4>Clique</h4>
             <img src="/static/genedive/images/help/clique.png" class="img-responsive">
-            <p>Provide one <span class="dgd-blue">Disease-Gene-Drug entity (DGD)</span> as input. GeneDive will show those <span class="dgd-orange">DGDs</span> that interact with the input <span class="dgd-blue">DGD</span> and one of its interactants.</p>
+            <p>Provide one <span class="dgd-blue">Disease, Gene, or Drug entity (DGD)</span> as input. GeneDive will show those <span class="dgd-orange">DGDs</span> that interact with the input <span class="dgd-blue">DGD</span> and one of its interactants.</p>
           </div>
         </div>
       </div>
@@ -160,7 +165,7 @@
 
     <!-- Graph View -->
     <div class="graph-view panel-bottom">
-                        <button type="button" class="module control-module btn-group btn btn-default reset-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <span class="button-text">Redraw Graph</span></button>
+                        <button type="button" class="module control-module btn-group btn btn-default reset-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <i class="fa fa-refresh" aria-hidden="true"></i> <span class="button-text">Redraw Graph</span></button>
       <div class="absent">
         <div>View Absent Nodes List</div>
       </div>
