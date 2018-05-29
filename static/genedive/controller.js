@@ -711,19 +711,14 @@ class Controller {
     for (let i = 0; i < this.interactions.length; i++) {
 
 
-      // If article or pubmed is blank, copy the value from one to the other. If both are blank, replace with "N/A"
+      // If article id is blank, copy the value from pubmed id. If both are blank, replace with "N/A"
       let article_blank = VALUES_TO_REPLACE.has(this.interactions[i].article_id);
       let pubmed_blank = VALUES_TO_REPLACE.has(this.interactions[i].pubmed_id);
-      let new_article_val = this.interactions[i].article_id;
-      let new_pubmed_val = this.interactions[i].pubmed_id;
       if(article_blank && pubmed_blank)
-        new_article_val = new_pubmed_val = BLANK_STRING;
+        this.interactions[i].article_id = this.interactions[i].pubmed_id = BLANK_STRING;
       else if(article_blank)
-        new_article_val = new_pubmed_val;
-      else
-        new_pubmed_val = new_article_val;
-      this.interactions[i].article_id = new_article_val;
-      this.interactions[i].pubmed_id = new_pubmed_val;
+        this.interactions[i].article_id = this.interactions[i].pubmed_id;
+
 
 
       if (VALUES_TO_REPLACE.has(this.interactions[i].section.trim()))
