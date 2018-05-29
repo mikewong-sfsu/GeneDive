@@ -19,9 +19,9 @@ class TableDetail extends ResultsTable {
 
     this.table.tablesorter({
         headers: {6: {sorter: false}, 7: {sorter: false}},
-        sortList: [[5, 1],]
-      } // [index, asc/desc]
-    );
+      sortList: [[1, 0],[2, 0] ], // Sort by DGD1 and then DGD2
+       // [index, asc/desc]
+    });
 
     // Bind zoom out behavior
     $('.table-view .messaging-and-controls .go-back').off('click').click(function () {
@@ -42,7 +42,7 @@ class TableDetail extends ResultsTable {
     tr.append($(document.createElement("th")).text("Journal").css("width", "8%"));
     tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "8%"));
     tr.append($(document.createElement("th")).text("Section").css("width", "8%"));
-    tr.append($(document.createElement("th")).text("Probability").addClass("numeric").css("width", "10%"));
+    tr.append($(document.createElement("th")).text("Conf Scr").addClass("numeric").css("width", "10%"));
     tr.append($(document.createElement("th")).text("Excerpt").css("width", "40%"));
     tr.append($(document.createElement("th")).text("Pubmed"));
 

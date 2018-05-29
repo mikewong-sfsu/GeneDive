@@ -17,10 +17,10 @@ class TableSummaryArticle extends ResultsTable {
     this.drawHeaders();
     this.drawBody();
 
-    this.table.tablesorter({ 
-      headers: { 0: { sorter: false }, 4: { sorter: false }, 6: { sorter: false }, 7: { sorter: false } }, 
-      sortList: [[5,1],] } // [index, asc/desc]
-    ); 
+    this.table.tablesorter({
+      headers: {0: {sorter: false}, 4: {sorter: false}, 6: {sorter: false}, 7: {sorter: false}},
+      sortList: [[1, 0], [2, 0]], // Sort by DGD1 and then DGD2
+    });
   }
   
   drawHeaders ( ) {
@@ -33,8 +33,8 @@ class TableSummaryArticle extends ResultsTable {
     tr.append( $(document.createElement("th")).text( "Article" ).addClass("numeric").css("width","10%").attr({"toggle": "tooltip", "title": "ID of the article which implied a DGD relationship"}) );
     tr.append( $(document.createElement("th")).text( "# DGD Pairs" ).addClass("numeric").css("width","10%").attr({"toggle": "tooltip", "title": "Number of relationships between Disease, Gene, or Drug Entities (DGDs) related to your query"}) );
     tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric").css("width","12%").attr({"toggle": "tooltip", "title": "Number of interactions between DGDs related to your query"}) );
-    tr.append( $(document.createElement("th")).text( "P. Distribution" ).css("width","10%").attr({"toggle": "tooltip", "title": "Shows the probability distribution between articles and suggested relationship confidence"}) );
-    tr.append( $(document.createElement("th")).text( "Max Confidence Score" ).addClass("numeric").attr({"toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
+    tr.append( $(document.createElement("th")).text( "Conf Ser Dist" ).css("width","10%").attr({"toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
+    tr.append( $(document.createElement("th")).text( "Max Conf Scr" ).addClass("numeric").attr({"toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
     tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width","40%").attr({"toggle": "tooltip", "title": "A selection from the article that the algorithm selected to imply a relationship"}) );
 
 
