@@ -27,6 +27,10 @@
 
 }
 
+.topbar {
+    background-color: black;
+}
+
 .table-view .table td {
     color: rgb(40, 40, 40);
     text-align: left;
@@ -72,6 +76,8 @@
 /* Table Messaging and Controls */
 
 .table-view .messaging-and-controls {
+    height: 26px;
+    background-color: #CCCCCC;
     padding: 6px 0px;
     display: none;
     flex-direction: row;

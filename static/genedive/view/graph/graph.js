@@ -6,6 +6,7 @@
  Brook Thomas brookthomas@gmail.com
  Jack Cole jcole2@mail.sfsu.edu
  @callergraph
+ @ingroup genedive
  */
 class GraphView {
 
@@ -91,7 +92,6 @@ class GraphView {
     // this.centerGraph();
     this.needsFitting = true;
 
-
     // Notify user of set members that don't appear in search results
     this.storeAbsentNodes(nodes, sets);
 
@@ -110,10 +110,15 @@ class GraphView {
   update(interactions, sets) {
 
     // If it's a new search set, redraw graph. Concats all the searchset ids
-    if (this.currentSetsID !== SearchSet.getIDOfSearchSetArray(sets))
-      this.draw(interactions, sets);
+    // if (this.currentSetsID !== SearchSet.getIDOfSearchSetArray(sets))
+    //   this.draw(interactions, sets);
 
     let newHiddenNodes = {};
+
+    // Deselect any currently selected nodes. This is because shift, ctrl, or alt clicking a node can cause it to be selected,
+    // Resulting in strange behavior
+    this.graph.nodes().deselect();
+
 
     // Produce a set of unique DGDs from the interactions list
     let interactionDGDs = {};
@@ -199,6 +204,7 @@ class GraphView {
       if(node.style("shape") !== expectedShape)
         node.style("shape", expectedShape);
     }
+    this.graph.style(this.bindSetStyles(GENEDIVE_CYTOSCAPE_STYLESHEET, sets));
 
     this.graph.edges().remove();
     this.graph.add(_.values(this.createEdges(interactions)));
@@ -293,6 +299,9 @@ class GraphView {
     });
 
     nodes.forEach(node => {
+    // Only change ellipse shapes
+    if(node.data.shape !== "ellipse")
+        return;
       let membership = GeneDive.search.memberOf(node.data.id);
       let partition_size = Math.floor(100 / membership.length);
 
@@ -304,15 +313,19 @@ class GraphView {
     return nodes;
   }
 
+    /**
+     @fn        GraphView.bindSetStyles
+     @brief     Gives multi set DGDs multiple colors
+     @details   This gives DGDs that belong to multiple sets different colors
+     @callergraph
+     */
   bindSetStyles(stylesheet, sets) {
 
     let index = 1;
 
     sets.forEach(s => {
       stylesheet[0].style[`pie-${index}-background-color`] = s.color;
-
-      // Issue: This was causing shapes to be stuck as an ellipse. Not sure what this is used for.
-      //stylesheet[0].style[`pie-${index}-background-size`] = `mapData(${s.id}, 0, 100, 0, 100)`;
+      stylesheet[0].style[`pie-${index}-background-size`] = `mapData(${s.id}, 0, 100, 0, 100)`;
       index++;
     });
 

@@ -11,23 +11,23 @@
  Brook Thomas brookthomas@gmail.com
  Jack Cole jcole2@mail.sfsu.edu
  @callergraph
+ @ingroup genedive
  */
 class Controller {
 
   constructor() {
-
-    this.color = new Color();
-    this.help = new Help(".module-help");
-    this.search = new Search(".search-input", ".topology-selector", ".search-sets", this.color);
+    this.color          = new Color();
+    this.help           = new Help( ".module-help" );
+    this.search         = new Search( ".search-input", ".topology-selector", ".search-sets", this.color );
     this.disambiguation = new Disambiguation();
-    this.probfilter = new ProbabilityFilter(".min-prob-slider", ".min-prob-slider-value");
-    this.textfilter = new TextFilter(".filter-select", ".filter-is-not .is", ".filter-text", ".filter-dropdown", ".add-filter", ".filters");
-    this.highlighter = new Highlight(".highlight-input");
-    this.grouper = new Grouper(".grouper-module .table-grouping");
-    this.graph = new GraphView("graph");
-    this.download = new DownloadUpload(".download-module button.download", ".download-module button.upload");
-    this.controls = new Controls(".control-module button.undo", ".control-module button.redo", "button.reset-graph");
-    this.history = new History(this);
+    this.probfilter     = new ProbabilityFilter( ".min-prob-slider", ".min-prob-slider-value", "#confidence-cutoff" );
+    this.textfilter     = new TextFilter( ".filter-select", ".filter-is-not .is", ".filter-text", ".filter-dropdown", ".add-filter", ".filters" );
+    this.highlighter    = new Highlight( ".highlight-input" );
+    this.grouper        = new Grouper( ".grouper-module .table-grouping" );
+    this.graph          = new GraphView( "graph" );
+    this.download       = new DownloadUpload( ".download-module button.download", ".download-module button.upload" );
+    this.controls       = new Controls( ".control-module button.undo", ".control-module button.redo", "button.reset-graph" );
+    this.history        = new History( this );
 
     this.tablestate = {zoomed: false, zoomgroup: null};
     this.interactions = null;
@@ -307,7 +307,6 @@ class Controller {
    */
   onTableElementClick() {
     try {
-
       this.loadTableAndGraphPage(true, false);
       this.history.saveCurrentStateToHistory();
     } catch (e) {
@@ -520,9 +519,10 @@ class Controller {
       return;
     }
 
+    // If doing a two hop search, either 2 DGDs are selected or a gene set is selected
     let topology = GeneDive.search.selectedTopology();
-    if (this.search.amountOfDGDsSearched() !== 2 && (topology === "2hop" || topology === "3hop")) {
-      alertify.notify("2-Hop / 3-Hop requires 2 DGDs", "", "3");
+    if ((this.search.amountOfDGDsSearched() < 2 && !this.search.typesOfDGDsSearched().includes('set')) && (topology === "2hop" || topology === "3hop")) {
+      alertify.notify("2-Hop / 3-Hop requires 2 or more DGDs", "", "3");
       this.loadTableAndGraphPage(false, false);
       this.history.saveCurrentStateToHistory();
       return;
@@ -710,11 +710,21 @@ class Controller {
     const VALUES_TO_REPLACE = new Set([null, 0, "", "0", "Unknown"]);
     for (let i = 0; i < this.interactions.length; i++) {
 
-      if (VALUES_TO_REPLACE.has(this.interactions[i].article_id))
-         this.interactions[i].article_id = BLANK_STRING;
 
-      if(VALUES_TO_REPLACE.has(this.interactions[i].pubmed_id))
-        this.interactions[i].pubmed_id = BLANK_STRING;
+      // If article or pubmed is blank, copy the value from one to the other. If both are blank, replace with "N/A"
+      let article_blank = VALUES_TO_REPLACE.has(this.interactions[i].article_id);
+      let pubmed_blank = VALUES_TO_REPLACE.has(this.interactions[i].pubmed_id);
+      let new_article_val = this.interactions[i].article_id;
+      let new_pubmed_val = this.interactions[i].pubmed_id;
+      if(article_blank && pubmed_blank)
+        new_article_val = new_pubmed_val = BLANK_STRING;
+      else if(article_blank)
+        new_article_val = new_pubmed_val;
+      else
+        new_pubmed_val = new_article_val;
+      this.interactions[i].article_id = new_article_val;
+      this.interactions[i].pubmed_id = new_pubmed_val;
+
 
       if (VALUES_TO_REPLACE.has(this.interactions[i].section.trim()))
         this.interactions[i].section = BLANK_STRING;
