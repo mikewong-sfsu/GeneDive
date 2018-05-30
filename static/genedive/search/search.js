@@ -254,7 +254,7 @@ class Search {
           mesh_url = `https://meshb.nlm.nih.gov/record/ui?ui=${set.ids[0].substring(5)}`;
 
         let phgkb_url = null;//`https://www.pharmgkb.org/search?connections&query=${set.name}`;
-        if(set.ids[0].substring(0, 5).toUpperCase() === "PA") {
+        if(set.ids[0].substring(0, 2).toUpperCase() === "PA") {
           phgkb_url = `https://www.pharmgkb.org/chemical/${set.ids[0]}`;
         }
         // IDs are prepended with C or D
