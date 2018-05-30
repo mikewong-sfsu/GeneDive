@@ -196,14 +196,18 @@ class Controller {
    @details
    @param    name The name of the node clicked on
    @param    id The id of the node clicked on
+   @param    type The type of the node clicked on
    @callergraph
    */
-  onNodeGraphCTRLClick(name, id) {
+  onNodeGraphCTRLClick(name, id, type) {
     try {
 
       this.loadSpinners();
       this.search.clearSearch();
-      this.search.addSearchSet(name, id, true);
+      let cur_toplogy = this.search.selectedTopology();
+      if(cur_toplogy === this.search.TOPOLOGY_TWO_HOP || cur_toplogy === this.search.TOPOLOGY_THREE_HOP)
+        this.search.setTopology(this.search.TOPOLOGY_ONE_HOP);
+      this.search.addSearchSet(name, id, type, true);
       this.runSearch();
     } catch (e) {
       this.handleException(e);
@@ -216,10 +220,10 @@ class Controller {
    @details
    @callergraph
    */
-  onNodeGraphShiftClickHold(name, id, deferRunSearch) {
+  onNodeGraphShiftClickHold(name, id, type, deferRunSearch) {
     try {
 
-      this.search.addSearchSet(name, id, deferRunSearch)
+      this.search.addSearchSet(name, id, type, deferRunSearch)
     } catch (e) {
       this.handleException(e);
     }
@@ -707,21 +711,22 @@ class Controller {
    */
   cleanUpData() {
     const BLANK_STRING = "N/A";
-    const VALUES_TO_REPLACE = new Set([null, 0, "", "0", "Unknown"]);
+    const VALUES_TO_REPLACE = new Set([null,"null", 0, "", "0", "unknown"]);
     for (let i = 0; i < this.interactions.length; i++) {
 
 
       // If article id is blank, copy the value from pubmed id. If both are blank, replace with "N/A"
-      let article_blank = VALUES_TO_REPLACE.has(this.interactions[i].article_id);
-      let pubmed_blank = VALUES_TO_REPLACE.has(this.interactions[i].pubmed_id);
+      let article_blank = VALUES_TO_REPLACE.has(this.interactions[i].article_id.trim().toLowerCase());
+      let pubmed_blank = VALUES_TO_REPLACE.has(this.interactions[i].pubmed_id.trim().toLowerCase());
       if(article_blank && pubmed_blank)
         this.interactions[i].article_id = this.interactions[i].pubmed_id = BLANK_STRING;
       else if(article_blank)
         this.interactions[i].article_id = this.interactions[i].pubmed_id;
 
+      if (VALUES_TO_REPLACE.has(this.interactions[i].journal.trim().toLowerCase()))
+        this.interactions[i].journal = BLANK_STRING;
 
-
-      if (VALUES_TO_REPLACE.has(this.interactions[i].section.trim()))
+      if (VALUES_TO_REPLACE.has(this.interactions[i].section.trim().toLowerCase()))
         this.interactions[i].section = BLANK_STRING;
 
     }

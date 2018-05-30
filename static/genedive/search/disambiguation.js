@@ -41,7 +41,7 @@ class Disambiguation {
           if ( closeEvent.index === 0 ) return;  // Cancel
           let selected = $(".disambiguation-form input:checked");
 
-          GeneDive.search.addSearchSet( selected.data("name"), [selected.val()] );
+          GeneDive.search.addSearchSet( selected.data("name"), [selected.val()], type );
 
         }
     }});

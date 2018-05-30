@@ -127,11 +127,11 @@ class GraphView {
       let interaction = interactions[i];
       interactionDGRs[interaction.geneids1] = {
         color: interaction.mention1_color,
-        shape:this.getShapeFromId(interaction.geneids1),
+        shape:this.getShapeFromType(interaction.type1),
       };
       interactionDGRs[interaction.geneids2] = {
         color: interaction.mention2_color,
-        shape:this.getShapeFromId(interaction.geneids2),
+        shape:this.getShapeFromType(interaction.type2),
       };
     }
 
@@ -225,39 +225,38 @@ class GraphView {
       let i2name = i.mention2 + (i.mention2_synonym != null ? `[aka ${i.mention2_synonym}]` : "");
 
       if (!nodes.hasOwnProperty(i.geneids1)) {
-        nodes[i.geneids1] = {group: 'nodes', data: {id: i.geneids1, name: i1name, color: i.mention1_color}};
+        nodes[i.geneids1] = {group: 'nodes', data: {id: i.geneids1, name: i1name, color: i.mention1_color, type:i.type1}};
       }
 
       if (!nodes.hasOwnProperty(i.geneids2)) {
-        nodes[i.geneids2] = {group: 'nodes', data: {id: i.geneids2, name: i2name, color: i.mention2_color}};
+        nodes[i.geneids2] = {group: 'nodes', data: {id: i.geneids2, name: i2name, color: i.mention2_color, type:i.type2}};
       }
     });
 
     // Assign node shape
     for (let n in nodes) {
       let node = nodes[n];
-      node.data.shape = this.getShapeFromId(node.data.id);
+      node.data.shape = this.getShapeFromType(node.data.type);
     }
     return nodes;
   }
 
   /**
-   @fn        GraphView.getShapeFromId
-   @brief     Returns the shape based on the geneid provided
-   @details   This will give a shape based on the geneid provided.
+   @fn        GraphView.getShapeFromType
+   @brief     Returns the shape based on the type provided
+   @details   This will give a shape based on the type provided.
    @param     id From interactions, either a geneids1 or geneids2
    @return    A string with the shape name.
    @callergraph
    */
-  getShapeFromId(id)
+  getShapeFromType(type)
   {
-    let firstChar = id.substring(0, 1);
-    switch (firstChar) {
-      case "C":
+    switch (type) {
+      case "r":
         return 'triangle';
-      case "D":
+      case "d":
         return 'square';
-      default:
+      default: // g
         return 'ellipse';
     }
   }
@@ -548,13 +547,14 @@ const nodeClickBehavior = function (event) {
   const graphClass = GeneDive.graph;
 
   if (event.originalEvent.ctrlKey) {
-    GeneDive.onNodeGraphCTRLClick(this.data('name'), [this.data('id')]);
+    GeneDive.onNodeGraphCTRLClick(this.data('name'), [this.data('id')], [this.data('type')]);
     return;
   }
 
   if (event.originalEvent.shiftKey) {
 
-    GeneDive.onNodeGraphShiftClickHold(this.data('name'), [this.data('id')], true);
+    GeneDive.onNodeGraphShiftClickHold(this.data('name'), [this.data('id')], [this.data('type')], true);
+
 
     if (!graphClass.shiftListenerActive) {
       // Bind event - run search when shift is released
