@@ -38,9 +38,11 @@ class Search {
     // Load the SVG files
     this.svgNCBI = "";
     this.svgPharm = "";
+    this.svgMesh = "";
     (async function (thisElement) {
       thisElement.svgNCBI = thisElement.loadFile("/static/genedive/images/linkout-ncbi.svg");
       thisElement.svgPharm = thisElement.loadFile("/static/genedive/images/linkout-pharmgkb.svg");
+      thisElement.svgMesh = thisElement.loadFile("/static/genedive/images/linkout-mesh.svg");
     }(this));
 
     this.initTypeahead();
@@ -246,6 +248,15 @@ class Search {
       let item = undefined;
 
         let links = [];
+
+        let mesh_url = null; //`https://meshb.nlm.nih.gov/search?searchInField=termDescriptor&sort=&size=20&searchType=exactMatch&searchMethod=FullWord&q=${set.name}`;
+        if(set.ids[0].substring(0, 5).toUpperCase() === "MESH:")
+          mesh_url = `https://meshb.nlm.nih.gov/record/ui?ui=${set.ids[0].substring(5)}`;
+
+        let phgkb_url = null;//`https://www.pharmgkb.org/search?connections&query=${set.name}`;
+        if(set.ids[0].substring(0, 5).toUpperCase() === "PA") {
+          phgkb_url = `https://www.pharmgkb.org/chemical/${set.ids[0]}`;
+        }
         // IDs are prepended with C or D
         if(set.type === "g") {
           links.push($("<a/>").addClass("linkout ncbi-linkout")
@@ -258,18 +269,30 @@ class Search {
               .append(this.svgNCBI)
             ));
         }
-        else if(set.type === "r") {
-          links.push($("<a/>").addClass("linkout pharmgkb-linkout")
+
+        // PHARMGKB
+      if(phgkb_url !== null)
+        links.push($("<a/>").addClass("linkout pharmgkb-linkout")
+          .attr("data-toggle", "tooltip")
+          .attr("data-container", "body")
+          .attr("title", "Open PharmGKB Datasheet In New Tab")
+          .attr("href", phgkb_url)
+          .attr("target", "_blank")
+          .append($("<svg>")
+            .append(this.svgPharm)
+          ));
+
+        // MESH
+      if(mesh_url !== null)
+       links.push($("<a/>").addClass("linkout mesh-linkout")
             .attr("data-toggle", "tooltip")
             .attr("data-container", "body")
-            .attr("title", "Open PharmGKB Datasheet In New Tab")
-            // .attr("href", `https://www.pharmgkb.org/search?connections&query=${set.name}`)
-            .attr("href", `https://www.pharmgkb.org/chemical/${set.ids[0]}`)
+            .attr("title", "Open MeSH Datasheet In New Tab")
+            .attr("href", mesh_url)
             .attr("target", "_blank")
             .append($("<svg>")
-              .append(this.svgPharm)
+              .append(this.svgMesh)
             ));
-        }
 
 
         item = $("<div/>")
