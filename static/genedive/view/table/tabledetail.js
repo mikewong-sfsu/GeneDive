@@ -19,7 +19,7 @@ class TableDetail extends ResultsTable {
 
     this.table.tablesorter({
         headers: {6: {sorter: false}, 7: {sorter: false}},
-        sortList: [[1, 0],[2, 0] ], // Sort by DGR1 and then DGR2
+        sortList: [[1, 0],[2, 0] ], // Sort by DGD1 and then DGD2
         // [index, asc/desc]
       });
 
@@ -37,8 +37,8 @@ class TableDetail extends ResultsTable {
     let tr = $(document.createElement("tr"));
     thead.append(tr);
 
-    tr.append($(document.createElement("th")).text("DGR").css("width", "8%"));
-    tr.append($(document.createElement("th")).text("DGR").css("width", "8%"));
+    tr.append($(document.createElement("th")).text("DGD").css("width", "8%"));
+    tr.append($(document.createElement("th")).text("DGD").css("width", "8%"));
     tr.append($(document.createElement("th")).text("Journal").css("width", "8%"));
     tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "8%"));
     // tr.append($(document.createElement("th")).text("Section").css("width", "8%"));
