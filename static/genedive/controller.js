@@ -72,12 +72,12 @@ class Controller {
   }
 
   /**
-   @fn       Controller.onAddDGD
-   @brief    Called when a DGD is added
+   @fn       Controller.onAddDGR
+   @brief    Called when a DGR is added
    @details
    @callergraph
    */
-  onAddDGD() {
+  onAddDGR() {
 
     try {
       this.loadSpinners();
@@ -88,12 +88,12 @@ class Controller {
   }
 
   /**
-   @fn       Controller.onRemoveDGD
-   @brief    Called when a DGD is removed
+   @fn       Controller.onRemoveDGR
+   @brief    Called when a DGR is removed
    @details
    @callergraph
    */
-  onRemoveDGD() {
+  onRemoveDGR() {
     try {
       this.loadSpinners();
       this.runSearch();
@@ -159,7 +159,7 @@ class Controller {
 
   /**
    @fn       Controller.onTableGroupingSelect
-   @brief    Called when DGD Pair or Article buttons are selected
+   @brief    Called when DGR Pair or Article buttons are selected
    @details
    @callergraph
    */
@@ -466,7 +466,7 @@ class Controller {
    */
   loadTableAndGraphPage(redrawTable = true, redrawGraph = true) {
 
-    if (this.search.amountOfDGDsSearched() === 0) {
+    if (this.search.amountOfDGRsSearched() === 0) {
       this.hideFilters();
       this.showHelp();
       this.download.disableDownload();
@@ -503,7 +503,7 @@ class Controller {
 
   /**
    @fn       Controller.runSearch
-   @brief    Searchs for DGD Interactions
+   @brief    Searchs for DGR Interactions
    @callergraph
    */
   runSearch() {
@@ -513,23 +513,23 @@ class Controller {
       this.interactionsjqXHR.abort();
 
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
-    if (this.search.amountOfDGDsSearched() === 0) {
+    if (this.search.amountOfDGRsSearched() === 0) {
       this.history.clearData();
       this.loadLandingPage();
       return;
     }
 
-    // If doing a two hop search, either 2 DGDs are selected or a gene set is selected
+    // If doing a two hop search, either 2 DGRs are selected or a gene set is selected
     let topology = GeneDive.search.selectedTopology();
-    if ((this.search.amountOfDGDsSearched() < 2 && !this.search.typesOfDGDsSearched().includes('set')) && (topology === "2hop" || topology === "3hop")) {
-      alertify.notify("2-Hop / 3-Hop requires 2 or more DGDs", "", "3");
+    if ((this.search.amountOfDGRsSearched() < 2 && !this.search.typesOfDGRsSearched().includes('set')) && (topology === "2hop" || topology === "3hop")) {
+      alertify.notify("2-Hop / 3-Hop requires 2 or more DGRs", "", "3");
       this.loadTableAndGraphPage(false, false);
       this.history.saveCurrentStateToHistory();
       return;
     }
 
-    if (topology === "clique" && (this.search.amountOfDGDsSearched() > 1 || this.search.sets[0].ids.length > 1)) {
-      alertify.notify("Clique search requires a single DGD.", "", "3");
+    if (topology === "clique" && (this.search.amountOfDGRsSearched() > 1 || this.search.sets[0].ids.length > 1)) {
+      alertify.notify("Clique search requires a single DGR.", "", "3");
       this.loadTableAndGraphPage(false, false);
       this.history.saveCurrentStateToHistory();
       return;
@@ -558,7 +558,7 @@ class Controller {
 
   /**
    @fn       Controller.filterInteractions
-   @brief    Searchs for DGD Interactions
+   @brief    Searchs for DGR Interactions
    @details  Returns new array of interactions passing the text filters
    <b>IMPORTANT - use this.filtrate, not this.interactions hereafter</b>
    @callergraph
@@ -615,7 +615,7 @@ class Controller {
     }
 
     // Otherwise show the appropriate summary view
-    if (this.grouper.selected() === "dgd") {
+    if (this.grouper.selected() === "dgr") {
       new TableSummaryGene(".table-view .table", this.filtrate, ".table-view .topbar .back");
     } else {
       new TableSummaryArticle(".table-view table", this.filtrate, ".table-view .topbar .back");
@@ -711,19 +711,14 @@ class Controller {
     for (let i = 0; i < this.interactions.length; i++) {
 
 
-      // If article or pubmed is blank, copy the value from one to the other. If both are blank, replace with "N/A"
+      // If article id is blank, copy the value from pubmed id. If both are blank, replace with "N/A"
       let article_blank = VALUES_TO_REPLACE.has(this.interactions[i].article_id);
       let pubmed_blank = VALUES_TO_REPLACE.has(this.interactions[i].pubmed_id);
-      let new_article_val = this.interactions[i].article_id;
-      let new_pubmed_val = this.interactions[i].pubmed_id;
       if(article_blank && pubmed_blank)
-        new_article_val = new_pubmed_val = BLANK_STRING;
+        this.interactions[i].article_id = this.interactions[i].pubmed_id = BLANK_STRING;
       else if(article_blank)
-        new_article_val = new_pubmed_val;
-      else
-        new_pubmed_val = new_article_val;
-      this.interactions[i].article_id = new_article_val;
-      this.interactions[i].pubmed_id = new_pubmed_val;
+        this.interactions[i].article_id = this.interactions[i].pubmed_id;
+
 
 
       if (VALUES_TO_REPLACE.has(this.interactions[i].section.trim()))

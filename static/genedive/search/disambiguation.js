@@ -1,6 +1,6 @@
 /**
  @class      Disambiguation
- @brief      Handles DGDs with multiple Symbol IDs
+ @brief      Handles DGRs with multiple Symbol IDs
  @details
  @authors    Mike Wong mikewong@sfsu.edu
  Brook Thomas brookthomas@gmail.com

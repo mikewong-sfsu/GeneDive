@@ -36,7 +36,7 @@ class GraphView {
     // They can be brought back if changes to searches allow
     this.resetHiddenNodes();
 
-    // If this changes, then we know new DGDs were added or removed so we have to redraw the graph
+    // If this changes, then we know new DGRs were added or removed so we have to redraw the graph
     this.currentSetsID = {};
 
     // This boolean will be examined when the graph is finished drawing, and used to decide to call the fit() method
@@ -61,9 +61,9 @@ class GraphView {
   /**
    @fn        GraphView.draw
    @brief     Redraws the entire graph
-   @details   When called, the entire graph is cleared and redrawn with the DGDs and their interactions.
-   @param     interactions The interactions between the DGDs
-   @param     sets The search sets of DGDs
+   @details   When called, the entire graph is cleared and redrawn with the DGRs and their interactions.
+   @param     interactions The interactions between the DGRs
+   @param     sets The search sets of DGRs
    @callergraph
    */
   draw(interactions, sets) {
@@ -101,10 +101,10 @@ class GraphView {
    @fn        GraphView.update
    @brief     Updates the elements in the graph
    @details   When called, this will try to remove or add only specific elements instead of reloading the entire graph.
-   The elements removed are stored into GraphView.hiddenNodes. If a new set of DGDs is searched, or if there are new nodes
+   The elements removed are stored into GraphView.hiddenNodes. If a new set of DGRs is searched, or if there are new nodes
    that aren't in GraphView.hiddenNodes or the graph, then we call draw to redo the graph completely.
-   @param     interactions The interactions between the DGDs
-   @param     sets The search sets of DGDs
+   @param     interactions The interactions between the DGRs
+   @param     sets The search sets of DGRs
    @callergraph
    */
   update(interactions, sets) {
@@ -120,24 +120,24 @@ class GraphView {
     this.graph.nodes().deselect();
 
 
-    // Produce a set of unique DGDs from the interactions list
-    let interactionDGDs = {};
+    // Produce a set of unique DGRs from the interactions list
+    let interactionDGRs = {};
     for(let i in interactions)
     {
       let interaction = interactions[i];
-      interactionDGDs[interaction.geneids1] = {
+      interactionDGRs[interaction.geneids1] = {
         color: interaction.mention1_color,
         shape:this.getShapeFromId(interaction.geneids1),
       };
-      interactionDGDs[interaction.geneids2] = {
+      interactionDGRs[interaction.geneids2] = {
         color: interaction.mention2_color,
         shape:this.getShapeFromId(interaction.geneids2),
       };
     }
 
     // Check if there are new nodes not in the hiddenNodes or graph itself. If so, redraw the graph.
-    for (let dgd in interactionDGDs) {
-      if (this.hiddenNodes[dgd] === undefined && (this.graph.hasElementWithId(dgd) === false)) {
+    for (let dgr in interactionDGRs) {
+      if (this.hiddenNodes[dgr] === undefined && (this.graph.hasElementWithId(dgr) === false)) {
         this.draw(interactions, sets);
         return;
       }
@@ -152,8 +152,8 @@ class GraphView {
         continue;
       let isNode = element.isNode();
       let elementDataID = element.data().id;
-      let notInDGDList = interactionDGDs[elementDataID] === undefined;
-      if (isNode && notInDGDList) {
+      let notInDGRList = interactionDGRs[elementDataID] === undefined;
+      if (isNode && notInDGRList) {
         let removedElements = element.remove();
         newHiddenNodes[elementDataID] = {};
 
@@ -169,7 +169,7 @@ class GraphView {
     // Add any hidden nodes in the interactions
     for (let nodeID in this.hiddenNodes) {
       // The node should be the first element`
-      if (interactionDGDs[nodeID] !== undefined) {
+      if (interactionDGRs[nodeID] !== undefined) {
 
         if (this.graph.hasElementWithId(nodeID)) {
           console.error(`Tried to add the hidden element ${nodeID}, but it's already there! This shouldn't happen.`);
@@ -195,8 +195,8 @@ class GraphView {
       if(node === undefined)
         continue;
       let nodeData = node.data();
-      let expectedColor = interactionDGDs[nodeData.id].color;
-      let expectedShape = interactionDGDs[nodeData.id].shape;
+      let expectedColor = interactionDGRs[nodeData.id].color;
+      let expectedShape = interactionDGRs[nodeData.id].shape;
 
       if(node.style("background-color") !== expectedColor)
         node.style("background-color", expectedColor);
@@ -315,8 +315,8 @@ class GraphView {
 
     /**
      @fn        GraphView.bindSetStyles
-     @brief     Gives multi set DGDs multiple colors
-     @details   This gives DGDs that belong to multiple sets different colors
+     @brief     Gives multi set DGRs multiple colors
+     @details   This gives DGRs that belong to multiple sets different colors
      @callergraph
      */
   bindSetStyles(stylesheet, sets) {
@@ -348,9 +348,9 @@ class GraphView {
 
     GeneDiveAPI.geneNames(this.absentNodes)
       .then(names => {
-        let header = `<h4>${this.absentNodes.length} DGDs in the search set(s) had no matching results:</h4>`;
+        let header = `<h4>${this.absentNodes.length} DGRs in the search set(s) had no matching results:</h4>`;
         let message = "";
-        message+= "<table><thead><tr><td>DGD ID</td><td>Symbol</td></tr></thead><tbody>";
+        message+= "<table><thead><tr><td>DGR ID</td><td>Symbol</td></tr></thead><tbody>";
         names.forEach(n => {
           message += `<tr><td>${n.id}</td><td class='absent-name'>${n.primary}</td></tr>`;
         });
@@ -516,7 +516,7 @@ class GraphView {
    @brief    Sets the graph state
    @details
    @param    graphData The state of GraphView that was generated by GraphView.exportGraphState().
-   @param    sets The sets of DGDs to help color the graph
+   @param    sets The sets of DGRs to help color the graph
    */
   importGraphState(graphData, sets) {
     this.shiftListenerActive = graphData.shiftListenerActive;

@@ -21,7 +21,7 @@ class TableSummaryGene extends ResultsTable {
 
     this.table.tablesorter({
       headers: {0: {sorter: false}, 5: {sorter: false}, 7: {sorter: false}},
-      sortList: [[1, 0], [2, 0]], // Sort by DGD1 and then DGD2
+      sortList: [[1, 0], [2, 0]], // Sort by DGR1 and then DGR2
     });
 
 
@@ -33,12 +33,12 @@ class TableSummaryGene extends ResultsTable {
     thead.append(tr);
 
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%" ) );
-    tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%").attr({"toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
-    tr.append( $(document.createElement("th")).text( "DGD" ).css("width","8%").attr({"toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
-    tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric").attr({"toggle": "tooltip", "title": "Number of interactions between other DGDs and your query"}) );
+    tr.append( $(document.createElement("th")).text( "DGR" ).css("width","8%").attr({"toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
+    tr.append( $(document.createElement("th")).text( "DGR" ).css("width","8%").attr({"toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
+    tr.append( $(document.createElement("th")).text( "# Interactions" ).addClass("numeric").attr({"toggle": "tooltip", "title": "Number of interactions between other DGRs and your query"}) );
     tr.append( $(document.createElement("th")).text( "# Articles" ).addClass("numeric header").attr({"toggle": "tooltip", "title": "Number of articles that were accessed by the relationship algorithm"}) ); // MW TODO: Why do I need to manually add header?
-    tr.append( $(document.createElement("th")).text( "P. Distribution" ).attr({"toggle": "tooltip", "title": "Shows the probability distribution between articles and suggested relationship confidence"}) );
-    tr.append( $(document.createElement("th")).text( "Max Confidence Score" ).addClass("numeric").attr({"toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
+    tr.append( $(document.createElement("th")).text( "Conf Scr Dist" ).attr({"toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
+    tr.append( $(document.createElement("th")).text( "Max Conf Scr" ).addClass("numeric").attr({"toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
     tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width","40%").attr({"toggle": "tooltip", "title": "A selection from the article that the algorithm selected to imply a relationship"}) );
 
     this.table.append(thead);

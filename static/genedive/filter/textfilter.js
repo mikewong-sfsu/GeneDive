@@ -27,12 +27,12 @@ class TextFilter {
   }
 
   createFilterValueLists(interactions) {
-    let values = {"Article": new Set(), "DGD": new Set(), "Journal": new Set(), "Section": new Set()};
+    let values = {"Article": new Set(), "DGR": new Set(), "Journal": new Set(), "Section": new Set()};
 
     interactions.forEach(i => {
       values["Article"].add(i.pubmed_id);
-      values["DGD"].add(i.mention1);
-      values["DGD"].add(i.mention2);
+      values["DGR"].add(i.mention1);
+      values["DGR"].add(i.mention2);
       values["Journal"].add(i.journal);
       values["Section"].add(i.section);
     });
@@ -109,7 +109,7 @@ class TextFilter {
           }
           break;
 
-        case "DGD":
+        case "DGR":
           if (filter.is) {
             interactions = interactions.filter((i) => {
               return (filter.value.toLowerCase() === i.mention1.toLowerCase()||filter.value.toLowerCase() === i.mention2.toLowerCase())

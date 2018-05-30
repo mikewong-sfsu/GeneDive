@@ -12,7 +12,7 @@ class Highlight {
   /**
    @fn       Highlight.highlight
    @brief    Highlights interactions that match terms
-   @details  Searches every interaction's context and the two DGDs for the term with Regex, and changes it's
+   @details  Searches every interaction's context and the two DGRs for the term with Regex, and changes it's
    highlight variable to true if it's a match, and false if not. The minimum length is 2, so no one letter searches.
 
    @param    interactions The interactions from the GeneDive search

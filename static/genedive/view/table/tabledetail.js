@@ -19,9 +19,9 @@ class TableDetail extends ResultsTable {
 
     this.table.tablesorter({
         headers: {6: {sorter: false}, 7: {sorter: false}},
-      sortList: [[1, 0],[2, 0] ], // Sort by DGD1 and then DGD2
-       // [index, asc/desc]
-    });
+        sortList: [[1, 0],[2, 0] ], // Sort by DGR1 and then DGR2
+        // [index, asc/desc]
+      });
 
     // Bind zoom out behavior
     $('.table-view .messaging-and-controls .go-back').off('click').click(function () {
@@ -37,12 +37,12 @@ class TableDetail extends ResultsTable {
     let tr = $(document.createElement("tr"));
     thead.append(tr);
 
-    tr.append($(document.createElement("th")).text("DGD").css("width", "8%"));
-    tr.append($(document.createElement("th")).text("DGD").css("width", "8%"));
+    tr.append($(document.createElement("th")).text("DGR").css("width", "8%"));
+    tr.append($(document.createElement("th")).text("DGR").css("width", "8%"));
     tr.append($(document.createElement("th")).text("Journal").css("width", "8%"));
     tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "8%"));
-    tr.append($(document.createElement("th")).text("Section").css("width", "8%"));
-    tr.append($(document.createElement("th")).text("Probability").addClass("numeric").css("width", "10%"));
+    // tr.append($(document.createElement("th")).text("Section").css("width", "8%"));
+    tr.append($(document.createElement("th")).text("Conf Scr").addClass("numeric").css("width", "10%"));
     tr.append($(document.createElement("th")).text("Excerpt").css("width", "40%"));
     tr.append($(document.createElement("th")).text("Pubmed"));
 
@@ -69,7 +69,7 @@ class TableDetail extends ResultsTable {
       tr.append($(document.createElement("td")).html(i.mention2));
       tr.append($(document.createElement("td")).html(i.journal));
       tr.append($(document.createElement("td")).text(displayedID).addClass("numeric"));
-      tr.append($(document.createElement("td")).text((i.section)));
+      // tr.append($(document.createElement("td")).text((i.section)));
       tr.append($(document.createElement("td")).text(Number(i.probability).toFixed(3)).addClass("numeric"));
       tr.append($(document.createElement("td")).html(excerpt));
       if (i.pubmed_id !== "0")

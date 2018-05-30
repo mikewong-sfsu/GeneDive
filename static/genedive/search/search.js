@@ -112,7 +112,7 @@ class Search {
       this.renderDisplay();
 
       if (!deferRunSearch) {
-        GeneDive.onAddDGD();
+        GeneDive.onAddDGR();
       }
     } catch (error) {
       GeneDive.handleException(error);
@@ -126,7 +126,7 @@ class Search {
     this.renderDisplay();
 
     if (!deferRunSearch) {
-      GeneDive.onRemoveDGD();
+      GeneDive.onRemoveDGR();
     }
   }
 
@@ -435,22 +435,22 @@ class Search {
   }
 
   /**
-   @fn       Search.amountOfDGDsSearched
-   @brief    Lists the amount of DGDs in search
+   @fn       Search.amountOfDGRsSearched
+   @brief    Lists the amount of DGRs in search
    @details
    @callergraph
    */
-  amountOfDGDsSearched() {
+  amountOfDGRsSearched() {
     return this.sets.length;
   }
 
   /**
-   @fn       Search.typesOfDGDsSearched
-   @brief    Produces an array of the type of DGDs searched
+   @fn       Search.typesOfDGRsSearched
+   @brief    Produces an array of the type of DGRs searched
    @details
    @callergraph
    */
-  typesOfDGDsSearched() {
+  typesOfDGRsSearched() {
       return this.sets.map(set => set.type);
   }
 
