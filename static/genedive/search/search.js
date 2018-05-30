@@ -255,7 +255,8 @@ class Search {
 
         let phgkb_url = null;//`https://www.pharmgkb.org/search?connections&query=${set.name}`;
         if(set.ids[0].substring(0, 2).toUpperCase() === "PA") {
-          phgkb_url = `https://www.pharmgkb.org/chemical/${set.ids[0]}`;
+          let phgkb_types = {"r":"chemical", "d": "variant"}
+          phgkb_url = `https://www.pharmgkb.org/${phgkb_types[set.type]}/${set.ids[0]}`;
         }
         // IDs are prepended with C or D
         if(set.type === "g") {
