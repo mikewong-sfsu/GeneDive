@@ -256,8 +256,10 @@ class Search {
         let phgkb_url = null;
         let phgkb_types = {"d": "variant", "g":"gene","r":"chemical", };
         if(set.ids[0].substring(0, 2).toUpperCase() === "PA" && set.type in phgkb_types) {
-          phgkb_url = `https://www.pharmgkb.org/search?connections&query=${set.name}`;
-          // phgkb_url = `https://www.pharmgkb.org/${phgkb_types[set.type]}/${set.ids[0]}`;
+          if(set.type === "r")
+            phgkb_url = `https://www.pharmgkb.org/${phgkb_types[set.type]}/${set.ids[0]}`;
+          else
+            phgkb_url = `https://www.pharmgkb.org/search?connections&query=${set.name}`;
         }
         // IDs are prepended with C or D
         if(set.type === "g") {
