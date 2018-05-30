@@ -39,23 +39,23 @@ class GraphSearch {
 
      
     /**
-     * @description DGDs in pathways between origin and destination with at most n hops.
+     * @description DGRs in pathways between origin and destination with at most n hops.
      If support is specified, these intermediaries must have an interaction with
      at least one other intermediary.
-     * @param dgd_sets {Array} The DGDs to find intermediaries
+     * @param dgr_sets {Array} The DGRs to find intermediaries
      * @param n Number of intermediate hops
      * @param support
      * @returns {GraphResult}
      */
-  nHop( dgd_sets, n, support ) {
+  nHop( dgr_sets, n, support ) {
     this.genes.clear();
     let ids_searched = [];
     // Build list of ids
-    for(let set = 0;set < dgd_sets.length;set++)
-        ids_searched = ids_searched.concat(dgd_sets[set].ids);
+    for(let set = 0;set < dgr_sets.length;set++)
+        ids_searched = ids_searched.concat(dgr_sets[set].ids);
 
 
-    // Do a depth first search starting at each DGD and ending at any other DGD in the search set
+    // Do a depth first search starting at each DGR and ending at any other DGR in the search set
     for(let id = 0;id < ids_searched.length;id++)
     {
       let destinations = new Set(ids_searched);

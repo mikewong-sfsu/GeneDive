@@ -20,6 +20,20 @@ class Search {
     this.graphsearch = new GraphSearch();
     this.sets = [];
     this.settingState = false;
+    this.GENES_NAME = "Genes";
+    this.DISEASES_NAME = "Diseases";
+    this.CHEMICALS_NAME = "Chemicals";
+    this.GENESETS_NAME = "Genesets";
+    this.TOPOLOGY_ONE_HOP = "1hop";
+    this.TOPOLOGY_TWO_HOP = "2hop";
+    this.TOPOLOGY_THREE_HOP = "3hop";
+    this.TOPOLOGY_CLIQUE = "clique";
+    this.NAME_MAP = {};
+      this.NAME_MAP[this.GENES_NAME    ] = "g";
+      this.NAME_MAP[this.CHEMICALS_NAME] = "r";
+      this.NAME_MAP[this.DISEASES_NAME ] = "d";
+      this.NAME_MAP[this.GENESETS_NAME ] = "s";
+
 
     // Load the SVG files
     this.svgNCBI = "";
@@ -42,7 +56,12 @@ class Search {
         GeneDive.onSelectSearchType();
     });
   }
-
+  /**
+   @fn       Search.selectedTopology
+   @brief    Selects the type of search programmatically
+   @details  Will make the button of the specified data type active.
+   @callergraph
+   */
   selectedTopology() {
     let selected = this.topology.children("button.active");
     selected.tooltip('hide');
@@ -57,7 +76,7 @@ class Search {
    @callergraph
    */
   setTopology(dataType) {
-    $(`.search-module button`).removeClass("active");
+    $(`.search-module button`).removeClass("active").blur();
     let button = $(`.search-module button[data-type=${dataType}]`);
     button.addClass("active");
   }
@@ -80,7 +99,7 @@ class Search {
     return xhr.response
   }
 
-  addSearchSet(name, ids, deferRunSearch = false) {
+  addSearchSet(name, ids, type, deferRunSearch = false) {
 
     try {
 
@@ -91,28 +110,28 @@ class Search {
 
       switch (this.selectedTopology()) {
 
-        case "clique":
+        case this.TOPOLOGY_CLIQUE:
           if (this.sets.length >= 1 || ids.length > 1) {
             alertify.notify("Clique searches are limited to a single gene.", "", "3");
             this.input.val("");
             return;
           }
 
-          this.sets.push(new SearchSet(name, ids));
+          this.sets.push(new SearchSet(name, ids, type));
           break;
 
-        case "1hop":
-        case "2hop":
-        case "3hop":
+        case this.TOPOLOGY_ONE_HOP:
+        case this.TOPOLOGY_TWO_HOP:
+        case this.TOPOLOGY_THREE_HOP:
         default:
-          this.sets.push(new SearchSet(name, ids));
+          this.sets.push(new SearchSet(name, ids, type));
           break;
       }
 
       this.renderDisplay();
 
       if (!deferRunSearch) {
-        GeneDive.onAddDGD();
+        GeneDive.onAddDGR();
       }
     } catch (error) {
       GeneDive.handleException(error);
@@ -121,12 +140,12 @@ class Search {
   }
 
   removeSearchSet(identifier, deferRunSearch = false) {
-    this.sets = this.sets.filter((set) => set.name != identifier && set.ids[0] != identifier);
+    this.sets = this.sets.filter((set) => set.name !== identifier && set.ids[0] !== identifier);
 
     this.renderDisplay();
 
     if (!deferRunSearch) {
-      GeneDive.onRemoveDGD();
+      GeneDive.onRemoveDGR();
     }
   }
 
@@ -142,16 +161,16 @@ class Search {
 
     switch (this.selectedTopology()) {
 
-      case "1hop":
+      case this.TOPOLOGY_ONE_HOP:
         return this.search1Hop();
 
-      case "2hop":
+      case this.TOPOLOGY_TWO_HOP:
         return this.search2Hop();
 
-      case "3hop":
+      case this.TOPOLOGY_THREE_HOP:
         return this.search3Hop();
 
-      case "clique":
+      case this.TOPOLOGY_CLIQUE:
         return this.searchClique(minProb);
     }
   }
@@ -226,55 +245,45 @@ class Search {
     for (let set of this.sets) {
       let item = undefined;
 
-      if (set.type === "gene") {
+        let links = [];
         // IDs are prepended with C or D
-        let parsed_id = set.ids[0];
-        if(parsed_id[0] === "C" || parsed_id[0] === "D" )
-          parsed_id = parsed_id.substring(1);
+        if(set.type === "g") {
+          links.push($("<a/>").addClass("linkout ncbi-linkout")
+            .attr("data-toggle", "tooltip")
+            .attr("data-container", "body")
+            .attr("title", "Open NCBI Datasheet In New Tab")
+            .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${set.ids[0]}`)
+            .attr("target", "_blank")
+            .append($("<svg>")
+              .append(this.svgNCBI)
+            ));
+        }
+        else if(set.type === "r") {
+          links.push($("<a/>").addClass("linkout pharmgkb-linkout")
+            .attr("data-toggle", "tooltip")
+            .attr("data-container", "body")
+            .attr("title", "Open PharmGKB Datasheet In New Tab")
+            // .attr("href", `https://www.pharmgkb.org/search?connections&query=${set.name}`)
+            .attr("href", `https://www.pharmgkb.org/chemical/${set.ids[0]}`)
+            .attr("target", "_blank")
+            .append($("<svg>")
+              .append(this.svgPharm)
+            ));
+        }
+
 
         item = $("<div/>")
           .addClass("search-item")
           .css("background-color", set.color)
           .append($("<span/>").addClass("name").text(set.name))
-          .append($("<span/>").append(
-            $("<a/>").addClass("linkout ncbi-linkout")
-              .attr("data-toggle", "tooltip")
-              .attr("data-container", "body" )
-              .attr("title", "Open NCBI Datasheet In New Tab")
-              .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${parsed_id}`)
-              .attr("target", "_blank")
-              .append($("<svg>")
-                .append(this.svgNCBI)
-              ),
-            $("<a/>").addClass("linkout pharmgkb-linkout")
-              .attr("data-toggle", "tooltip")
-              .attr("data-container", "body" )
-              .attr("title", "Open PharmGKB Datasheet In New Tab")
-              .attr("href", `https://www.pharmgkb.org/search?connections&query=${set.name}`)
-              // .attr("href", `https://www.pharmgkb.org/chemical/${parsed_id}`)
-              .attr("target", "_blank")
-              .append($("<svg>")
-                .append(this.svgPharm)
-              ),
-          ))
+          .append($("<span/>").append(links))
           .append(
             $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
               .on('click', (event) => {
                 this.removeSearchSet($(event.target).data("id"))
               })
           );
-      } else {
-        item = $("<div/>")
-          .addClass("search-item")
-          .css("background-color", set.color)
-          .append($("<span/>").addClass("name").text(set.name))
-          .append(
-            $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
-              .on('click', (event) => {
-                this.removeSearchSet($(event.target).data("id"))
-              })
-          );
-      }
+
 
       this.display.append(item);
     }
@@ -318,28 +327,28 @@ class Search {
     this.input.typeahead(
       {minLength: 1, highlight: true, hint: false,},
       {
-        name: 'Genes',
+        name: this.GENES_NAME,
         source: genes,
         limit: TYPE_AHEAD_LIMIT,
         display: 'symbol',
         templates: {header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>"}
       },
       {
-        name: 'Chemicals',
+        name: this.CHEMICALS_NAME,
         source: chemical,
         limit: TYPE_AHEAD_LIMIT,
         display: 'symbol',
         templates: {header: "<h4 style='color:rgb(128,128,128);'>Chemicals</h4>"}
       },
       {
-        name: 'Diseases',
+        name: this.DISEASES_NAME,
         source: disease,
         limit: TYPE_AHEAD_LIMIT,
         display: 'symbol',
         templates: {header: "<h4 style='color:rgb(128,128,128);'>Diseases</h4>"}
       },
       {
-        name: 'Genesets',
+        name: this.GENESETS_NAME,
         source: geneset,
         limit: TYPE_AHEAD_LIMIT,
         display: 'symbol',
@@ -355,17 +364,18 @@ class Search {
     });
 
     // The action we take when a typeahead element is selected
-    this.input.on('typeahead:selected', (event, item) => {
+    this.input.on('typeahead:selected', (event, item, set_name) => {
 
+      item.type = this.NAME_MAP[set_name];
       // Case: Gene w/ Disambiguation
-      if (item.values.length > 1 && item.type != "set") {
+      if (item.values.length > 1 && item.type !== "s") {
         GeneDive.disambiguation.resolveIds(item.symbol, item.values);
         this.input.typeahead("val", "");
         return;
       }
 
       // Case: Gene w/o Disambiguation || Search Set
-      this.addSearchSet(item.symbol, item.values);
+      this.addSearchSet(item.symbol, item.values, item.type);
       this.input.typeahead("val", "");
 
     });
@@ -379,7 +389,7 @@ class Search {
 
     for (let set of this.sets) {
 
-      if (set.type == "gene") {
+      if (set.type === "g") {
         graph_data[set.ids[0]] = {name: set.name, color: set.color};
         continue;
       }
@@ -435,32 +445,32 @@ class Search {
   }
 
   /**
-   @fn       Search.amountOfDGDsSearched
-   @brief    Lists the amount of DGDs in search
+   @fn       Search.amountOfDGRsSearched
+   @brief    Lists the amount of DGRs in search
    @details
    @callergraph
    */
-  amountOfDGDsSearched() {
+  amountOfDGRsSearched() {
     return this.sets.length;
   }
 
   /**
-   @fn       Search.typesOfDGDsSearched
-   @brief    Produces an array of the type of DGDs searched
+   @fn       Search.typesOfDGRsSearched
+   @brief    Produces an array of the type of DGRs searched
    @details
    @callergraph
    */
-  typesOfDGDsSearched() {
+  typesOfDGRsSearched() {
       return this.sets.map(set => set.type);
   }
 
 }
 
 class SearchSet {
-  constructor(name, ids) {
+  constructor(name, ids, type) {
     this.id = sha256(name).slice(0, 30);
     this.name = name;
-    this.type = ids.length > 1 ? "set" : "gene";
+    this.type = type;
     this.ids = ids.map(i => String(i));
     this.color = "#cccccc";
     this.entity = "";

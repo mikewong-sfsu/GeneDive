@@ -113,7 +113,7 @@ class Test {
 
   }
 
-  searchDGDs(dgds, type) {
+  searchDGRs(dgrs, type) {
     const SEARCH_FIELD = ".search-input";
     const ALLOWED_TYPES = {"clique": true, "1hop": true, "2hop": true, "3hop": true,};
     const thisClass = this;
@@ -122,16 +122,16 @@ class Test {
       let fieldHasCorrectValue;
       if (!type in ALLOWED_TYPES)
         reject("Invalid type specified. Must be a string with one of the following:", Object.keys(ALLOWED_TYPES));
-      // Check if the dgds are an array
-      if (dgds.constructor !== Array)
-        reject("Invalid dgds passed in. Must be an Array.");
+      // Check if the dgrs are an array
+      if (dgrs.constructor !== Array)
+        reject("Invalid dgrs passed in. Must be an Array.");
       await thisClass.page.click(`.topology-selector [data-type="${type}"]`, {waitUntil: 'networkidle2'}).catch((reason) => {
         reject(reason);
       });
 
-      // Try to add each DGD
-      for (let i in dgds) {
-        let dgd = dgds[i];
+      // Try to add each DGR
+      for (let i in dgrs) {
+        let dgr = dgrs[i];
         fieldHasCorrectValue = false;
 
         // Will try to input the search text over and over until it finally fills it in, or 5 tries have passed
@@ -142,8 +142,8 @@ class Test {
             document.querySelector(e).value = ""
           }, SEARCH_FIELD);
           await thisClass.page.click(SEARCH_FIELD).catch((reason) => {reject(reason);}); // click on element
-          await thisClass.page.keyboard.type(dgd, {delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters
-          fieldHasCorrectValue = await thisClass.page.evaluate((e) => document.querySelector(e).value, SEARCH_FIELD) === dgd;
+          await thisClass.page.keyboard.type(dgr, {delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters
+          fieldHasCorrectValue = await thisClass.page.evaluate((e) => document.querySelector(e).value, SEARCH_FIELD) === dgr;
           await thisClass.page.waitFor(100); // Wait a few seconds for auto complete
         }
 
@@ -161,7 +161,7 @@ class Test {
         });
       }
 
-      resolve(`Completed ${type} search of ${dgds}`);
+      resolve(`Completed ${type} search of ${dgrs}`);
 
     });
   }
@@ -282,14 +282,14 @@ class Test {
         let tableHeaders = [];
         let tableElement = $(table)[0];
         let rows = tableElement.rows;
-        let DGDNumber = 0;
+        let DGRNumber = 0;
         for (let r = 0; r < rows.length; r++) {
           if (rows[r].cells[0].tagName.toLowerCase() === "th")
             for (let h = 0; h < rows[r].cells.length; h++) {
               let text = rows[r].cells[h].textContent;
-              if (text === "DGD") {
-                DGDNumber += 1;
-                tableHeaders[h] = text + DGDNumber;
+              if (text === "DGR") {
+                DGRNumber += 1;
+                tableHeaders[h] = text + DGRNumber;
               }
               else
                 tableHeaders[h] = text;

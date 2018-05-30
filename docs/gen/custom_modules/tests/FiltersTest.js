@@ -25,12 +25,12 @@ class FiltersTest extends Test {
   execute() {
     const thisClass = this;
     const PAGE = this.page;
-    const DGD = "MAD";
+    const DGR = "MAD";
     const EVALUATE_NUMBER_OF_SETS = "$('.search-item').length";
-    const FIELDS_TO_TEST = ["DGD1", "DGD2", "Sample Excerpt"];
+    const FIELDS_TO_TEST = ["DGR1", "DGR2", "Sample Excerpt"];
     const EXCERPT_COL = "Sample Excerpt";
     let highlight_history = [];
-    let numberOfDGDs;
+    let numberOfDGRs;
 
 
     return new Promise(async (resolve, reject) => {
@@ -40,13 +40,13 @@ class FiltersTest extends Test {
         // thisClass.hookToConsoleErrors();
 
         await thisClass.startAtSearchPage().catch((reason)=>{reject(reason)});
-        await thisClass.searchDGDs([DGD], "1hop").catch((reason)=>{reject(reason)});
+        await thisClass.searchDGRs([DGR], "1hop").catch((reason)=>{reject(reason)});
         await PAGE.waitFor(200);
 
-        // Check if there is 1 DGD
-        numberOfDGDs = await thisClass.page.evaluate(EVALUATE_NUMBER_OF_SETS).catch((reason)=>{reject(reason)});
-        if(numberOfDGDs !== 1)
-          reject(`Test failed: There should be 1 DGD being searched after adding one set. ${numberOfDGDs} were found.`);
+        // Check if there is 1 DGR
+        numberOfDGRs = await thisClass.page.evaluate(EVALUATE_NUMBER_OF_SETS).catch((reason)=>{reject(reason)});
+        if(numberOfDGRs !== 1)
+          reject(`Test failed: There should be 1 DGR being searched after adding one set. ${numberOfDGRs} were found.`);
 
         // Get some values from the table to try and filter for
         let table_contents = await thisClass.getTableContents().catch((reason)=>{reject(reason)});

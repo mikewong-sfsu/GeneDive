@@ -18,7 +18,7 @@
     <div class="about">
       <h2>GeneDive</h2>
       <h4>Gene, Drug, and Disease Interaction Search and Visualization Tool</h4>
-      <p>GeneDive is a powerful but easy-to-use application that can search, sort, group, filter, highlight, and visualize interactions between drugs, genes, and diseases (DGD).  GeneDive also facilitates topology discovery through the various search modes that reveal direct and indirect interactions between DGD.  The search results, in textual and graphical form, can be downloaded along with the search settings to easily restart the session at later time.
+      <p>GeneDive is a powerful but easy-to-use application that can search, sort, group, filter, highlight, and visualize interactions between drugs, genes, and diseases (DGR).  GeneDive also facilitates topology discovery through the various search modes that reveal direct and indirect interactions between DGR.  The search results, in textual and graphical form, can be downloaded along with the search settings to easily restart the session at later time.
          Refer to <a target="_blank" href="//www.ncbi.nlm.nih.gov/pubmed/29218917">Previde et al., 2018</a> for more details.</p>
       <p>GeneDive is a joint project between the Computer Science Department at San Francisco State University, and the Bioengineering Department at Stanford University.</p>
       <p id="citation">To cite this work, please use the following publication:
