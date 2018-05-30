@@ -525,7 +525,7 @@ class Controller {
 
     // If doing a two hop search, either 2 DGRs are selected or a gene set is selected
     let topology = GeneDive.search.selectedTopology();
-    if ((this.search.amountOfDGRsSearched() < 2 && !this.search.typesOfDGRsSearched().includes('set')) && (topology === "2hop" || topology === "3hop")) {
+    if ((this.search.amountOfDGRsSearched() < 2 && !this.search.typesOfDGRsSearched().includes('s')) && (topology === "2hop" || topology === "3hop")) {
       alertify.notify("2-Hop / 3-Hop requires 2 or more DGRs", "", "3");
       this.loadTableAndGraphPage(false, false);
       this.history.saveCurrentStateToHistory();
