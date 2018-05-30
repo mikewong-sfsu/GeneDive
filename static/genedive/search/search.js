@@ -254,8 +254,8 @@ class Search {
           mesh_url = `https://meshb.nlm.nih.gov/record/ui?ui=${set.ids[0].substring(5)}`;
 
         let phgkb_url = null;//`https://www.pharmgkb.org/search?connections&query=${set.name}`;
-        if(set.ids[0].substring(0, 2).toUpperCase() === "PA") {
-          let phgkb_types = {"r":"chemical", "d": "variant"}
+        let phgkb_types = {"d": "variant", "g":"gene","r":"chemical", };
+        if(set.ids[0].substring(0, 2).toUpperCase() === "PA" && set.type in phgkb_types) {
           phgkb_url = `https://www.pharmgkb.org/${phgkb_types[set.type]}/${set.ids[0]}`;
         }
         // IDs are prepended with C or D
