@@ -11,6 +11,7 @@ This documentation is geared towards scientists who intend to use GeneDive for t
 	* [Registration and Login](#regist)
  	* [Searching](#searching)
  	* [Results](#results)
+ 	* [Graph](#results)
  * [Support](#support)
  * [License](#license)
 
@@ -71,7 +72,7 @@ When you successfully login, you will be presented with a large area in the cent
 	**3-Hop:** This search will present results whom's direct interactions mutually interact with each other. The intermediates will be highlighted in orange.  This requires more than 1 item to be specified.  
 	**Clique:** Similar to 1-Hop, except only the results that are 1 jump away from the search that are related to one another will be presented. You are limited to one item at a time when in this search mode.  
 
-* **%Search Bar**
+* <b>%Search Bar</b>
 
 	This will accept any string input. Upon typing in your query, GeneDive will lookup the query amongst Genes, Chemicals, Diseases, and Genesets, and present the findings below the search field, which you can either click on or use the arrow keys and hit enter to select.  
 
@@ -92,7 +93,7 @@ When you successfully login, you will be presented with a large area in the cent
 	You can further filter results down by Article, Exerpt, Gene, Journal, and Section. Upon adding an "is" filter, all results not containing the filter will be hidden. If you add a "not" filter, any results matching the filter's value will be hidden.
 
 
-* **%Highlight Rows**
+* <b>%Highlight Rows</b>
 
 	When you enter strings in here, any results that contain that contain that value in their data will be highlighted in the table view. Edges will also be highlighted in the graph view.
 
@@ -113,20 +114,68 @@ When you successfully login, you will be presented with a large area in the cent
 
 
 <a name="results"></a>
-### Results
+### Table
 
 The majority of screen space is taken up in the middle by the results. On the top is a table of the results, and the bottom a graph.
 
-**Results Table**  
-The results here are grouped by DGR interactions by default. You can group them by article interactions by clicking on Articles at the bottom of the %Search area, under Group Table Results By. You can sort the table by clicking the small, black arrows next to each field header. If there is only one visible arrow, then the table is currently sorted by the non-visible arrow that is paired with that visible one.
+**Grouped Results Table**  
+The results here are grouped by DGR interactions by default. You can group them by article interactions by clicking on Articles at the bottom of the %Search area, under Group Table Results By. You can sort the table by clicking the small, black arrows next to each field header. If there is only one visible arrow, then the table is sorted by that column. Down arrow means descending, up arrow means ascending.
+
+*TIP: You can sort by multiple rows by holding shift when click on the headers.*
+
+* <b>\+</b>  
+A link you can click to see the details. The entire row is also clickable.
+
+* **DGR** **DGR** (DGD Pair grouping only)  
+The interacting pair of DGRs. The right one is alphabetically smaller than the left one.
+
+* **Article** (Article grouping only)  
+The specific Article ID that the interactions we found in.
+
+* **DGR Pairs** (Article grouping only)  
+How many unique pairs are found in that Article
+
+* <b># Interactions</b>  
+How many interactions that group has.
+
+* <b># Articles** (DGD Pair grouping onl</b>  
+How many articles that group has.
+
+* <b># Conf Scr Dist</b>  
+The Confidence Score Distribution of that group. When more than one interaction is in that group, a histogram is displayed showing the distrubition of probabilities from 0 to 1. The graph is a distribution, not a count, so the bars do not represent the amount of interactions, just how they're distributed.
+
+* **Max Conf Scr**  
+The Maximum Confidence Score in that grouping.
+
+* **Sample Excerpt**  
+This an excerpt selected from the highest confidence scored interaction in the group.
 
 ![Grouped results](img/readme/results_grouped.png)
 
-Clicking on a table row will present you with all the interactions of that group. You can go directly to the article by clicking on the link under the Pubmed column. To return to the grouped results, click Back at the top left of the table.
+**Detailed Results Table**  
+
+Clicking on a table row will present you with all the interactions of that group. The columns have the same meaning as in the Grouped Results Table, except for the following.
+
+* **Journal**  
+The Journal from which the Article came from.
+
+* **Article ID**  
+The Article from where the interaction was found.
+
+* **Excerpt**  
+The actual excerpt from the article for that interaction.
+
+* **Pubmed**  
+A link to the article on Pubmed.
+
+To go back to the grouped results, click the Back button at the top right.
+
+
 
 ![Expanded results](img/readme/results_detailed.png)
 
-**DGR Graph**  
+<a name="graph"></a>
+### Graph 
 The graph below the table presents a visual representation of the DGR interactions. The thickness of an edge represents how many interactions between the DGR there are in the articles. The color of the node corresponds to the colors of the search items, located under the search bar.
 
 <div style="display:inline-block">![Search with same colors](img/readme/graph_color_results_search.png)</div> <div style="display:inline-block">![Graph with multiple items search, showing the correlation between color of nodes and the searches](img/readme/graph_color_results_graph.png)</div> 
