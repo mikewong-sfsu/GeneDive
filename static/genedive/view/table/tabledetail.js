@@ -25,7 +25,7 @@ class TableDetail extends ResultsTable {
 
     this.table.tablesorter({
         headers: {6: {sorter: false}, 7: {sorter: false}},
-      sortList: [[5, 1],], // Sort by Max Confidence
+      sortList: [[4, 1],], // Sort by Max Confidence
         // [index, asc/desc]
       });
 
