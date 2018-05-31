@@ -41,7 +41,7 @@ GeneDive is a collaborative project between the San Francisco State University D
 ## Usage
 
 <a name="regist"></a>
-### Registration and Login
+### Registration and %Login
 
 To register for the site, click Register on the front page and fill out the appropriate forms. You will then be able to login with your information, and be redirected to the search page.
 
