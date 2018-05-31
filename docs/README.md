@@ -71,7 +71,7 @@ When you successfully login, you will be presented with a large area in the cent
 	**3-Hop:** This search will present results whom's direct interactions mutually interact with each other. The intermediates will be highlighted in orange.  This requires more than 1 item to be specified.  
 	**Clique:** Similar to 1-Hop, except only the results that are 1 jump away from the search that are related to one another will be presented. You are limited to one item at a time when in this search mode.  
 
-* **%Search Bar:**
+* **%Search Bar**
 
 	This will accept any string input. Upon typing in your query, GeneDive will lookup the query amongst Genes, Chemicals, Diseases, and Genesets, and present the findings below the search field, which you can either click on or use the arrow keys and hit enter to select.  
 
