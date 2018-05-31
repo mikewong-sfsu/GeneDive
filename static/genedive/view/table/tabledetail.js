@@ -2,16 +2,22 @@ class TableDetail extends ResultsTable {
 
   constructor(table, interactions, group) {
     super(table, interactions);
-    this.interactions = GeneDive.grouper.group(interactions)[group];
-    this.interactions_count = this.interactions.length;
+    this.interactions = GeneDive.grouper.group(interactions);
+    if(!(group in this.interactions))
+    {
+      this.amountOfEntries = 0;
+      return;
+    }
+    this.interactions = this.interactions[group];
+    this.amountOfEntries = this.interactions.length;
     this.highlight_count = _.reduce(_.map(this.interactions, i => i.highlight ? 1 : 0), (acc, i) => acc + i);
     this.showBackButton();
 
     // Update topbar - with or without highlight count
     if (this.highlight_count > 0) {
-      this.updateMessage(`Viewing <span class="figure">${this.interactions_count}</span> Interactions with <span class="figure">${this.highlight_count}</span> Highlighted`);
+      this.updateMessage(`Viewing <span class="figure">${this.amountOfEntries}</span> Interactions with <span class="figure">${this.highlight_count}</span> Highlighted`);
     } else {
-      this.updateMessage(`Viewing <span class="figure">${this.interactions_count}</span> Interactions`);
+      this.updateMessage(`Viewing <span class="figure">${this.amountOfEntries}</span> Interactions`);
     }
 
     this.drawHeaders();
@@ -19,7 +25,7 @@ class TableDetail extends ResultsTable {
 
     this.table.tablesorter({
         headers: {6: {sorter: false}, 7: {sorter: false}},
-        sortList: [[1, 0],[2, 0] ], // Sort by DGR1 and then DGR2
+      sortList: [[5, 1],], // Sort by Max Confidence
         // [index, asc/desc]
       });
 
@@ -28,6 +34,7 @@ class TableDetail extends ResultsTable {
       GeneDive.tablestate.zoomed = false;
       GeneDive.onBackClick();
     });
+
 
   }
 
@@ -79,6 +86,14 @@ class TableDetail extends ResultsTable {
     }
 
     this.table.append(tbody);
+  }
+
+  set amountOfEntries(n){
+    this._amountOfEntries = n;
+  }
+
+  get amountOfEntries(){
+    return this._amountOfEntries;
   }
 
 }

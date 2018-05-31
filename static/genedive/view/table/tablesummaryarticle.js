@@ -19,7 +19,7 @@ class TableSummaryArticle extends ResultsTable {
 
     this.table.tablesorter({
       headers: {0: {sorter: false}, 4: {sorter: false}, 6: {sorter: false}, 7: {sorter: false}},
-      sortList: [[1, 0], [2, 0]], // Sort by DGR1 and then DGR2
+      sortList: [[5, 1],], // Sort by Max Confidence
     });
   }
   
