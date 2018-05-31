@@ -613,10 +613,20 @@ class Controller {
     $('.table-view').append($("<table/>").addClass("table table-hover"));
 
     // First check for zoom condition
+
     if (this.tablestate.zoomed) {
-      new TableDetail(".table-view table", this.filtrate, this.tablestate.zoomgroup);
-      return;
+      let table_detail = new TableDetail(".table-view table", this.filtrate, this.tablestate.zoomgroup);
+      // If all the entries were filtered out, render the table summary instead.
+      if(table_detail.amountOfEntries > 0)
+        return;
+      else
+      {
+        this.tablestate.zoomed = false;
+        $('.table-view table').remove();
+        $('.table-view').append($("<table/>").addClass("table table-hover"));
+      }
     }
+
 
     // Otherwise show the appropriate summary view
     if (this.grouper.selected() === "dgr") {

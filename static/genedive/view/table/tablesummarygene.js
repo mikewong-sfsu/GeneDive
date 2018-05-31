@@ -21,7 +21,7 @@ class TableSummaryGene extends ResultsTable {
 
     this.table.tablesorter({
       headers: {0: {sorter: false}, 5: {sorter: false}, 7: {sorter: false}},
-      sortList: [[1, 0], [2, 0]], // Sort by DGR1 and then DGR2
+      sortList: [[6, 1],], // Sort by Max Confidence
     });
 
 
