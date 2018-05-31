@@ -553,7 +553,7 @@ const nodeClickBehavior = function (event) {
 
   if (event.originalEvent.shiftKey) {
 
-    GeneDive.onNodeGraphShiftClickHold(this.data('name'), [this.data('id')], [this.data('type')], true);
+    GeneDive.onNodeGraphShiftClickHold(this.data('name'), [this.data('id')], this.data('type'), true);
 
 
     if (!graphClass.shiftListenerActive) {
