@@ -59,7 +59,7 @@
             <option selected="selected">Excerpt</option>
             <option>DGR</option>
             <option>Journal</option>
-            <option>Section</option>
+            <!--<option>Section</option>-->
           </select>
           <div class="filter-is-not">
             <span><input type="radio" name="isnot" value="is" class="is" checked > is </span>
