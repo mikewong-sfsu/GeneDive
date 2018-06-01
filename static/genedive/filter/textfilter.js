@@ -34,7 +34,7 @@ class TextFilter {
       values["DGR"].add(i.mention1);
       values["DGR"].add(i.mention2);
       values["Journal"].add(i.journal);
-      values["Section"].add(i.section);
+      // values["Section"].add(i.section); // Disabled for now
     });
 
     this.filterValues = values;
