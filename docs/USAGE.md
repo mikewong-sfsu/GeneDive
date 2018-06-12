@@ -8,7 +8,7 @@
 ## Searching
 
 When you successfully login, you will be presented with a large area in the center of the screen for results, along with a search and filter section on the left side of the screen.  
-![Show search area](../old/img/search_area.png)
+![Show search area](img/search_area.png)
 
 The four choices, 1-Hop, 2-Hop, 3-Hop, and Clique will determine the results that are presented.
 
@@ -16,13 +16,13 @@ The four choices, 1-Hop, 2-Hop, 3-Hop, and Clique will determine the results tha
 **2-Hop:** This search will present results whom mutually interact with the same items. The intermediates will be highlighted in orange. This requires more than 1 item to be specified.  
 **3-Hop:** This search will present results whom's direct interactions mutually interact with each other. The intermediates will be highlighted in orange.  This requires more than 1 item to be specified.  
 **Clique:** Similar to 1-Hop, except only the results that are 1 jump away from the search that are related to one another will be presented. You are limited to one item at a time when in this search mode.  
-![Different types of search modes](../old/img/search_modes.png)
+![Different types of search modes](img/search_modes.png)
 
 **Search Bar:** This will accept any string input. Upon typing in your query, GeneDive will lookup the query amongst genes, chemicals, diseases, and genesets, and present the findings below, which you can either click on or use the arrow keys and hit enter to select.  
-![Search showing query autocomplete](../old/img/search_autocomplete.png)
+![Search showing query autocomplete](img/search_autocomplete.png)
 
 More than one item can be selected from the list, but only if you are choosing 1, 2, or 3-Hops. Clique does not support mulitple item selection.  
-![Search showing multiple items selected](../old/img/search_multiple_selections.png)
+![Search showing multiple items selected](img/search_multiple_selections.png)
 
 **Minimum Probability:** This option allows you to choose the threshold for the probability of gene interactions. The relationship between every gene is given a probability value, from 0 to 1, based on how they they are presented in the article. Lowering this value will present more results, but will increase the possibility of false positives. Increasing this value will narrow results, but will increase the possibility of false negatives.
 
