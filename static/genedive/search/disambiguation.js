@@ -1,6 +1,6 @@
 /**
  @class      Disambiguation
- @brief      Handles DGDs with multiple Symbol IDs
+ @brief      Handles DGRs with multiple Symbol IDs
  @details
  @authors    Mike Wong mikewong@sfsu.edu
  Brook Thomas brookthomas@gmail.com
@@ -41,7 +41,7 @@ class Disambiguation {
           if ( closeEvent.index === 0 ) return;  // Cancel
           let selected = $(".disambiguation-form input:checked");
 
-          GeneDive.search.addSearchSet( selected.data("name"), [selected.val()] );
+          GeneDive.search.addSearchSet( selected.data("name"), [selected.val()], type );
 
         }
     }});

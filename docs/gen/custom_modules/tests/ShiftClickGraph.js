@@ -27,7 +27,7 @@ class ShiftClickGraph extends Test {
     const NODE_2 = "FMRP";
     const thisClass = this;
     const PAGE = this.page;
-    let numberOfDGDs;
+    let numberOfDGRs;
 
 
     return new Promise(async (resolve, reject) => {
@@ -36,13 +36,13 @@ class ShiftClickGraph extends Test {
         // thisClass.hookToConsoleErrors();
 
         await thisClass.startAtSearchPage().catch((reason)=>{reject(reason)});
-        await thisClass.searchDGDs([NODE_1], "1hop").catch((reason)=>{reject(reason)});
+        await thisClass.searchDGRs([NODE_1], "1hop").catch((reason)=>{reject(reason)});
         await PAGE.waitFor(200);
 
-        // Check if there is 1 DGD
-        numberOfDGDs = await thisClass.page.evaluate(EVALATE_NUMBER_OF_SETS).catch((reason)=>{reject(reason)});
-        if(numberOfDGDs !== 1)
-          reject(`Test failed: There should be 1 DGD being searched after adding one set. ${numberOfDGDs} were found.`);
+        // Check if there is 1 DGR
+        numberOfDGRs = await thisClass.page.evaluate(EVALATE_NUMBER_OF_SETS).catch((reason)=>{reject(reason)});
+        if(numberOfDGRs !== 1)
+          reject(`Test failed: There should be 1 DGR being searched after adding one set. ${numberOfDGRs} were found.`);
 
         // Hold shift and then add the node.
         await PAGE.keyboard.down('Shift').catch((reason)=>{reject(reason)});
@@ -59,10 +59,10 @@ class ShiftClickGraph extends Test {
         await thisClass.screenShotEntirePage("test123.png").catch((reason)=>{reject(reason)});
 
         await PAGE.waitFor(200);
-        // Check if there are 2 DGDs
-        numberOfDGDs = await thisClass.page.evaluate(EVALATE_NUMBER_OF_SETS).catch((reason)=>{reject(reason)});
-        if(numberOfDGDs !== 2)
-          reject(`Test failed: There should be 2 DGDs being searched after shift clicking a node. ${numberOfDGDs} were found.`);
+        // Check if there are 2 DGRs
+        numberOfDGRs = await thisClass.page.evaluate(EVALATE_NUMBER_OF_SETS).catch((reason)=>{reject(reason)});
+        if(numberOfDGRs !== 2)
+          reject(`Test failed: There should be 2 DGRs being searched after shift clicking a node. ${numberOfDGRs} were found.`);
 
         // Go back in history
         await thisClass.goBackInHistory().catch((reason)=>{reject(reason)});
@@ -70,10 +70,10 @@ class ShiftClickGraph extends Test {
         await thisClass.waitForPageToFinishLoading().catch((reason)=>{reject(reason)});
         await PAGE.waitFor(500);
 
-        // Check if there is 1 DGD
-        numberOfDGDs = await thisClass.page.evaluate(EVALATE_NUMBER_OF_SETS).catch((reason)=>{reject(reason)});
-        if(numberOfDGDs !== 1)
-          reject(`Test failed: There should only be 1 DGD being searched. ${numberOfDGDs} were found.`);
+        // Check if there is 1 DGR
+        numberOfDGRs = await thisClass.page.evaluate(EVALATE_NUMBER_OF_SETS).catch((reason)=>{reject(reason)});
+        if(numberOfDGRs !== 1)
+          reject(`Test failed: There should only be 1 DGR being searched. ${numberOfDGRs} were found.`);
 
         resolve(thisClass.createResponse(true, "Test Passed", 0));
       }

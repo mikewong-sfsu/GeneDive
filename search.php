@@ -5,7 +5,7 @@
   <div class="control-view">
 
     <div class="titlebar"><a href="/">GeneDive</a>
-    <span class="subtitle">Disease, Gene, Drug (DGD)<br>Interaction Explorer</span>
+    <span class="subtitle">Disease, Gene, Drug (DGR)<br>Interaction Explorer</span>
     </div>
 
     <!-- Other Controls -->
@@ -21,14 +21,14 @@
     <div class="module search-module">
       <div class="topology-row">
         <div class="btn-group topology-selector" style="width:100%;" role="group" aria-label="...">
-          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD to view all direct interactions with the DGD. Provide multiple DGDs or DGD sets to view interactions between all input DGDs." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 1 (one) intermediary DGD."                 style="width:25%;" type="button" class="btn btn-default"        data-type="2hop">2-Hop</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two DGDs as input. GeneDive will show interactions between the two DGDs through up to 2 (two) intermediary DGDs."                style="width:25%;" type="button" class="btn btn-default"        data-type="3hop">3-Hop</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGD as input. GeneDive will show those DGDs that interact with input DGD and one of its interactants."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGR to view all direct interactions with the DGR. Provide multiple DGRs or DGR sets to view interactions between all input DGRs." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two DGRs as input. GeneDive will show interactions between the two DGRs through up to 1 (one) intermediary DGR."                 style="width:25%;" type="button" class="btn btn-default"        data-type="2hop">2-Hop</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two DGRs as input. GeneDive will show interactions between the two DGRs through up to 2 (two) intermediary DGRs."                style="width:25%;" type="button" class="btn btn-default"        data-type="3hop">3-Hop</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGR as input. GeneDive will show those DGRs that interact with input DGR and one of its interactants."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
         </div>
       </div>
 
-      <input type="text" placeholder="Enter a DGD name" class="form-control search-input">
+      <input type="text" placeholder="Enter a DGR name" class="form-control search-input">
 
       <!-- Search Sets displays current search objects -->
       <div class="search-sets">
@@ -57,9 +57,9 @@
           <select class="filter-select">
             <option>Article</option>
             <option selected="selected">Excerpt</option>
-            <option>DGD</option>
+            <option>DGR</option>
             <option>Journal</option>
-            <option>Section</option>
+            <!--<option>Section</option>-->
           </select>
           <div class="filter-is-not">
             <span><input type="radio" name="isnot" value="is" class="is" checked > is </span>
@@ -101,7 +101,7 @@
       </div>
 
       <div class="btn-group table-grouping" style="width:100%;" role="group" aria-label="...">
-        <button style="width:50%;" type="button" class="btn btn-default active" data-type="dgd">DGD Pair</button>
+        <button style="width:50%;" type="button" class="btn btn-default active" data-type="dgr">DGR Pair</button>
         <button style="width:50%;" type="button" class="btn btn-default" data-type="article">Article</button>
       </div>
     </div>
@@ -138,22 +138,22 @@
           <div class="mode">
             <h4>1-Hop</h4>
             <img src="/static/genedive/images/help/1hop.png" class="img-responsive">
-            <p>Provide one <span class="dgd-blue">Disease, Gene, or Drug entitiy (DGD)</span> to view all direct interactions with that <span class="dgd-blue">DGD</span>. Provide multiple <span class="dgd-blue">DGDs</span> or <span class="dgd-blue">DGD</span> sets to view interactions between all input <span class="dgd-blue">DGDs</span>.</p>
+            <p>Provide one <span class="dgr-blue">Disease, Gene, or Drug entitiy (DGR)</span> to view all direct interactions with that <span class="dgr-blue">DGR</span>. Provide multiple <span class="dgr-blue">DGRs</span> or <span class="dgr-blue">DGR</span> sets to view interactions between all input <span class="dgr-blue">DGRs</span>.</p>
           </div>
           <div class="mode">
             <h4>2-Hop</h4>
             <img src="/static/genedive/images/help/2hop.png" class="img-responsive">
-            <p>Provide two <span class="dgd-blue">Disease, Gene, or Drug entities (DGDs)</span> as input. GeneDive will show interactions between the two <span class="dgd-blue">DGDs</span> through up to one intermediary <span class="dgd-orange">DGD</span>.</p>
+            <p>Provide two <span class="dgr-blue">Disease, Gene, or Drug entities (DGRs)</span> as input. GeneDive will show interactions between the two <span class="dgr-blue">DGRs</span> through up to one intermediary <span class="dgr-orange">DGR</span>.</p>
           </div>
           <div class="mode">
             <h4>3-Hop</h4>
             <img src="/static/genedive/images/help/3hop.png" class="img-responsive">
-            <p>Provide two <span class="dgd-blue">Disease, Gene, or Drug entities (DGDs)</span> as input. GeneDive will show interactions between the two <span class="dgd-blue">DGDs</span> through up to two intermediary <span class="dgd-orange">DGDs</span>.</p>
+            <p>Provide two <span class="dgr-blue">Disease, Gene, or Drug entities (DGRs)</span> as input. GeneDive will show interactions between the two <span class="dgr-blue">DGRs</span> through up to two intermediary <span class="dgr-orange">DGRs</span>.</p>
           </div>
           <div class="mode">
             <h4>Clique</h4>
             <img src="/static/genedive/images/help/clique.png" class="img-responsive">
-            <p>Provide one <span class="dgd-blue">Disease, Gene, or Drug entity (DGD)</span> as input. GeneDive will show those <span class="dgd-orange">DGDs</span> that interact with the input <span class="dgd-blue">DGD</span> and one of its interactants.</p>
+            <p>Provide one <span class="dgr-blue">Disease, Gene, or Drug entity (DGR)</span> as input. GeneDive will show those <span class="dgr-orange">DGRs</span> that interact with the input <span class="dgr-blue">DGR</span> and one of its interactants.</p>
           </div>
         </div>
       </div>
@@ -198,20 +198,20 @@
           </div>
           <div class="mode">
             <i class="fa fa-hand-paper-o" aria-hidden="true"></i>
-            <h4>Move DGDs</h4>
-            <p>Click and drag DGDs to move them around. DGDs will stay where you leave them.</p>
+            <h4>Move DGRs</h4>
+            <p>Click and drag DGRs to move them around. DGRs will stay where you leave them.</p>
           </div>
         </div>
         <div class="modes">
           <div class="mode">
             <i class="fa fa-search-plus" aria-hidden="true"></i>
-            <h4>Shift-Click DGD to Add</h4>
-            <p>Shift-Click on DGDs to add them to the search. Releasing shift will start a new search.</p>
+            <h4>Shift-Click DGR to Add</h4>
+            <p>Shift-Click on DGRs to add them to the search. Releasing shift will start a new search.</p>
           </div>
           <div class="mode">
             <i class="fa fa-search" aria-hidden="true"></i>
-            <h4>Ctrl-Click DGD to Start New Search</h4>
-            <p>Ctrl-Click on a DGD to start a new search with only that DGD.</p>
+            <h4>Ctrl-Click DGR to Start New Search</h4>
+            <p>Ctrl-Click on a DGR to start a new search with only that DGR.</p>
           </div>
         </div>
         </div>

@@ -22,7 +22,7 @@ class Grouper {
     let grouping = this.selected();
 
     interactions.forEach( i => {
-      let key = grouping == "dgd" ? [i.geneids1, i.geneids2].sort().join("_") : i.article_id;
+      let key = grouping == "dgr" ? [i.geneids1, i.geneids2].sort().join("_") : i.article_id;
           key = sha256(key);
 
       if ( !groups.hasOwnProperty(key) ) {
