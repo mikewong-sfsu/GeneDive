@@ -1,0 +1,191 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="visio.css"/>
+<title>
+UML
+</title>
+<script type="text/javascript" language="javascript">
+function UpdateTooltip(){};
+function OnShapeClick(){};
+</script>
+
+<script src="png_1.js" type="text/javascript" language="javascript"></script>
+<script type="text/javascript" language="javascript">
+	if( (parent.isSVG) || 
+		(parent.isVML && parent.vmlSupported) || 
+		(parent.isXAML && parent.isUpLevel)) 
+	{
+		location.replace(parent.g_FileList[parent.g_CurPageIndex].PriImage);
+	}
+</script>
+
+
+<script type="text/javascript" language="javascript">
+var pageID = 0;
+var isUpLevel = parent.isUpLevel;
+var OnShapeClick = null;
+if (!parent.isMac)
+{
+	OnShapeClick = parent.OnShapeClick;
+}
+
+var OnShapeKey = parent.OnShapeKey;
+var UpdateTooltip = parent.UpdateTooltip;
+var clickMenu = parent.clickMenu;
+var toggleMenuDiv = parent.toggleMenuDiv;
+var toggleMenuLink = parent.toggleMenuLink;
+var GoToPage = parent.GoToPage;
+
+
+if (parent.isUpLevel)
+{
+
+	if (parent.g_FirstPageToLoad != null && parent.g_FirstPageToLoad.length > 0)
+	{
+		if (parent.g_FileList[parent.g_CurPageIndex].PageID != pageID)
+		{
+			var fileEntry = parent.g_FileList[parent.g_CurPageIndex];
+			var fileToLoad = fileToLoad = fileEntry.PriImage;
+			if (fileEntry.SecImage.length > 0)
+			{
+				fileToLoad = fileEntry.SecImage;
+			}
+
+			location.replace(fileToLoad);
+		}
+
+		parent.g_FirstPageToLoad = null;
+	}
+
+
+	var viewMgr = new parent.CViewMgr();
+	parent.viewMgr = viewMgr;
+
+	viewMgr.SupportsDetails = true;
+	viewMgr.SupportsSearch = true;
+
+	viewMgr.put_Location = ViewMgrSetRasterLocation;
+	viewMgr.visBBoxLeft = 0.342014;
+	viewMgr.visBBoxRight = 8.253472;
+	viewMgr.visBBoxBottom = 6.443773;
+	viewMgr.visBBoxTop = 10.745029;
+	viewMgr.highlightDiv = null;
+}
+
+function load ()
+{
+	if(isUpLevel)
+	{
+		arrowdiv.innerHTML = '<img id="arrowgif" alt="Shows the location of the selected shape" src="arrow.png"/>';
+
+		var pageIndex = parent.PageIndexFromID (pageID);
+		parent.CurPageUpdate (pageIndex);
+	}
+}
+
+function unload()
+{
+	if(isUpLevel)
+	{
+		viewMgr = null;
+		parent.viewMgr = null;
+	}
+}
+
+window.onload = load;
+window.onunload = unload;
+document.onclick = clickMenu;
+
+</script>
+<style type="text/css"> 
+body {
+	background:url(foo) fixed;
+	padding: 10px;
+}
+div.banner {
+	position: fixed;
+	_position: absolute;
+	top: 0;
+	left: 0;
+	_top: expression(eval(document.body.scrollTop));
+	_left: expression(eval(document.body.scrollLeft));
+	width: 100%;
+	_width: expression(eval(document.body.clientWidth));
+	margin: 0;
+	padding: 3px;
+	padding-left: 6px;
+	background:lime;
+	background-color: #FFFFC6;
+	font: 11px tahoma,arial,serif;
+	border-bottom: 2px ridge #FFFFC6;
+}
+</style>
+</head>
+
+<body class="pageView" bgcolor="#FFFFFF" style="margin: 0px">
+
+<script type="text/javascript" language="javascript">
+// Displays the banner prompt to install Silverlight
+if (parent.slSupported && !parent.slInstalled)
+{
+	var slBanner = document.createElement("div");
+	slBanner.className = "banner";
+	slBanner.innerHTML = 'To enable full functionality such as Pan and Zoom, <a href="https://www.microsoft.com/silverlight/resources/install.aspx" target="parent">click here</a> to install the Silverlight plug-in.';
+
+	document.body.appendChild(slBanner);
+	document.body.style.paddingTop = "2.5em";
+}
+</script>
+
+
+<div id="arrowdiv" style="position:absolute;top:0;left:0;visibility:hidden;z-index:5">
+</div>
+
+<div id="menu1" onclick="clickMenu()" class="hlMenu">
+</div>
+<DIV id="RasterDiv" style="margin:10px">
+
+<center>
+  <IMG id="ConvertedImage" SRC="png_1.png" ALT="Page-1" name=RasterImage BORDER="0" USEMAP="#visImageMap">
+</center>
+
+<MAP NAME="visImageMap">
+  <AREA shape="POLYGON" tabindex="1" ALT="Table  View (HTML)" origTitle="Table  View (HTML)" TITLE="Table  View (HTML)" HREF="../table-view.html" target="_top" COORDS="953,420,1024,420,1024,342,953,342,953,420" onmouseover="UpdateTooltip(this,0,122,event)" onfocus="UpdateTooltip(this,0,122,event)" onclick="return OnShapeClick(0,122,event);" onkeyup="OnShapeKey(0,122,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="View Manager" origTitle="View Manager" TITLE="View Manager" HREF="../view-manager.html" target="_top" COORDS="922,202,1007,202,1007,145,922,145,922,202" onmouseover="UpdateTooltip(this,0,100,event)" onfocus="UpdateTooltip(this,0,100,event)" onclick="return OnShapeClick(0,100,event);" onkeyup="OnShapeKey(0,100,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Graph View (SVG via  CytoScape)" origTitle="Graph View (SVG via  CytoScape)" TITLE="Graph View (SVG via  CytoScape)" HREF="../graph-view.html" target="_top" COORDS="953,323,1024,323,1024,245,953,245,953,323" onmouseover="UpdateTooltip(this,0,95,event)" onfocus="UpdateTooltip(this,0,95,event)" onclick="return OnShapeClick(0,95,event);" onkeyup="OnShapeKey(0,95,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Entrez/NCBI Gene Data (IDs, Symbols, Aliases)" origTitle="Entrez/NCBI Gene Data (IDs, Symbols, Aliases)" TITLE="Entrez/NCBI Gene Data (IDs, Symbols, Aliases)" HREF="../entrez.html" target="_top" COORDS="586,413,586,411,584,413,578,414,570,416,558,417,544,417,531,416,520,415,512,413,509,412,509,413,501,413,501,415,503,417,505,419,510,421,518,423,529,424,542,425,554,425,567,424,580,422,588,420,590,418,593,416,594,414,594,413,586,413" onmouseover="UpdateTooltip(this,0,68,event)" onfocus="UpdateTooltip(this,0,68,event)" onclick="return OnShapeClick(0,68,event);" onkeyup="OnShapeKey(0,68,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Entrez/NCBI Gene Data (IDs, Symbols, Aliases)" origTitle="Entrez/NCBI Gene Data (IDs, Symbols, Aliases)" TITLE="Entrez/NCBI Gene Data (IDs, Symbols, Aliases)" HREF="../entrez.html" target="_top" COORDS="586,408,586,407,584,408,578,410,570,411,558,413,544,413,531,412,520,411,512,409,509,407,509,408,501,408,501,410,503,413,505,415,510,416,518,419,529,420,542,421,554,421,567,420,580,418,588,415,590,414,593,412,594,409,594,408,586,408" onmouseover="UpdateTooltip(this,0,68,event)" onfocus="UpdateTooltip(this,0,68,event)" onclick="return OnShapeClick(0,68,event);" onkeyup="OnShapeKey(0,68,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Entrez/NCBI Gene Data (IDs, Symbols, Aliases)" origTitle="Entrez/NCBI Gene Data (IDs, Symbols, Aliases)" TITLE="Entrez/NCBI Gene Data (IDs, Symbols, Aliases)" HREF="../entrez.html" target="_top" COORDS="507,489,508,490,512,491,517,492,525,494,532,494,540,495,547,495,556,495,564,494,571,493,577,492,583,491,586,490,589,488,590,486,590,408,589,407,586,405,583,404,577,402,570,401,563,400,555,400,547,400,540,400,532,400,525,401,517,402,512,404,508,405,507,406,505,407,505,408,505,486,505,488,507,489" onmouseover="UpdateTooltip(this,0,68,event)" onfocus="UpdateTooltip(this,0,68,event)" onclick="return OnShapeClick(0,68,event);" onkeyup="OnShapeKey(0,68,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Reactome &#38;  KEGG Genesets" origTitle="Reactome &#38;  KEGG Genesets" TITLE="Reactome &#38;  KEGG Genesets" HREF="../reactome.html" target="_top" COORDS="687,413,687,411,685,413,679,414,671,416,659,417,645,417,632,416,621,415,613,413,610,412,610,413,602,413,602,415,604,417,606,419,611,421,619,423,630,424,643,425,656,425,668,424,681,422,689,420,691,418,694,416,695,414,695,413,687,413" onmouseover="UpdateTooltip(this,0,67,event)" onfocus="UpdateTooltip(this,0,67,event)" onclick="return OnShapeClick(0,67,event);" onkeyup="OnShapeKey(0,67,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Reactome &#38;  KEGG Genesets" origTitle="Reactome &#38;  KEGG Genesets" TITLE="Reactome &#38;  KEGG Genesets" HREF="../reactome.html" target="_top" COORDS="687,408,687,407,685,408,679,410,671,411,659,413,645,413,632,412,621,411,613,409,610,407,610,408,602,408,602,410,604,413,606,415,611,416,619,419,630,420,643,421,656,421,668,420,681,418,689,415,691,414,694,412,695,409,695,408,687,408" onmouseover="UpdateTooltip(this,0,67,event)" onfocus="UpdateTooltip(this,0,67,event)" onclick="return OnShapeClick(0,67,event);" onkeyup="OnShapeKey(0,67,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Reactome &#38;  KEGG Genesets" origTitle="Reactome &#38;  KEGG Genesets" TITLE="Reactome &#38;  KEGG Genesets" HREF="../reactome.html" target="_top" COORDS="608,489,609,490,613,491,618,492,626,494,633,494,641,495,648,495,657,495,665,494,672,493,678,492,684,491,688,490,690,488,691,486,691,408,690,407,688,405,684,404,678,402,671,401,664,400,656,400,648,400,641,400,633,400,626,401,618,402,613,404,609,405,608,406,606,407,606,408,606,486,606,488,608,489" onmouseover="UpdateTooltip(this,0,67,event)" onfocus="UpdateTooltip(this,0,67,event)" onclick="return OnShapeClick(0,67,event);" onkeyup="OnShapeKey(0,67,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="PharmKGB Drug &#38; Disease DB" origTitle="PharmKGB Drug &#38; Disease DB" TITLE="PharmKGB Drug &#38; Disease DB" HREF="../pharmkgb.html" target="_top" COORDS="789,413,789,411,786,413,781,414,773,416,760,417,747,417,734,416,722,415,715,413,711,412,712,413,704,413,704,415,705,417,708,419,712,421,721,423,732,424,744,425,757,425,769,424,783,422,790,420,793,418,795,416,796,414,797,413,789,413" onmouseover="UpdateTooltip(this,0,66,event)" onfocus="UpdateTooltip(this,0,66,event)" onclick="return OnShapeClick(0,66,event);" onkeyup="OnShapeKey(0,66,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="PharmKGB Drug &#38; Disease DB" origTitle="PharmKGB Drug &#38; Disease DB" TITLE="PharmKGB Drug &#38; Disease DB" HREF="../pharmkgb.html" target="_top" COORDS="789,408,789,407,786,408,781,410,773,411,760,413,747,413,734,412,722,411,715,409,711,407,712,408,704,408,704,410,705,413,708,415,712,416,721,419,732,420,744,421,757,421,769,420,783,418,790,415,793,414,795,412,796,409,797,408,789,408" onmouseover="UpdateTooltip(this,0,66,event)" onfocus="UpdateTooltip(this,0,66,event)" onclick="return OnShapeClick(0,66,event);" onkeyup="OnShapeKey(0,66,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="PharmKGB Drug &#38; Disease DB" origTitle="PharmKGB Drug &#38; Disease DB" TITLE="PharmKGB Drug &#38; Disease DB" HREF="../pharmkgb.html" target="_top" COORDS="710,489,711,490,715,491,720,492,726,493,734,494,742,495,750,495,758,495,766,494,774,493,780,492,785,491,789,490,792,488,793,486,793,408,792,407,790,406,789,405,785,404,780,402,772,401,765,400,758,400,750,400,742,400,735,400,728,401,720,402,714,404,710,406,708,407,708,408,708,486,708,488,710,489" onmouseover="UpdateTooltip(this,0,66,event)" onfocus="UpdateTooltip(this,0,66,event)" onclick="return OnShapeClick(0,66,event);" onkeyup="OnShapeKey(0,66,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="GeneDive DB (SQLite)" origTitle="GeneDive DB (SQLite)" TITLE="GeneDive DB (SQLite)" HREF="../genedive-db.html" target="_top" COORDS="900,287,901,286,898,287,892,289,884,290,872,291,859,292,845,291,834,290,826,288,823,286,823,287,815,287,816,289,817,291,820,293,824,295,833,297,844,299,856,300,869,300,881,299,894,297,902,294,905,293,907,291,908,288,908,287,900,287" onmouseover="UpdateTooltip(this,0,65,event)" onfocus="UpdateTooltip(this,0,65,event)" onclick="return OnShapeClick(0,65,event);" onkeyup="OnShapeKey(0,65,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="GeneDive DB (SQLite)" origTitle="GeneDive DB (SQLite)" TITLE="GeneDive DB (SQLite)" HREF="../genedive-db.html" target="_top" COORDS="900,283,901,282,898,283,892,285,884,286,872,287,859,287,845,287,834,285,826,283,823,282,823,283,815,283,816,285,817,287,820,289,824,291,833,293,844,295,856,295,869,295,881,294,894,292,902,290,905,289,907,286,908,284,908,283,900,283" onmouseover="UpdateTooltip(this,0,65,event)" onfocus="UpdateTooltip(this,0,65,event)" onclick="return OnShapeClick(0,65,event);" onkeyup="OnShapeKey(0,65,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="GeneDive DB (SQLite)" origTitle="GeneDive DB (SQLite)" TITLE="GeneDive DB (SQLite)" HREF="../genedive-db.html" target="_top" COORDS="821,332,823,333,827,334,832,336,840,337,847,338,854,338,862,338,870,338,878,337,885,337,892,336,897,334,901,333,903,331,904,330,904,283,903,281,901,280,897,278,892,277,884,276,877,275,870,275,862,274,854,275,847,275,840,276,832,277,827,278,823,280,820,281,819,283,819,330,820,331,821,332" onmouseover="UpdateTooltip(this,0,65,event)" onfocus="UpdateTooltip(this,0,65,event)" onclick="return OnShapeClick(0,65,event);" onkeyup="OnShapeKey(0,65,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="GeneDive Web Service (RESTful API)  PHP" origTitle="GeneDive Web Service (RESTful API)  PHP" TITLE="GeneDive Web Service (RESTful API)  PHP" HREF="../web-service.html" target="_top" COORDS="538,335,788,335,788,278,538,278,538,335" onmouseover="UpdateTooltip(this,0,64,event)" onfocus="UpdateTooltip(this,0,64,event)" onclick="return OnShapeClick(0,64,event);" onkeyup="OnShapeKey(0,64,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="State &#38; History Manager" origTitle="State &#38; History Manager" TITLE="State &#38; History Manager" HREF="../history.html" target="_top" COORDS="297,112,405,112,405,57,297,57,297,112" onmouseover="UpdateTooltip(this,0,45,event)" onfocus="UpdateTooltip(this,0,45,event)" onclick="return OnShapeClick(0,45,event);" onkeyup="OnShapeKey(0,45,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Grouping" origTitle="Grouping" TITLE="Grouping" HREF="../grouping.html" target="_top" COORDS="817,202,902,202,902,145,817,145,817,202" onmouseover="UpdateTooltip(this,0,32,event)" onfocus="UpdateTooltip(this,0,32,event)" onclick="return OnShapeClick(0,32,event);" onkeyup="OnShapeKey(0,32,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Highlight" origTitle="Highlight" TITLE="Highlight" HREF="../highlight.html" target="_top" COORDS="720,202,791,202,791,145,720,145,720,202" onmouseover="UpdateTooltip(this,0,31,event)" onfocus="UpdateTooltip(this,0,31,event)" onclick="return OnShapeClick(0,31,event);" onkeyup="OnShapeKey(0,31,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Synonym Tagging" origTitle="Synonym Tagging" TITLE="Synonym Tagging" HREF="../synonym-tagging.html" target="_top" COORDS="609,202,693,202,693,145,609,145,609,202" onmouseover="UpdateTooltip(this,0,29,event)" onfocus="UpdateTooltip(this,0,29,event)" onclick="return OnShapeClick(0,29,event);" onkeyup="OnShapeKey(0,29,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Disambiguation Manager" origTitle="Disambiguation Manager" TITLE="Disambiguation Manager" HREF="../disambiguation.html" target="_top" COORDS="297,202,405,202,405,145,297,145,297,202" onmouseover="UpdateTooltip(this,0,25,event)" onfocus="UpdateTooltip(this,0,25,event)" onclick="return OnShapeClick(0,25,event);" onkeyup="OnShapeKey(0,25,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Typeahead (aka Autocomplete)" origTitle="Typeahead (aka Autocomplete)" TITLE="Typeahead (aka Autocomplete)" HREF="../typeahead.html" target="_top" COORDS="132,202,240,202,240,145,132,145,132,202" onmouseover="UpdateTooltip(this,0,24,event)" onfocus="UpdateTooltip(this,0,24,event)" onclick="return OnShapeClick(0,24,event);" onkeyup="OnShapeKey(0,24,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Filter" origTitle="Filter" TITLE="Filter" HREF="../filter.html" target="_top" COORDS="523,202,582,202,582,145,523,145,523,202" onmouseover="UpdateTooltip(this,0,23,event)" onfocus="UpdateTooltip(this,0,23,event)" onclick="return OnShapeClick(0,23,event);" onkeyup="OnShapeKey(0,23,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Search  Manager" origTitle="Search  Manager" TITLE="Search  Manager" HREF="../search-manager.html" target="_top" COORDS="432,202,502,202,502,145,432,145,432,202" onmouseover="UpdateTooltip(this,0,22,event)" onfocus="UpdateTooltip(this,0,22,event)" onclick="return OnShapeClick(0,22,event);" onkeyup="OnShapeKey(0,22,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Automation Framework Puppeteer/Node" origTitle="Automation Framework Puppeteer/Node" TITLE="Automation Framework Puppeteer/Node" HREF="../automation.html" target="_top" COORDS="157,57,138,57,138,112,246,112,246,57,226,57,226,57,157,57,157,57" onmouseover="UpdateTooltip(this,0,20,event)" onfocus="UpdateTooltip(this,0,20,event)" onclick="return OnShapeClick(0,20,event);" onkeyup="OnShapeKey(0,20,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="DGR Symbol → ID map" origTitle="DGR Symbol → ID map" TITLE="DGR Symbol → ID map" HREF="../google.com" target="_top" COORDS="63,364,27,364,27,427,35,432,43,435,51,436,60,435,68,432,75,427,83,422,91,419,100,418,108,419,116,422,124,427,124,364,88,364,88,363,63,363,63,364" onmouseover="UpdateTooltip(this,0,13,event)" onfocus="UpdateTooltip(this,0,13,event)" onclick="return OnShapeClick(0,13,event);" onkeyup="OnShapeKey(0,13,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="User Input" origTitle="User Input" TITLE="User Input" HREF="../user-input.html" target="_top" COORDS="5,210,101,210,101,138,5,170,5,210" onmouseover="UpdateTooltip(this,0,12,event)" onfocus="UpdateTooltip(this,0,12,event)" onclick="return OnShapeClick(0,12,event);" onkeyup="OnShapeKey(0,12,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="DeepDive DGRI Data Mallory et al" origTitle="DeepDive DGRI Data Mallory et al" TITLE="DeepDive DGRI Data Mallory et al" HREF="../dgri.html" target="_top" COORDS="890,413,890,411,888,413,882,414,874,416,862,417,848,417,835,416,824,415,816,413,813,412,813,413,805,413,806,415,807,417,810,419,814,421,823,423,834,424,846,425,859,425,871,424,884,422,892,420,895,418,897,416,898,414,898,413,890,413" onmouseover="UpdateTooltip(this,0,7,event)" onfocus="UpdateTooltip(this,0,7,event)" onclick="return OnShapeClick(0,7,event);" onkeyup="OnShapeKey(0,7,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="DeepDive DGRI Data Mallory et al" origTitle="DeepDive DGRI Data Mallory et al" TITLE="DeepDive DGRI Data Mallory et al" HREF="../dgri.html" target="_top" COORDS="890,408,890,407,888,408,882,410,874,411,862,413,848,413,835,412,824,411,816,409,813,407,813,408,805,408,806,410,807,413,810,415,814,416,823,419,834,420,846,421,859,421,871,420,884,418,892,415,895,414,897,412,898,409,898,408,890,408" onmouseover="UpdateTooltip(this,0,7,event)" onfocus="UpdateTooltip(this,0,7,event)" onclick="return OnShapeClick(0,7,event);" onkeyup="OnShapeKey(0,7,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="DeepDive DGRI Data Mallory et al" origTitle="DeepDive DGRI Data Mallory et al" TITLE="DeepDive DGRI Data Mallory et al" HREF="../dgri.html" target="_top" COORDS="811,489,813,490,816,491,822,492,828,493,835,494,843,495,852,495,860,495,868,494,875,493,882,492,887,491,891,490,893,488,894,486,894,408,894,407,892,406,891,405,887,404,882,402,874,401,867,400,859,400,852,400,844,400,836,400,829,401,822,402,815,404,811,406,810,407,809,408,809,486,810,488,811,489" onmouseover="UpdateTooltip(this,0,7,event)" onfocus="UpdateTooltip(this,0,7,event)" onclick="return OnShapeClick(0,7,event);" onkeyup="OnShapeKey(0,7,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Saved User Sessions" origTitle="Saved User Sessions" TITLE="Saved User Sessions" HREF="../saved-user-sessions.html" target="_top" COORDS="4,289,11,294,19,297,28,298,37,297,45,294,52,289,59,284,68,281,76,280,85,281,93,284,100,289,100,226,4,226,4,289" onmouseover="UpdateTooltip(this,0,3,event)" onfocus="UpdateTooltip(this,0,3,event)" onclick="return OnShapeClick(0,3,event);" onkeyup="OnShapeKey(0,3,event);">
+  <AREA shape="POLYGON" tabindex="1" ALT="Automation Scripts" origTitle="Automation Scripts" TITLE="Automation Scripts" HREF="../automation-scripts.html" target="_top" COORDS="5,106,14,111,24,113,34,113,44,111,53,106,62,102,72,99,82,99,92,102,101,106,101,57,5,57,5,106" onmouseover="UpdateTooltip(this,0,2,event)" onfocus="UpdateTooltip(this,0,2,event)" onclick="return OnShapeClick(0,2,event);" onkeyup="OnShapeKey(0,2,event);">
+</MAP>
+
+
+</DIV>
+</body>
+</html>

@@ -1,0 +1,28 @@
+body {
+    margin-top: 150px;
+    margin-left: 400px;
+    margin-right: 400px;
+    margin-bottom: 200px;
+    border-style: solid;
+    border-color: grey;
+    padding: 50px 50px 50px 50px;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+a {
+    margin-left: 150px;
+    margin-right: 150px;
+    border-style: solid;
+    border-color: green;
+    background-color: green;
+    color: white;
+    text-align: center;
+    display: block;
+}

@@ -1,0 +1,20 @@
+<?php include_once "auth.php"; ?>
+<!--<?php include "header.php"; ?>-->
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="uml.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<h1>Search Manager</h1>
+<h4>Activates topologies that are associated with a user's topology button clicks -- 1 hop, 2 hop, and so on.</h4>
+<ul>
+    <li>Topology button group button clicks are handled by search.js, which activates the topologies corresponding to a user's button clicks</li>
+    <li>controller.js checks the topology that was set in search.js, and returns the interactions associated with the search term with respect to the minimum probability determined by the filter.</li>
+</ul>
+<p>Associated files:</p>
+<a href="../../static/genedive/search/search.js">search.js</a><br>
+<a href="../gen/GeneDiveAPI.js">GeneDiveAPI.js</a><br>
+<a href="../../static/genedive/controller.js">search.js</a>
+</body>
