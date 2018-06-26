@@ -2,7 +2,7 @@
 <!--<?php include "header.php"; ?>-->
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!--<link rel="stylesheet" type="text/css" href="uml.css">-->
+    <link rel="stylesheet" type="text/css" href="uml.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -11,7 +11,7 @@
 <h4>Used to manage data involving DGRs with many symbol IDs.</h4>
 <ul>
     <li>Uses GeneDiveAPI.js to provide additional info about DGRs that resolve to multiple IDs.</li>
-    <li>The search.js file calls disambiguation.js's resolveIds function in the event that a typeahead element is select by a user, and the associated gene requires disambiguation.</li>
+    <li>The search.js file calls disambiguation.js's resolveIds() function when that a typeahead element is select by a user, and the associated gene requires disambiguation.</li>
 </ul>
 <a href="search.js">search.js</a><br>
 <a href="GeneDiveAPI.js">GeneDiveAPI.js</a><br>
