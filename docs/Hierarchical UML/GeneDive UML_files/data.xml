@@ -1,0 +1,1079 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisioDocument>
+	<DocumentProperties>
+		<Title></Title>
+		<HyperlinkBase href=""></HyperlinkBase>
+	</DocumentProperties>
+	<Pages>
+		<Page ID="0" Name="Page-1" NameU="Page-1">
+			<PageProps>
+				<PageScale Unit="IN">1.000000000000000</PageScale>
+				<DrawingScale Unit="IN_F">1.000000000000000</DrawingScale>
+			</PageProps>
+			<Layer IX="0">
+				<Name>Flowchart</Name>
+				<NameUniv>Flowchart</NameUniv>
+				<Visible>1</Visible>
+			</Layer>
+			<Layer IX="1">
+				<Name>Network</Name>
+				<NameUniv>Network</NameUniv>
+				<Visible>1</Visible>
+			</Layer>
+			<Layer IX="2">
+				<Name>Connector</Name>
+				<NameUniv>Connector</NameUniv>
+				<Visible>1</Visible>
+			</Layer>
+			<Layer IX="3">
+				<Name>Container</Name>
+				<NameUniv>Container</NameUniv>
+				<Visible>1</Visible>
+			</Layer>
+			<Shapes>
+				<Shape ID="132" UniqueID="{4F8B7D85-687A-48DF-8B45-E182CCA18A89}" Name="Plain" NameU="Plain" Master="20">
+					<Text>GeneDive Control System</Text>
+					<XForm>
+						<PinX Unit="IN_F">4.744070842304995</PinX>
+						<PinY Unit="IN_F">9.870778525476247</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>3</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="2" UniqueID="{31DDFD6E-A04D-47CE-B952-50E3DA985B34}" Name="Document" NameU="Document" Master="2">
+					<Text>Automation
+Scripts</Text>
+					<XForm>
+						<PinX Unit="IN_F">0.753348214285714</PinX>
+						<PinY Unit="IN_F">10.088986766581639</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../automation-scripts.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="3" UniqueID="{CED624AE-5AFF-47F9-BF15-78684AF8BA4D}" Name="Document.3" NameU="Document.3" Master="2">
+					<Text>Saved User
+Sessions</Text>
+					<XForm>
+						<PinX Unit="IN_F">0.744838169642847</PinX>
+						<PinY Unit="IN_F">8.721261160714285</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../saved-user-sessions.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="7" UniqueID="{11DAF996-66A2-4115-B62E-F6C6792ABAA8}" Name="Disk storage.7" NameU="Disk storage.7" Master="4">
+					<Text>DeepDive
+DGRI Data Mallory et al</Text>
+					<XForm>
+						<PinX Unit="IN_F">6.921875000000000</PinX>
+						<PinY Unit="IN_F">7.289062500000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../dgri.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="12" UniqueID="{4D8FD2C8-BEBE-4488-9296-86234452DEB6}" Name="Manual input" NameU="Manual input" Master="8">
+					<Text>User Input</Text>
+					<XForm>
+						<PinX Unit="IN_F">0.753348214285714</PinX>
+						<PinY Unit="IN_F">9.403738839285715</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../user-input.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="13" UniqueID="{36BE9285-B7BA-4F32-97C9-09C8FA378372}" Name="Document.13" NameU="Document.13" Master="2">
+					<Text>DGR
+Symbol → ID
+map</Text>
+					<XForm>
+						<PinX Unit="IN_F">0.925223214285714</PinX>
+						<PinY Unit="IN_F">7.653738995282243</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../google.com</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="14" UniqueID="{B1E952D3-7C4F-4EEB-A254-D43215A19559}" Name="Document.14" NameU="Document.14" Master="2">
+					<Text>KEGG &amp; 
+Reactome
+Geneset → </Text>
+					<XForm>
+						<PinX Unit="IN_F">1.878348214285714</PinX>
+						<PinY Unit="IN_F">7.653738995282243</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="15" UniqueID="{BB56BF7C-127F-423B-A8C7-807B9D426347}" Name="Document.15" NameU="Document.15" Master="2">
+					<Text>DeepDive
+DGRI Network
+&amp; Probability</Text>
+					<XForm>
+						<PinX Unit="IN_F">2.831473214285714</PinX>
+						<PinY Unit="IN_F">7.653738995282243</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="20" UniqueID="{E4FB8EC3-C81E-4D1C-BE26-AE7E08F0846E}" Name="Rectangle.20" NameU="Rectangle.20" Master="7">
+					<Text>Automation Framework
+Puppeteer/Node</Text>
+					<XForm>
+						<PinX Unit="IN_F">1.822893391895514</PinX>
+						<PinY Unit="IN_F">10.091756847668059</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../automation.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="22" UniqueID="{8B287611-9B8F-43E9-BCB7-7ED09CDE59D0}" Name="Rectangle.22" NameU="Rectangle.22" Master="7">
+					<Text>Search 
+Manager</Text>
+					<XForm>
+						<PinX Unit="IN_F">3.952683198443140</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../search-manager.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="23" UniqueID="{58522B96-FE91-4453-B5F5-CAD0932AA4ED}" Name="Rectangle.23" NameU="Rectangle.23" Master="7">
+					<Text>Filter</Text>
+					<XForm>
+						<PinX Unit="IN_F">4.610072521359802</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../filter.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="24" UniqueID="{B8D5D130-068A-4D36-B78A-562F9CE87E08}" Name="Rectangle.24" NameU="Rectangle.24" Master="7">
+					<Text>Typeahead (aka Autocomplete)</Text>
+					<XForm>
+						<PinX Unit="IN_F">1.781249966821634</PinX>
+						<PinY Unit="IN_F">9.403738671647655</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../typeahead.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="25" UniqueID="{A8659899-CE62-4144-B80B-5D7E8113F457}" Name="Rectangle.25" NameU="Rectangle.25" Master="7">
+					<Text>Disambiguation Manager</Text>
+					<XForm>
+						<PinX Unit="IN_F">3.051618280288382</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../disambiguation.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="29" UniqueID="{57575CD8-689E-421D-9D1C-8C149E99D21D}" Name="Rectangle.29" NameU="Rectangle.29" Master="7">
+					<Text>Synonym
+Tagging</Text>
+					<XForm>
+						<PinX Unit="IN_F">5.371651762431222</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../synonym-tagging.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="30" UniqueID="{4D5F3487-DCD3-469B-9B9B-3641F57D882B}" Name="Sheet.30" NameU="Sheet.30">
+					<XForm>
+						<PinX Unit="IN_F">0.899015309226190</PinX>
+						<PinY Unit="IN_F">10.249798146726190</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="31" UniqueID="{D76DEF92-616A-4D86-A21B-462AE9916BB1}" Name="Rectangle.31" NameU="Rectangle.31" Master="7">
+					<Text>Highlight</Text>
+					<XForm>
+						<PinX Unit="IN_F">6.178222632966932</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../highlight.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="32" UniqueID="{1F328D6D-E079-48DA-BDBC-9D85761B0E56}" Name="Rectangle.32" NameU="Rectangle.32" Master="7">
+					<Text>Grouping</Text>
+					<XForm>
+						<PinX Unit="IN_F">6.984793503502640</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../grouping.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="34" UniqueID="{94F778C8-1D06-4AC2-9397-730E06B7A969}" Name="Dynamic connector" NameU="Dynamic connector" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">5.803222632966931</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="35" UniqueID="{4D3904F2-8AB5-4C91-A319-E4CF20C8CDC3}" Name="Dynamic connector.35" NameU="Dynamic connector.35" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">6.553222632966930</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="38" UniqueID="{8B6387BC-712B-4F01-B191-04FA865935EC}" Name="Dynamic connector.38" NameU="Dynamic connector.38" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">1.244070853946527</PinX>
+						<PinY Unit="IN_F">9.403738755466685</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="39" UniqueID="{9FFF416F-0869-4D27-954F-F513B455CCDC}" Name="Dynamic connector.39" NameU="Dynamic connector.39" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">1.264892566483466</PinX>
+						<PinY Unit="IN_F">10.090371807124850</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="40" UniqueID="{92836CA2-8EB1-4013-B6B4-A714019FC4F3}" Name="Dynamic connector.40" NameU="Dynamic connector.40" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">1.624999976716936</PinX>
+						<PinY Unit="IN_F">9.751686395659132</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="45" UniqueID="{AC6F59C8-E274-4B44-85EC-9A7D61409835}" Name="Rectangle.45" NameU="Rectangle.45" Master="7">
+					<Text>State &amp; History
+Manager</Text>
+					<XForm>
+						<PinX Unit="IN_F">3.051618280288382</PinX>
+						<PinY Unit="IN_F">10.093443410965252</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../statehistory-manager.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="46" UniqueID="{28F04525-1456-4BA9-B680-83B252113603}" Name="Dynamic connector.46" NameU="Dynamic connector.46" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">2.416434123555008</PinX>
+						<PinY Unit="IN_F">9.404581953296251</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="54" UniqueID="{324EBCDD-71E3-4AA0-B820-EAA486E5C4AC}" Name="Dynamic connector.54" NameU="Dynamic connector.54" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">2.416772847132536</PinX>
+						<PinY Unit="IN_F">8.874717081733030</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="55" UniqueID="{473E0F1E-3F05-4212-8F95-FFB2B4ACF871}" Name="Dynamic connector.55" NameU="Dynamic connector.55" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">1.777707334336753</PinX>
+						<PinY Unit="IN_F">8.717623884485540</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="59" UniqueID="{19DA480C-EFD1-45C3-9442-7ACF91EDE24D}" Name="Dynamic connector.59" NameU="Dynamic connector.59" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">1.874999988358466</PinX>
+						<PinY Unit="IN_F">9.407352285839767</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="60" UniqueID="{C99DD1FD-E361-4ECF-A275-3A3853A951BC}" Name="Dynamic connector.60" NameU="Dynamic connector.60" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">2.416434123555008</PinX>
+						<PinY Unit="IN_F">9.752529677307727</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="61" UniqueID="{B4AB891B-E560-4689-930F-30FCEF258033}" Name="Dynamic connector.61" NameU="Dynamic connector.61" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">4.940080891895512</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="62" UniqueID="{97AF305D-6305-4ABF-875A-832545488A7B}" Name="Dynamic connector.62" NameU="Dynamic connector.62" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">4.303873674633616</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="63" UniqueID="{EDAD77EE-F5CF-4128-978D-FC2BDD4B2E77}" Name="Dynamic connector.63" NameU="Dynamic connector.63" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">3.575427804097906</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="64" UniqueID="{08F36747-8AB8-41E7-82A7-37CB30E038AA}" Name="Rectangle.64" NameU="Rectangle.64" Master="7">
+					<Text>GeneDive Web Service (RESTful API) 
+PHP</Text>
+					<XForm>
+						<PinX Unit="IN_F">5.464773995535710</PinX>
+						<PinY Unit="IN_F">8.375000000000000</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../web-service.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="65" UniqueID="{02FC776E-1664-48D3-AD6E-BAC9AC937218}" Name="Disk storage.65" NameU="Disk storage.65" Master="4">
+					<Text>GeneDive
+DB (SQLite)
+</Text>
+					<XForm>
+						<PinX Unit="IN_F">7.000000000000000</PinX>
+						<PinY Unit="IN_F">8.378906250000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../genedive-db.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="66" UniqueID="{9FD55BDE-81D7-40E9-9BFF-6712BCDD3577}" Name="Disk storage.66" NameU="Disk storage.66" Master="4">
+					<Text>PharmKGB
+Drug &amp; Disease
+DB</Text>
+					<XForm>
+						<PinX Unit="IN_F">6.136858258928580</PinX>
+						<PinY Unit="IN_F">7.289062500000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../pharmkgb.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="67" UniqueID="{BC88F9E2-EDD5-4648-9ED7-81038FCA8924}" Name="Disk storage.67" NameU="Disk storage.67" Master="4">
+					<Text>Reactome &amp; 
+KEGG Genesets</Text>
+					<XForm>
+						<PinX Unit="IN_F">5.351841517857162</PinX>
+						<PinY Unit="IN_F">7.289062500000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../reactome.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="68" UniqueID="{BE21FEB6-EB6F-48A7-8E92-86CEC75CEBB0}" Name="Disk storage.68" NameU="Disk storage.68" Master="4">
+					<Text>Entrez/NCBI
+Gene Data
+(IDs, Symbols, Aliases)</Text>
+					<XForm>
+						<PinX Unit="IN_F">4.570591517857162</PinX>
+						<PinY Unit="IN_F">7.289062500000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../entrez.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+					<Prop ID="1" Name="Cost" NameU="Cost">
+						<Value></Value>
+						<Label>Cost</Label>
+					</Prop>
+					<Prop ID="2" Name="Duration" NameU="Duration">
+						<Value></Value>
+						<Label>Duration</Label>
+					</Prop>
+					<Prop ID="3" Name="Resources" NameU="Resources">
+						<Value></Value>
+						<Label>Resources</Label>
+					</Prop>
+				</Shape>
+				<Shape ID="79" UniqueID="{4DAA87A8-4370-41B5-8AD2-1919B8A96CC2}" Name="Dynamic connector.79" NameU="Dynamic connector.79" Master="6">
+					<Text>Excerpt 
+Search</Text>
+					<XForm>
+						<PinX Unit="IN_F">4.250000000000000</PinX>
+						<PinY Unit="IN_F">8.780967161477523</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="80" UniqueID="{63C3BC6E-08EC-45A7-8B7C-367684C58D7A}" Name="Dynamic connector.80" NameU="Dynamic connector.80" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">5.785295758928581</PinX>
+						<PinY Unit="IN_F">7.894531250000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="90" UniqueID="{75BDC554-ACC6-4DAD-9ABD-2ACDB4EDFA7C}" Name="Dynamic connector.90" NameU="Dynamic connector.90" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">6.175920758928581</PinX>
+						<PinY Unit="IN_F">7.894531250000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="91" UniqueID="{9873E60F-0610-4431-8DB3-F6CBCE37D486}" Name="Dynamic connector.91" NameU="Dynamic connector.91" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">6.568429129464290</PinX>
+						<PinY Unit="IN_F">7.894531249999998</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="92" UniqueID="{34930300-2820-4E33-AD6C-27E19FDE6636}" Name="Dynamic connector.92" NameU="Dynamic connector.92" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">6.960937500000000</PinX>
+						<PinY Unit="IN_F">7.894531250000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="93" UniqueID="{E788CEE7-B906-4AE9-B332-40FABF7F4579}" Name="Dynamic connector.93" NameU="Dynamic connector.93" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">6.550711495535709</PinX>
+						<PinY Unit="IN_F">8.376953125000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="95" UniqueID="{475CCC04-9019-4759-9256-A924850B7A95}" Name="Rectangle.95" NameU="Rectangle.95" Master="7">
+					<Text>Graph View
+(SVG via 
+CytoScape)</Text>
+					<XForm>
+						<PinX Unit="IN_F">7.978445870535709</PinX>
+						<PinY Unit="IN_F">8.550926819367678</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../graph-view.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="100" UniqueID="{9E7C5CEA-7BF7-4594-B23D-44F3248B7FC6}" Name="Rectangle.100" NameU="Rectangle.100" Master="7">
+					<Text>View Manager</Text>
+					<XForm>
+						<PinX Unit="IN_F">7.796874976716936</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../view-manager.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="101" UniqueID="{00774295-118F-43E9-855D-C59BA13C2D9D}" Name="Dynamic connector.101" NameU="Dynamic connector.101" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">7.390834240109788</PinX>
+						<PinY Unit="IN_F">9.405425234944849</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="103" UniqueID="{E760F6CA-A350-4761-BD74-E067CC8B7C37}" Name="Dynamic connector.103" NameU="Dynamic connector.103" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">5.672363196266830</PinX>
+						<PinY Unit="IN_F">9.921332978297800</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="104" UniqueID="{5567D4E4-0C0E-4DD0-BDE6-2C91C348F36E}" Name="Dynamic connector.104" NameU="Dynamic connector.104" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">5.843749891151677</PinX>
+						<PinY Unit="IN_F">9.624999820720408</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="107" UniqueID="{491AEE5A-2865-498D-91C1-F2461B7FFF88}" Name="Dynamic connector.107" NameU="Dynamic connector.107" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">3.664550733665251</PinX>
+						<PinY Unit="IN_F">9.858679778949950</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="108" UniqueID="{C976A3F8-23DA-488C-82F9-4176F72D7DA9}" Name="Rectangle.108" NameU="Rectangle.108" Master="7">
+					<XForm>
+						<PinX Unit="IN_F">1.843749993597157</PinX>
+						<PinY Unit="IN_F">7.750000009313226</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="111" UniqueID="{A533AF51-E14F-4CA0-8563-B57F5D79EE3D}" Name="Sheet.111" NameU="Sheet.111">
+					<Text>GeneDive Front End JSON Cache</Text>
+					<XForm>
+						<PinX Unit="IN_F">1.314278733018517</PinX>
+						<PinY Unit="IN_F">8.062500000000000</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="113" UniqueID="{247CFA1E-8A80-4EF7-B299-02E70C575F35}" Name="Sheet.113" NameU="Sheet.113">
+					<Text>Extract-Transform-JSONify Scripts</Text>
+					<XForm>
+						<PinX Unit="IN_F">1.750000000000000</PinX>
+						<PinY Unit="IN_F">6.562500000000000</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="114" UniqueID="{8C79E832-EB74-4436-9327-FA85429AB8D5}" Name="Dynamic connector.114" NameU="Dynamic connector.114" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">3.923549107142857</PinX>
+						<PinY Unit="IN_F">7.183279932908979</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="115" UniqueID="{6C79981D-9DE7-43E8-A69D-4BD15A4E7818}" Name="Dynamic connector.115" NameU="Dynamic connector.115" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">1.900111607142857</PinX>
+						<PinY Unit="IN_F">7.081717432908980</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="117" UniqueID="{43075C26-FD6B-46BF-B37E-9DAD8DDE0B6B}" Name="Dynamic connector.117" NameU="Dynamic connector.117" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">2.853236607142857</PinX>
+						<PinY Unit="IN_F">7.081717432908979</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="118" UniqueID="{C8CD7DA6-3AC7-4C05-9450-700EB5A9A846}" Name="Dynamic connector.118" NameU="Dynamic connector.118" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">4.566545758928581</PinX>
+						<PinY Unit="IN_F">6.820312500000001</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="119" UniqueID="{944A7A35-2C07-46CE-B34D-5D4AE4186617}" Name="Dynamic connector.119" NameU="Dynamic connector.119" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">5.300920758928581</PinX>
+						<PinY Unit="IN_F">6.820312500000001</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="122" UniqueID="{81CF341E-B2B7-4340-B2F7-6519FDD22A3B}" Name="Rectangle.122" NameU="Rectangle.122" Master="7">
+					<Text>Table 
+View (HTML)</Text>
+					<XForm>
+						<PinX Unit="IN_F">7.978445870535709</PinX>
+						<PinY Unit="IN_F">7.800926987005735</PinY>
+					</XForm>
+					<Scratch>
+						<B>
+							<SolutionXML>
+								<HLURL:Hyperlinks xmlns:HLURL="urn:schemas-microsoft-com:office:visio:dghlinkext">
+									<HLURL:Hyperlink ID="1">
+										<HLURL:Description></HLURL:Description>
+										<HLURL:Address>../table-view.html</HLURL:Address>
+										<HLURL:SubAddress></HLURL:SubAddress>
+										<HLURL:ExtraInfo></HLURL:ExtraInfo>
+										<HLURL:Default>0</HLURL:Default>
+										<HLURL:NewWindow>0</HLURL:NewWindow>
+									</HLURL:Hyperlink>
+								</HLURL:Hyperlinks>
+							</SolutionXML>
+						</B>
+					</Scratch>
+				</Shape>
+				<Shape ID="123" UniqueID="{3A9206AC-99C2-422B-B2DD-31F19AFBA3D8}" Name="Rectangle.123" NameU="Rectangle.123" Master="7">
+					<XForm>
+						<PinX Unit="IN_F">5.875000000000000</PinX>
+						<PinY Unit="IN_F">8.437500000000000</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="125" UniqueID="{6C12B006-829A-4A30-89A2-779A84815BE6}" Name="Dynamic connector.125" NameU="Dynamic connector.125" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">7.751883358894178</PinX>
+						<PinY Unit="IN_F">8.868930571161364</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="138" UniqueID="{51D4AAF2-ABC2-4D36-B739-A8636CF15205}" Name="Sheet.138" NameU="Sheet.138">
+					<Text>GeneDive Backend</Text>
+					<XForm>
+						<PinX Unit="IN_F">4.935721266981483</PinX>
+						<PinY Unit="IN_F">8.750000000000000</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="145" UniqueID="{A67543D1-ACC8-46C7-AA1A-8DE204B78105}" Name="Dynamic connector.145" NameU="Dynamic connector.145" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">7.615350632440472</PinX>
+						<PinY Unit="IN_F">8.180225398264771</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="147" UniqueID="{86FB534E-AB13-44A0-8DA2-E298BFB5B63B}" Name="Dynamic connector.147" NameU="Dynamic connector.147" Master="6">
+					<Text>Network &amp;
+Probability
+Search</Text>
+					<XForm>
+						<PinX Unit="IN_F">3.609374996798579</PinX>
+						<PinY Unit="IN_F">8.468467166134136</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>2</LayerMember>
+					</LayerMem>
+				</Shape>
+			</Shapes>
+		</Page>
+	</Pages>
+</VisioDocument>

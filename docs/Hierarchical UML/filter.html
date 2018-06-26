@@ -1,0 +1,20 @@
+<?php include_once "auth.php"; ?>
+<!--<?php include "header.php"; ?>-->
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="uml.css">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<h1>Filter</h1>
+<h4>The filter component provides users with the ability to constrain results based on minimum confidence score.</h4>
+<ul>
+    <li>Determined by slider bar value, which is carefully tracked via probabilityfilter.js.</li>
+    <li>Button clicks can automatically set the confidence score and corresponding slider to a hard-coded value, also handled via probabilityfilter.js.</li>
+    <li>Controller.js creates an instance of probabilityfilter.js, and monitors that instance's properties in order to update the user's desired minimum probability.</li>
+</ul>
+<a href="search.js">search.js</a><br>
+<a href="GeneDiveAPI.js">GeneDiveAPI.js</a><br>
+<a href="..search.js">search.js</a>
+</body>
