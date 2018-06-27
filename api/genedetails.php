@@ -2,16 +2,31 @@
   
   $pdo = new PDO( 'sqlite:../data/data.sqlite');
 
-  $gid = $_GET['ids'];
-  $query = "SELECT ngd.*, ifnull(amount,0) as count FROM ncbi_gene_data ngd LEFT JOIN interaction_count ic ON ngd.id = ic.gene_id WHERE ngd.id IN ( ? );";
+  $gids = explode(",",$_GET['ids']);
+
+  $prepared_slots = array_fill(0, sizeof($gids), "?");
+  $prepared_slots = implode(" , ", $prepared_slots);
+  $query = "SELECT geneid, mention, COUNT(*) as interactions, type, probability as max_probability, context as max_context FROM (
+	SELECT geneids1 AS geneid,  type1 as type, mention1 AS mention, context, probability 
+		FROM interactions 
+		WHERE geneids1 IN ( $prepared_slots ) 
+	UNION 
+		SELECT geneids2 AS geneid, type2 as type, mention2 AS mention, context, probability
+		FROM interactions
+		WHERE geneids2 IN ( $prepared_slots )
+	)
+GROUP BY geneid
+ORDER BY probability DESC;";
 
   $stmt = $pdo->prepare($query);
 
 
   if(!$stmt)
-      print("[]");
+  {
+      echo "[]";
+  }
   else{
-      $stmt->execute(array($gid));
+      $stmt->execute(array_merge($gids, $gids));
 
       echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
   }

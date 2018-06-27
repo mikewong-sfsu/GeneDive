@@ -41,7 +41,7 @@ class Disambiguation {
           if ( closeEvent.index === 0 ) return;  // Cancel
           let selected = $(".disambiguation-form input:checked");
 
-          GeneDive.search.addSearchSet( selected.data("name"), [selected.val()], type );
+          GeneDive.search.addSearchSet( selected.data("name"), [selected.val()], selected.data("type") );
 
         }
     }});
@@ -70,16 +70,17 @@ class Disambiguation {
           }});
   }
 
-  prepareForm ( symbol, geneData ) {
+  prepareForm ( dgrDetails ) {
 
     let form = $("<form/>").addClass("disambiguation-form");
-    form.append("<p/>").text(`${symbol} resolves to several different genes.`);
+    form.append("<p/>").text(`${dgrDetails[0].mention} resolves to multiple ids.`);
     form.append("<br/>");
-    for ( let gene of geneData ) {
+    for ( let dgr of dgrDetails ) {
       let input = `<div class="disambiguation-row">
-                    <input type='radio' value='${gene.id}' name='resolveId' data-name='${gene.primary}'>
-                    <span class='symbol'>${gene.primary}</span>
-                    <span class='name'>${gene.name}</span>
+                    <input type='radio' value='${dgr.geneid}' name='resolveId' data-name='${dgr.mention}' data-type='${dgr.type}'>
+                    <span class='name'>${dgr.geneid}</span> with 
+                    <span class='interactions'>${dgr.interactions} interactions</span>
+                    and a max probability of <span class='probability'>${dgr.max_probability}</span>
                   </div>`;
       form.append(input);
     }
@@ -89,10 +90,11 @@ class Disambiguation {
   }
 
   resolveIds ( symbol, ids ) {
-    GeneDiveAPI.geneDetails(ids.toString(), ( geneDetails ) => {
-      let details = JSON.parse(geneDetails);
+    GeneDiveAPI.geneDetails(ids.toString(), ( dgrDetails ) => {
+      let details = JSON.parse(dgrDetails);
+      console.debug(dgrDetails);
       if(details.length > 0)
-        alertify.disambiguationPrompt( this.prepareForm( symbol, details ));
+        alertify.disambiguationPrompt( this.prepareForm( JSON.parse(dgrDetails) ));
       else
         alertify.disambiguationPromptNoResults( `No results found in NCBI DB for <i>${symbol}</i>.`);
     });
