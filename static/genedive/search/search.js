@@ -22,7 +22,7 @@ class Search {
     this.settingState = false;
     this.GENES_NAME = "Genes";
     this.DISEASES_NAME = "Diseases";
-    this.CHEMICALS_NAME = "Chemicals";
+    this.DRUGS_NAME = "Drugs";
     this.GENESETS_NAME = "Genesets";
     this.TOPOLOGY_ONE_HOP = "1hop";
     this.TOPOLOGY_TWO_HOP = "2hop";
@@ -30,7 +30,7 @@ class Search {
     this.TOPOLOGY_CLIQUE = "clique";
     this.NAME_MAP = {};
       this.NAME_MAP[this.GENES_NAME    ] = "g";
-      this.NAME_MAP[this.CHEMICALS_NAME] = "r";
+      this.NAME_MAP[this.DRUGS_NAME] = "r";
       this.NAME_MAP[this.DISEASES_NAME ] = "d";
       this.NAME_MAP[this.GENESETS_NAME ] = "s";
 
@@ -247,76 +247,83 @@ class Search {
     for (let set of this.sets) {
       let item = undefined;
 
-        let links = [];
-
-        let mesh_url = null; //`https://meshb.nlm.nih.gov/search?searchInField=termDescriptor&sort=&size=20&searchType=exactMatch&searchMethod=FullWord&q=${set.name}`;
-        if(set.ids[0].substring(0, 5).toUpperCase() === "MESH:")
-          mesh_url = `https://meshb.nlm.nih.gov/record/ui?ui=${set.ids[0].substring(5)}`;
-
-        let phgkb_url = null;
-        let phgkb_types = {"d": "variant", "g":"gene","r":"chemical", };
-        if(set.ids[0].substring(0, 2).toUpperCase() === "PA" && set.type in phgkb_types) {
-          if(set.type === "r")
-            phgkb_url = `https://www.pharmgkb.org/${phgkb_types[set.type]}/${set.ids[0]}`;
-          else
-            phgkb_url = `https://www.pharmgkb.org/search?connections&query=${set.name}`;
-        }
-        // IDs are prepended with C or D
-        if(set.type === "g") {
-          links.push($("<a/>").addClass("linkout ncbi-linkout")
-            .attr("data-toggle", "tooltip")
-            .attr("data-container", "body")
-            .attr("title", "Open NCBI Datasheet In New Tab")
-            .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${set.ids[0]}`)
-            .attr("target", "_blank")
-            .append($("<svg>")
-              .append(this.svgNCBI)
-            ));
-        }
-
-        // PHARMGKB
-      if(phgkb_url !== null)
-        links.push($("<a/>").addClass("linkout pharmgkb-linkout")
-          .attr("data-toggle", "tooltip")
-          .attr("data-container", "body")
-          .attr("title", "Open PharmGKB Datasheet In New Tab")
-          .attr("href", phgkb_url)
-          .attr("target", "_blank")
-          .append($("<svg>")
-            .append(this.svgPharm)
-          ));
-
-        // MESH
-      if(mesh_url !== null)
-       links.push($("<a/>").addClass("linkout mesh-linkout")
-            .attr("data-toggle", "tooltip")
-            .attr("data-container", "body")
-            .attr("title", "Open MeSH Datasheet In New Tab")
-            .attr("href", mesh_url)
-            .attr("target", "_blank")
-            .append($("<svg>")
-              .append(this.svgMesh)
-            ));
 
 
         item = $("<div/>")
           .addClass("search-item")
           .css("background-color", set.color)
           .append($("<span/>").addClass("name").text(set.name))
-          .append($("<span/>").append(links))
+          .append($("<span/>").addClass(`${set.id}-links`))
           .append(
-            $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
-              .on('click', (event) => {
-                this.removeSearchSet($(event.target).data("id"))
-              })
+              $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
+                  .on('click', (event) => {
+                      this.removeSearchSet($(event.target).data("id"));
+                  })
           );
 
 
       this.display.append(item);
+
+        GeneDiveAPI.alternativeIDs(set.ids[0]).then((returnedResult)=>{
+            this.setLinks(JSON.parse(returnedResult.vals), returnedResult.type ,set.id);
+        });
     }
 
     // Initialize tooltips
     $('[data-toggle="tooltip"]').tooltip({trigger: 'hover',});
+  }
+
+  setLinks(values, type, id){
+      let links = [];
+
+      let pharm_gkb_types = {
+          "g": "gene",
+          "d": "disease",
+          "c": "chemical",
+          "r": "drug",
+      };
+
+
+
+      // IDs are prepended with C or D
+      if("ncbi" in values) {
+          links.push($("<a/>").addClass("linkout ncbi-linkout")
+              .attr("data-toggle", "tooltip")
+              .attr("data-container", "body")
+              .attr("title", "Open NCBI Datasheet In New Tab")
+              .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${values.ncbi}`)
+              .attr("target", "_blank")
+              .append($("<svg>")
+                  .append(this.svgNCBI)
+              ));
+      }
+
+      // PHARMGKB
+      if("pgkb" in values)
+          links.push($("<a/>").addClass("linkout pharmgkb-linkout")
+              .attr("data-toggle", "tooltip")
+              .attr("data-container", "body")
+              .attr("title", "Open PharmGKB Datasheet In New Tab")
+              .attr("href", `https://www.pharmgkb.org/${pharm_gkb_types[type]}/${values.pgkb}`)
+              .attr("target", "_blank")
+              .append($("<svg>")
+                  .append(this.svgPharm)
+              ));
+
+      // MESH
+      if("mesh" in values)
+          links.push($("<a/>").addClass("linkout mesh-linkout")
+              .attr("data-toggle", "tooltip")
+              .attr("data-container", "body")
+              .attr("title", "Open MeSH Datasheet In New Tab")
+              .attr("href", `https://meshb.nlm.nih.gov/record/ui?ui=${values.mesh}`)
+              .attr("target", "_blank")
+              .append($("<svg>")
+                  .append(this.svgMesh)
+              ));
+
+      $(`.${id}-links`).empty().append(links);
+
   }
 
   initTypeahead() {
@@ -361,11 +368,11 @@ class Search {
         templates: {header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>"}
       },
       {
-        name: this.CHEMICALS_NAME,
+        name: this.DRUGS_NAME,
         source: chemical,
         limit: TYPE_AHEAD_LIMIT,
         display: 'symbol',
-        templates: {header: "<h4 style='color:rgb(128,128,128);'>Chemicals</h4>"}
+        templates: {header: "<h4 style='color:rgb(128,128,128);'>Drugs</h4>"}
       },
       {
         name: this.DISEASES_NAME,
