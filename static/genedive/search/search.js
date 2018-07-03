@@ -266,7 +266,7 @@ class Search {
 
         GeneDiveAPI.alternativeIDs(set.ids[0]).then((returnedResult)=>{
             this.setLinks(JSON.parse(returnedResult.vals), returnedResult.type ,set.id);
-        });
+        }).catch((error) => {GeneDive.handleException(error)});
     }
 
     // Initialize tooltips
