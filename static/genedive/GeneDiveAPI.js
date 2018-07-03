@@ -45,21 +45,44 @@ GeneDiveAPI.geneDetails = function (ids, callback) {
 /// Given one or more gene ids, returns the NCBI names
 /// @param {String} a comma-separated string of gene ids
 GeneDiveAPI.geneNames = ( ids ) => new Promise( ( resolve, reject ) => {
-  ids = GeneDiveAPI._stringifyIDs( ids );
-  const request = new XMLHttpRequest();
+    ids = GeneDiveAPI._stringifyIDs( ids );
+    const request = new XMLHttpRequest();
 
-  request.onload = function () {
-    if ( this.status == 200 ) {
-      resolve( JSON.parse(this.response) );
-    } else {
-      reject( new Error(this.statusText) );
-    }
-  }
+    request.onload = function () {
+        if ( this.status == 200 ) {
+            resolve( JSON.parse(this.response) );
+        } else {
+            reject( new Error(this.statusText) );
+        }
+    };
 
-  request.onerror = function () {
-    reject( new Error(this.statusText) );
-  };
+    request.onerror = function () {
+        reject( new Error(this.statusText) );
+    };
 
-  request.open( "GET", `/api/genenames.php?ids=${ids}` );
-  request.send();
+    request.open( "GET", `/api/genenames.php?ids=${ids}` );
+    request.send();
+});
+
+/// @function GeneDiveAPI.alternativeIDs
+/// Given a dgr id, returns all it's various IDs
+/// @param {String} a single id
+GeneDiveAPI.alternativeIDs = ( id ) => new Promise( ( resolve, reject ) => {
+    id = GeneDiveAPI._stringifyIDs( id );
+    const request = new XMLHttpRequest();
+
+    request.onload = function () {
+        if ( this.status === 200 ) {
+            resolve( JSON.parse(this.response) );
+        } else {
+            reject( new Error(this.statusText) );
+        }
+    };
+
+    request.onerror = function () {
+        reject( new Error(this.statusText) );
+    };
+
+    request.open( "GET", `/api/aliases.php?id=${id}` );
+    request.send();
 });
