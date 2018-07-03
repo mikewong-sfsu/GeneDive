@@ -1,5 +1,7 @@
 <?php
-  
+
+include_once "../auth.php";
+
   $pdo = new PDO( 'sqlite:../data/data.sqlite');
 
   $gids = explode(",",$_GET['ids']);
