@@ -316,7 +316,7 @@ class Search {
               .attr("data-toggle", "tooltip")
               .attr("data-container", "body")
               .attr("title", "Open MeSH Datasheet In New Tab")
-              .attr("href", `https://meshb.nlm.nih.gov/record/ui?ui=${values.mesh}`)
+              .attr("href", `https://meshb.nlm.nih.gov/record/ui?ui=${values.mesh.replace("MESH:","")}`)
               .attr("target", "_blank")
               .append($("<svg>")
                   .append(this.svgMesh)
