@@ -109,6 +109,8 @@ class GraphView {
    */
   update(interactions, sets) {
 
+
+
     // If it's a new search set, redraw graph. Concats all the searchset ids
     // if (this.currentSetsID !== SearchSet.getIDOfSearchSetArray(sets))
     //   this.draw(interactions, sets);
@@ -253,6 +255,7 @@ class GraphView {
   {
     switch (type) {
       case "r":
+      case "c":
         return 'triangle';
       case "d":
         return 'square';
