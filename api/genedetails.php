@@ -18,11 +18,11 @@ if(isset($_GET['confidence'])) {
 }
 
 $query = "SELECT geneid, mention, COUNT(*) as interactions, type, MAX(probability) as max_probability FROM (
-	SELECT geneids1 AS geneid,  type1 as type, mention1 AS mention, probability 
+	SELECT id, geneids1 AS geneid,  type1 as type, mention1 AS mention, probability 
 		FROM interactions 
 		WHERE geneids1 IN ( $prepared_slots ) $confidence_filter
 	UNION 
-		SELECT geneids2 AS geneid, type2 as type, mention2 AS mention, probability
+		SELECT id, geneids2 AS geneid, type2 as type, mention2 AS mention, probability
 		FROM interactions
 		WHERE geneids2 IN ( $prepared_slots ) $confidence_filter
 	)
