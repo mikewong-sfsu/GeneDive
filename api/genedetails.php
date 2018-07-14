@@ -1,19 +1,45 @@
 <?php
-  
-  $pdo = new PDO( 'sqlite:../data/data.sqlite');
 
-  $gid = $_GET['ids'];
-  $query = "SELECT ngd.*, ifnull(amount,0) as count FROM ncbi_gene_data ngd LEFT JOIN interaction_count ic ON ngd.id = ic.gene_id WHERE ngd.id IN ( ? );";
+include_once "../auth.php";
 
-  $stmt = $pdo->prepare($query);
+$pdo = new PDO( 'sqlite:../data/data.sqlite');
+
+$gids = explode(",",$_GET['ids']);
+$prepared_slots = array_fill(0, sizeof($gids), "?");
+$prepared_slots = implode(" , ", $prepared_slots);
+
+$confidence = 0.0;
+$confidence_filter ="";
+
+if(isset($_GET['confidence'])) {
+  $confidence = floatval($_GET['confidence']);
+  $confidence_filter = "AND probability >= ?";
+  $gids = array_merge($gids, [$confidence]);
+}
+
+$query = "SELECT geneid, mention, COUNT(*) as interactions, type, MAX(probability) as max_probability FROM (
+	SELECT geneids1 AS geneid,  type1 as type, mention1 AS mention, probability 
+		FROM interactions 
+		WHERE geneids1 IN ( $prepared_slots ) $confidence_filter
+	UNION 
+		SELECT geneids2 AS geneid, type2 as type, mention2 AS mention, probability
+		FROM interactions
+		WHERE geneids2 IN ( $prepared_slots ) $confidence_filter
+	)
+GROUP BY geneid
+ORDER BY probability DESC;";
+
+$stmt = $pdo->prepare($query);
 
 
-  if(!$stmt)
-      print("[]");
-  else{
-      $stmt->execute(array($gid));
+if(!$stmt)
+{
+  echo "[]";
+}
+else{
+  $stmt->execute(array_merge($gids, $gids));
 
-      echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
-  }
+  echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+}
 
 ?>
