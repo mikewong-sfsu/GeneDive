@@ -276,22 +276,13 @@ class Search {
   setLinks(values, type, id){
       let links = [];
 
-      let pharm_gkb_types = {
-          "g": "gene",
-          "d": "disease",
-          "c": "chemical",
-          "r": "drug",
-      };
-
-
-
       // IDs are prepended with C or D
       if("ncbi" in values) {
           links.push($("<a/>").addClass("linkout ncbi-linkout")
               .attr("data-toggle", "tooltip")
               .attr("data-container", "body")
               .attr("title", "Open NCBI Datasheet In New Tab")
-              .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${values.ncbi}`)
+              .attr("href", this.createExternalLink("ncbi",type,values.pgkb))
               .attr("target", "_blank")
               .append($("<svg>")
                   .append(this.svgNCBI)
@@ -304,7 +295,7 @@ class Search {
               .attr("data-toggle", "tooltip")
               .attr("data-container", "body")
               .attr("title", "Open PharmGKB Datasheet In New Tab")
-              .attr("href", `https://www.pharmgkb.org/${pharm_gkb_types[type]}/${values.pgkb}`)
+              .attr("href", this.createExternalLink("pgkb",type,values.pgkb))
               .attr("target", "_blank")
               .append($("<svg>")
                   .append(this.svgPharm)
@@ -316,7 +307,7 @@ class Search {
               .attr("data-toggle", "tooltip")
               .attr("data-container", "body")
               .attr("title", "Open MeSH Datasheet In New Tab")
-              .attr("href", `https://meshb.nlm.nih.gov/record/ui?ui=${values.mesh.replace("MESH:","")}`)
+              .attr("href", this.createExternalLink("mesh",type,values.mesh))
               .attr("target", "_blank")
               .append($("<svg>")
                   .append(this.svgMesh)
@@ -324,6 +315,68 @@ class Search {
 
       $(`.${id}-links`).empty().append(links);
 
+  }
+
+  createExternalLink(db, type, id)
+  {
+    let pharm_gkb_types = {
+      "g": "gene",
+      "d": "disease",
+      "c": "chemical",
+      "r": "drug",
+      };
+
+    switch (db){
+      case "ncbi":
+        return `https://www.ncbi.nlm.nih.gov/gene/${id}`;
+      case "pgkb":
+        return `https://www.pharmgkb.org/${pharm_gkb_types[type]}/${id}`;
+      case "mesh":
+        return `https://meshb.nlm.nih.gov/record/ui?ui=${id.replace("MESH:","")}`;
+      default:
+        return ``;
+    }
+  }
+
+  createExternalLinkWithoutKnowingDB(type, id)
+  {
+    let db = this.getDBfromID(id);
+
+    return this.createExternalLink(db, type,id)
+  }
+
+  getIconLinkFromID(id){
+    let db = this.getDBfromID(id);
+    let svg = $("<svg>");
+    svg.attr("data-toggle", "tooltip").attr("data-container", "body");
+
+    switch (db){
+      case "ncbi":
+        svg.append(this.svgNCBI);
+        svg.attr("title", "Open NCBI Datasheet In New Tab");
+        break;
+      case "pgkb":
+        svg.append(this.svgPharm);
+        svg.attr("title", "Open PharmGKB Datasheet In New Tab");
+        break;
+      case "mesh":
+        svg.append(this.svgMesh);
+        svg.attr("title", "Open MeSH Datasheet In New Tab");
+        break;
+    }
+
+    return svg;
+  }
+
+  getDBfromID(id)
+  {
+    let db = "ncbi";
+    if(id.toUpperCase().startsWith("PA"))
+      db = "pgkb";
+    else if(id.toUpperCase().startsWith("MESH:"))
+      db = "mesh";
+
+    return db;
   }
 
   initTypeahead() {
