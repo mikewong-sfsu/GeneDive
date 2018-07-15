@@ -21,18 +21,18 @@ class Disambiguation {
           this.symbol = symbol;
         },
         setup:function(){
-            return { 
-              buttons:[
-                {text: "Cancel", key:27},
-                {text: "Select" }
-                ],
-              focus: { element:0 },
-              options: { 
-                maximizable: false,
-                resizable: false, 
-                closeable: false 
-              }
-            };
+          return {
+            buttons:[
+              {text: "Cancel", key:27},
+              {text: "Select" }
+            ],
+            focus: { element:0 },
+            options: {
+              maximizable: false,
+              resizable: false,
+              closeable: false
+            }
+          };
         },
         prepare:function(){
           this.setContent( this.form );
@@ -45,31 +45,31 @@ class Disambiguation {
           GeneDive.search.addSearchSet( selected.data("name"), [selected.val()], selected.data("type") );
 
         }
-    }});
-      alertify.dialog('disambiguationPromptNoResults',function() {
+      }});
+    alertify.dialog('disambiguationPromptNoResults',function() {
+      return {
+        main:function( text, symbol ){
+          this.text = text;
+          this.symbol = symbol;
+        },
+        setup:function(){
           return {
-              main:function( text, symbol ){
-                  this.text = text;
-                  this.symbol = symbol;
-              },
-              setup:function(){
-                  return {
-                      buttons:[
-                          {text: "OK", key:27}
-                      ],
-                      focus: { element:0 },
-                      options: {
-                          maximizable: false,
-                          resizable: false,
-                          closeable: false
-                      }
-                  };
-              },
-              prepare:function(){
-                  this.setContent( this.text );
-                  this.setHeader(`Resolve Symbol "${this.symbol}"`);
-              },
-          }});
+            buttons:[
+              {text: "OK", key:27}
+            ],
+            focus: { element:0 },
+            options: {
+              maximizable: false,
+              resizable: false,
+              closeable: false
+            }
+          };
+        },
+        prepare:function(){
+          this.setContent( this.text );
+          this.setHeader(`Resolve Symbol "${this.symbol}"`);
+        },
+      }});
   }
 
   prepareForm ( dgrDetails ) {
@@ -94,8 +94,8 @@ class Disambiguation {
 
   }
 
-  resolveIds ( symbol, ids ) {
-    GeneDiveAPI.geneDetails(ids.toString(), ( dgrDetails ) => {
+  resolveIds ( symbol, ids , min_confidence) {
+    GeneDiveAPI.geneDetails(ids.toString(), min_confidence, ( dgrDetails ) => {
       let details = JSON.parse(dgrDetails);
       console.debug(dgrDetails);
       if(details.length > 0)
