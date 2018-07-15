@@ -348,7 +348,6 @@ class Search {
   getIconLinkFromID(id){
     let db = this.getDBfromID(id);
     let svg = $("<svg>");
-    svg.attr("data-toggle", "tooltip").attr("data-container", "body");
 
     switch (db){
       case "ncbi":
