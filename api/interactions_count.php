@@ -15,7 +15,7 @@ else
 
 // Gets the value. If the value is found, delete it from the session so as to save space
 if(isset($_SESSION[ $queryVal])){
-        $data["count"] = $_SESSION[ "last_interactions_query_count"];
+        $data["count"] = $_SESSION[ $queryVal];
         unset($_SESSION[ $queryVal]);
         $data["found"] = true;
 }
