@@ -31,11 +31,11 @@ GeneDiveAPI.interactions = function (ids, minProb, callback) {
 /// @param {String} a comma-separated string of gene ids
 /// @return jqXHR The ajax request made, so you can call abort() or other methods
 /// @author jcole2@mail.sfsu.edu
-GeneDiveAPI.geneDetails = function (ids, callback) {
+GeneDiveAPI.geneDetails = function (ids, confidence, callback) {
   ids = GeneDiveAPI._stringifyIDs( ids );
   $.ajax({
     type: "GET",
-    url: `/api/genedetails.php?ids=${ids}`,
+    url: `/api/genedetails.php?ids=${ids}&confidence=${confidence}`,
     cache: true,
     success: callback
   });
@@ -67,7 +67,7 @@ GeneDiveAPI.geneNames = ( ids ) => new Promise( ( resolve, reject ) => {
 /// @function GeneDiveAPI.alternativeIDs
 /// Given a dgr id, returns all it's various IDs
 /// @param {String} a single id
-GeneDiveAPI.alternativeIDs = ( id ) => new Promise( ( resolve, reject ) => {
+GeneDiveAPI.alternativeIDs = ( id) => new Promise( ( resolve, reject ) => {
     id = GeneDiveAPI._stringifyIDs( id );
     const request = new XMLHttpRequest();
 

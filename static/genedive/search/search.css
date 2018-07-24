@@ -108,6 +108,23 @@
   width: 45%;
 }
 
+.disambiguation-row a:hover{
+  text-decoration: none;
+}
+
 .disambiguation-row .name {
+}
+
+.disambiguation-row svg{
+  height: 1em;
+  width: 1em;
+}
+
+.disambiguation-row svg path{
+  fill: #78a7cf;
+}
+
+.disambiguation-row a:hover svg path {
+  fill: #23527c;
 }
 

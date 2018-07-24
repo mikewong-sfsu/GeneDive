@@ -29,10 +29,10 @@ class Search {
     this.TOPOLOGY_THREE_HOP = "3hop";
     this.TOPOLOGY_CLIQUE = "clique";
     this.NAME_MAP = {};
-      this.NAME_MAP[this.GENES_NAME    ] = "g";
-      this.NAME_MAP[this.DRUGS_NAME] = "r";
-      this.NAME_MAP[this.DISEASES_NAME ] = "d";
-      this.NAME_MAP[this.GENESETS_NAME ] = "s";
+    this.NAME_MAP[this.GENES_NAME    ] = "g";
+    this.NAME_MAP[this.DRUGS_NAME] = "r";
+    this.NAME_MAP[this.DISEASES_NAME ] = "d";
+    this.NAME_MAP[this.GENESETS_NAME ] = "s";
 
 
     // Load the SVG files
@@ -208,9 +208,9 @@ class Search {
   search3Hop() {
     let second_set;
     if(this.sets.length >= 2)
-        second_set = this.sets[1].ids;
+      second_set = this.sets[1].ids;
     else
-        second_set = this.sets[0].ids;
+      second_set = this.sets[0].ids;
     let nhop = this.graphsearch.nHop(this.sets, 3, false);
 
     // Re-render Search Display with Colors
@@ -249,24 +249,24 @@ class Search {
 
 
 
-        item = $("<div/>")
-          .addClass("search-item")
-          .css("background-color", set.color)
-          .append($("<span/>").addClass("name").text(set.name))
-          .append($("<span/>").addClass(`${set.id}-links`))
-          .append(
-              $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
-                  .on('click', (event) => {
-                      this.removeSearchSet($(event.target).data("id"));
-                  })
-          );
+      item = $("<div/>")
+        .addClass("search-item")
+        .css("background-color", set.color)
+        .append($("<span/>").addClass("name").text(set.name))
+        .append($("<span/>").addClass(`${set.id}-links`))
+        .append(
+          $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
+            .on('click', (event) => {
+              this.removeSearchSet($(event.target).data("id"));
+            })
+        );
 
 
       this.display.append(item);
 
-        GeneDiveAPI.alternativeIDs(set.ids[0]).then((returnedResult)=>{
-            this.setLinks(JSON.parse(returnedResult.vals), returnedResult.type ,set.id);
-        }).catch((error) => {GeneDive.handleException(error)});
+      GeneDiveAPI.alternativeIDs(set.ids[0]).then((returnedResult)=>{
+        this.setLinks(JSON.parse(returnedResult.vals), returnedResult.type ,set.id);
+      }).catch((error) => {GeneDive.handleException(error)});
     }
 
     // Initialize tooltips
@@ -274,56 +274,109 @@ class Search {
   }
 
   setLinks(values, type, id){
-      let links = [];
+    let links = [];
 
-      let pharm_gkb_types = {
-          "g": "gene",
-          "d": "disease",
-          "c": "chemical",
-          "r": "drug",
-      };
+    // IDs are prepended with C or D
+    if("ncbi" in values) {
+      links.push($("<a/>").addClass("linkout ncbi-linkout")
+        .attr("data-toggle", "tooltip")
+        .attr("data-container", "body")
+        .attr("title", "Open NCBI Datasheet In New Tab")
+        .attr("href", this.createExternalLink("ncbi",type,values.pgkb))
+        .attr("target", "_blank")
+        .append($("<svg>")
+          .append(this.svgNCBI)
+        ));
+    }
 
+    // PHARMGKB
+    if("pgkb" in values)
+      links.push($("<a/>").addClass("linkout pharmgkb-linkout")
+        .attr("data-toggle", "tooltip")
+        .attr("data-container", "body")
+        .attr("title", "Open PharmGKB Datasheet In New Tab")
+        .attr("href", this.createExternalLink("pgkb",type,values.pgkb))
+        .attr("target", "_blank")
+        .append($("<svg>")
+          .append(this.svgPharm)
+        ));
 
+    // MESH
+    if("mesh" in values)
+      links.push($("<a/>").addClass("linkout mesh-linkout")
+        .attr("data-toggle", "tooltip")
+        .attr("data-container", "body")
+        .attr("title", "Open MeSH Datasheet In New Tab")
+        .attr("href", this.createExternalLink("mesh",type,values.mesh))
+        .attr("target", "_blank")
+        .append($("<svg>")
+          .append(this.svgMesh)
+        ));
 
-      // IDs are prepended with C or D
-      if("ncbi" in values) {
-          links.push($("<a/>").addClass("linkout ncbi-linkout")
-              .attr("data-toggle", "tooltip")
-              .attr("data-container", "body")
-              .attr("title", "Open NCBI Datasheet In New Tab")
-              .attr("href", `https://www.ncbi.nlm.nih.gov/gene/${values.ncbi}`)
-              .attr("target", "_blank")
-              .append($("<svg>")
-                  .append(this.svgNCBI)
-              ));
-      }
+    $(`.${id}-links`).empty().append(links);
 
-      // PHARMGKB
-      if("pgkb" in values)
-          links.push($("<a/>").addClass("linkout pharmgkb-linkout")
-              .attr("data-toggle", "tooltip")
-              .attr("data-container", "body")
-              .attr("title", "Open PharmGKB Datasheet In New Tab")
-              .attr("href", `https://www.pharmgkb.org/${pharm_gkb_types[type]}/${values.pgkb}`)
-              .attr("target", "_blank")
-              .append($("<svg>")
-                  .append(this.svgPharm)
-              ));
+  }
 
-      // MESH
-      if("mesh" in values)
-          links.push($("<a/>").addClass("linkout mesh-linkout")
-              .attr("data-toggle", "tooltip")
-              .attr("data-container", "body")
-              .attr("title", "Open MeSH Datasheet In New Tab")
-              .attr("href", `https://meshb.nlm.nih.gov/record/ui?ui=${values.mesh.replace("MESH:","")}`)
-              .attr("target", "_blank")
-              .append($("<svg>")
-                  .append(this.svgMesh)
-              ));
+  createExternalLink(db, type, id)
+  {
+    let pharm_gkb_types = {
+      "g": "gene",
+      "d": "disease",
+      "c": "chemical",
+      "r": "drug",
+    };
 
-      $(`.${id}-links`).empty().append(links);
+    switch (db){
+      case "ncbi":
+        return `https://www.ncbi.nlm.nih.gov/gene/${id}`;
+      case "pgkb":
+        return `https://www.pharmgkb.org/${pharm_gkb_types[type]}/${id}`;
+      case "mesh":
+        return `https://meshb.nlm.nih.gov/record/ui?ui=${id.replace("MESH:","")}`;
+      default:
+        return ``;
+    }
+  }
 
+  createExternalLinkWithoutKnowingDB(type, id)
+  {
+    let db = this.getDBfromID(id);
+
+    return this.createExternalLink(db, type,id)
+  }
+
+  getIconLinkFromID(id){
+    let db = this.getDBfromID(id);
+    let svg = $("<svg>");
+    svg.attr("data-toggle", "tooltip").attr("data-container", "body");
+
+    switch (db){
+      case "ncbi":
+        svg.append(this.svgNCBI);
+        svg.attr("title", "Open NCBI Datasheet In New Tab");
+        break;
+      case "pgkb":
+        svg.append(this.svgPharm);
+        svg.attr("title", "Open PharmGKB Datasheet In New Tab");
+        break;
+      case "mesh":
+        svg.append(this.svgMesh);
+        svg.attr("title", "Open MeSH Datasheet In New Tab");
+        break;
+    }
+
+    return svg;
+  }
+
+  getDBfromID(id)
+  {
+    let db = "ncbi";
+    if(id.toUpperCase().startsWith("PA"))
+      db = "pgkb";
+    else if(id.toUpperCase().startsWith("MESH:"))
+      db = "mesh";
+
+    return db;
   }
 
   initTypeahead() {
@@ -403,7 +456,7 @@ class Search {
       item.type = this.NAME_MAP[set_name];
       // Case: Gene w/ Disambiguation
       if (item.values.length > 1 && item.type !== "s") {
-        GeneDive.disambiguation.resolveIds(item.symbol, item.values);
+        GeneDive.disambiguation.resolveIds(item.symbol, item.values, GeneDive.probfilter.getMinimumProbability());
         this.input.typeahead("val", "");
         return;
       }
@@ -495,7 +548,7 @@ class Search {
    @callergraph
    */
   typesOfDGRsSearched() {
-      return this.sets.map(set => set.type);
+    return this.sets.map(set => set.type);
   }
 
 }
