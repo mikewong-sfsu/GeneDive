@@ -2,6 +2,7 @@ class ProbabilityFilter {
 
     constructor ( slider, value_display, button_group ) {
         this.slider        = $(slider);
+
         this.value_display = $(value_display);
         this.minimum       = 0.7;
         this.confidence    = {
@@ -59,13 +60,20 @@ class ProbabilityFilter {
         this.setColor(value);
     }
 
-    setColor(value) {
+  /**
+   * Changes the color of the slider as different values are set.
+   * @param value
+   */
+  setColor(value) {
+      // Looks ugly so disabled for now
+    return;
+      let element = $(".slider-handle");
         if(value < this.confidence["medium"].cutoff)
-            $('.slider-selection').css('background', 'red');
+          element.css('background', '#ac2925');
         else if (value < this.confidence["high"].cutoff)
-            $('.slider-selection').css('background','yellow');
+          element.css('background','#f0ad4e');
         else
-            $('.slider-selection').css('background','green');
+          element.css('background','#5cb85c');
     }
 
     reset(){

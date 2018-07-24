@@ -1,3 +1,4 @@
 ./sqlite_data/*.sqlite
 ./json_data/*.json
 ./tsv_data/*
+.ipynb_checkpoints
