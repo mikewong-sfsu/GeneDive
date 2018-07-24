@@ -150,7 +150,7 @@ The Maximum Confidence Score in that grouping.
 * **Sample Excerpt**  
 This an excerpt selected from the highest confidence scored interaction in the group.
 
-![Grouped results](img/readme/results_grouped.png)
+![Grouped results](img/results_table_grouped.png)
 
 **Detailed Results Table**  
 
