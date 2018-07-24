@@ -6,12 +6,13 @@ include_once "../auth.php";
 
   $gid = $_GET['ids'];
   $minProb = $_GET['minProb'];
+
   $query = NULL;
 
-    $gids = explode(",",preg_replace('/[^0-9A-Za-z:,]/', "", $_GET['ids']));
+  $gids = explode(",",preg_replace('/[^0-9A-Za-z:,]/', "", $_GET['ids']));
 
-    $prepared_slots = array_fill(0, sizeof($gids), "?");
-    $prepared_slots = implode(" , ", $prepared_slots);
+  $prepared_slots = array_fill(0, sizeof($gids), "?");
+  $prepared_slots = implode(" , ", $prepared_slots);
 
   if ( sizeof($gids) > 1 ) {
     $query = "SELECT * FROM interactions WHERE geneids1 IN ( $prepared_slots ) AND geneids2 IN ( $prepared_slots ) AND probability >= ? ORDER BY probability;";
@@ -28,10 +29,17 @@ if(!$stmt)
 }
 else {
 
-
     $stmt->execute(array_merge($gids, $gids, [$minProb]));
-//    echo $query;
-//    print_r(array_merge($gids, $gids, [$minProb]));
-    echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Save count of interactions
+    if(isset($_GET['queryKey']))
+    {
+        $queryKey = $_GET['queryKey'];
+        $queryVal = "interactions_$queryKey";
+        $_SESSION[ $queryVal] = sizeof($results);
+    }
+    echo json_encode($results);
 }
 ?>
