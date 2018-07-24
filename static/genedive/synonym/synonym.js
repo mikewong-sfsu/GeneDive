@@ -3,7 +3,10 @@ class Synonym {
   static buildIdSymbolMap ( search_set ) {
     let map = {};
 
-    search_set.filter( set => set.type == "gene" ).forEach( set => {
+    search_set
+    // TODO: Why was this filter here? Disabled
+      //.filter( set => set.type == "gene" )
+      .forEach( set => {
       map[set.ids] = set.name;
     });
 
