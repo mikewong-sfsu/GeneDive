@@ -357,7 +357,7 @@ class Controller {
       if(countObj.found)
         this.loading.setInteractionsLoadingCount(countObj.count);
       else
-        this.tryToLoadInteractionsCount(token);
+        setTimeout(function(){ GeneDive.tryToLoadInteractionsCount(token); }, 200);
     } catch (e) {
       this.handleException(e);
     }
