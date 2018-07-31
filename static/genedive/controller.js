@@ -28,7 +28,7 @@ class Controller {
     this.download       = new DownloadUpload( ".download-module button.download", ".download-module button.upload" );
     this.controls       = new Controls( ".control-module button.undo", ".control-module button.redo", "button.reset-graph" );
     this.history        = new History( this );
-    this.loading        = new Loading(".loading-container", ".loading-info");
+    this.loading        = new Loading(".loading-container", ".loading-info", ".loading-container .progress-bar");
 
     this.tablestate = {zoomed: false, zoomgroup: null};
     this.interactions = null;
@@ -339,6 +339,7 @@ class Controller {
       this.textfilter.updateSelectedFilter();
       this.loadTableAndGraphPage();
       this.history.saveCurrentStateToHistory();
+      this.loading.reset();
     } catch (e) {
       this.handleException(e);
     }
@@ -540,7 +541,7 @@ class Controller {
     if (this.interactions_countXHR !== null)
       this.interactions_countXHR.abort();
 
-    this.loading.resetInteractionsLoadingCount();
+    this.loading.reset();
 
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGRsSearched() === 0) {

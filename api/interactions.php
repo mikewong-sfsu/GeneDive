@@ -33,6 +33,8 @@ else {
 
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
+
     // Save count of interactions
     if(isset($_GET['queryKey']))
     {
@@ -40,6 +42,10 @@ else {
         $queryVal = "interactions_$queryKey";
         $_SESSION[ $queryVal] = sizeof($results);
     }
-    echo json_encode($results);
+
+    $final_string = json_encode($results);
+
+    header('Content-Length: '.mb_strlen($final_string, '8bit'));
+    echo $final_string;
 }
 ?>
