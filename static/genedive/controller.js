@@ -713,7 +713,7 @@ class Controller {
 
   /**
    @fn       Controller.cleanUpData
-   @brief    Replaces blank or null values in data
+   @brief    Replaces blank or null values in data, and sorts the symbols alphabetically
    @details  In the data, some values are null, or zero, or blank. Having different values for essentially what is
    "Not available" causes problems in filtering, so we assign them all to "N/A" or "Unknown", keeping them the same
    for whatever index they're under.
@@ -723,21 +723,45 @@ class Controller {
     const BLANK_STRING = "N/A";
     const VALUES_TO_REPLACE = new Set([null,"null", 0, "", "0", "unknown"]);
     for (let i = 0; i < this.interactions.length; i++) {
-
+      let interaction = this.interactions[i];
 
       // If article id is blank, copy the value from pubmed id. If both are blank, replace with "N/A"
-      let article_blank = VALUES_TO_REPLACE.has(this.interactions[i].article_id.trim().toLowerCase());
-      let pubmed_blank = VALUES_TO_REPLACE.has(this.interactions[i].pubmed_id.trim().toLowerCase());
+      let article_blank = VALUES_TO_REPLACE.has(interaction.article_id.trim().toLowerCase());
+      let pubmed_blank = VALUES_TO_REPLACE.has(interaction.pubmed_id.trim().toLowerCase());
       if(article_blank && pubmed_blank)
-        this.interactions[i].article_id = this.interactions[i].pubmed_id = BLANK_STRING;
+        interaction.article_id = interaction.pubmed_id = BLANK_STRING;
       else if(article_blank)
-        this.interactions[i].article_id = this.interactions[i].pubmed_id;
+        interaction.article_id = interaction.pubmed_id;
 
-      if (VALUES_TO_REPLACE.has(this.interactions[i].journal.trim().toLowerCase()))
-        this.interactions[i].journal = BLANK_STRING;
+      if (VALUES_TO_REPLACE.has(interaction.journal.trim().toLowerCase()))
+        interaction.journal = BLANK_STRING;
 
-      if (VALUES_TO_REPLACE.has(this.interactions[i].section.trim().toLowerCase()))
-        this.interactions[i].section = BLANK_STRING;
+      if (VALUES_TO_REPLACE.has(interaction.section.trim().toLowerCase()))
+        interaction.section = BLANK_STRING;
+
+      // Sort the symbols alphabetically
+      if(interaction.mention1 > interaction.mention2)
+      {
+        let temp;
+
+        temp = interaction.geneids1;
+        interaction.geneids1 = interaction.geneids2;
+        interaction.geneids2 = temp;
+
+        temp = interaction.mention1;
+        interaction.mention1 = interaction.mention2;
+        interaction.mention2 = temp;
+
+        temp = interaction.mention_offset1;
+        interaction.mention_offset1 = interaction.mention_offset2;
+        interaction.mention_offset2 = temp;
+
+        temp = interaction.type1;
+        interaction.type1 = interaction.type2;
+        interaction.type2 = temp;
+
+
+      }
 
     }
   }
