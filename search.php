@@ -45,9 +45,9 @@
       <input id="min-prob-slider" class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7" style="width:100%;">
       <h6 style="margin-top: 2px; margin-bottom: -8px;">Suggested Confidence Cutoffs</h6>
       <div class="btn-group" id="confidence-cutoff" style="width: 100%; margin-top: 12px;">
-          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.70.  WARNING: May increase query response time." class="btn btn-outline-danger" id="low-confidence">Low</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.85" class="btn btn-outline-warning" id="medium-confidence">Medium</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.95" class="btn btn-outline-success" id="high-confidence">High</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.70.  WARNING: May increase query response time." class="btn btn-default" id="low-confidence">Low</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.85" class="btn btn-default" id="medium-confidence">Medium</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.95" class="btn btn-default" id="high-confidence">High</button>
       </div>
 
       <!-- Text Filter Submodule -->
