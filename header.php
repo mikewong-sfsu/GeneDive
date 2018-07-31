@@ -1,6 +1,4 @@
 <?php
-  ini_set( 'display_errors',         1 );
-  ini_set( 'display_startup_errors', 1 );
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -58,6 +56,7 @@
     <link rel=stylesheet type=text/css href="static/genedive/search/search.css?random=<?php echo $random_string; ?>">
     <link rel=stylesheet type=text/css href="static/genedive/filter/filter.css?random=<?php echo $random_string; ?>">
     <link rel=stylesheet type=text/css href="static/genedive/view/table/table.css?random=<?php echo $random_string; ?>">
+    <link rel=stylesheet type=text/css href="static/genedive/view/graph/graph.css?random=<?php echo $random_string; ?>">
     <link rel=stylesheet type=text/css href="static/genedive/view/graph/graph.css?random=<?php echo $random_string; ?>">
 
   </head>

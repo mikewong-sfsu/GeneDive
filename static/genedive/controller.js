@@ -28,6 +28,7 @@ class Controller {
     this.download       = new DownloadUpload( ".download-module button.download", ".download-module button.upload" );
     this.controls       = new Controls( ".control-module button.undo", ".control-module button.redo", "button.reset-graph" );
     this.history        = new History( this );
+    this.loading        = new Loading(".loading-container", ".loading-info");
 
     this.tablestate = {zoomed: false, zoomgroup: null};
     this.interactions = null;
@@ -37,6 +38,7 @@ class Controller {
     // A user could cause another UI call to the interactions before the previous one has finished.
     // This variable stores whatever interaction API call is going on, so we can abort it if another request is made
     this.interactionsjqXHR = null;
+    this.interactions_countXHR = null;
 
     $(function () {
       $(".panel-top").resizable({
@@ -342,6 +344,25 @@ class Controller {
     }
   }
 
+  tryToLoadInteractionsCount(token){
+    this.interactions_countXHR = GeneDiveAPI.interactionsCount(token, (count) => {
+      this.interactions_countXHR = null;
+      this.onInteractionsCountLoaded(count, token);
+    });
+  }
+
+  onInteractionsCountLoaded(count, token){
+    try {
+      let countObj = JSON.parse(count);
+      if(countObj.found)
+        this.loading.setInteractionsLoadingCount(countObj.count);
+      else
+        this.tryToLoadInteractionsCount(token);
+    } catch (e) {
+      this.handleException(e);
+    }
+  }
+
   /**
    @fn       Controller.onWindowResized
    @brief    The function called when the Window is Resized
@@ -516,6 +537,11 @@ class Controller {
     if (this.interactionsjqXHR !== null)
       this.interactionsjqXHR.abort();
 
+    if (this.interactions_countXHR !== null)
+      this.interactions_countXHR.abort();
+
+    this.loading.resetInteractionsLoadingCount();
+
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGRsSearched() === 0) {
       this.history.clearData();
@@ -552,11 +578,17 @@ class Controller {
     // This resets the table view to default
     this.tablestate.zoomed = false;
 
+    let token = GeneDiveAPI.generateToken();
 
-    this.interactionsjqXHR = GeneDiveAPI.interactions(ids, minProb, (interactions) => {
+    this.interactionsjqXHR = GeneDiveAPI.interactions(ids, minProb, token, (interactions) => {
       this.interactionsjqXHR = null;
+      this.interactions_countXHR = null;
       this.onInteractionsLoaded(interactions);
     });
+
+    this.tryToLoadInteractionsCount(token);
+
+
   }
 
 

@@ -45,29 +45,30 @@
     <script src="static/cytoscape/cytoscape-qtip.js"></script>
 
     <!-- GeneDive Classses -->
-    <script src="static/genedive/GeneDiveAPI.js"></script>
-    <script src="static/genedive/search/graphsearch.js"></script>
-    <script src="static/genedive/search/disambiguation.js"></script>
-    <script src="static/genedive/search/search.js"></script>
-    <script src="static/genedive/color/color.js"></script>
-    <script src="static/genedive/synonym/synonym.js"></script>
-    <script src="static/genedive/filter/probabilityfilter.js"></script>
-    <script src="static/genedive/filter/textfilter.js"></script>
-    <script src="static/genedive/highlight/highlight.js"></script>
-    <script src="static/genedive/grouper/grouper.js"></script>
-    <script src="static/genedive/view/table/resultstable.js"></script>
-    <script src="static/genedive/view/table/tabledetail.js"></script>
-    <script src="static/genedive/view/table/tablesummarygene.js"></script>
-    <script src="static/genedive/view/table/tablesummaryarticle.js"></script>
-    <script src="static/genedive/view/graph/graph.js"></script>
-    <script src="static/genedive/help/help.js"></script>
-    <script src="static/genedive/download_upload/download_upload.js"></script>
-    <script src="static/genedive/delay.js"></script>
-    <script src="static/genedive/controls/controls.js"></script>
-    <script src="static/genedive/history/history.js"></script>
+    <script src="static/genedive/GeneDiveAPI.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/search/graphsearch.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/search/disambiguation.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/search/loading.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/search/search.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/color/color.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/synonym/synonym.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/filter/probabilityfilter.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/filter/textfilter.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/highlight/highlight.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/grouper/grouper.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/view/table/resultstable.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/view/table/tabledetail.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/view/table/tablesummarygene.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/view/table/tablesummaryarticle.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/view/graph/graph.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/help/help.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/download_upload/download_upload.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/delay.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/controls/controls.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/history/history.js?random=<?php echo $random_string; ?>"></script>
 
     <!-- Core Controller -->
-    <script src="static/genedive/controller.js"></script>
+    <script src="static/genedive/controller.js?random=<?php echo $random_string; ?>"></script>
 
   </body>
 </html>

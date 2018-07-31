@@ -128,8 +128,11 @@
         <span class="metadata"></span>
       </div>
       <div class="spinner table-rendering-spinner">
-        <div>
-          <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+        <div class="loading-container">
+          <div class="loading-info"></div>
+          <div>
+            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+          </div>
         </div>
       </div>
       <div class="help table-help">
