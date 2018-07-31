@@ -13,18 +13,24 @@ class Loading {
     this.loadingContainer = $(loadingContainer);
     this.loadingInfo = $(loadingInfo);
     this.progressBar = $(progressBar);
+    this.interactionsCount = "";
 
     this.DEFAULT_LOADING_INTERACTIONS_MSG = "Loading Interactions";
 
   }
 
   setInteractionsLoadingCount(count){
-    this.loadingInfo.text(`Loading ${count} Interactions`);
+    this.interactionsCount = count;
+    this.loadingInfo.text(`Downloading ${this.interactionsCount} Interactions`);
   }
 
 
   resetInteractionsLoadingCount(){
     this.loadingInfo.text(this.DEFAULT_LOADING_INTERACTIONS_MSG);
+  }
+
+  loadingTableAndGraph(){
+    this.loadingInfo.text(`Processing ${this.interactionsCount} interactions`);
   }
 
   setProgressAmount(percent){
@@ -33,19 +39,27 @@ class Loading {
 
   reset(){
     this.resetInteractionsLoadingCount();
-    this.setProgressAmount(0)
+    this.setProgressAmount(0);
+    this.interactionsCount = "";
   }
 
 
+  /**
+   *
+   * @param {ProgressEvent} event
+   */
   setDownloadProgressAmount(event){
     console.debug(event);
     if (event.lengthComputable) {
       var percentComplete = event.loaded / event.total;
 
-      this.setProgressAmount(percentComplete*100);
+      this.setProgressAmount(percentComplete*80);
 
 
     }
+
+    let interactionsCount = event.currentTarget.getResponseHeader("custom-interactions-count");
+    this.setInteractionsLoadingCount(interactionsCount);
 
   }
 
@@ -59,5 +73,7 @@ class Loading {
 
     return xhr;
   }
+
+
 
 }

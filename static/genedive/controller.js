@@ -329,20 +329,28 @@ class Controller {
    */
   onInteractionsLoaded(interactions) {
     try {
-
-      this.interactions = JSON.parse(interactions);
-      this.cleanUpData();
-      this.filterInteractions();
-      this.colorInteractions();
-      this.addSynonyms();
-      this.highlightInteractions();
-      this.textfilter.updateSelectedFilter();
-      this.loadTableAndGraphPage();
-      this.history.saveCurrentStateToHistory();
-      this.loading.reset();
+      this.loading.loadingTableAndGraph();
+      let thisClass = this;
+      setTimeout(function(){
+        try{
+          thisClass.interactions = JSON.parse(interactions);
+          thisClass.cleanUpData();
+          thisClass.filterInteractions();
+          thisClass.colorInteractions();
+          thisClass.addSynonyms();
+          thisClass.highlightInteractions();
+          thisClass.textfilter.updateSelectedFilter();
+          thisClass.loadTableAndGraphPage();
+          thisClass.history.saveCurrentStateToHistory();
+        } catch (e) {
+          thisClass.handleException(e);
+        }
+        thisClass.loading.reset();
+      },150);
     } catch (e) {
       this.handleException(e);
     }
+
   }
 
   tryToLoadInteractionsCount(token){
@@ -353,6 +361,7 @@ class Controller {
   }
 
   onInteractionsCountLoaded(count, token){
+    return;
     try {
       let countObj = JSON.parse(count);
       if(countObj.found)

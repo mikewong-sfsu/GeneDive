@@ -45,6 +45,7 @@ else {
   $size = mb_strlen($final_string, '8bit');
 
   header('Content-Length: '.$size);
+  header('Custom-Interactions-Count: '.sizeof($results));
   echo $final_string;
 }
 ?>
