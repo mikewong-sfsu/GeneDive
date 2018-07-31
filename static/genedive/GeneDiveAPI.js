@@ -19,6 +19,7 @@ GeneDiveAPI.interactions = function (ids, minProb, token, callback) {
   ids = GeneDiveAPI._stringifyIDs( ids );
 
   return $.ajax({
+    xhr : GeneDive.loading.xhrLoadingCall,
     type: "GET",
     url: `/api/interactions.php?ids=${ids}&minProb=${minProb}&queryKey=${token}`,
     cache: true,

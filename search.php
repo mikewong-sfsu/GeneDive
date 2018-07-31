@@ -133,6 +133,9 @@
           <div>
             <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
           </div>
+          <div class="progress">
+            <div class="progress-bar w-75" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
         </div>
       </div>
       <div class="help table-help">
