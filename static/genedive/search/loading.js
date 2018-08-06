@@ -51,7 +51,13 @@ class Loading {
    * @param {ProgressEvent} event
    */
   setDownloadProgressAmount(event){
-    console.debug(event);
+    if(this.interactionsCount === null){
+      let partialData = event.currentTarget.response;
+      let regexMatch = partialData.match(/"count"\s*:\s*(\d+)/);
+      if(regexMatch !== null)
+        this.setInteractionsLoadingCount(parseInt(regexMatch[1]));
+    }
+
     if (event.lengthComputable) {
       let percentComplete = event.loaded / event.total;
 
@@ -59,13 +65,6 @@ class Loading {
       this.loadingInfo.text(`Downloading ${this.interactionsCount !== null ? this.interactionsCount : ""} Interactions`);
     }
 
-
-    if(this.interactionsCount === null){
-      let partialData = event.currentTarget.response;
-      let regexMatch = partialData.match(/"count"\s*:\s*(\d+)/);
-      if(regexMatch !== null)
-        this.setInteractionsLoadingCount(parseInt(regexMatch[1]));
-    }
 
     // This was bad, using custom headers is bad.
     // let interactionsCount = event.currentTarget.getResponseHeader("custom-interactions-count");
