@@ -33,18 +33,24 @@ else {
 
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  // Save count of interactions
-  if(isset($_GET['queryKey']))
-  {
-    $queryKey = $_GET['queryKey'];
-    $queryVal = "interactions_$queryKey";
-    $_SESSION[ $queryVal] = sizeof($results);
-  }
+//  // Save count of interactions
+//  if(isset($_GET['queryKey']))
+//  {
+//    $queryKey = $_GET['queryKey'];
+//    $queryVal = "interactions_$queryKey";
+//    $_SESSION[ $queryVal] = sizeof($results);
+//  }
 
-  $final_string = json_encode($results);
-  $size = mb_strlen($final_string, '8bit');
 
-  header('Content-Length: '.$size);
+  $return_data = [
+    "count" => sizeof($results),
+    "results" => $results,
+  ];
+
+  $final_string = json_encode($return_data);
+
+
+  header('Content-Length: '.mb_strlen($final_string, '8bit'));
   header('Content-Range: 0'); // Content-Length header is dropped unless this is set.
   echo $final_string;
 }
