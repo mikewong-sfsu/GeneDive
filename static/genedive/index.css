@@ -48,6 +48,10 @@
   width: 30%;
 }
 
+.landing .strip .login .forgot-password {
+	float: right;
+}
+
 .landing .strip .about h4 {
   color: #68c7ff;
 }

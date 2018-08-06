@@ -28,6 +28,7 @@ class Controller {
     this.download       = new DownloadUpload( ".download-module button.download", ".download-module button.upload" );
     this.controls       = new Controls( ".control-module button.undo", ".control-module button.redo", "button.reset-graph" );
     this.history        = new History( this );
+    this.loading        = new Loading(".loading-container", ".loading-info", ".loading-container .progress-bar");
 
     this.tablestate = {zoomed: false, zoomgroup: null};
     this.interactions = null;
@@ -37,6 +38,7 @@ class Controller {
     // A user could cause another UI call to the interactions before the previous one has finished.
     // This variable stores whatever interaction API call is going on, so we can abort it if another request is made
     this.interactionsjqXHR = null;
+    this.interactions_countXHR = null;
 
     $(function () {
       $(".panel-top").resizable({
@@ -327,16 +329,45 @@ class Controller {
    */
   onInteractionsLoaded(interactions) {
     try {
+      this.loading.loadingTableAndGraph();
+      let thisClass = this;
+      setTimeout(function(){
+        try{
+          thisClass.interactions = JSON.parse(interactions);
+          thisClass.cleanUpData();
+          thisClass.filterInteractions();
+          thisClass.colorInteractions();
+          thisClass.addSynonyms();
+          thisClass.highlightInteractions();
+          thisClass.textfilter.updateSelectedFilter();
+          thisClass.loadTableAndGraphPage();
+          thisClass.history.saveCurrentStateToHistory();
+        } catch (e) {
+          thisClass.handleException(e);
+        }
+        thisClass.loading.reset();
+      },150);
+    } catch (e) {
+      this.handleException(e);
+    }
 
-      this.interactions = JSON.parse(interactions);
-      this.cleanUpData();
-      this.filterInteractions();
-      this.colorInteractions();
-      this.addSynonyms();
-      this.highlightInteractions();
-      this.textfilter.updateSelectedFilter();
-      this.loadTableAndGraphPage();
-      this.history.saveCurrentStateToHistory();
+  }
+
+  tryToLoadInteractionsCount(token){
+    return;
+    this.interactions_countXHR = GeneDiveAPI.interactionsCount(token, (count) => {
+      this.interactions_countXHR = null;
+      this.onInteractionsCountLoaded(count, token);
+    });
+  }
+
+  onInteractionsCountLoaded(count, token){
+    try {
+      let countObj = JSON.parse(count);
+      if(countObj.found)
+        this.loading.setInteractionsLoadingCount(countObj.count);
+      else
+        setTimeout(function(){ GeneDive.tryToLoadInteractionsCount(token); }, 200);
     } catch (e) {
       this.handleException(e);
     }
@@ -516,6 +547,11 @@ class Controller {
     if (this.interactionsjqXHR !== null)
       this.interactionsjqXHR.abort();
 
+    if (this.interactions_countXHR !== null)
+      this.interactions_countXHR.abort();
+
+    this.loading.reset();
+
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGRsSearched() === 0) {
       this.history.clearData();
@@ -552,11 +588,17 @@ class Controller {
     // This resets the table view to default
     this.tablestate.zoomed = false;
 
+    let token = GeneDiveAPI.generateToken();
 
-    this.interactionsjqXHR = GeneDiveAPI.interactions(ids, minProb, (interactions) => {
+    this.interactionsjqXHR = GeneDiveAPI.interactions(ids, minProb, token, (interactions) => {
       this.interactionsjqXHR = null;
+      this.interactions_countXHR = null;
       this.onInteractionsLoaded(interactions);
     });
+
+    this.tryToLoadInteractionsCount(token);
+
+
   }
 
 
@@ -713,7 +755,7 @@ class Controller {
 
   /**
    @fn       Controller.cleanUpData
-   @brief    Replaces blank or null values in data
+   @brief    Replaces blank or null values in data, and sorts the symbols alphabetically
    @details  In the data, some values are null, or zero, or blank. Having different values for essentially what is
    "Not available" causes problems in filtering, so we assign them all to "N/A" or "Unknown", keeping them the same
    for whatever index they're under.
@@ -723,21 +765,45 @@ class Controller {
     const BLANK_STRING = "N/A";
     const VALUES_TO_REPLACE = new Set([null,"null", 0, "", "0", "unknown"]);
     for (let i = 0; i < this.interactions.length; i++) {
-
+      let interaction = this.interactions[i];
 
       // If article id is blank, copy the value from pubmed id. If both are blank, replace with "N/A"
-      let article_blank = VALUES_TO_REPLACE.has(this.interactions[i].article_id.trim().toLowerCase());
-      let pubmed_blank = VALUES_TO_REPLACE.has(this.interactions[i].pubmed_id.trim().toLowerCase());
+      let article_blank = VALUES_TO_REPLACE.has(interaction.article_id.trim().toLowerCase());
+      let pubmed_blank = VALUES_TO_REPLACE.has(interaction.pubmed_id.trim().toLowerCase());
       if(article_blank && pubmed_blank)
-        this.interactions[i].article_id = this.interactions[i].pubmed_id = BLANK_STRING;
+        interaction.article_id = interaction.pubmed_id = BLANK_STRING;
       else if(article_blank)
-        this.interactions[i].article_id = this.interactions[i].pubmed_id;
+        interaction.article_id = interaction.pubmed_id;
 
-      if (VALUES_TO_REPLACE.has(this.interactions[i].journal.trim().toLowerCase()))
-        this.interactions[i].journal = BLANK_STRING;
+      if (VALUES_TO_REPLACE.has(interaction.journal.trim().toLowerCase()))
+        interaction.journal = BLANK_STRING;
 
-      if (VALUES_TO_REPLACE.has(this.interactions[i].section.trim().toLowerCase()))
-        this.interactions[i].section = BLANK_STRING;
+      if (VALUES_TO_REPLACE.has(interaction.section.trim().toLowerCase()))
+        interaction.section = BLANK_STRING;
+
+      // Sort the symbols alphabetically
+      if(interaction.mention1 > interaction.mention2)
+      {
+        let temp;
+
+        temp = interaction.geneids1;
+        interaction.geneids1 = interaction.geneids2;
+        interaction.geneids2 = temp;
+
+        temp = interaction.mention1;
+        interaction.mention1 = interaction.mention2;
+        interaction.mention2 = temp;
+
+        temp = interaction.mention_offset1;
+        interaction.mention_offset1 = interaction.mention_offset2;
+        interaction.mention_offset2 = temp;
+
+        temp = interaction.type1;
+        interaction.type1 = interaction.type2;
+        interaction.type2 = temp;
+
+
+      }
 
     }
   }

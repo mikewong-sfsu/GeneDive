@@ -15,16 +15,28 @@ GeneDiveAPI._stringifyIDs = function ( ids ) {
 /// @param {String} a comma-separated list of gene ids
 /// @return jqXHR The ajax request made, so you can call abort() or other methods
 /// @author jcole2@mail.sfsu.edu
-GeneDiveAPI.interactions = function (ids, minProb, callback) {
+GeneDiveAPI.interactions = function (ids, minProb, token, callback) {
   ids = GeneDiveAPI._stringifyIDs( ids );
 
   return $.ajax({
+    xhr : GeneDive.loading.xhrLoadingCall,
     type: "GET",
-    url: `/api/interactions.php?ids=${ids}&minProb=${minProb}`,
+    url: `/api/interactions.php?ids=${ids}&minProb=${minProb}&queryKey=${token}`,
     cache: true,
     success: callback
   });
-};  
+};
+
+/// @function GeneDiveAPI.interactionsCount
+GeneDiveAPI.interactionsCount = function (token, callback) {
+
+  return $.ajax({
+    type: "GET",
+    url: `/api/interactions_count.php?queryKey=${token}`,
+    cache: true,
+    success: callback
+  });
+};
 
 /// @function GeneDiveAPI.geneDetails
 /// Given one or more gene ids, returns additional gene data for disambiguation
@@ -86,3 +98,11 @@ GeneDiveAPI.alternativeIDs = ( id) => new Promise( ( resolve, reject ) => {
     request.open( "GET", `/api/aliases.php?id=${id}` );
     request.send();
 });
+
+/**
+ * Quick a dirty, should probably use a better method. Doesn't matter too much since a user can only see their tokens
+ * @returns {string}
+ */
+GeneDiveAPI.generateToken = ()=>{
+  return Math.random().toString(36).substring(2);
+};

@@ -45,9 +45,9 @@
       <input id="min-prob-slider" class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7" style="width:100%;">
       <h6 style="margin-top: 2px; margin-bottom: -8px;">Suggested Confidence Cutoffs</h6>
       <div class="btn-group" id="confidence-cutoff" style="width: 100%; margin-top: 12px;">
-          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.70.  WARNING: May increase query response time." class="btn btn-danger" id="low-confidence">Low</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.85" class="btn btn-warning" id="medium-confidence">Medium</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.95" class="btn btn-success" id="high-confidence">High</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.70.  WARNING: May increase query response time." class="btn btn-default" id="low-confidence">Low</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.85" class="btn btn-default" id="medium-confidence">Medium</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.95" class="btn btn-default" id="high-confidence">High</button>
       </div>
 
       <!-- Text Filter Submodule -->
@@ -128,8 +128,14 @@
         <span class="metadata"></span>
       </div>
       <div class="spinner table-rendering-spinner">
-        <div>
-          <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+        <div class="loading-container">
+          <div class="loading-info"></div>
+          <div>
+            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+          </div>
+          <div class="progress">
+            <div class="progress-bar w-75" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
         </div>
       </div>
       <div class="help table-help">

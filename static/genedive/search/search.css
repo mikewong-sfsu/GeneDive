@@ -128,3 +128,27 @@
   fill: #23527c;
 }
 
+.loading-container{
+  text-align:center;
+  width: 100%;
+}
+
+.loading-info{
+  font-size: 0.5em;
+}
+
+.loading-container .progress{
+  margin: 0 auto;
+  width: 50%;
+
+
+}
+
+.progress-bar {
+  /*  instant transition   */
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
+}
