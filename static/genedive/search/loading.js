@@ -13,7 +13,7 @@ class Loading {
     this.loadingContainer = $(loadingContainer);
     this.loadingInfo = $(loadingInfo);
     this.progressBar = $(progressBar);
-    this.interactionsCount = "";
+    this.interactionsCount = null;
     this.DOWNLOAD_PROGRESS_START = 0;
     this.DOWNLOAD_PROGRESS_END = 80;
 
@@ -42,7 +42,7 @@ class Loading {
   reset(){
     this.resetInteractionsLoadingCount();
     this.setProgressAmount(0);
-    this.interactionsCount = "";
+    this.interactionsCount = null;
   }
 
 
@@ -59,6 +59,14 @@ class Loading {
       this.loadingInfo.text(`Downloading ${this.interactionsCount !== null ? this.interactionsCount : ""} Interactions`);
     }
 
+
+    if(this.interactionsCount === null){
+      let partialData = event.currentTarget.response;
+      let regexMatch = partialData.match(/"count"\s*:\s*(\d+)/);
+      if(regexMatch !== null)
+        this.setInteractionsLoadingCount(parseInt(regexMatch[1]));
+    }
+
     // This was bad, using custom headers is bad.
     // let interactionsCount = event.currentTarget.getResponseHeader("custom-interactions-count");
     // this.setInteractionsLoadingCount(interactionsCount);
@@ -72,6 +80,7 @@ class Loading {
     xhr.addEventListener("progress", function(evt){
       GeneDive.loading.setDownloadProgressAmount(evt);
     }, false);
+
 
     return xhr;
   }

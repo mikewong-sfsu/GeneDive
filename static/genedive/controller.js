@@ -333,7 +333,7 @@ class Controller {
       let thisClass = this;
       setTimeout(function(){
         try{
-          thisClass.interactions = JSON.parse(interactions);
+          thisClass.interactions = JSON.parse(interactions).results;
           thisClass.cleanUpData();
           thisClass.filterInteractions();
           thisClass.colorInteractions();
@@ -354,6 +354,7 @@ class Controller {
   }
 
   tryToLoadInteractionsCount(token){
+    return;
     this.interactions_countXHR = GeneDiveAPI.interactionsCount(token, (count) => {
       this.interactions_countXHR = null;
       this.onInteractionsCountLoaded(count, token);
