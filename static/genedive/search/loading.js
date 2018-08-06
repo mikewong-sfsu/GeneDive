@@ -56,6 +56,7 @@ class Loading {
       let percentComplete = event.loaded / event.total;
 
       this.setProgressAmount(percentComplete*this.DOWNLOAD_PROGRESS_END + this.DOWNLOAD_PROGRESS_START);
+      this.loadingInfo.text(`Downloading ${this.interactionsCount !== null ? this.interactionsCount : ""} Interactions`);
     }
 
     // This was bad, using custom headers is bad.
