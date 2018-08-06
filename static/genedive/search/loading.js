@@ -14,6 +14,8 @@ class Loading {
     this.loadingInfo = $(loadingInfo);
     this.progressBar = $(progressBar);
     this.interactionsCount = "";
+    this.DOWNLOAD_PROGRESS_START = 0;
+    this.DOWNLOAD_PROGRESS_END = 80;
 
     this.DEFAULT_LOADING_INTERACTIONS_MSG = "Loading Interactions";
 
@@ -51,15 +53,14 @@ class Loading {
   setDownloadProgressAmount(event){
     console.debug(event);
     if (event.lengthComputable) {
-      var percentComplete = event.loaded / event.total;
+      let percentComplete = event.loaded / event.total;
 
-      this.setProgressAmount(percentComplete*80);
-
-
+      this.setProgressAmount(percentComplete*this.DOWNLOAD_PROGRESS_END + this.DOWNLOAD_PROGRESS_START);
     }
 
-    let interactionsCount = event.currentTarget.getResponseHeader("custom-interactions-count");
-    this.setInteractionsLoadingCount(interactionsCount);
+    // This was bad, using custom headers is bad.
+    // let interactionsCount = event.currentTarget.getResponseHeader("custom-interactions-count");
+    // this.setInteractionsLoadingCount(interactionsCount);
 
   }
 

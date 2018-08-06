@@ -354,7 +354,6 @@ class Controller {
   }
 
   tryToLoadInteractionsCount(token){
-    return;
     this.interactions_countXHR = GeneDiveAPI.interactionsCount(token, (count) => {
       this.interactions_countXHR = null;
       this.onInteractionsCountLoaded(count, token);
