@@ -45,7 +45,7 @@ else {
   $size = mb_strlen($final_string, '8bit');
 
   header('Content-Length: '.$size);
-  header('Content-Range: 0'); // Content header is dropped unless this is set to 0
+  header('Content-Range: 0'); // Content-Length header is dropped unless this is set.
   echo $final_string;
 }
 ?>
