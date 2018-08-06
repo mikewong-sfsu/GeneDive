@@ -45,7 +45,7 @@ else {
   $size = mb_strlen($final_string, '8bit');
 
   header('Content-Length: '.$size);
-  header('Custom-Interactions-Count: '.sizeof($results));
+  header('Content-Range: 0'); // Content header is dropped unless this is set to 0
   echo $final_string;
 }
 ?>
