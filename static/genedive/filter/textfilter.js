@@ -27,13 +27,13 @@ class TextFilter {
   }
 
   createFilterValueLists(interactions) {
-    let values = {"Article": new Set(), "DGR": new Set(), "Journal": new Set(), "Section": new Set()};
+    let values = {"Article": {}, "DGR": {}, "Journal": {}, "Section": {}};
 
     interactions.forEach(i => {
-      values["Article"].add(i.pubmed_id);
-      values["DGR"].add(i.mention1);
-      values["DGR"].add(i.mention2);
-      values["Journal"].add(i.journal);
+      values["Article"][i.pubmed_id.toLocaleLowerCase()] = i.pubmed_id;
+      values["DGR"][i.mention1.toLowerCase()] = i.mention1;
+      values["DGR"][i.mention2.toLowerCase()] = i.mention2;
+      values["Journal"][i.journal.toLowerCase()] = i.journal;
       // values["Section"].add(i.section); // Disabled for now
     });
 
@@ -149,11 +149,13 @@ class TextFilter {
       this.valueText.hide();
       this.valueDropdown.show().empty();
 
-      let values = Array.from(this.filterValues[target.value]).sort();
+      let values = this.filterValues[target.value]
 
-      values.forEach(v => {
-        this.valueDropdown.append($("<option/>").html(v));
-      });
+
+      for(let key in values){
+        this.valueDropdown.append($("<option/>").html(values[key]));
+
+      }
 
     }
   }
