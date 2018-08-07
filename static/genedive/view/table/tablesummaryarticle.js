@@ -52,7 +52,7 @@ class TableSummaryArticle extends ResultsTable {
         .data("group", group)
         .data("toggle", "tooltip")
         .prop("title", "View All Interactions in Group")
-        .on("click", ( event ) => { 
+        .on("click", ( event ) => {
           GeneDive.tablestate.zoomed = true;
           GeneDive.tablestate.zoomgroup = $( event.currentTarget ).data( "group" );
           GeneDive.onTableElementClick();
