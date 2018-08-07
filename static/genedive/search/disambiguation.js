@@ -94,7 +94,7 @@ class Disambiguation {
 
       $(".list-group-item", form).click(function(e) {
         $(".list-group-item", form).removeClass("active");
-        $(e.target).addClass("active");
+        $(e.currentTarget).addClass("active");
       });
     }
 
