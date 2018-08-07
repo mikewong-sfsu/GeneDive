@@ -112,7 +112,8 @@
   text-decoration: none;
 }
 
-.disambiguation-row .name {
+.disambiguation-row button {
+  width: 80%;
 }
 
 .disambiguation-row svg{

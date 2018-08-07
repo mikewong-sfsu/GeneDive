@@ -40,7 +40,7 @@ class Disambiguation {
         },
         callback: function( closeEvent ) {
           if ( closeEvent.index === 0 ) return;  // Cancel
-          let selected = $(".disambiguation-form input:checked");
+          let selected = $(".disambiguation-form .list-group-item-action.active");
 
           GeneDive.search.addSearchSet( selected.data("name"), [selected.val()], selected.data("type") );
 
@@ -76,18 +76,26 @@ class Disambiguation {
 
     let form = $("<form/>").addClass("disambiguation-form");
     form.append("<p/>").text(`${dgrDetails[0].mention} resolves to multiple ids.`);
-    form.append("<br/>");
+    form.append(`<ul class=\"list-group\">`);
     for ( let dgr of dgrDetails ) {
       let url = GeneDive.search.createExternalLinkWithoutKnowingDB(dgr.type, dgr.geneid);
       let svg = GeneDive.search.getIconLinkFromID(dgr.geneid);
       let input = `<div class="disambiguation-row">
-                    <input type='radio' value='${dgr.geneid}' name='resolveId' data-name='${dgr.mention}' data-type='${dgr.type}'>
-                    <a href="${url}" target="_blank">${svg.html()}
-                    <span class='name'>${dgr.geneid}</span></a> with 
-                    <span class='interactions'>${dgr.interactions} interactions</span>
-                    and a max probability of <span class='probability'>${dgr.max_probability}</span>
-                  </div>`;
+                    <button type="button" class="list-group-item list-group-item-action disambiguation-row" value='${dgr.geneid}' name='resolveId' data-name='${dgr.mention}' data-type='${dgr.type}'>
+                      <span class='name'>${dgr.geneid}</span>:  
+                      <span class='interactions'>${dgr.interactions} interactions</span>,
+                      <span class='probability'>${dgr.max_probability}</span> max probability
+                      <a href="${url}" target="_blank">${svg.html()}</a>
+                    </button>
+                    
+                   </div>`;
       form.append(input);
+      form.append(`</ul>`);
+
+      $(".list-group-item", form).click(function(e) {
+        $(".list-group-item", form).removeClass("active");
+        $(e.target).addClass("active");
+      });
     }
 
     return form[0];
