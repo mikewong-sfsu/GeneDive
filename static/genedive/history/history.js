@@ -13,6 +13,8 @@ class History{
     this.stateHistory = [];
     this.currentStateIndex = -1;
     this.stateIsBeingUpdated = false;
+
+    this.yScrollCurrent = 0;
   }
 
   /**
@@ -30,6 +32,8 @@ class History{
     this.controller.graph.clearData();
     this.controller.probfilter.reset();
     this.controller.textfilter.reset();
+    this.controller.yScrollSummary = 0;
+    this.controller.yScrollView.scrollTop = 0;
 
     this.controller.controls.checkButtonStates();
   }
@@ -47,6 +51,11 @@ class History{
    */
   saveCurrentState() {
     let state = {};
+
+
+    // Scroll
+    state.yScrollSummary = this.controller.yScrollSummary;
+    state.yScrollCurrent = this.yScrollCurrent; // This should have been loaded earlier
 
     // Grouper
     state.grouper = this.controller.grouper.exportGrouperState();
@@ -94,8 +103,9 @@ class History{
     this.stateHistory = this.stateHistory.slice(0, this.currentStateIndex + 1);
     this.stateHistory.push(this.saveCurrentState());
     this.currentStateIndex += 1;
-    console.debug(`Saved state ${this.currentStateIndex}`)
+    console.debug(`Saved state ${this.currentStateIndex}`);
     this.controller.controls.checkButtonStates();
+
   }
 
   /**
@@ -135,6 +145,8 @@ class History{
     this.controller.graph.importGraphState(state.graph, this.controller.search.sets);
 
 
+
+
     if (this.controller.search.amountOfDGRsSearched() === 0)
       this.controller.loadLandingPage();
     else
@@ -144,6 +156,10 @@ class History{
 
     // Set the state controls
     this.controller.controls.checkButtonStates();
+
+    // Scroll has to be set at end, once the spinners are gone.
+    this.controller.yScrollSummary = state.yScrollSummary;
+    this.controller.yScrollView.scrollTop = state.yScrollCurrent;
   }
 
   /**
@@ -226,5 +242,9 @@ class History{
    */
   canGoForwardInStateHistory() {
     return this.stateHistory.length - this.currentStateIndex > 1;
+  }
+
+  saveYScrollCurrent(yScroll){
+    this.stateHistory[this.currentStateIndex].yScrollCurrent = yScroll;
   }
 }
