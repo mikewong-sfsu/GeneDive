@@ -36,7 +36,8 @@ class Controller {
 
     // Saves the table view's Y scroll positions
     this.yScrollSummary = 0;
-    this.yScrollDetail = 0;
+    // this.yScrollDetail = 0;
+    this.yScrollView = $(".table-view")[0];
 
     // A user could cause another UI call to the interactions before the previous one has finished.
     // This variable stores whatever interaction API call is going on, so we can abort it if another request is made
@@ -170,6 +171,7 @@ class Controller {
    */
   onTableGroupingSelect() {
     try {
+      this.history.saveYScrollCurrent(this.yScrollGetCurrent());
       this.loadTableAndGraphPage(true, false);
       this.history.saveCurrentStateToHistory();
     } catch (e) {
@@ -300,8 +302,8 @@ class Controller {
    */
   onBackClick() {
     try {
-
       this.loadTableAndGraphPage(true, false);
+      this.yScrollRestoreSummary();
       this.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
@@ -316,6 +318,8 @@ class Controller {
    */
   onTableElementClick() {
     try {
+      this.history.saveYScrollCurrent(this.yScrollGetCurrent());
+      this.yScrollSaveSummary();
       this.loadTableAndGraphPage(true, false);
       this.history.saveCurrentStateToHistory();
     } catch (e) {
@@ -336,6 +340,7 @@ class Controller {
       let thisClass = this;
       setTimeout(function(){
         try{
+          thisClass.yScrollReset();
           thisClass.interactions = JSON.parse(interactions).results;
           thisClass.cleanUpData();
           thisClass.filterInteractions();
@@ -809,6 +814,43 @@ class Controller {
       }
 
     }
+  }
+
+  /**
+   * @fn       Controller.yScrollReset
+   * @brief    Resets the saved Y scroll on the graph
+   * @details  This sets both the current Y Scroll and the saved Y Scroll to 0.
+   * @callergraph
+   */
+  yScrollReset(){
+    this.yScrollSummary = 0;
+    this.yScrollView.scrollTop = 0;
+  }
+
+  /**
+   * @fn       Controller.yScrollSaveSummary
+   * @brief    Saves the current Y Scroll position
+   * @details  This saves the current Y scroll position of the table view, and then sets it to 0. So that when a user
+   * clicks on the details, it will allow them to return back to that position, while also starting them at the top.
+   * @callergraph
+   */
+  yScrollSaveSummary(){
+    this.yScrollSummary = this.yScrollGetCurrent();
+    this.yScrollView.scrollTop = 0;
+  }
+
+  /**
+   * @fn       Controller.yScrollRestoreSummary
+   * @brief    Restores the saved Y Scroll
+   * @details  When a user wants to return back to the summary, this will return them to their previous position
+   * @callergraph
+   */
+  yScrollRestoreSummary(){
+    this.yScrollView.scrollTop = this.yScrollSummary;
+  }
+
+  yScrollGetCurrent(){
+    return this.yScrollView.scrollTop;
   }
 
 
