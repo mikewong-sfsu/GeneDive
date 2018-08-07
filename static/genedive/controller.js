@@ -34,6 +34,9 @@ class Controller {
     this.interactions = null;
     this.filtrate = null;
 
+    // Saves the table view's Y scroll positions
+    this.yScrollSummary = 0;
+    this.yScrollDetail = 0;
 
     // A user could cause another UI call to the interactions before the previous one has finished.
     // This variable stores whatever interaction API call is going on, so we can abort it if another request is made
