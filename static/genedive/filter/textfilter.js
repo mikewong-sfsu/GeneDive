@@ -54,7 +54,7 @@ class TextFilter {
       let index = val.toLowerCase();
       if(index in newSet)
       {
-        
+
       }
       else
         newSet[index] = val;
@@ -82,9 +82,8 @@ class TextFilter {
             newObject[dgrLowerCase] = dgr;
         }
         // Else choose most complex mix
-        else
         {
-          if(object[dgrLowerCase].differenceBetweenUpperAndLower() < dgr.differenceBetweenUpperAndLower())
+          if(dgr.differenceBetweenUpperAndLower() < newObject[dgrLowerCase].differenceBetweenUpperAndLower())
             newObject[dgrLowerCase] = dgr;
         }
       }
