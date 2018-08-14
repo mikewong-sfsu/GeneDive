@@ -14,10 +14,12 @@ class Loading {
     this.loadingInfo = $(loadingInfo);
     this.progressBar = $(progressBar);
     this.interactionsCount = null;
-    this.DOWNLOAD_PROGRESS_START = 0;
+    this.download_progress_start = 0;
     this.DOWNLOAD_PROGRESS_END = 80;
 
     this.DEFAULT_LOADING_INTERACTIONS_MSG = "Loading Interactions";
+    this.PRE_DOWNLOAD_PROGRESS_INCREMENT_COUNT = 1;
+    this.PRE_DOWNLOAD_PROGRESS_MAX = 20;
 
   }
 
@@ -39,10 +41,20 @@ class Loading {
     this.progressBar.width(`${percent}%`);
   }
 
-  reset(){
+  startNewDownload(){
     this.resetInteractionsLoadingCount();
     this.setProgressAmount(0);
     this.interactionsCount = null;
+    this.incrementLoadingBeforeResponse(0)
+  }
+
+  incrementLoadingBeforeResponse(newProgress){
+    this.setProgressAmount(newProgress);
+    let thisClass = this;
+    setTimeout(()=>{
+      if(thisClass.interactionsCount === null && newProgress <= thisClass.PRE_DOWNLOAD_PROGRESS_MAX )
+        thisClass.incrementLoadingBeforeResponse(newProgress + thisClass.PRE_DOWNLOAD_PROGRESS_INCREMENT_COUNT);
+    }, 1000);
   }
 
 
@@ -61,7 +73,7 @@ class Loading {
     if (event.lengthComputable) {
       let percentComplete = event.loaded / event.total;
 
-      this.setProgressAmount(percentComplete*this.DOWNLOAD_PROGRESS_END + this.DOWNLOAD_PROGRESS_START);
+      this.setProgressAmount(percentComplete*this.DOWNLOAD_PROGRESS_END + this.download_progress_start);
       this.loadingInfo.text(`Downloading ${this.interactionsCount !== null ? this.interactionsCount : ""} Interactions`);
     }
 
