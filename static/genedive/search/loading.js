@@ -45,6 +45,7 @@ class Loading {
     this.resetInteractionsLoadingCount();
     this.setProgressAmount(0);
     this.interactionsCount = null;
+    this.download_progress_start = 0;
     this.incrementLoadingBeforeResponse(0)
   }
 
@@ -54,6 +55,8 @@ class Loading {
     setTimeout(()=>{
       if(thisClass.interactionsCount === null && newProgress <= thisClass.PRE_DOWNLOAD_PROGRESS_MAX )
         thisClass.incrementLoadingBeforeResponse(newProgress + thisClass.PRE_DOWNLOAD_PROGRESS_INCREMENT_COUNT);
+      else
+        this.download_progress_start = newProgress;
     }, 1000);
   }
 
