@@ -80,7 +80,7 @@ class TableSummaryArticle extends ResultsTable {
       tr.append( $(document.createElement("td")).text( this.interactions[group].length ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
-      tr.append( $(document.createElement("td")).html( excerpt ) );
+      tr.append( $(document.createElement("td")).html( this.adjustExcerpt(row) ) );
       tbody.append(tr);
     }
 
