@@ -206,10 +206,11 @@ class TextFilter {
       this.valueText.hide();
       this.valueDropdown.show().empty();
 
-      let values = this.filterValues[target.value]
+      let values = this.filterValues[target.value];
+      let keys = Object.keys(values).sort()
 
 
-      for(let key in values){
+      for(let key in keys){
         this.valueDropdown.append($("<option/>").html(values[key]));
 
       }
@@ -274,15 +275,15 @@ class FilterSet {
   }
 }
 
-String.prototype.numberOfLowercase = ()=>{
+String.prototype.numberOfLowercase = function(){
   return this.length - this.replace(/[A-Z]/g, '').length;
 };
 
-String.prototype.numberOfUppercase = ()=>{
+String.prototype.numberOfUppercase = function(){
   return this.length - this.replace(/[a-z]/g, '').length;
 };
 
-String.prototype.differenceBetweenUpperAndLower = ()=>{
+String.prototype.differenceBetweenUpperAndLower = function(){
   let numberOfLower = this.numberOfLowercase();
   return Math.abs(numberOfLower + numberOfLower - this.length)
 };
