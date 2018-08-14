@@ -22,15 +22,11 @@ class Disambiguation {
         },
         setup:function(){
           return {
-            buttons:[
-              {text: "Cancel", key:27},
-              {text: "Select" }
-            ],
             focus: { element:0 },
             options: {
               maximizable: false,
               resizable: false,
-              closeable: false
+              closeable: true,
             }
           };
         },
@@ -74,31 +70,33 @@ class Disambiguation {
 
   prepareForm ( dgrDetails ) {
 
-    let form = $("<form/>").addClass("disambiguation-form");
-    form.append("<p/>").text(`${dgrDetails[0].mention} resolves to multiple ids.`);
-    form.append(`<ul class=\"list-group\">`);
+    let div = $('<div>');
+    let list = $(`<div class="list-group row">`);
+
+    div.append("<p/>").text(`${dgrDetails[0].mention} resolves to the following ids:`);
+
     for ( let dgr of dgrDetails ) {
       let url = GeneDive.search.createExternalLinkWithoutKnowingDB(dgr.type, dgr.geneid);
       let svg = GeneDive.search.getIconLinkFromID(dgr.geneid);
-      let input = `<div class="disambiguation-row">
-                    <button type="button" class="list-group-item list-group-item-action disambiguation-row" value='${dgr.geneid}' name='resolveId' data-name='${dgr.mention}' data-type='${dgr.type}'>
-                      <span class='name'>${dgr.geneid}</span>:  
-                      <span class='interactions'>${dgr.interactions} interactions</span>,
-                      <span class='probability'>${dgr.max_probability}</span> max probability
-                      <a href="${url}" target="_blank">${svg.html()}</a>
-                    </button>
-                    
-                   </div>`;
-      form.append(input);
-      form.append(`</ul>`);
+      let input = `<a class="list-group-item col-xs-9 disambguation-selection"
+                    data-id='${dgr.geneid}' name='resolveId' data-name='${dgr.mention}' data-type='${dgr.type}'
+                    onclick="GeneDive.disambiguation.onSelectId(this)">
+                      <h4 class='list-group-item-heading'>${dgr.geneid}</h4>
+                      <p class="list-group-item-text">
+                        Interactions: ${dgr.interactions}<br>
+                        Max Probability: ${dgr.max_probability}
+                      </p>
+                    </a>
+                    <a href="${url}" target="_blank" class="list-group-item col-xs-3 btn disambguation-external">
+                      ${svg.html()}
+                    </a>
+`;
 
-      $(".list-group-item", form).click(function(e) {
-        $(".list-group-item", form).removeClass("active");
-        $(e.currentTarget).addClass("active");
-      });
+      list.append(input);
     }
+    div.append(list);
 
-    return form[0];
+    return div[0];
 
   }
 
@@ -107,10 +105,19 @@ class Disambiguation {
       let details = JSON.parse(dgrDetails);
       console.debug(dgrDetails);
       if(details.length > 0)
-        alertify.disambiguationPrompt( this.prepareForm( JSON.parse(dgrDetails) ), symbol);
+        this.disambiguationPrompt = alertify.disambiguationPrompt( this.prepareForm( JSON.parse(dgrDetails) ), symbol);
       else
-        alertify.disambiguationPromptNoResults( `No results found in NCBI DB for <i>${symbol}</i>.`, symbol);
+        this.disambiguationPrompt = alertify.disambiguationPromptNoResults( `No results found in NCBI DB for <i>${symbol}</i>.`, symbol);
     });
+  }
+
+  onSelectId( element ) {
+    this.disambiguationPrompt.destroy();
+    let name = element.getAttribute('data-name');
+    let id = element.getAttribute('data-id');
+    let type = element.getAttribute('data-type');
+    GeneDive.search.addSearchSet( name, [id], type );
+
   }
 
 }

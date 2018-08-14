@@ -353,7 +353,6 @@ class Controller {
         } catch (e) {
           thisClass.handleException(e);
         }
-        thisClass.loading.reset();
       },150);
     } catch (e) {
       this.handleException(e);
@@ -558,7 +557,7 @@ class Controller {
     if (this.interactions_countXHR !== null)
       this.interactions_countXHR.abort();
 
-    this.loading.reset();
+
 
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGRsSearched() === 0) {
@@ -566,6 +565,8 @@ class Controller {
       this.loadLandingPage();
       return;
     }
+
+
 
     // If doing a two hop search, either 2 DGRs are selected or a gene set is selected
     let topology = GeneDive.search.selectedTopology();
@@ -595,6 +596,8 @@ class Controller {
 
     // This resets the table view to default
     this.tablestate.zoomed = false;
+
+    this.loading.startNewDownload();
 
     let token = GeneDiveAPI.generateToken();
 

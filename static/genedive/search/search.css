@@ -95,39 +95,27 @@
 
 /* Disambiguation Form */
 
-.disambiguation-row {
-  width: 100%;
+.disambguation-selection{
+  cursor: pointer;
 }
 
-.disambiguation-row input {
+.disambguation-external{
+  cursor: pointer;
+}
+.disambguation-external svg{
+  max-width: 100%;
+  height: 4em;
+  width: 4em;
 }
 
-.disambiguation-row .symbol {
-  display:inline-block;
-  padding-left: 18px;
-  width: 45%;
-}
-
-.disambiguation-row a:hover{
-  text-decoration: none;
-}
-
-.disambiguation-row button {
-  width: 80%;
-}
-
-.disambiguation-row svg{
-  height: 1em;
-  width: 1em;
-}
-
-.disambiguation-row svg path{
+.disambguation-external svg path{
   fill: #78a7cf;
 }
 
-.disambiguation-row a:hover svg path {
+.disambguation-external:hover svg path {
   fill: #23527c;
 }
+
 
 .loading-container{
   text-align:center;

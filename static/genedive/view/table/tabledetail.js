@@ -67,8 +67,7 @@ class TableDetail extends ResultsTable {
         tr.addClass("highlight-row");
       }
 
-      let excerpt = this.styleExcerpt(i.context, i.mention1, i.mention1_color);
-      excerpt = this.styleExcerpt(excerpt, i.mention2, i.mention2_color);
+
       let pubmed_link = this.buildPubmedLink(i.pubmed_id);
       let displayedID = i.pubmed_id;
 
@@ -78,7 +77,7 @@ class TableDetail extends ResultsTable {
       tr.append($(document.createElement("td")).text(displayedID).addClass("numeric"));
       // tr.append($(document.createElement("td")).text((i.section)));
       tr.append($(document.createElement("td")).text(Number(i.probability).toFixed(3)).addClass("numeric"));
-      tr.append($(document.createElement("td")).html(excerpt));
+      tr.append($(document.createElement("td")).html(this.adjustExcerpt(i)));
       if (i.pubmed_id !== "0")
         tr.append($(document.createElement("td")).html(pubmed_link));
 

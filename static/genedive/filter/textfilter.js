@@ -26,19 +26,77 @@ class TextFilter {
 
   }
 
+
+
   createFilterValueLists(interactions) {
-    let values = {"Article": {}, "DGR": {}, "Journal": {}, "Section": {}};
+    let sets = {"Article": new Set(), "DGR": {}, "Journal":  new Set(), "Section": new Set()};
+    let values = {};
 
     interactions.forEach(i => {
-      values["Article"][i.pubmed_id.toLocaleLowerCase()] = i.pubmed_id;
-      values["DGR"][i.mention1.toLowerCase()] = i.mention1;
-      values["DGR"][i.mention2.toLowerCase()] = i.mention2;
-      values["Journal"][i.journal.toLowerCase()] = i.journal;
+      sets["Article"].add(i.pubmed_id);
+      sets["DGR"][i.mention1] = {type: i.type1};
+      sets["DGR"][i.mention2] = {type: i.type2};
+      sets["Journal"].add(i.journal);
       // values["Section"].add(i.section); // Disabled for now
     });
 
+    values["Article"] = this.chooseDynamicCase(sets["Article"]);
+    values["Journal"] = this.chooseDynamicCase(sets["Journal"]);
+    values["DGR"] = this.chooseDGRCase(sets["DGR"]);
+
     this.filterValues = values;
   }
+
+  chooseDynamicCase(set){
+    let arr = Array.from(set);
+    let newSet = {};
+    for(let val in arr){
+      let index = val.toLowerCase();
+      if(index in newSet)
+      {
+        
+      }
+      else
+        newSet[index] = val;
+
+    }
+
+    return newSet;
+
+  }
+
+
+  chooseDGRCase(object){
+    let newObject = {};
+
+    for(let dgr in object){
+      let dgrLowerCase = dgr.toLowerCase();
+      let type = object[dgr].type;
+      if(dgrLowerCase in newObject)
+      {
+
+        // If drug, choose the option with most lowercase characters
+        if(type === "r")
+        {
+          if(newObject[dgrLowerCase].numberOfLowercase() < dgr.numberOfLowercase())
+            newObject[dgrLowerCase] = dgr;
+        }
+        // Else choose most complex mix
+        else
+        {
+          if(object[dgrLowerCase].differenceBetweenUpperAndLower() < dgr.differenceBetweenUpperAndLower())
+            newObject[dgrLowerCase] = dgr;
+        }
+      }
+      else
+        newObject[dgrLowerCase] = dgr;
+    }
+
+    return newObject;
+
+  }
+
+
 
   addFilter() {
     this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val());
@@ -171,7 +229,7 @@ class TextFilter {
       "sets": this.sets,
       "filterValues": {},
       "selectedFilter" : this.filterSelector.val(),
-    }
+    };
 
     // The filterValues are Set objects, so this converts them to an array so they can be stringified.
     $.each(this.filterValues, function(index, value) {
@@ -216,3 +274,16 @@ class FilterSet {
     this.value = value;
   }
 }
+
+String.prototype.numberOfLowercase = ()=>{
+  return this.length - this.replace(/[A-Z]/g, '').length;
+};
+
+String.prototype.numberOfUppercase = ()=>{
+  return this.length - this.replace(/[a-z]/g, '').length;
+};
+
+String.prototype.differenceBetweenUpperAndLower = ()=>{
+  let numberOfLower = this.numberOfLowercase();
+  return Math.abs(numberOfLower + numberOfLower - this.length)
+};
