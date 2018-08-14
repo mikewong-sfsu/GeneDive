@@ -207,11 +207,11 @@ class TextFilter {
       this.valueDropdown.show().empty();
 
       let values = this.filterValues[target.value];
-      let keys = Object.keys(values).sort()
+      let keys = Object.keys(values).sort();
 
 
       for(let key in keys){
-        this.valueDropdown.append($("<option/>").html(values[key]));
+        this.valueDropdown.append($("<option/>").html(values[keys[key]]));
 
       }
 
