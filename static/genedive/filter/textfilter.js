@@ -51,13 +51,13 @@ class TextFilter {
     let arr = Array.from(set);
     let newSet = {};
     for(let val in arr){
-      let index = val.toLowerCase();
+      let index = arr[val].toLowerCase();
       if(index in newSet)
       {
 
       }
       else
-        newSet[index] = val;
+        newSet[index] = arr[val];
 
     }
 
