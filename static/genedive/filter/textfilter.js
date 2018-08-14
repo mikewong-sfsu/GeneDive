@@ -71,9 +71,22 @@ class TextFilter {
 
     for(let dgr in object){
       let dgrLowerCase = dgr.toLowerCase();
+      let type = object[dgr].type;
       if(dgrLowerCase in newObject)
       {
-        // TODO: Add some way to choose between different cased DGRs
+
+        // If drug, choose the option with most lowercase characters
+        if(type === "r")
+        {
+          if(newObject[dgrLowerCase].numberOfLowercase() < dgr.numberOfLowercase())
+            newObject[dgrLowerCase] = dgr;
+        }
+        // Else choose most complex mix
+        else
+        {
+          if(object[dgrLowerCase].differenceBetweenUpperAndLower() < dgr.differenceBetweenUpperAndLower())
+            newObject[dgrLowerCase] = dgr;
+        }
       }
       else
         newObject[dgrLowerCase] = dgr;
@@ -82,6 +95,8 @@ class TextFilter {
     return newObject;
 
   }
+
+
 
   addFilter() {
     this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val());
@@ -214,7 +229,7 @@ class TextFilter {
       "sets": this.sets,
       "filterValues": {},
       "selectedFilter" : this.filterSelector.val(),
-    }
+    };
 
     // The filterValues are Set objects, so this converts them to an array so they can be stringified.
     $.each(this.filterValues, function(index, value) {
@@ -259,3 +274,16 @@ class FilterSet {
     this.value = value;
   }
 }
+
+String.prototype.numberOfLowercase = ()=>{
+  return this.length - this.replace(/[A-Z]/g, '').length;
+};
+
+String.prototype.numberOfUppercase = ()=>{
+  return this.length - this.replace(/[a-z]/g, '').length;
+};
+
+String.prototype.differenceBetweenUpperAndLower = ()=>{
+  let numberOfLower = this.numberOfLowercase();
+  return Math.abs(numberOfLower + numberOfLower - this.length)
+};
