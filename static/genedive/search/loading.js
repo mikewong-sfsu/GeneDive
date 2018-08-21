@@ -13,6 +13,7 @@ class Loading {
     this.loadingContainer = $(loadingContainer);
     this.loadingInfo = $(loadingInfo);
     this.progressBar = $(progressBar);
+    this.currentTimeout = null;
     this.interactionsCount = null;
     this.LOADING_PROGRESS_END = 20;
     this.LOADING_PROGRESS_INCREMENT = 1;
@@ -45,13 +46,14 @@ class Loading {
     this.resetInteractionsLoadingCount();
     this.setProgressAmount(0);
     this.interactionsCount = null;
+    clearTimeout(this.currentTimeout);
     this.incrementLoadingBeforeResponse(0)
   }
 
   incrementLoadingBeforeResponse(newProgress){
     this.setProgressAmount(newProgress);
     let thisClass = this;
-    setTimeout(()=>{
+    this.currentTimeout = setTimeout(()=>{
       if(thisClass.interactionsCount === null && newProgress < thisClass.LOADING_PROGRESS_END )
         thisClass.incrementLoadingBeforeResponse(newProgress + thisClass.LOADING_PROGRESS_INCREMENT);
     }, 1000);
