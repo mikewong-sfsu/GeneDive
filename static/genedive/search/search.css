@@ -95,24 +95,22 @@
 
 /* Disambiguation Form */
 
-.disambguation-selection{
+.disambiguation-selection, .disambiguation-external{
   cursor: pointer;
+  min-height: 85px;
 }
 
-.disambguation-external{
-  cursor: pointer;
-}
-.disambguation-external svg{
+.disambiguation-external svg{
   max-width: 100%;
   height: 4em;
   width: 4em;
 }
 
-.disambguation-external svg path{
+.disambiguation-external svg path{
   fill: #78a7cf;
 }
 
-.disambguation-external:hover svg path {
+.disambiguation-external:hover svg path {
   fill: #23527c;
 }
 
