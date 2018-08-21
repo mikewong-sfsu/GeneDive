@@ -14,12 +14,12 @@ class Loading {
     this.loadingInfo = $(loadingInfo);
     this.progressBar = $(progressBar);
     this.interactionsCount = null;
-    this.download_progress_start = 0;
+    this.LOADING_PROGRESS_END = 20;
+    this.LOADING_PROGRESS_INCREMENT = 1;
     this.DOWNLOAD_PROGRESS_END = 80;
 
     this.DEFAULT_LOADING_INTERACTIONS_MSG = "Loading Interactions";
-    this.PRE_DOWNLOAD_PROGRESS_INCREMENT_COUNT = 1;
-    this.PRE_DOWNLOAD_PROGRESS_MAX = 20;
+
 
   }
 
@@ -45,7 +45,6 @@ class Loading {
     this.resetInteractionsLoadingCount();
     this.setProgressAmount(0);
     this.interactionsCount = null;
-    this.download_progress_start = 0;
     this.incrementLoadingBeforeResponse(0)
   }
 
@@ -53,10 +52,8 @@ class Loading {
     this.setProgressAmount(newProgress);
     let thisClass = this;
     setTimeout(()=>{
-      if(thisClass.interactionsCount === null && newProgress <= thisClass.PRE_DOWNLOAD_PROGRESS_MAX )
-        thisClass.incrementLoadingBeforeResponse(newProgress + thisClass.PRE_DOWNLOAD_PROGRESS_INCREMENT_COUNT);
-      else
-        this.download_progress_start = newProgress;
+      if(thisClass.interactionsCount === null && newProgress < thisClass.LOADING_PROGRESS_END )
+        thisClass.incrementLoadingBeforeResponse(newProgress + thisClass.LOADING_PROGRESS_INCREMENT);
     }, 1000);
   }
 
@@ -76,7 +73,7 @@ class Loading {
     if (event.lengthComputable) {
       let percentComplete = event.loaded / event.total;
 
-      this.setProgressAmount(percentComplete*this.DOWNLOAD_PROGRESS_END + this.download_progress_start);
+      this.setProgressAmount(percentComplete*(this.DOWNLOAD_PROGRESS_END - this.LOADING_PROGRESS_END)+this.LOADING_PROGRESS_END);
       this.loadingInfo.text(`Downloading ${this.interactionsCount !== null ? this.interactionsCount : ""} Interactions`);
     }
 
