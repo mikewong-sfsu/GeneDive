@@ -59,9 +59,9 @@ class ResultsTable {
 
   adjustExcerpt(row){
     let excerpt = row.context;
-    // if(row.context.trim() === "Source: PharmGKB"){
-    //   excerpt = `Source: <a href="https://www.pharmgkb.org/combination/${row.geneids1},${row.geneids2}" target="_blank">PharmGKB ${row.geneids1} ${row.geneids2} Combination</a>`
-    // }
+     if(row.context.trim() === "Source: PharmGKB"){
+       excerpt = `Source: <a href="/api/external_link.php?site=pharmgkb_combination&dgr1=${row.geneids1}&dgr2=${row.geneids2}" target="_blank">PharmGKB ${row.mention1} ${row.mention2} Combination</a>`
+     }
     excerpt = this.styleExcerpt(excerpt, row.mention1, row.mention1_color);
     excerpt = this.styleExcerpt(excerpt, row.mention2, row.mention2_color);
     return excerpt;

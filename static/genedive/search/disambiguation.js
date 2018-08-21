@@ -78,7 +78,7 @@ class Disambiguation {
     for ( let dgr of dgrDetails ) {
       let url = GeneDive.search.createExternalLinkWithoutKnowingDB(dgr.type, dgr.geneid);
       let svg = GeneDive.search.getIconLinkFromID(dgr.geneid);
-      let input = `<a class="list-group-item col-xs-9 disambguation-selection"
+      let input = `<a class="list-group-item col-xs-9 disambiguation-selection"
                     data-id='${dgr.geneid}' name='resolveId' data-name='${dgr.mention}' data-type='${dgr.type}'
                     onclick="GeneDive.disambiguation.onSelectId(this)">
                       <h4 class='list-group-item-heading'>${dgr.geneid}</h4>
@@ -87,7 +87,7 @@ class Disambiguation {
                         Max Probability: ${dgr.max_probability}
                       </p>
                     </a>
-                    <a href="${url}" target="_blank" class="list-group-item col-xs-3 btn disambguation-external">
+                    <a href="${url}" target="_blank" class="list-group-item col-xs-3 btn disambiguation-external">
                       ${svg.html()}
                     </a>
 `;
