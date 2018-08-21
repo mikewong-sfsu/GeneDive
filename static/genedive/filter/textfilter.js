@@ -78,8 +78,8 @@ class TextFilter {
         // If drug, choose the option with most lowercase characters
         if(type === "r")
         {
-          if(newObject[dgrLowerCase].numberOfLowercase() < dgr.numberOfLowercase())
-            newObject[dgrLowerCase] = dgr;
+          if(!(dgrLowerCase in newObject[dgrLowerCase]))
+            newObject[dgrLowerCase] = dgrLowerCase;
         }
         // Else choose most complex mix
         {
