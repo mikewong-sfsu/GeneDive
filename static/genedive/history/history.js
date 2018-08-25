@@ -144,9 +144,6 @@ class History{
     // Set Graph state
     this.controller.graph.importGraphState(state.graph, this.controller.search.sets);
 
-
-
-
     if (this.controller.search.amountOfDGRsSearched() === 0)
       this.controller.loadLandingPage();
     else

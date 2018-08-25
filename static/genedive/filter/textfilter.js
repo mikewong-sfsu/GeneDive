@@ -227,14 +227,9 @@ class TextFilter {
     let filterData = {
       "currentValueInput" : this.currentValueInput,
       "sets": this.sets,
-      "filterValues": {},
-      "selectedFilter" : this.filterSelector.val(),
+        "selectedFilter" : this.filterSelector.val(),
     };
 
-    // The filterValues are Set objects, so this converts them to an array so they can be stringified.
-    $.each(this.filterValues, function(index, value) {
-      filterData[index] = Array.from(value);
-    });
 
     return filterData;
   }
@@ -249,13 +244,10 @@ class TextFilter {
     this.currentValueInput = filterData.currentValueInput;
     this.sets = filterData.sets;
 
-    // Convert the arrays back into Set objects
-    $.each(filterData.filterValues, function(index, value) {
-      this.filterValues[index] = new Set(value);
-    });
-
+    this.createFilterValueLists(GeneDive.interactions);
     this.renderDisplay();
     this.updateSelectedFilter();
+
   }
 
   reset(){
