@@ -14,7 +14,7 @@ class ResultsTable {
       return "N/A";
     else
       return `
-      <a class="pubmedLink" href='https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/' target='_blank'>
+      <a class="pubmedLink" href='https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/' target='_blank' onclick="event.stopPropagation()">
         <i class="fa fa-file-text-o" aria-hidden="true"></i>
         <i class="fa fa-link" aria-hidden="true"></i>
       </a>`;
@@ -59,8 +59,8 @@ class ResultsTable {
 
   adjustExcerpt(row){
     let excerpt = row.context;
-     if(row.context.trim() === "Source: PharmGKB"){
-       excerpt = `Source: <a href="/api/external_link.php?site=pharmgkb_combination&dgr1=${row.geneids1}&dgr2=${row.geneids2}" target="_blank">PharmGKB ${row.mention1} ${row.mention2} Combination</a>`
+     if(row.context.trim().toLocaleLowerCase() === "source: pharmgkb"){
+       excerpt = `Source: <a href="/api/external_link.php?site=pharmgkb_combination&dgr1=${row.geneids1}&dgr2=${row.geneids2}" target="_blank" onclick="event.stopPropagation()">PharmGKB ${row.mention1} ${row.mention2} Combination</a>`
      }
     excerpt = this.styleExcerpt(excerpt, row.mention1, row.mention1_color);
     excerpt = this.styleExcerpt(excerpt, row.mention2, row.mention2_color);
