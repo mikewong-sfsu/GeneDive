@@ -35,9 +35,8 @@
       </div>
     </div>
 
-    <!-- Filter Controls -->
-    <div class="module filter-module">
-      <!-- Probability Filter Submodule -->
+    <!-- Probability Controls -->
+    <div class="module probability-module">
       <div class="min-prob-titlebar">
         <h5>Minimum Confidence Score</h5>
         <span class="min-prob-slider-value">0.70</span>
@@ -45,13 +44,18 @@
       <input id="min-prob-slider" class="min-prob-slider" type="text" name="min-prob-value" data-provider="slider" data-slider-min="0" data-slider-max="1" data-slider-step="0.01" data-slider-value="0.7" style="width:100%;">
       <h6 style="margin-top: 2px; margin-bottom: -8px;">Suggested Confidence Cutoffs</h6>
       <div class="btn-group" id="confidence-cutoff" style="width: 100%; margin-top: 12px;">
-          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.70.  WARNING: May increase query response time." class="btn btn-default" id="low-confidence">Low</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.85" class="btn btn-default" id="medium-confidence">Medium</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.95" class="btn btn-default" id="high-confidence">High</button>
+        <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.70.  WARNING: May increase query response time." class="btn btn-default" id="low-confidence">Low</button>
+        <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.85" class="btn btn-default" id="medium-confidence">Medium</button>
+        <button data-toggle="tooltip-initial" data-placement="bottom" style="width: 33.3%;" title="Apply filter for interactions with confidence score of at least 0.95" class="btn btn-default" id="high-confidence">High</button>
       </div>
 
+    </div>
+    <!-- Filter Controls -->
+    <div class="module filter-module">
+
+
       <!-- Text Filter Submodule -->
-      <h5 class="h5-second" style="margin-top: 40px;">Filter Results</h5>
+      <h5 class="h5-second">Filter Results</h5>
       <form id="add-filter" onsubmit="return false;">
         <div class="top-row">
           <select class="filter-select">
