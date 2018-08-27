@@ -14,7 +14,7 @@ class ResultsTable {
       return "N/A";
     else
       return `
-      <a class="pubmedLink" href='https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/' target='_blank' onclick="event.stopPropagation()">
+      <a class="pubmedLink" href='/api/external_link.php?action=pubmed&pubmedID=${pubmedID}' target='_blank' onclick="event.stopPropagation()">
         <i class="fa fa-file-text-o" aria-hidden="true"></i>
         <i class="fa fa-link" aria-hidden="true"></i>
       </a>`;

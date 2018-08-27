@@ -54,6 +54,11 @@ if($action === "pharmgkb_combination"){
     $FINAL_URL = "https://meshb.nlm.nih.gov/record/ui?ui=${mesh_dgr}";
   }
 
+}else if($action === "pubmed")
+{
+
+  $pubmedID = $_GET['pubmedID'];
+  $FINAL_URL = "https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/";
 }
 
 //print($FINAL_URL);
