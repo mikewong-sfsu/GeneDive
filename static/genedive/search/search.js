@@ -319,23 +319,25 @@ class Search {
 
   createExternalLink(db, type, id)
   {
-    let pharm_gkb_types = {
-      "g": "gene",
-      "d": "disease",
-      "c": "chemical",
-      "r": "drug",
-    };
 
-    switch (db){
-      case "ncbi":
-        return `https://www.ncbi.nlm.nih.gov/gene/${id}`;
-      case "pgkb":
-        return `https://www.pharmgkb.org/${pharm_gkb_types[type]}/${id}`;
-      case "mesh":
-        return `https://meshb.nlm.nih.gov/record/ui?ui=${id.replace("MESH:","")}`;
-      default:
-        return ``;
-    }
+    return `/api/external_link.php?action=single_dgr&dgr=${id}&db=${db}`;
+    // let pharm_gkb_types = {
+    //   "g": "gene",
+    //   "d": "disease",
+    //   "c": "chemical",
+    //   "r": "drug",
+    // };
+    //
+    // switch (db){
+    //   case "ncbi":
+    //     return `https://www.ncbi.nlm.nih.gov/gene/${id}`;
+    //   case "pgkb":
+    //     return `https://www.pharmgkb.org/${pharm_gkb_types[type]}/${id}`;
+    //   case "mesh":
+    //     return `https://meshb.nlm.nih.gov/record/ui?ui=${id.replace("MESH:","")}`;
+    //   default:
+    //     return ``;
+    // }
   }
 
   createExternalLinkWithoutKnowingDB(type, id)

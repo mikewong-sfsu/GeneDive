@@ -79,4 +79,12 @@ class ProbabilityFilter {
     reset(){
         this.setMinimumProbability(0.7);
     }
+
+    hideProbabilityFilter(){
+      $('.module.probability-module').hide();
+    }
+
+    showProbabilityFilter(){
+      $('.module.probability-module').show();
+    }
 }

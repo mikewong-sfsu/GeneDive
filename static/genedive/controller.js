@@ -557,16 +557,15 @@ class Controller {
     if (this.interactions_countXHR !== null)
       this.interactions_countXHR.abort();
 
-
-
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGRsSearched() === 0) {
       this.history.clearData();
+      this.probfilter.hideProbabilityFilter();
       this.loadLandingPage();
       return;
     }
 
-
+    this.probfilter.showProbabilityFilter();
 
     // If doing a two hop search, either 2 DGRs are selected or a gene set is selected
     let topology = GeneDive.search.selectedTopology();
@@ -749,11 +748,11 @@ class Controller {
 
 
   showFilters() {
-    $('.table-view .messaging-and-controls, .module:not(".search-module"):not(".control-module"):not(".download-module"), .divider').show();
+    $('.table-view .messaging-and-controls, .module.filter-module, .divider').show();
   }
 
   hideFilters() {
-    $('.table-view .messaging-and-controls, .module:not(".search-module"):not(".control-module"):not(".download-module"), .divider').hide();
+    $('.table-view .messaging-and-controls, .module.filter-module, .divider').hide();
   }
 
   showError() {
