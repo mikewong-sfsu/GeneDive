@@ -471,7 +471,7 @@ class Controller {
       this.graph.hideGraphAbsent();
       this.hideTable();
       this.graph.hideGraphView();
-      this.hideNoResults();
+      this.hideElementsRequiringDGRs();
       this.showSpinners();
       this.spinneractive = true;
     }
@@ -486,7 +486,7 @@ class Controller {
   loadLandingPage() {
     this.showHelp();
     this.download.disableDownload();
-    this.hideFilters();
+    this.hideElementsRequiringDGRs();
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
@@ -509,13 +509,12 @@ class Controller {
   loadTableAndGraphPage(redrawTable = true, redrawGraph = true) {
 
     if (this.search.amountOfDGRsSearched() === 0) {
-      this.hideFilters();
+      this.hideElementsRequiringDGRs();
       this.showHelp();
       this.download.disableDownload();
     } else {
-      this.showFilters();
+      this.showElementsRequiringDGRs();
       if (this.resultsFound()) {
-        this.hideNoResults();
         if (redrawTable)
           this.drawTable();
         else
@@ -532,7 +531,7 @@ class Controller {
       } else {
         this.hideTable();
         this.graph.hideGraphView();
-        this.showNoResults();
+
       }
       this.download.enableDownload();
     }
@@ -738,21 +737,15 @@ class Controller {
     $(".help").hide();
   }
 
-  showNoResults() {
-    $(".no-results").show();
+
+  hideElementsRequiringDGRs() {
+    // $('.table-view .messaging-and-controls, .module.filter-module, .divider').show();
+    $('.require-dgr-search').hide();
   }
 
-  hideNoResults() {
-    $(".no-results").hide();
-  }
-
-
-  showFilters() {
-    $('.table-view .messaging-and-controls, .module.filter-module, .divider').show();
-  }
-
-  hideFilters() {
-    $('.table-view .messaging-and-controls, .module.filter-module, .divider').hide();
+  showElementsRequiringDGRs() {
+    // $('.table-view .messaging-and-controls, .module.filter-module, .divider').hide();
+    $('.require-dgr-search').show();
   }
 
   showError() {
@@ -870,7 +863,7 @@ class Controller {
     console.error.apply(null, arguments);
     this.hideTable();
     this.graph.hideGraphView();
-    this.hideNoResults();
+    this.hideElementsRequiringDGRs();
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;

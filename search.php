@@ -51,7 +51,7 @@
 
     </div>
     <!-- Filter Controls -->
-    <div class="module filter-module">
+    <div class="module filter-module require-dgr-search">
 
 
       <!-- Text Filter Submodule -->
@@ -86,20 +86,20 @@
       </div>
     </div>
 
-    <div class="divider"></div>
+    <div class="divider require-dgr-search"></div>
 
     <!-- Highlight Module -->
-    <div class="module highlight-module">
+    <div class="module highlight-module require-dgr-search">
       <div class="title">
         <h5><!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->Highlight Rows</h5>
       </div>
       <input type="text" placeholder="highlight term..." class="form-control highlight-input">
     </div>
 
-    <div class="divider"></div>
+    <div class="divider require-dgr-search"></div>
 
     <!-- Grouper -->
-    <div class="module grouper-module">
+    <div class="module grouper-module require-dgr-search">
       <div class="title">
         <h5>Group Table Results By</h5>
       </div>
@@ -110,7 +110,7 @@
       </div>
     </div>
 
-    <div class="divider"></div>
+    <div class="divider require-dgr-search"></div>
 
     <!-- Download and Upload -->
     <div class="module download-module">
@@ -127,7 +127,7 @@
 
     <!-- Table View -->
     <div class="table-view ui-widget-content panel-top">
-      <div class="messaging-and-controls">
+      <div class="messaging-and-controls require-dgr-search">
         <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
         <span class="metadata"></span>
       </div>
