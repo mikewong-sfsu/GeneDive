@@ -15,9 +15,9 @@ $prepared_slots = array_fill(0, sizeof($gids), "?");
 $prepared_slots = implode(" , ", $prepared_slots);
 
 if ( sizeof($gids) > 1 ) {
-  $query = "SELECT * FROM interactions WHERE geneids1 IN ( $prepared_slots ) AND geneids2 IN ( $prepared_slots ) AND probability >= ? ORDER BY probability;";
+  $query = "SELECT * FROM interactions WHERE geneids1 IN ( $prepared_slots ) AND geneids2 IN ( $prepared_slots ) AND probability >= ?;";
 } else {
-  $query = "SELECT * FROM interactions WHERE (geneids1 = $prepared_slots OR geneids2 = $prepared_slots) AND probability >= ? ORDER BY probability;";
+  $query = "SELECT * FROM interactions WHERE (geneids1 = $prepared_slots OR geneids2 = $prepared_slots) AND probability >= ?;";
 }
 
 $stmt = $pdo->prepare($query);
