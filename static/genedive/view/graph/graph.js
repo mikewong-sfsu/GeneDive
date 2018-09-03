@@ -29,7 +29,6 @@ class GraphView {
     // Timeout to track when the window is resized
     this.windowResizeEventTimeout = null;
 
-
     this.absentNodes = [];
 
     // Stores nodes that were hidden due to filtering, probability changes, or other things.
@@ -254,12 +253,18 @@ class GraphView {
   getShapeFromType(type)
   {
     switch (type) {
-      case "r":
-      case "c":
+      // Drug
+      case 'Drug':
+      case 'Chemical':
         return 'triangle';
-      case "d":
+      // Disease
+      case 'Disease' :
+      case 'Variant' :
+      case 'Haplotype' :
+      case 'VariantLocation' :
         return 'square';
-      default: // g
+      // Gene
+      default:
         return 'ellipse';
     }
   }
