@@ -28,11 +28,6 @@ class Search {
     this.TOPOLOGY_TWO_HOP = "2hop";
     this.TOPOLOGY_THREE_HOP = "3hop";
     this.TOPOLOGY_CLIQUE = "clique";
-    this.NAME_MAP = {};
-    this.NAME_MAP[this.GENES_NAME    ] = "g";
-    this.NAME_MAP[this.DRUGS_NAME] = "r";
-    this.NAME_MAP[this.DISEASES_NAME ] = "d";
-    this.NAME_MAP[this.GENESETS_NAME ] = "s";
 
 
     // Load the SVG files
@@ -454,16 +449,15 @@ class Search {
     // The action we take when a typeahead element is selected
     this.input.on('typeahead:selected', (event, item, set_name) => {
 
-      item.type = this.NAME_MAP[set_name];
       // Case: Gene w/ Disambiguation
-      if (item.values.length > 1 && item.type !== "s") {
+      if (item.values.length > 1 && set_name !== this.GENESETS_NAME) {
         GeneDive.disambiguation.resolveIds(item.symbol, item.values, GeneDive.probfilter.getMinimumProbability());
         this.input.typeahead("val", "");
         return;
       }
 
       // Case: Gene w/o Disambiguation || Search Set
-      this.addSearchSet(item.symbol, item.values, item.type);
+      this.addSearchSet(item.symbol, item.values, set_name);
       this.input.typeahead("val", "");
 
     });
@@ -477,7 +471,7 @@ class Search {
 
     for (let set of this.sets) {
 
-      if (set.type === "g") {
+      if (set.type === "Gene") {
         graph_data[set.ids[0]] = {name: set.name, color: set.color};
         continue;
       }
