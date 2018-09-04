@@ -100,9 +100,9 @@ If you feel that we are not abiding by this privacy policy, you should contact u
             console.error(f, "not found in", i);
           let ret = i[f];
           if(typeof ret === "string")
-            return ret.replace("\"", "\"\"");
-          else
-            return ret;
+            ret = ret.replace("\"", "\"\"");
+
+          return `"${ret}"`;
         }
         catch (e){console.debug(e, f, i);return "";}
       }).join(",");
