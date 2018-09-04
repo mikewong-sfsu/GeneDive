@@ -30,7 +30,6 @@ class GraphView {
     // Timeout to track when the window is resized
     this.windowResizeEventTimeout = null;
 
-
     this.absentNodes = [];
 
     // Stores nodes that were hidden due to filtering, probability changes, or other things.
@@ -253,13 +252,24 @@ class GraphView {
   getShapeFromType(type)
   {
     switch (type) {
-      case "r":
-      case "c":
-        return 'triangle';
-      case "d":
-        return 'square';
-      default: // g
+      // Gene
+      case 'Gene':
         return 'ellipse';
+      // Drug
+      case 'Drug':
+      case 'Chemical':
+        return 'triangle';
+      // Disease
+      case 'Disease' :
+      case 'Variant' :
+      case 'Haplotype' :
+      case 'VariantLocation' :
+        return 'square';
+      // Unknown
+      default:
+        console.error(`Unknown type ${type}. Defaulting to ellipse shape`);
+        return 'ellipse';
+
     }
   }
 

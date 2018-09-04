@@ -73,14 +73,43 @@ If you feel that we are not abiding by this privacy policy, you should contact u
   }
 
   buildInteractionsData() {
-    let csv = "id, journal, article, pubmed_id, sentence_offset, gene1_id, gene1, gene2_id, gene2, sentence, highlighted, probability\n";
 
-    GeneDive.filtrate.forEach(i => {
-      let sentence = `${i.id},${i.journal},${i.article_id},${i.pubmed_id},${i.sentence_id},${i.geneids1},${i.mention1},${i.geneids2},${i.mention2},"${i.context}",${i.highlight},${i.probability}\n`;
-      csv = csv.concat(sentence);
-    });
+    let fields = ["id",
+      "journal",
+      "article_id",
+      "pubmed_id",
+      "sentence_id",
+      "geneids1",
+      "mention1",
+      "type1",
+      "geneids2",
+      "mention2",
+      "type2",
+      "sentence_id",
+      "highlight",
+      "probability",
+      "context",
+    ];
 
-    return csv;
+    let csv_header = fields.join(",")+"\r\n";
+    // Goes through each interaction and generates a comma seperated row of all the values from the fields above
+    let csv_content = GeneDive.filtrate.map((i)=>{
+      return fields.map((f)=>{
+        try{
+          if(!(f in i))
+            console.error(f, "not found in", i);
+          let ret = i[f];
+          if(typeof ret === "string")
+            return ret.replace("\"", "\"\"");
+          else
+            return ret;
+        }
+        catch (e){console.debug(e, f, i);return "";}
+      }).join(",");
+    }).join("\r\n");
+
+
+    return csv_header+csv_content;
   }
 
   buildStateFile() {
