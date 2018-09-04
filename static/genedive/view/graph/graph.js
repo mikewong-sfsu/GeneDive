@@ -253,6 +253,9 @@ class GraphView {
   getShapeFromType(type)
   {
     switch (type) {
+      // Gene
+      case 'Gene':
+        return 'ellipse';
       // Drug
       case 'Drug':
       case 'Chemical':
@@ -263,9 +266,11 @@ class GraphView {
       case 'Haplotype' :
       case 'VariantLocation' :
         return 'square';
-      // Gene
+      // Unknown
       default:
+        console.error(`Unknown type ${type}. Defaulting to ellipse shape`);
         return 'ellipse';
+
     }
   }
 
