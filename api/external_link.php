@@ -39,14 +39,15 @@ if($action === "pharmgkb_combination"){
   $results = $stmt->fetchAll();
 
   $ids = json_decode($results[0]["vals"]);
-
+  $type = $ids->type;
   if($db === "ncbi") {
     $ncbi_dgr = $ids->ncbi;
     $FINAL_URL = "https://www.ncbi.nlm.nih.gov/gene/${ncbi_dgr}";
   }
   else if($db === "pgkb") {
     $pgkb_dgr = $ids->pgkb;
-    $FINAL_URL = "https://www.pharmgkb.org/${PHARM_GKB_TYPES[$ids->type]}/${pgkb_dgr}";
+    $type_lower = strtolower($type);
+    $FINAL_URL = "https://www.pharmgkb.org/${type_lower}/${pgkb_dgr}";
   }
   else if($db === "mesh")
   {
@@ -60,6 +61,7 @@ if($action === "pharmgkb_combination"){
   $pubmedID = $_GET['pubmedID'];
   $FINAL_URL = "https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/";
 }
+
 
 //print($FINAL_URL);
 header("Location: $FINAL_URL");
