@@ -34,8 +34,10 @@ class TextFilter {
 
     interactions.forEach(i => {
       sets["Article"].add(i.pubmed_id);
-      sets["DGR"][i.mention1] = {type: i.type1};
-      sets["DGR"][i.mention2] = {type: i.type2};
+      let dgr1 = {symbol: i.mention1, id: i.geneids1, type: i.type1};
+      let dgr2 = {symbol: i.mention2, id: i.geneids2, type: i.type2};
+      sets["DGR"][JSON.stringify(dgr1)] = dgr1;
+      sets["DGR"][JSON.stringify(dgr2)] = dgr2;
       sets["Journal"].add(i.journal);
       // values["Section"].add(i.section); // Disabled for now
     });
@@ -69,26 +71,29 @@ class TextFilter {
   chooseDGRCase(object){
     let newObject = {};
 
-    for(let dgr in object){
-      let dgrLowerCase = dgr.toLowerCase();
-      let type = object[dgr].type;
-      if(dgrLowerCase in newObject)
+    for(let hash in object){
+      let id = object[hash].id;
+      let symbol = object[hash].symbol;
+      let type = object[hash].type;
+      let dgrLowerCase = symbol.toLowerCase();
+
+      if(hash in newObject)
       {
 
         // If drug, choose the option with most lowercase characters
         if(type === "r")
         {
           if(!(dgrLowerCase in newObject[dgrLowerCase]))
-            newObject[dgrLowerCase] = dgrLowerCase;
+            newObject[hash] = object[hash];
         }
         // Else choose most complex mix
         {
-          if(dgr.differenceBetweenUpperAndLower() < newObject[dgrLowerCase].differenceBetweenUpperAndLower())
-            newObject[dgrLowerCase] = dgr;
+          if(symbol.differenceBetweenUpperAndLower() < newObject[hash].symbol.differenceBetweenUpperAndLower())
+            newObject[hash] = object[hash];
         }
       }
       else
-        newObject[dgrLowerCase] = dgr;
+        newObject[hash] = object[hash];
     }
 
     return newObject;
@@ -167,13 +172,19 @@ class TextFilter {
           break;
 
         case "DGR":
+          let filter_obj = JSON.parse(filter.value);
+          let symbol = filter_obj.symbol;
+          let dgrid = filter_obj.id;
+          let type = filter_obj.type;
           if (filter.is) {
             interactions = interactions.filter((i) => {
-              return (filter.value.toLowerCase() === i.mention1.toLowerCase()||filter.value.toLowerCase() === i.mention2.toLowerCase())
+              return (dgrid === i.geneids1 && symbol === i.mention1 && type === i.type1)
+              || (dgrid === i.geneids2 && symbol === i.mention2 && type === i.type2)
             });
           } else {
             interactions = interactions.filter((i) => {
-              return !(filter.value.toLowerCase() === i.mention1.toLowerCase()||filter.value.toLowerCase() === i.mention2.toLowerCase())
+              return !(dgrid === i.geneids1 && symbol === i.mention1 && type === i.type1)
+                && !(dgrid === i.geneids2 && symbol === i.mention2 && type === i.type2)
             });
           }
           break;
@@ -201,7 +212,8 @@ class TextFilter {
       this.currentValueInput = this.valueText;
       this.valueDropdown.hide();
       this.valueText.show();
-    } else {
+    }
+    else {
       this.currentValueInput = this.valueDropdown;
       this.valueText.hide();
       this.valueDropdown.show().empty();
@@ -209,11 +221,14 @@ class TextFilter {
       let values = this.filterValues[target.value];
       let keys = Object.keys(values).sort();
 
+      if(target.value === "DGR")
+        for(let key in keys)
+          this.valueDropdown.append($(`<option value="${keys[key]}"/>`).html(values[keys[key]].symbol));
+      else
+        for(let key in keys)
+          this.valueDropdown.append($(`<option value="${values[keys[key]]}"/>`).html(values[keys[key]]));
 
-      for(let key in keys){
-        this.valueDropdown.append($("<option/>").html(values[keys[key]]));
 
-      }
 
     }
   }
@@ -227,9 +242,14 @@ class TextFilter {
     let filterData = {
       "currentValueInput" : this.currentValueInput,
       "sets": this.sets,
-        "selectedFilter" : this.filterSelector.val(),
+      "filterValues": {},
+      "selectedFilter" : this.filterSelector.val(),
     };
 
+    // The filterValues are Set objects, so this converts them to an array so they can be stringified.
+    $.each(this.filterValues, function(index, value) {
+      filterData[index] = Array.from(value);
+    });
 
     return filterData;
   }
@@ -244,10 +264,13 @@ class TextFilter {
     this.currentValueInput = filterData.currentValueInput;
     this.sets = filterData.sets;
 
-    this.createFilterValueLists(GeneDive.interactions);
+    // Convert the arrays back into Set objects
+    $.each(filterData.filterValues, function(index, value) {
+      this.filterValues[index] = new Set(value);
+    });
+
     this.renderDisplay();
     this.updateSelectedFilter();
-
   }
 
   reset(){
