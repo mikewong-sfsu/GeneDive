@@ -44,6 +44,10 @@
     <script src="static/cytoscape/jquery.qtip.min.js"></script>
     <script src="static/cytoscape/cytoscape-qtip.js"></script>
 
+    <!-- PouchDB -->
+    <script src="static/pouchdb/pouchdb-7.0.0.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/pouchdb/pouchdb.find.js?random=<?php echo $random_string; ?>"></script>
+
     <!-- GeneDive Classses -->
     <script src="static/genedive/GeneDiveAPI.js?random=<?php echo $random_string; ?>"></script>
     <script src="static/genedive/search/graphsearch.js?random=<?php echo $random_string; ?>"></script>
@@ -66,6 +70,7 @@
     <script src="static/genedive/delay.js?random=<?php echo $random_string; ?>"></script>
     <script src="static/genedive/controls/controls.js?random=<?php echo $random_string; ?>"></script>
     <script src="static/genedive/history/history.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/localdb/db.js?random=<?php echo $random_string; ?>"></script>
 
     <!-- Core Controller -->
     <script src="static/genedive/controller.js?random=<?php echo $random_string; ?>"></script>

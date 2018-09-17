@@ -1,8 +1,9 @@
 class DownloadUpload {
 
-  constructor(download, upload) {
+  constructor(download, upload, upload_data) {
     this.downloadButton = $(download);
     this.uploadButton = $(upload);
+    this.uploadDataButton = $(upload_data);
     this.genediveStateFileName = "state.genedive";
     this.fileBeingAnalyzed = false;
 
@@ -14,6 +15,11 @@ class DownloadUpload {
     this.uploadButton.on("click", (event) => {
       $(event.target).blur();
       this.onUploadClick();
+    });
+
+    this.uploadDataButton.on("click", (event) => {
+      $(event.target).blur();
+      this.onUploadDataClick();
     });
   }
 
@@ -216,7 +222,7 @@ If you feel that we are not abiding by this privacy policy, you should contact u
 
     let alert = alertify.alert(
       "Upload GeneDive zip", // Title
-      `<div class="upload_file">
+      `<div id="upload_file_state" class="upload_file">
           <div id="holder">
             <input class="display-none" type="file" id="file_upload" name="files[]" accept=".zip"/>
             <label class="file_upload_label" for="file_upload">
@@ -230,7 +236,39 @@ If you feel that we are not abiding by this privacy policy, you should contact u
     )
       .set('label', 'Cancel');
 
-    this.intializeUploadFields($(".upload_file"), alert);
+    this.intializeUploadFields($("#upload_file_state"), alert);
+
+
+  }
+
+  /**
+   * @fn       DownloadUpload.onUploadDataClick
+   * @brief     Upload a TSV file to the local database
+   * @details   When a user clicks on Upload Results, this method will set the program to the state found in the file
+   * @param userInput The string to put into Readme.MD
+   * @callergraph
+   */
+  onUploadDataClick() {
+    if (GeneDive.spinneractive)
+      return;
+
+    let alert = alertify.alert(
+      "Upload GeneDive zip", // Title
+      `<div id="upload_file_data" class="upload_file">
+          <div id="holder">
+            <input class="display-none" type="file" id="file_upload_data" name="files[]" accept=".tsv"/>
+            <label class="file_upload_label" for="file_upload_data">
+              <span>
+                <i class="fas fa-upload"></i>
+                <span class="upload-help">Drag and Drop or Click to upload</span>
+              </span>
+            </label>
+          </div>
+        </div>`, // Content
+    )
+      .set('label', 'Cancel');
+
+    this.intializeUploadDataFields($("#upload_file_data"), alert);
 
 
   }
@@ -284,6 +322,54 @@ If you feel that we are not abiding by this privacy policy, you should contact u
   }
 
   /**
+   * @fn       DownloadUpload.intializeUploadFields
+   * @brief     Binds events to upload fields
+   * @details   When a user clicks Upload Results, an alert with new elements is created. Those elements must have events
+   * binded to them so that files uploaded can be read.
+   * @param     element The element containing the upload fields
+   * @param     alert The popup alert containing the upload fields
+   * @callergraph
+   */
+  intializeUploadDataFields(element, alert) {
+
+    // If the browser supports drag and drop
+    if ('draggable' in document.createElement('span')) {
+      let holder = $('#holder', element)[0];
+      const thisClass = this;
+
+      holder.ondragover = function () {
+        console.debug("Drag over", this);
+        this.className = 'hover';
+        return false;
+      };
+      holder.ondragleave = function () {
+        console.debug("Drag end");
+        this.className = '';
+        return false;
+      };
+      holder.ondrop = function (e) {
+        this.className = '';
+        alert.close();
+        e.preventDefault();
+        thisClass.openTSVFile(e.dataTransfer.files);
+      }
+    }
+
+
+    $("#file_upload_data", element).on("change", () => {
+      alert.close();
+      let upload = $("#file_upload_data");
+      if (upload.length > 0 && upload[0].value.length > 0) {
+        this.openTSVFile(upload[0].files);
+        this.clearUploadField(upload);
+      }
+
+    });
+
+
+  }
+
+  /**
    * @fn       DownloadUpload.openZipFile
    * @brief     Apply zip file to GeneDive state
    * @details
@@ -292,7 +378,6 @@ If you feel that we are not abiding by this privacy policy, you should contact u
    */
 
   openZipFile(filesUploaded) {
-    GeneDive.loadSpinners();
     const acceptedFileTypes = {
       "application/x-zip-compressed": true,
       "application/zip": true,
@@ -338,6 +423,44 @@ If you feel that we are not abiding by this privacy policy, you should contact u
             thisDownloadUpload.handleException(`Error reading ${files[0].name}`, e);
 
           });
+
+    } catch (e) {
+      this.handleException(e);
+    }
+
+  }
+
+  /**
+   * @fn       DownloadUpload.openTSVFile
+   * @brief     Add TSV file to database
+   * @details
+   * @param filesUploaded The files uploaded
+   * @callergraph
+   */
+
+  openTSVFile(filesUploaded) {
+    GeneDive.loadSpinners();
+
+    try {
+      // Copy the file data so when we clear the upload field, we don't lose the data.
+      let files = {};
+      let read = new FileReader();
+      $.extend(true, files, filesUploaded);
+
+      let thisDownloadUpload = this;
+
+      console.debug("openZipFile", files);
+
+      if (files.length > 1)
+        return GeneDive.handleException(new Error(`Multiple files uploaded. Only upload one file`), files);
+      else if (files.length < 1)
+        return GeneDive.handleException(new Error(`No files were uploaded`), files);
+
+      read.readAsBinaryString(files[0]);
+
+      read.onloadend = function(){
+        GeneDive.localdb.addTSVData(read.result);
+      }
 
     } catch (e) {
       this.handleException(e);
