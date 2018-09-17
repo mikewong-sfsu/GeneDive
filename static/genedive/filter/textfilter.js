@@ -103,12 +103,12 @@ class TextFilter {
 
 
   addFilter() {
-    this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val());
+    this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val(), $("option:selected",this.currentValueInput).text());
     //this.currentValueInput.val($("option:eq(0)",this.currentValueInput).val());
   }
 
-  addFilterSet(attribute, is, value) {
-    this.sets.push(new FilterSet(attribute, is, value));
+  addFilterSet(attribute, is, value, displayValue) {
+    this.sets.push(new FilterSet(attribute, is, value, displayValue));
     this.renderDisplay();
     GeneDive.onAddFilter();
   }
@@ -128,7 +128,7 @@ class TextFilter {
         .addClass(set.is ? "filter-is" : "filter-not")
         .append($("<span/>").addClass("attribute").text(set.attribute))
         .append($("<span/>").addClass("is").text(set.is ? "is" : "not"))
-        .append($("<span/>").addClass("value").text(set.value))
+        .append($("<span/>").addClass("value").text(set.displayValue))
         .append(
           $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.id)
             .on('click', (event) => {
@@ -219,11 +219,15 @@ class TextFilter {
       this.valueDropdown.show().empty();
 
       let values = this.filterValues[target.value];
-      let keys = Object.keys(values).sort();
+
+      // case insensitive sort
+      let keys = Object.keys(values).sort(function (a, b) {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+      });
 
       if(target.value === "DGR")
         for(let key in keys)
-          this.valueDropdown.append($(`<option value="${keys[key]}"/>`).html(values[keys[key]].symbol));
+          this.valueDropdown.append($(`<option value='${keys[key]}'/>`).html(values[keys[key]].symbol));
       else
         for(let key in keys)
           this.valueDropdown.append($(`<option value="${values[keys[key]]}"/>`).html(values[keys[key]]));
@@ -282,11 +286,12 @@ class TextFilter {
 }
 
 class FilterSet {
-  constructor(attribute, is, value) {
+  constructor(attribute, is, value,displayValue) {
     this.id = attribute + value;
     this.attribute = attribute;
     this.is = is;
     this.value = value;
+    this.displayValue = displayValue;
   }
 }
 
