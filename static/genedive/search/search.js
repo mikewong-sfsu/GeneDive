@@ -29,7 +29,6 @@ class Search {
     this.TOPOLOGY_THREE_HOP = "3hop";
     this.TOPOLOGY_CLIQUE = "clique";
 
-
     // Load the SVG files
     this.svgNCBI = "";
     this.svgPharm = "";
