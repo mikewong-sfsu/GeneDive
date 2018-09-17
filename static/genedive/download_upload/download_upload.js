@@ -124,7 +124,7 @@ If you feel that we are not abiding by this privacy policy, you should contact u
   }
 
   fetchGraphImage() {
-    return GeneDive.graph.graph.png({output: 'base64'});
+    return GeneDive.graph.graph.png({scale: 4.1667, output: 'base64'});
   }
 
   /**

@@ -17,6 +17,7 @@ class GraphView {
     this.shiftListenerActive = false;
     this.graph
       .on('tap', 'node', nodeClickBehavior)
+      .on('drag', 'node', nodeDragBehavior)
       // These are made as function calls because the GeneDive constant isn't set until later.
       .on('viewport', () => {
         GeneDive.onGraphPanOrZoomed();
@@ -107,8 +108,6 @@ class GraphView {
    @callergraph
    */
   update(interactions, sets) {
-
-
 
     // If it's a new search set, redraw graph. Concats all the searchset ids
     // if (this.currentSetsID !== SearchSet.getIDOfSearchSetArray(sets))
@@ -557,7 +556,7 @@ class GraphView {
  */
 const nodeClickBehavior = function (event) {
 
-  const graphClass = GeneDive.graph;
+  const graph = GeneDive.graph;
 
   if (event.originalEvent.ctrlKey) {
     GeneDive.onNodeGraphCTRLClick(this.data('name'), [this.data('id')], [this.data('type')]);
@@ -569,19 +568,44 @@ const nodeClickBehavior = function (event) {
     GeneDive.onNodeGraphShiftClickHold(this.data('name'), [this.data('id')], this.data('type'), true);
 
 
-    if (!graphClass.shiftListenerActive) {
+    if (!graph.shiftListenerActive) {
       // Bind event - run search when shift is released
       $(document).on('keyup', function (event) {
         $(document).unbind('keyup');
-        graphClass.shiftListenerActive = false;
+        graph.shiftListenerActive = false;
         GeneDive.onNodeGraphShiftClickRelease();
       });
 
-      graphClass.shiftListenerActive = true;
+      graph.shiftListenerActive = true;
     }
 
   }
 };
+
+const nodeDragBehavior = function( ev ) {
+  let node     = ev.target;
+  let position = node.position();
+  if( node.data( 'previous-position' )) {
+    let previous  = JSON.parse( node.data( 'previous-position' ));
+    let delta     = { x: position.x - previous.x, y: position.y - previous.y };
+    let neighbors = node.neighborhood();
+    let dandelion = [];
+    neighbors.forEach(( neighbor ) => {
+      if( ! neighbor.isNode()) { return; }
+      edges = neighbor.connectedEdges();
+      dandelion.push({ node: neighbor, edges: (edges.length > 0 ? edges.length : 1)});
+    });
+    dandelion.forEach(( leaf ) => {
+      let node     = leaf.node;
+      let weight   = 1/leaf.edges;
+      let position = node.position();
+      position.x += (weight * delta.x);
+      position.y += (weight * delta.y);
+      node.position( position );
+    });
+  }
+  node.data( 'previous-position', JSON.stringify( position ));
+}
 
 let GENEDIVE_CYTOSCAPE_STYLESHEET = [
   {
