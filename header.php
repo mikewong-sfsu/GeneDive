@@ -57,7 +57,6 @@
     <link rel=stylesheet type=text/css href="static/genedive/filter/filter.css?random=<?php echo $random_string; ?>">
     <link rel=stylesheet type=text/css href="static/genedive/view/table/table.css?random=<?php echo $random_string; ?>">
     <link rel=stylesheet type=text/css href="static/genedive/view/graph/graph.css?random=<?php echo $random_string; ?>">
-    <link rel=stylesheet type=text/css href="static/genedive/view/graph/graph.css?random=<?php echo $random_string; ?>">
 
   </head>
   <body>
