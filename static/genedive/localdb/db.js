@@ -12,13 +12,26 @@ class LocalDB {
    * @param controller {GeneDive} The genedive controller
    */
   constructor(controller) {
-    this.dbName = 'localDB';
 
-    this.db = new PouchDB(this.dbName);
-    this.db.createIndex({
-      index: {
-        fields: ['geneids1','geneids2',],
-      },
+    this.db = openDatabase('genedive', '1.0', 'Genedive Interactions Local DB', 2 * 1024 * 1024);
+    this.db.transaction((tx) => {
+      tx.executeSql(`CREATE TABLE IF NOT EXISTS interactions (
+        id INTEGER NOT NULL,
+        journal VARCHAR(64),
+        article_id VARCHAR(64),
+        pubmed_id INTEGER,
+        sentence_id INTEGER,
+        mention1_offset INTEGER,
+        mention2_offset INTEGER,
+        mention1 VARCHAR(32) collate nocase,
+        mention2 VARCHAR(32) collate nocase,
+        geneids1 VARCHAR(64),
+        geneids2 VARCHAR(64),
+        probability FLOAT,
+        context VARCHAR(256),
+        section VARCHAR(64), reactome INTEGER, type1 CHARACTER(1), type2 CHARACTER(1),
+        PRIMARY KEY (id)
+      );`)
     });
     this.controller = controller;
     this.requiredHeaders = new Set();
@@ -81,7 +94,7 @@ class LocalDB {
 
         line.probability = parseFloat(line.probability);
 
-        this.db.post(line).catch((e)=>console.error(e));
+        this.addLine(line);
       }
     }catch(error){
       this.controller.handleException(error);
@@ -99,6 +112,34 @@ class LocalDB {
         selector: {  geneids1: {$in: ids},  geneids2: {$in: ids},  probability : {$gte : minConfidence} }
       };
     return this.db.find(filter)
+  }
+
+  /**
+   * Adds a line to the database
+   * @param line
+   */
+  addLine(line){
+    let interaction = [
+      line.journal,
+      line.article_id,
+      line.pubmed_id,
+      line.sentence_id,
+      line.mention2_offset,
+      line.mention1_offset,
+      line.mention1,
+      line.mention2,
+      line.geneids1,
+      line.geneids2,
+      line.probability,
+      line.context,
+      line.section,
+      line.reactome,
+      line.type1,
+      line.type2];
+    this.db.transaction( (tx) => {
+      tx.executeSql(`insert into interactions ( journal, article_id, pubmed_id, sentence_id, mention1_offset, mention2_offset, mention1, mention2, geneids1, geneids2, probability, context, section, reactome , type1, type2) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?);`,
+        interaction)
+    });
   }
 
   /**
