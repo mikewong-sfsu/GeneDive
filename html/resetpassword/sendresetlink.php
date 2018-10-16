@@ -11,7 +11,7 @@
   require '../PHPMailer/src/SMTP.php';
 
   include_once "../session.php";
-  include_once "../data/credentials.php";
+  include_once "../../data/credentials.php";
 
 
   // Some basic validation - we got a valid email and a password?
@@ -31,7 +31,7 @@
 
   // Looks good - continue
 try{
-  $pdo  = new PDO( 'sqlite:../data/users.sqlite' ) or die( "Cannot connect to the database." );
+  $pdo  = new PDO( 'sqlite:../../data/users.sqlite' ) or die( "Cannot connect to the database." );
 
   $email = $_POST['email'];
   

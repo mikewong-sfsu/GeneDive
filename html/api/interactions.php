@@ -2,7 +2,9 @@
 
 include_once "../auth.php";
 
-$pdo = new PDO( 'sqlite:../data/data.sqlite');
+getenv("GENEDIVE_NAME")
+
+$pdo = new PDO( 'sqlite:../../data/data.sqlite');
 
 $gid = $_GET['ids'];
 $minProb = $_GET['minProb'];

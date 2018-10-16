@@ -1,6 +1,6 @@
 <?php
 include_once "../auth.php";
-$pdo = new PDO( 'sqlite:../data/data.sqlite');
+$pdo = new PDO( 'sqlite:../../data/data.sqlite');
 
 $action = $_GET['action'];
 $FINAL_URL = "";
