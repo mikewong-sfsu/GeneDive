@@ -4,9 +4,9 @@ data/users.sqlite
 data/data.sqlite
 data/master/
 data/pharmgkb/
-sessions/
-static/genedive/json/*.json
-static/genedive/json/*.zip
+html/sessions/
+html/static/genedive/json/*.json
+html/static/genedive/json/*.zip
 
 # Just in case we put new files containing sensitive data in the future
 *.sqlite
