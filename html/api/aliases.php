@@ -1,6 +1,8 @@
 <?php
-include_once "../auth.php";
-$pdo = new PDO( 'sqlite:../../data/data.sqlite');
+require_once "../auth.php";
+require_once "../environment.php";
+
+$pdo = new PDO( PDO_GENEDIVE_DATA);
 
 $id = $_GET['id'];
 $query = "SELECT vals, type FROM alternative_ids WHERE ? in (mesh, pgkb, ncbi) LIMIT 1;";

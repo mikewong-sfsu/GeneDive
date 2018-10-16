@@ -1,6 +1,8 @@
 <?php
-include_once "../auth.php";
-$pdo = new PDO( 'sqlite:../../data/data.sqlite');
+require_once "../auth.php";
+require_once "../environment.php";
+
+$pdo = new PDO( PDO_GENEDIVE_DATA);
 
 $action = $_GET['action'];
 $FINAL_URL = "";

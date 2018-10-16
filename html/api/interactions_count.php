@@ -1,6 +1,7 @@
 <?php
 
-include_once "../auth.php";
+require_once "../auth.php";
+require_once "../environment.php";
 
 $data = [];
 
