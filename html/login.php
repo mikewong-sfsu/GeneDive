@@ -1,6 +1,6 @@
 <?php
 
-  include "session.php";
+  require_once "session.php";
   define("FORGOT_PASS_LINK", '<a href="resetpassword/forgotpass.php">Forgot your password?</a>');
 
   // User shouldn't be here ... ?

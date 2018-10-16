@@ -1,6 +1,6 @@
 <?php
 
-  include_once "../session.php";
+  require_once "../session.php";
 
   if ( !isset($_POST['password']) || !isset($_POST['token']) ) {
     header("Location: ../index.php");

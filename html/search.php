@@ -1,5 +1,5 @@
-<?php include_once "auth.php"; ?>
-<?php include "header.php"; ?>
+<?php require_once "auth.php"; ?>
+<?php require_once "header.php"; ?>
 
 <div class="main-display">
   <div class="control-view">
@@ -232,4 +232,4 @@
   </div>
 </div>
 
-<?php include "footer.php"; ?>
+<?php require_once "footer.php"; ?>

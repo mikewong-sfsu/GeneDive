@@ -1,5 +1,5 @@
 <?php
-include_once "session.php";
+require_once "session.php";
 
 //  exit("Registration disabled.");
 //  include_once "session.php";

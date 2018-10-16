@@ -10,8 +10,8 @@
   require '../PHPMailer/src/PHPMailer.php';
   require '../PHPMailer/src/SMTP.php';
 
-  include_once "../session.php";
-  include_once "../../data/credentials.php";
+require_once "../session.php";
+require_once "../../data/credentials.php";
 
 
   // Some basic validation - we got a valid email and a password?

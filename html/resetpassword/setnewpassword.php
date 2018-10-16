@@ -1,6 +1,6 @@
 <?php
 
-  include_once "../session.php";
+require_once "../session.php";
 
   if ( !isset($_GET['email']) || !isset($_GET['email']) ) {
     header("Location: ../index.php");
