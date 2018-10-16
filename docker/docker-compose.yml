@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+  web:
+    image: richarvey/nginx-php-fpm:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    ports:
+      - ${GENEDIVE_PORT}:80
+    volumes:
+      - ./blank.txt:/etc/nginx/conf.d/nginx.conf.default # Disables the default server
+      - ../public_html/api:/public_html/api
+      - ./site.conf:/etc/nginx/conf.d/site.conf
+      - ./scripts:/scripts
+      - ./data:/data
+      - ./keys:/keys
+    networks:
+      - backend
+      - default
+  python:
+    image: python:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.python
+    volumes:
+      - ./scripts:/scripts
+      - ./data:/data
+      - ./keys:/keys
+    tty: true
+    #command: tail -f /dev/null
+    # python /scripts/init.py
+    environment:
+      - GENEDIVE_NAME=${GENEDIVE_NAME}
+    ports:
+      - "22:22"
+    networks:
+      backend:
+        aliases:
+          - python_container
+
+networks:
+  backend:
+    driver: bridge
