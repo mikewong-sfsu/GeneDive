@@ -17,7 +17,7 @@
   $password = hash( "sha256", $_POST[ 'password' ] );
 
   // Load User
-  $pdo  = new PDO( 'sqlite:data/users.sqlite');
+  $pdo  = new PDO( 'sqlite:/usr/local/genedive/data/users.sqlite');
   $stmt = $pdo->prepare("SELECT email, password FROM user WHERE email = :email");
 
   if($stmt === false)

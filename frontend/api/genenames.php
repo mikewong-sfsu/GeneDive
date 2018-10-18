@@ -2,7 +2,7 @@
 
 include_once "../auth.php";
 
-  $pdo = new PDO( 'sqlite:../data/data.sqlite');
+  $pdo = new PDO( 'sqlite:/usr/local/genedive/data/data.sqlite');
 
   $gid = $_GET['ids'];
   $query = "SELECT id, `primary` FROM ncbi_gene_data WHERE id IN ($gid);";

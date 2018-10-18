@@ -10,7 +10,7 @@
   $email = $_GET['email'];
   $token = $_GET['token'];
 
-  $pdo  = new PDO( 'sqlite:../data/users.sqlite' ) or die( "Cannot connect to the database." );
+  $pdo  = new PDO( 'sqlite:/usr/local/genedive/data/users.sqlite' ) or die( "Cannot connect to the database." );
 
   $stmt = $pdo->prepare( "SELECT reset_token, reset_expiry FROM user WHERE email = :email" );
   $stmt->bindValue( ':email', $email, PDO::PARAM_STR );

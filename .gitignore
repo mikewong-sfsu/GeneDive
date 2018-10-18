@@ -1,12 +1,12 @@
 *.bak
 .idea/
-data/users.sqlite
-data/data.sqlite
-data/master/
-data/pharmgkb/
-sessions/
-static/genedive/json/*.json
-static/genedive/json/*.zip
+backend/data/users.sqlite
+backend/data/data.sqlite
+backend/data/master/
+backend/data/pharmgkb/
+backend/sessions/
+frontend/static/genedive/json/*.json
+frontend/static/genedive/json/*.zip
 
 # Just in case we put new files containing sensitive data in the future
 *.sqlite
