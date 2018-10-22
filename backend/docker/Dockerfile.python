@@ -1,0 +1,2 @@
+FROM python:latest
+CMD apt-get update && apt-get install -y openssh-server && mkdir -p /run/sshd && mkdir -p /root/.ssh/ && cat /keys/web.pub >> /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys && $(which sshd) && python /scripts/init.py && tail -f /dev/null
