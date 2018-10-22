@@ -1,7 +1,9 @@
 <?php
 
-require_once "../auth.php";
-require_once "../environment.php";
+require_once "../phpLib/environment.php";
+if(!IS_DOCKER_CONTAINER){
+  require_once "../auth.php";
+}
 
 $data = [];
 
