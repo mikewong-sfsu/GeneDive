@@ -1,6 +1,10 @@
 <?php
-include_once "../auth.php";
-$pdo = new PDO( 'sqlite:/usr/local/genedive/data/data.sqlite');
+require_once "../phpLib/environment.php";
+if(!IS_DOCKER_CONTAINER){
+  require_once "../auth.php";
+}
+
+$pdo = new PDO( PDO_GENEDIVE_DATA);
 
 $action = $_GET['action'];
 $FINAL_URL = "";

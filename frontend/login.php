@@ -1,6 +1,6 @@
 <?php
-
-  include "session.php";
+  require_once "./phpLib/environment.php";
+  require_once "session.php";
   define("FORGOT_PASS_LINK", '<a href="resetpassword/forgotpass.php">Forgot your password?</a>');
 
   // User shouldn't be here ... ?
@@ -17,7 +17,7 @@
   $password = hash( "sha256", $_POST[ 'password' ] );
 
   // Load User
-  $pdo  = new PDO( 'sqlite:/usr/local/genedive/data/users.sqlite');
+  $pdo  = new PDO( PDO_GENEDIVE_USERS);
   $stmt = $pdo->prepare("SELECT email, password FROM user WHERE email = :email");
 
   if($stmt === false)

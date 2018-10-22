@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-  include_once "session.php";
+require_once "session.php";
 
 ?>
 

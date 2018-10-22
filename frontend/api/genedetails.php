@@ -1,8 +1,11 @@
 <?php
 
-include_once "../auth.php";
+require_once "../phpLib/environment.php";
+if(!IS_DOCKER_CONTAINER){
+  require_once "../auth.php";
+}
 
-$pdo = new PDO( 'sqlite:/usr/local/genedive/data/data.sqlite');
+$pdo = new PDO( PDO_GENEDIVE_DATA);
 
 $gids = explode(",",$_GET['ids']);
 $prepared_slots = array_fill(0, sizeof($gids), "?");

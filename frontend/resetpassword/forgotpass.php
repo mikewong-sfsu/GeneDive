@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-  include_once "../session.php";
+require_once "../session.php";
 
   if ( !file_exists("../data/credentials.php") ) {
     $_SESSION[ 'is_auth' ] = false;

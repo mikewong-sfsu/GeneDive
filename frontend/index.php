@@ -1,4 +1,4 @@
-<?php include_once "session.php" ?>
+<?php require_once "session.php" ?>
 
 <head>
     <meta charset="utf-8">
