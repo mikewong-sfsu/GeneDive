@@ -31,7 +31,7 @@ require_once "../../data/credentials.php";
 
   // Looks good - continue
 try{
-  $pdo  = new PDO( 'sqlite:../../data/users.sqlite' ) or die( "Cannot connect to the database." );
+  $pdo  = new PDO( 'sqlite:/usr/local/genedive/data/users.sqlite' ) or die( "Cannot connect to the database." );
 
   $email = $_POST['email'];
   

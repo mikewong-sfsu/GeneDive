@@ -1,8 +1,8 @@
 <?php
 define("IS_DOCKER_CONTAINER", getenv("IS_DOCKER_CONTAINER"));
 
-define("GENEDIVE_DATA_FILE", realpath(dirname(__FILE__)). "/../../backend/data/data.sqlite");
-define("GENEDIVE_USERS_FILE", realpath(dirname(__FILE__)). "/../../backend/data/users.sqlite");
+define("GENEDIVE_DATA_FILE", '/usr/local/genedive/backend/data/data.sqlite');
+define("GENEDIVE_USERS_FILE", '/usr/local/genedive/backend/data/users.sqlite');
 
 // Docker stuff
 define("ENVIRONMENT_NAME",getenv("GENEDIVE_NAME"));
