@@ -1,5 +1,5 @@
 <?php
-include_once "session.php";
+require_once "session.php";
 
 //  exit("Registration disabled.");
 //  include_once "session.php";
@@ -36,7 +36,7 @@ fail("Invalid Email or Password. Try again.");
 $email = $_POST['email'];
 
 try{
-  $pdo  = new PDO( 'sqlite:/usr/local/genedive/data/users.sqlite' );// or die( "Cannot connect to the database." );
+  $pdo  = new PDO( 'sqlite:../data/users.sqlite' );// or die( "Cannot connect to the database." );
   $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
   $stmt = $pdo->prepare( "SELECT email FROM user WHERE email = :email" );
   $stmt->bindValue( ':email', $email, PDO::PARAM_STR );

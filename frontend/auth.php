@@ -1,6 +1,6 @@
 <?php
 
-include_once "session.php";
+require_once "session.php";
 
 // Kick user back to the home page if they aren't currently logged in
 if( ! isset($_SESSION[ "is_auth" ])) {
