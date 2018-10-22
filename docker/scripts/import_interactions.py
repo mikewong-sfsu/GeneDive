@@ -1,4 +1,4 @@
-from lib import Database, ENVIRONMENT_NAME
+from lib import Database,ENVIRONMENT_NAME
 
 import sys
 import_file = sys.argv[1]  # The location of the file being imported

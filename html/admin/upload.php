@@ -1,5 +1,8 @@
 <?php
-require_once "lib/environment.php";
+require_once "../phpLib/environment.php";
+if(!IS_DOCKER_CONTAINER)
+  exit("Not in docker container");
+
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +12,7 @@ require_once "lib/environment.php";
   <title>Upload file to <?php echo ENVIRONMENT_NAME;?></title>
 </head>
 <body>
-  <form action="api/import.php" method="post" enctype="multipart/form-data">
+  <form action="import.php" method="post" enctype="multipart/form-data">
     TSV file: <input type="file" name="file1"  accept=".tsv"/>
     <input type="submit">
   </form>

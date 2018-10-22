@@ -2,7 +2,13 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once "../lib/environment.php";
+require_once "../phpLib/environment.php";
+require_once('Net/SSH2.php');
+require_once('Crypt/RSA.php');
+
+
+if(!IS_DOCKER_CONTAINER)
+  exit("Not in docker container");
 
 // Move temporary file to data directory
 $target_file_location = ENVIRONMENT_DATA_FOLDER ."/". $_FILES["file1"]["name"];
@@ -11,13 +17,19 @@ move_uploaded_file($uploaded_file_name, $target_file_location);
 
 // Execute python import
 $python_file = PYTHON_IMPORT_FILE;
-//$command = "python ${python_file} ${target_file_location}";
-$command = "python --version";
-$output = [];
+$command = "export GENEDIVE_NAME=".ENVIRONMENT_NAME.";python ${python_file} ${target_file_location}";
 
-$return_output = exec($command, $output);
+$ssh = new Net_SSH2('python');
+$key = new Crypt_RSA();
+$key->loadKey(file_get_contents('/var/cache/nginx/.ssh/id_rsa'));
+if (!$ssh->login('root', $key)) {
+  exit('Login Failed');
+}
 
-
+echo $ssh->exec('pwd')."<br>";
+echo "<pre>";
+echo $ssh->exec($command);
+echo "</pre>";
 
 
 // Return result
@@ -34,6 +46,4 @@ echo "\$command: ${command}<br>";
 echo "<pre>";
 echo "\$_FILES";
 print_r($_FILES);
-echo "\n\n\$output: ";
-print_r($output);
 echo "</pre>";

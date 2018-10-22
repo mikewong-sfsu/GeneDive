@@ -1,2 +1,2 @@
 FROM richarvey/nginx-php-fpm:latest
-CMD mkdir -p '/root/.ssh' && cd '/root/.ssh/' && rm -f id_rsa id_rsa.pub  && ssh-keygen -f id_rsa -t rsa -N '' &&  mv id_rsa.pub /keys/web.pub && chmod 600 id_rsa && docker-php-entrypoint /start.sh
+CMD mkdir -p '/var/cache/nginx/.ssh' && cd '/var/cache/nginx/.ssh/' && rm -f id_rsa id_rsa.pub  && ssh-keygen -f id_rsa -t rsa -N '' &&  cp id_rsa.pub /keys/web.pub && chmod 600 id_rsa && chown nginx id_rsa && docker-php-entrypoint /start.sh

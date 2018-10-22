@@ -28,7 +28,7 @@ class Database:
         "type2",
         ]
 
-    def __init__(self):
+    def __init__(self, environment_name):
         self.__connection = sqlite3.connect(ENVIRONMENT_SQLITE_LOCATION)
 
     def build_schema(self):
@@ -58,7 +58,7 @@ class Database:
         if not all_required_present:
             return False
 
-        self.__add_objs_to_db("interaction", interactions, required_columns)
+        self.__add_objs_to_db("interactions", interactions, required_columns)
 
         return True
 
@@ -85,7 +85,7 @@ class Database:
                 # every subsequent line read as an entry
                 else:
                     line_object = {}
-                    for col_nam, col_num in header_indexes:
+                    for col_num, col_nam in enumerate(header_indexes):
                         line_object[col_nam] = line[col_num]
                     final_object_array.append(line_object)
 
@@ -107,8 +107,9 @@ class Database:
         statement = self.__INSERT_SQL.format(
             table=table,
             columns=",".join(columns),
-            values=",".join(map(lambda: "?", columns)),
+            values=",".join(map(lambda x: ":"+x, columns)),
             )
+
         cursor = self.__connection.cursor()
 
         for row in data:

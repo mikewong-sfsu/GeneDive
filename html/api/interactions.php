@@ -1,12 +1,15 @@
 <?php
 
-require_once "../auth.php";
-require_once "../environment.php";
+require_once "../phpLib/environment.php";
+if(!IS_DOCKER_CONTAINER){
+  require_once "../auth.php";
+}
 
-$pdo = new PDO( PDO_GENEDIVE_DATA);
 
 $gid = $_GET['ids'];
 $minProb = $_GET['minProb'];
+
+$pdo = new PDO( PDO_GENEDIVE_DATA);
 
 $query = NULL;
 
