@@ -17,7 +17,7 @@
   $password = hash( "sha256", $_POST[ 'password' ] );
 
   // Load User
-  $pdo  = new PDO( PDO_GENEDIVE_USERS);
+  $pdo  = new PDO( PDO_GENEDIVE_USERS );
   $stmt = $pdo->prepare("SELECT email, password FROM user WHERE email = :email");
 
   if($stmt === false)
