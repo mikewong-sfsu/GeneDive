@@ -13,3 +13,4 @@ frontend/static/genedive/json/*.zip
 *.tsv
 *.csv
 *.zip
+*.swp
