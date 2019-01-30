@@ -1,0 +1,27 @@
+#! /usr/bin/perl
+
+exit( 0 ) if( -e 'genedive-github.key' && -e 'genedive-github-pub.key' );
+
+print <<EOF;
+
+===============================================================================
+ERROR: MISSING GENEDIVE GITHUB KEY PAIR
+===============================================================================
+
+The GeneDive-GitHub public/private keys are required to authorize you as a
+legitimate developer of GeneDive. Use the same key pair that you use to get
+access to the GitHub repository. It is generally a good idea to use a different
+public key for each repository, or even a new private/public key-pair for each
+repository, but this may be impractical.
+
+Copy the public key that you use for GeneDive on GitHub (which usually can
+be found in: \$HOME/.ssh) into the current directory 
+(<GeneDive>/backend/docker) as 'genedive-github-pub.key'. Copy the private
+key as 'genedive-github.key'.
+
+Proceed to build the GeneDive Docker image with the 'make' command.
+
+
+EOF
+
+exit( 1 );
