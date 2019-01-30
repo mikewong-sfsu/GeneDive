@@ -1,5 +1,6 @@
 FROM php:7.2-apache
 COPY devel /genedive
+RUN chmod a+x /genedive/backend/docker/install/*.sh
 RUN /genedive/backend/docker/install/setup.sh
 RUN /genedive/backend/docker/install/link.sh
 COPY devel/backend/docker/php.ini /usr/local/etc/php/

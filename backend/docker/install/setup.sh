@@ -1,8 +1,5 @@
 #! /bin/sh
 
-# Create path for frontend cache files
-mkdir -p /var/www/html/static/genedive/json
-
 # Update OS and install SQLite3 and Python utilities
 apt-get update
 apt-get install -y apt-utils
