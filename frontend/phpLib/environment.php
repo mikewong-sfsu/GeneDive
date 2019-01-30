@@ -13,22 +13,6 @@ define("PYTHON_IMPORT_FILE", ENVIRONMENT_SCRIPTS_FOLDER."/import_interactions.py
 
 set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__)). "/../phpseclib/");
 
-
-if(IS_DOCKER_CONTAINER)
-  $sql_file = ENVIRONMENT_SQLITE_LOCATION;
-else
-  $sql_file = GENEDIVE_DATA_FILE;
-
-define("PDO_GENEDIVE_DATA",'sqlite:'.$sql_file );
+define("PDO_GENEDIVE_DATA",'sqlite:'.GENEDIVE_DATA_FILE );
 define("PDO_GENEDIVE_USERS",'sqlite:'.GENEDIVE_USERS_FILE );
 
-$test = 0;
-if($test)
-{
-  echo '<pre>';
-  echo "\"".IS_DOCKER_CONTAINER."\"\n";
-  echo "\"".$sql_file."\"\n";
-  echo "\"".ENVIRONMENT_NAME."\"\n";
-
-  echo '</pre>';
-}
