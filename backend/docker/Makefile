@@ -1,5 +1,19 @@
 .PHONY: all build cache clean devel run shell stop
 
+-include port.make
+# File 'port.make' should contain the following line only (uncommented)
+#
+# PORT=<Your port number>
+#
+
+# Create a file 'port.make' replacing the variable below if you want another
+# port; don't change this variable. Alternatively, define the variable prior
+# to running make on the command line, i.e.
+#
+# $ PORT=<Your port number> make
+#
+PORT?=8080
+
 all: devel build run
 
 build: cache
@@ -33,7 +47,7 @@ check-keys:
 	perl preinstall/check-keys
 
 run:
-	docker run -d -p 8080:80 --name genedive-local genedive
+	docker run -d -p $(PORT):80 --name genedive-local genedive
 
 stop:
 	docker stop genedive-local
