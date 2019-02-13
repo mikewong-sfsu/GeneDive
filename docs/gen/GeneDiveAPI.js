@@ -15,7 +15,7 @@
  */
 const HEADLESS_MODE = false;
 const ARGUMENTS = process.argv;
-const JSON_FILE = "GeneDiveAPI_params.json";
+const JSON_FILE = "GeneDiveAPI_params_example.json";
 const tests = require('./custom_modules/tests/_import.js');
 const puppeteer = require('puppeteer');
 const test_results = [];
@@ -130,7 +130,7 @@ for (let i = 0; i < ARGUMENTS.length; i++)
 
   let promises = [];
   // Create Browser
-  const browser = await puppeteer.launch({headless: HEADLESS_MODE});
+  const browser = await puppeteer.launch({headless: true,args:['--no-sandbox']});
 
   // Go to login page, login, and then close the page
   await do_test(tests.Login, browser, json_data)
