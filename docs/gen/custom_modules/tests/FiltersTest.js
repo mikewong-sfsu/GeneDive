@@ -25,32 +25,28 @@ class FiltersTest extends Test {
   execute() {
     const thisClass = this;
     const PAGE = this.page;
-    const DGR = "MAD";
+    const DGR = "SFTPA1";
     const EVALUATE_NUMBER_OF_SETS = "$('.search-item').length";
     const FIELDS_TO_TEST = ["DGR1", "DGR2", "Sample Excerpt"];
     const EXCERPT_COL = "Sample Excerpt";
     let highlight_history = [];
     let numberOfDGRs;
 
-
     return new Promise(async (resolve, reject) => {
       try{
 
         // If any errors happen on the page, fail the test
         // thisClass.hookToConsoleErrors();
-
         await thisClass.startAtSearchPage().catch((reason)=>{reject(reason)});
         await thisClass.searchDGRs([DGR], "1hop").catch((reason)=>{reject(reason)});
-        await PAGE.waitFor(200);
+        await PAGE.waitFor(50);
 
         // Check if there is 1 DGR
         numberOfDGRs = await thisClass.page.evaluate(EVALUATE_NUMBER_OF_SETS).catch((reason)=>{reject(reason)});
         if(numberOfDGRs !== 1)
           reject(`Test failed: There should be 1 DGR being searched after adding one set. ${numberOfDGRs} were found.`);
-
         // Get some values from the table to try and filter for
         let table_contents = await thisClass.getTableContents().catch((reason)=>{reject(reason)});
-
         // Go through each row and try to highlight them
         for(let row = 0;row < table_contents.length;row++)
         {
@@ -63,43 +59,58 @@ class FiltersTest extends Test {
               text = text.split(" ")[0];
 
             // Since the text field is regex compatible, escape regex characters
-            text = text.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");
+	    //text = text.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");
             await thisClass.typeInFilter(text);
-            await PAGE.waitFor(1000);
-            if(!await thisClass.isRowHighlighted(row).catch((reason)=>{reject(reason)}))
+            await PAGE.waitFor(100);
+	    if(await thisClass.isRowHighlighted(row).catch((reason)=>{reject(reason)}))
               reject(`Highlight did not work on row ${row} when typing in ${text}`);
-
-            highlight_history.push({row : row, search : text});
+	    highlight_history.push({row : row, search : text});
           }
         }
 
-
         // Go back in history to make sure state is properly working
-        let wentBack = true;
-        for(let event = highlight_history.length-1;event >= 0;event--)
+        //if(thisClass.canGoBackInHistory)
+	 // let wentBack = await thisClass.goBackInHistory().catch((reason)=>{reject(reason)});
+	let wentBack = true;
+      	//await PAGE.waitFor(100);
+	for(let event = highlight_history.length-1;event >= 0;event--)
         {
           let history = highlight_history[event];
-
-          await PAGE.waitFor(200);
-
+	console.log("history :",history);
+	console.log("event:",event);
+          //if(thisClass.canGoBackInHistory)
+	  //wentBack = await thisClass.goBackInHistory().catch((reason)=>{reject(reason)});
+	  //let filter_field_value = await thisClass.page.evaluate(
+	//	                    (filter) => {return $(filter).val()}, thisClass._FILTER_FIELD
+	//	                  ).catch((reason) => {reject(reason);});
           if(wentBack)
-          {
-
-            let filter_field_value = await thisClass.page.evaluate(
-              (filter) => {return $(filter).val()}, thisClass.FILTER_FIELD
-            ).catch((reason) => {reject(reason);});
-            let row_highlighted = await thisClass.isRowHighlighted(history.row).catch((reason)=>{reject(reason)});
-
+          {   
+	      //await PAGE.waitFor(200)
+	      let filter_field_value = await thisClass.page.evaluate(
+		                    (filter) => {return $(filter).val()}, thisClass._FILTER_FIELD
+		                  ).catch((reason) => {reject(reason);});
+	     console.log("filter_value:" ,filter_field_value);
+           await PAGE.waitFor(200) 
+	    let row_highlighted = await thisClass.isRowHighlighted(history.row).catch((reason)=>{reject(reason)});
+	    console.log("row_highlighted:",row_highlighted);
+	   
+	   // commented to understand code
             // If it's not found, restart the current loop.
-            if( !(row_highlighted && filter_field_value === history.search ))
-              event++;
+            if( !(row_highlighted && filter_field_value === history.search )){
+             event++;
+		}
           }
           else
           {
-            console.log(history);
+            //console.log(history);
             reject(`Something is amiss with the state history. Could not find row ${history.row} highlighted using "${history.search}"`);
           }
-          wentBack = await thisClass.goBackInHistory().catch((reason)=>{reject(reason)});
+		
+	//await PAGE.waitFor(100)
+          if(thisClass.canGoBackInHistory)
+		//await PAGE.waitFor(120);
+	 	wentBack = await thisClass.goBackInHistory().catch((reason)=>{reject(reason)});
+		//await PAGE.waitFor(100);
         }
 
 
@@ -108,7 +119,7 @@ class FiltersTest extends Test {
       }
       catch (e) {
         console.error(e);
-        reject(e);
+        reject(thisClass.createResponse(false, e, 1));
       }
 
 
@@ -121,7 +132,7 @@ class FiltersTest extends Test {
     const HIGHLIGHT_CLASS = "highlight-row";
     return this.page.evaluate(
       (table, highlight_class, row) => {
-        return $(table)[0].rows[row+1].classList.contains(highlight_class);
+	return $(table)[0].rows[row+1].classList.contains(highlight_class);
       },this.TABLE_ELEMENT, HIGHLIGHT_CLASS, row);
   }
 }

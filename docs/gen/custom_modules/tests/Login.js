@@ -31,10 +31,8 @@ class Login extends Test {
       try{
         // If any errors happen on the page, fail the test
         // thisClass.hookToConsoleErrors();
-
         console.log("Connecting to " + thisClass.DOMAIN);
         await PAGE.goto(thisClass.DOMAIN, {waitUntil: 'networkidle2'}).catch((reason)=>{reject(`Unable to connect. ${reason}`)});
-
         if (thisClass.LOGIN === undefined || this.PASSWORD === undefined)
           reject("Login or Password not set");
         await PAGE.click("input#email");
@@ -51,6 +49,7 @@ class Login extends Test {
         resolve(thisClass.createResponse(true,"Successfully logged in",0));
       }
       catch (e) {
+	console.log(e);      
         reject(e);
       }
     })

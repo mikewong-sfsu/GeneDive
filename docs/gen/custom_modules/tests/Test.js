@@ -100,9 +100,9 @@ class Test {
     return new Promise(async function (resolve, reject) {
       await thisClass.page.setViewport({width: thisClass.DEFAULT_WIDTH, height: thisClass.DEFAULT_HEIGHT})
         .catch((reason) => {
-          reject(reason);
+		reject(reason);
         });
-      await thisClass.page.goto(thisClass.DOMAIN + thisClass.SEARCH_PAGE, {waitUntil: 'networkidle2'})
+	    await thisClass.page.goto(thisClass.DOMAIN + thisClass.SEARCH_PAGE, {waitUntil: 'networkidle2'})
         .then((reason) => {
           resolve(reason);
         })
@@ -134,23 +134,24 @@ class Test {
         let dgr = dgrs[i];
         fieldHasCorrectValue = false;
 
-        // Will try to input the search text over and over until it finally fills it in, or 5 tries have passed
-        for (let j = 0; !fieldHasCorrectValue && j < 5; j++) {
-
-          // Clear element value
+       // Clear element value
           await thisClass.page.evaluate((e) => {
             document.querySelector(e).value = ""
           }, SEARCH_FIELD);
           await thisClass.page.click(SEARCH_FIELD).catch((reason) => {reject(reason);}); // click on element
-          await thisClass.page.keyboard.type(dgr, {delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters
-          fieldHasCorrectValue = await thisClass.page.evaluate((e) => document.querySelector(e).value, SEARCH_FIELD) === dgr;
-          await thisClass.page.waitFor(100); // Wait a few seconds for auto complete
-        }
+ // Will try to input the search text over and over until it finally fills it in, or 5 tries have passed
+    for (let j = 0; !fieldHasCorrectValue && j < 5; j++) {
+	  await thisClass.page.type(SEARCH_FIELD,dgr,{delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters 
+	    fieldHasCorrectValue = await thisClass.page.evaluate((e) => document.querySelector(e).value, SEARCH_FIELD) === dgr;
+	     if(fieldHasCorrectValue)
+		    break;
+	    await thisClass.page.waitFor(30); // Wait a few seconds for autocomplete
+	    
+	       }
 
         // If it still couldn't enter the value
         if (!fieldHasCorrectValue)
           reject("Could not input value into search field");
-
         // Press ENTER and wait for the page to stop loading.
         thisClass.page.keyboard.press('Enter').catch((reason) => {
           reject(reason);
@@ -159,6 +160,7 @@ class Test {
         await thisClass.waitForPageToFinishLoading().catch((reason) => {
           reject(reason);
         });
+
       }
 
       resolve(`Completed ${type} search of ${dgrs}`);
@@ -181,7 +183,7 @@ class Test {
           reject(reason);
         });
     });
-  }
+  } 
 
   clickOnNodeInGraph(nodeName) {
     const PAGE = this.page;
