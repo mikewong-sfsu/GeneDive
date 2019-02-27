@@ -1,2 +1,4 @@
-sources
+sources/all
+sources/plos-pmc
+sources/pharmgkb
 users.sqlite
