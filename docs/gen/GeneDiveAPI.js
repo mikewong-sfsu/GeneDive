@@ -153,7 +153,6 @@ for (let i = 0; i < ARGUMENTS.length; i++)
   else{
   // Execute every test
     for (let key in tests) {
-    	console.log(key);
 	if (key === "Login")
         continue;
       await do_test(tests[key], browser, json_data);

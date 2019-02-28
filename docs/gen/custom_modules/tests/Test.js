@@ -8,6 +8,15 @@
  */
 
 class Test {
+
+  get MIN_SCORE(){
+    return this._MIN_SCORE;
+  }
+
+  get FILTER_INPUT(){
+    return this._FILTER_INPUT;
+  }
+ 
   get FILTER_FIELD() {
     return this._FILTER_FIELD;
   }
@@ -53,7 +62,8 @@ class Test {
     this._TYPING_SPEED = 30;
     this._TABLE_ELEMENT = ".table";
     this._FILTER_FIELD = ".highlight-input";
-
+    this._MIN_SCORE = ".min-prob-slider";
+    this._FILTER_INPUT = ".filter-input";
 
   }
   /**
@@ -241,7 +251,7 @@ class Test {
     })
   }
 
-  typeInFilter(text, clear){
+  highlightText(text, clear){
     const thisClass = this;
 
 
@@ -317,6 +327,7 @@ class Test {
       }, this.TABLE_ELEMENT
     )
   }
+
 
   waitForPageToFinishLoading() {
     return this.page.waitForFunction(this.PAGE_IS_NOT_LOADING);

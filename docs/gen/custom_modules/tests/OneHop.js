@@ -26,20 +26,24 @@ class OneHop extends Test {
     const thisClass = this;
     const PAGE = this.page;
     const HOP = "1hop";
-    const DGR = "SFTPA1";
+    const DGR = ["SFTPA1","SFTPA2"];
     const EVALUATE_SETS = "$('.search-item').length"
     const TEST_FIELDS = ["DGR1","DGR2","Max Conf Scr","Sample Excerpt"];
     const SEARCH_EXCERPT = "Sample Excerpt";
     return new Promise(async (resolve,reject) =>{
       try{
 	await this.startAtSearchPage().catch((reason)=>{reject(reason)});
-	await this.searchDGRs([DGR],HOP).catch((reason)=>{reject(reason)});
-	//await this.page.waitFor(50);
-	//check result of the DGR pair
-	let numberOfDGR = await this.page.evaluate(EVALUATE_SETS).catch((reason)=>{reject(reason)});
-	if(numberOfDGR !== 1){
+	//loop through the set of DGRS
+	let i,numberOfDGR;
+	for(i in DGR){
+	  await this.searchDGRs([DGR[i]],HOP).catch((reason)=>{reject(reason)});
+	  //check result of the DGR pair
+	  numberOfDGR = await this.page.evaluate(EVALUATE_SETS).catch((reason)=>{reject(reason)});
+	}
+	if(numberOfDGR !== DGR.length){
 	  reject(`Test Failed : There should be atleast 1 DGR being searched on adding to set.${numberOfDGR} were found.`);
 	}
+	let minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE).catch((reason)=>{reject(reason)});
 	//get table values for filtering
 	let tableContents = await this.getTableContents().catch((reason)=>{reject(reason)});
 	//loop through the table and filter based on excerpt
@@ -47,13 +51,16 @@ class OneHop extends Test {
 	for(row in tableContents){
 	  for(col in TEST_FIELDS){
 	    let content = tableContents[row][TEST_FIELDS[col]];
-	    //console.log(content);
-	    if(TEST_FIELDS[col] === SEARCH_EXCERPT)
+	    //check if the filter value are all greater than minimum confidence
+	    if(col == 2 && content < minScore)
+		reject("Confidence Score less than Minimum confidence Score");
+ 	    //check value is highlighted based on highlight filter
+	    if(col == 3)
 	    content = content.split(" ")[0];
-	    //if(content.length > 1)
-	    //content = content[0];	    
-	    await this.typeInFilter(content);
-	    
+	    await this.highlightText(content);
+	    //check if the row is highlighted
+	    //if(!await this.isRowHighlighted(row).catch((reason)=>{reject(reason)}))
+	     // reject(`Highlight did not work on row ${row} when typing in ${content}`);
 	  }
 	}
 	resolve(this.createResponse(true,"successfully tested OneHop filter",0));
@@ -62,7 +69,13 @@ class OneHop extends Test {
 	console.log(e);
 	reject(e);
       }
-    })
+    });
+  }
+  isRowHighlighted(row){
+    const HIGHLIGHT_ROW = "highlight-row";
+    return this.page.evaluate((table,highlightRow,row)=>{
+	    return $(table)[0].rows[row+1].classList.contains(highlightRow);
+ 	    },this.TABLE_ELEMENT,HIGHLIGHT_ROW,row);
   }
 }
 
