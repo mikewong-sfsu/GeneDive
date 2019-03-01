@@ -20,6 +20,7 @@ const tests = require('./custom_modules/tests/_import.js');
 const puppeteer = require('puppeteer');
 const test_results = [];
 const RESULTS_FILE = `./log/GeneDiveAPI-results-{timestamp}.json`;
+const HTML_FILE = `./log/GeneDiveAPI-results-{timestamp}.html`;
 const COLOR = {
   Reset: "\x1b[0m",
   Bright: "\x1b[1m",
@@ -89,13 +90,14 @@ const do_test = async (test, browser, json_data) => {
     console.log(`${singleTest.toString()}: ${COLOR.FgGreen}PASS${COLOR.Reset}`);
     save_test_success(reason);
     page.close();
-  })
-    .catch((reason) => {
+  }).
+   catch((reason) => {
       page.screenshot({path: `${singleTest.name}-error.png`});
       console.log(`${singleTest.toString()}: ${COLOR.FgRed}FAIL${COLOR.Reset}`);
+      //console.log(reason);
       save_test_success(reason);
       page.close();
-    });
+    }	);
   return promise;
 };
 
@@ -130,7 +132,9 @@ for (let i = 0; i < ARGUMENTS.length; i++)
 
   let promises = [];
   // Create Browser
-  const browser = await puppeteer.launch({headless: true,args:['--no-sandbox']});
+  const browser = await puppeteer.launch({headless: true,
+	  args:['--no-sandbox','--disable-setuid-sandbox'],
+  	  ignoreHTTPSErrors: true});
 
   // Go to login page, login, and then close the page
   await do_test(tests.Login, browser, json_data)
@@ -138,21 +142,22 @@ for (let i = 0; i < ARGUMENTS.length; i++)
       process.exit(0);
     }));
 
-  if (arguments_trimmed.length > 0)
-  // Execute the tests passed in as arguments
+  if (arguments_trimmed.length > 0){
+  // Execute the tests passed in as arguments //individual tests
     for (let key in arguments_trimmed) {
-
-      if(arguments_trimmed[key] !== "Login")
+	console.log(arguments_trimmed[key]);
+      if(arguments_trimmed[key] !== Login )
         await do_test(tests[arguments_trimmed[key]], browser, json_data);
-
-    }
-  else
+	 }
+  }
+  else{
   // Execute every test
     for (let key in tests) {
-      if (key === "Login")
+	if (key === "Login")
         continue;
       await do_test(tests[key], browser, json_data);
     }
+  }
 
 
   await Promise.all(promises).catch((reason)=>{console.error(`ERROR awaiting all promises: ${reason}`)});
@@ -171,8 +176,9 @@ for (let i = 0; i < ARGUMENTS.length; i++)
     + (date.getSeconds()).pad(2);
   let filename = RESULTS_FILE.replace("{timestamp}", timestamp);
   fs.writeFileSync(filename, JSON.stringify(test_results), 'utf8');
-
-
+  let htmlfilename = HTML_FILE.replace("{timestamp}", timestamp);
+  fs.writeFileSync(htmlfilename,createTable(test_results),'utf8');
+	
   // Close Browser
   try{
     browser.close().catch((reason)=>{console.error(`ERROR closing browser: ${reason}`)});
@@ -191,3 +197,32 @@ for (let i = 0; i < ARGUMENTS.length; i++)
     console.log(`Program complete: ${reason}`);
     process.exit(0);
   });
+//convert JSON to table in HTML
+  function createTable(json_file){
+    var col = [];
+    var row,key;
+    for( row in json_file){
+	for(key in json_file[row]){
+	  if (col.indexOf(key) === -1)
+	    col.push(key);
+      }
+    }
+    //create table
+    var table_text = "";
+   // data = JSON.parse(json_file);
+    table_text +="<table>";
+    table_text +="<tr>";
+    for(key in col){
+      table_text += "<th>" + col[key] + "</th>";
+    }
+    table_text += "</tr>";
+    for(row in json_file){
+      table_text +="<tr>";
+      for(key in col){
+	table_text +="<td>" + json_file[row][col[key]] + "</td>";
+      }
+      table_text +="</tr>";
+    }
+    table_text +="</table>";
+    return table_text; 
+  }	  

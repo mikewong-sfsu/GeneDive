@@ -3,6 +3,7 @@ async function Login(page, login, password) {
   return new Promise(async (resolve, reject) => {
     if (login === undefined || password === undefined)
       reject("Login or Password not set");
+console.log("in the action folder");
     await page.click("input#email");
     await page.keyboard.type(login);
     await page.click("input#password");

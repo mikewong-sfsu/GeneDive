@@ -1,0 +1,23 @@
+[
+   {
+      "description" : "Curated disease, gene, and drug (DGR) interactions from PharmGKB and extracted DGR interactions from PLoS and PMC using Deep Learning",
+      "host" : "http://localhost:8080",
+      "name" : "Default",
+      "path" : "all",
+      "user" : "GeneDive"
+   },
+   {
+      "description" : "Extracted disease, gene, and drug (DGR) interactions from the Public Library of Science (PLoS) and PubMed Central (PMC) using Deep Learning",
+      "host" : "http://localhost:8080",
+      "name" : "PLOS-PMC",
+      "path" : "plos-pmc",
+      "user" : "GeneDive"
+   },
+   {
+      "description" : "Curated disease, gene, and drug (DGR) interactions from PharmGKB",
+      "host" : "http://localhost:8080",
+      "name" : "PharmGKB",
+      "path" : "pharmgkb",
+      "user" : "GeneDive"
+   }
+]
