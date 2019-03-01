@@ -10,7 +10,7 @@
 const OXYGEN_CONFIG_FILE = "doxygen.cfg";
 const SCREENSHOTS_PHANTOMJS_FILE = "GeneDiveAPI.js";
 const CONFIG_DIRECTORY = __dirname;
-const LOG_DIRECTORY = CONFIG_DIRECTORY + "\\log";
+const LOG_DIRECTORY = "./log";
 const { exec } = require('child_process');
 const log_files = require('fs');
 
@@ -35,10 +35,15 @@ function append_log(file, text){
 function write_file(file)
 {	
 	if (!log_files.existsSync(LOG_DIRECTORY)){
-		log_files.mkdirSync(LOG_DIRECTORY);
+		console.log('directory does not exist');
+		log_files.mkdirSync(LOG_DIRECTORY, {recursive: true});
+	} else {
+		console.log({ LOG_DIRECTORY });
+		console.log('directory exist');
 	}
 
-	log_files.appendFile(LOG_DIRECTORY+"\\"+file, logs[file], {'flags' : 'w'}, function(err) {
+
+	log_files.appendFile(LOG_DIRECTORY+"/"+file, logs[file], {'flags' : 'w'}, function(err) {
 		if(err) {
 			throw err;
 		}
