@@ -17,8 +17,8 @@ class Test {
     return this._FILTER_INPUT;
   }
  
-  get FILTER_FIELD() {
-    return this._FILTER_FIELD;
+  get HIGHLIGHT_FILTER() {
+    return this._HIGHLIGHT_FILTER;
   }
   get TABLE_ELEMENT() {
     return this._TABLE_ELEMENT;
@@ -61,7 +61,7 @@ class Test {
     this._PASSWORD = global_data.password;
     this._TYPING_SPEED = 30;
     this._TABLE_ELEMENT = ".table";
-    this._FILTER_FIELD = ".highlight-input";
+    this._HIGHLIGHT_FILTER = ".highlight-input";
     this._MIN_SCORE = ".min-prob-slider";
     this._FILTER_INPUT = ".filter-input";
 
@@ -266,18 +266,18 @@ class Test {
       if(clear)
         await thisClass.page.evaluate((e) => {
           document.querySelector(e).value = ""
-        }, thisClass.FILTER_FIELD);
+        }, thisClass.HIGHLIGHT_FILTER);
 
       // Get current value
       let currentFilterValue = await thisClass.page.evaluate(
-        (filter) => {return $(filter).val()}, thisClass.FILTER_FIELD
+        (filter) => {return $(filter).val()}, thisClass.HIGHLIGHT_FILTER
       ).catch((reason) => {reject(reason);});
 
       // click the field and type in
-      await thisClass.page.click(thisClass.FILTER_FIELD).catch((reason) => {reject(reason);});
+      await thisClass.page.click(thisClass.HIGHLIGHT_FILTER).catch((reason) => {reject(reason);});
       await thisClass.page.keyboard.type(text, {delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters
       let newValue = await thisClass.page.evaluate(
-        (filter) => {return $(filter).val()}, thisClass.FILTER_FIELD
+        (filter) => {return $(filter).val()}, thisClass.HIGHLIGHT_FILTER
       ).catch((reason) => {reject(reason);});
 
       if(newValue !== currentFilterValue + text)
