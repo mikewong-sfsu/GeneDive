@@ -47,7 +47,7 @@ class OneHop extends Test {
 	//get table values for filtering
 	let tableContents = await this.getTableContents().catch((reason)=>{reject(reason)});
 	//loop through the table and filter based on excerpt
-	let row,col;
+	var row,col;
 	for(row in tableContents){
 	  for(col in TEST_FIELDS){
 	    let content = tableContents[row][TEST_FIELDS[col]];
@@ -55,12 +55,13 @@ class OneHop extends Test {
 	    if(col == 2 && content < minScore)
 		reject("Confidence Score less than Minimum confidence Score");
  	    //check value is highlighted based on highlight filter
-	    if(col == 3)
+	    if(col == 3){
 	    content = content.split(" ")[0];
 	    await this.highlightText(content);
 	    //check if the row is highlighted
-	    //if(!await this.isRowHighlighted(row).catch((reason)=>{reject(reason)}))
-	     // reject(`Highlight did not work on row ${row} when typing in ${content}`);
+	    if(await this.isRowHighlighted(row).catch((reason)=>{reject(reason)}))
+	      reject(`Highlight did not work on row ${row} when typing in ${content}`);
+	    }
 	  }
 	}
 	resolve(this.createResponse(true,"successfully tested OneHop filter",0));
@@ -72,9 +73,9 @@ class OneHop extends Test {
     });
   }
   isRowHighlighted(row){
-    const HIGHLIGHT_ROW = "highlight-row";
+    const HIGHLIGHT_ROW = ".highlight-row";
     return this.page.evaluate((table,highlightRow,row)=>{
-	    return $(table)[0].rows[row+1].classList.contains(highlightRow);
+	    return $(table)[0].rows[row].classList.contains(highlightRow);
  	    },this.TABLE_ELEMENT,HIGHLIGHT_ROW,row);
   }
 }
