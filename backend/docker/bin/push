@@ -1,0 +1,38 @@
+#! /usr/bin/perl
+use Cwd qw( getcwd );
+
+my $cwd       = getcwd();
+my @changes   = map { parse_git_status( $_ )} split /\n/, `git status -s`;
+my $container = 'genedive-local';
+
+foreach my $change (@changes) {
+	my $from = normalize_path( "$cwd/$change" );
+	my $to   = normalize_path( "/genedive/backend/docker/$change" );
+	print STDERR "git cp $from $container:$to\n";
+	system( "git cp $from $container:$to" );
+}
+
+# ============================================================
+sub parse_git_status {
+# ============================================================
+	local $_ = shift;
+	my ($code, $file) = /^(..)\s(.*)$/;
+	my $filename = (split( '/', $file ))[ -1 ];
+	if( $filename =~ /^\./ && $filename ne '.gitignore' ) { return (); } # Ignore most hidden files
+	return $file;
+}
+
+# ============================================================
+sub normalize_path {
+# ============================================================
+	my $path  = shift;
+	my @paths = split /\//, $path;
+
+	my @normalized = ();
+	foreach my $path (@paths) {
+		if( $path =~ /\.\./ ) { shift @normalized; }
+		else                  { push @normalized, $path; }
+	}
+
+	return '/' . join( '/', @normalized );
+}
