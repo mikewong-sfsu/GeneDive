@@ -20,6 +20,6 @@ var GeneDiveCache = {};
 			case 'chemical_id' : array = AUTOCOMPLETE_CHEMICAL = AUTOCOMPLETE_CHEMICAL .concat( data ); break;
 			case 'set_id'      : array = AUTOCOMPLETE_GENE_SET = AUTOCOMPLETE_GENE_SET .concat( data ); break;
 		}
-		console.log( 'CACHE:', cache, array );
+		console.log( `Cache loaded for '${cache}' with ${array.length} entries.` );
 	});
 });

@@ -44,7 +44,7 @@ class Search {
       GeneDiveCache[ 'disease_id' ],
       GeneDiveCache[ 'chemical_id' ],
       GeneDiveCache[ 'set_id' ]
-    ).done(( ev ) => { this.initTypeahead(); console.log( 'IDs loaded from cache' );});
+    ).done(( ev ) => { this.initTypeahead(); });
 
     alertify.set('notifier', 'position', 'top-left');
 
