@@ -8,9 +8,12 @@ new JSZip.external.Promise(function (resolve, reject) {
       resolve( data );
     }
   });
-}).then( ( data ) => {
+})
+	
+.then( ( data ) => {
   return JSZip.loadAsync( data );
 })
+
 .then(( zipfile ) => {
   zipfile.file( 'adjacency_matrix.json' ).async( 'string' ).then(( data ) => { 
     adjacency_matrix = JSON.parse( data ); 
