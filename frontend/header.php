@@ -21,10 +21,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Typeahead Files -->
-    <script src="static/genedive/json/gene_id.json?random=<?php echo $random_string; ?>"></script>
-    <script src="static/genedive/json/chemical_id.json?random=<?php echo $random_string; ?>"></script>
-    <script src="static/genedive/json/disease_id.json?random=<?php echo $random_string; ?>"></script>
-    <script src="static/genedive/json/symbol_id.json?random=<?php echo $random_string; ?>"></script>
+    <!-- script src="static/genedive/json/gene_id.json?random=<?php echo $random_string; ?>"></script-->
+    <!-- script src="static/genedive/json/chemical_id.json?random=<?php echo $random_string; ?>"></script-->
+    <!-- script src="static/genedive/json/disease_id.json?random=<?php echo $random_string; ?>"></script-->
+    <!-- script src="static/genedive/json/symbol_id.json?random=<?php echo $random_string; ?>"></script-->
+
     <!-- see footer.php for all other JS source -->
 
     <!-- Fonts -->

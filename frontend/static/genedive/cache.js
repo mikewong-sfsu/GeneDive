@@ -1,26 +1,25 @@
-var AUTOCOMPLETE_SYMBOL     = []; // gene_id MW Should be AUTOCOMPLETE_GENE
-var AUTOCOMPLETE_DISEASE    = []; // disease_id
-var AUTOCOMPLETE_CHEMICAL   = []; // chemical_id Should be AUTOCOMPLETE_DRUG (sacrifice accuracy for simplicity)
-var AUTOCOMPLETE_SYMBOL_SET = []; // symbol_id MW Should be DGR_SET
+var AUTOCOMPLETE_GENE     = []; // gene_id 
+var AUTOCOMPLETE_DISEASE  = []; // disease_id
+var AUTOCOMPLETE_CHEMICAL = []; // chemical_id Should be AUTOCOMPLETE_DRUG (sacrifice accuracy for simplicity)
+var AUTOCOMPLETE_GENE_SET = []; // symbol_id 
 
 var GeneDiveCache = {};
 
-Object.entries({ 
-	'gene_id'       : AUTOCOMPLETE_SYMBOL,
-	'disease_id'    : AUTOCOMPLETE_DISEASE,
-	'chemical_id'   : AUTOCOMPLETE_CHEMICAL,
-	'symbol_id'     : AUTOCOMPLETE_SYMBOL_SET,
+[ 'gene_id', 'disease_id', 'chemical_id', 'set_id' ].forEach(( cache ) => {
 
-}).forEach(([ cache, array ]) => {
-
-	GeneDiveCache[ gene_id ] = $.ajax({
+	GeneDiveCache[ cache ] = $.ajax({
 		url: `cache.php?get=${cache}`,
 		method: "GET"
 	})
-	.done(( data ) => {
-		array.splice( -1, 0, data );
-	})
-	.fail(( xhr ) => {
-		console.log( 'error', xhr );
+	.then(( contents ) => {
+		var data  = JSON.parse( contents );
+		var array = undefined;
+		switch( cache ) {
+			case 'gene_id'     : array = AUTOCOMPLETE_GENE     = AUTOCOMPLETE_GENE     .concat( data ); break;
+			case 'disease_id'  : array = AUTOCOMPLETE_DISEASE  = AUTOCOMPLETE_DISEASE  .concat( data ); break;
+			case 'chemical_id' : array = AUTOCOMPLETE_CHEMICAL = AUTOCOMPLETE_CHEMICAL .concat( data ); break;
+			case 'set_id'      : array = AUTOCOMPLETE_GENE_SET = AUTOCOMPLETE_GENE_SET .concat( data ); break;
+		}
+		console.log( 'CACHE:', cache, array );
 	});
 });
