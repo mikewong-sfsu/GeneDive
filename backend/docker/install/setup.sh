@@ -6,7 +6,13 @@ apt-get install -y apt-utils
 apt-get install -y \
         sqlite3 \
         libsqlite3-dev \
-        python3-pip
+        python3-pip \
+        libzip-dev \
+        zip
+
+# Add Zip extensions to PHP 7.2
+docker-php-ext-configure zip --with-libzip
+docker-php-ext-install zip
 
 # Delete paths
 rm -rf /usr/local/genedive /var/www/html
