@@ -42,7 +42,7 @@
 <a class="datasource-add list-group-item">
     <div class="datasource-info">
         <h5 class="name"><span class="fa fa-plus-circle"></span> Add a Data Source</h5>
-        <p class="description">Upload your own data to search and view in GeneDive'</p>
+        <p class="description">Upload your own data to search and view in GeneDive</p>
     </div>
 </a>
 
