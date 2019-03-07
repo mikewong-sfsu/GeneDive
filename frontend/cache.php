@@ -12,7 +12,7 @@ if( ! isset( $_GET[ 'get' ] )) { exit; }
 if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( '["all"]' ); };
 
 $DATASOURCES = '/usr/local/genedive/data/sources';
-$sources     = json_decode( base64_decode( $_SESSION[ 'sources' ] ));
+$sources     = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
 $manifest    = read_manifest();
 
 // ===== DISPATCH TABLE
@@ -43,7 +43,7 @@ function read_manifest() {
 // ============================================================
 	global $DATASOURCES;
 	$content  = file_get_contents( "$DATASOURCES/manifest.json" );
-	$manifest = json_decode( $content );
+	$manifest = json_decode( $content, true );
 	return $manifest;
 }
 
@@ -57,16 +57,32 @@ function adjacency_matrix( $manifest, $sources ) {
 	$repositories = array_filter( $sources, "filter_by_host_manifest" );
 
 	// ===== MOST COMMON CASE
-	// GeneDive "all" adjacency matrix requested
-	if( count( $repositories ) == 1 && $repositories[ 0 ] == 'all' ) {
+	$source = $repositories[ 0 ];
+	if( count( $repositories ) == 1 ) {
 
-		$cache = "$DATASOURCES/all/adjacency_matrix.json.zip";
-		$fp = fopen( $cache, 'rb' );
+		// GeneDive 'all', 'pharmgkb', or 'plos-pmc' adjacency matrix requested
+	 	if(	in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
 
-		header( "Content-type: application/zip" );
-		header( "Content-length: " . filesize( $cache ));
-		fpassthru( $fp );
-		exit();
+			$cache = "$DATASOURCES/$source/adjacency_matrix.json.zip";
+			$fp = fopen( $cache, 'rb' );
+
+			header( "Content-type: application/zip" );
+			header( "Content-length: " . filesize( $cache ));
+			fpassthru( $fp );
+			exit();
+
+		// Single user-provided data source adjacency matrix requested
+		} else {
+			$key   = substr( sha1( $source ), 0, 8 );
+			$cache = "$DATASOURCES/$key/adjacency_matrix.json.zip";
+			if( ! file_exists( $cache )) { print "Missing 'adjacency_matrix.json.zip' for $source\n"; exit( 1 ); }
+			$fp = fopen( $cache, 'rb' );
+
+			header( "Content-type: application/zip" );
+			header( "Content-length: " . filesize( $cache ));
+			fpassthru( $fp );
+			exit();
+		}
 	}
 
 	// ===== COMBINATION OF SOURCES PREVIOUSLY CACHED
@@ -86,6 +102,7 @@ function adjacency_matrix( $manifest, $sources ) {
 	foreach( $repositories as $sourceid ) {
 		$repository = $manifest[ $sourceid ];
 		foreach( $repository as $dgr1 => $edges ) {
+			if( ! is_array( $edges )) { continue; } // Skip invalid entries
 			foreach( $edges as $dgr2 => $scores ) {
 				if( array_key_exists( $dgr2, $matrix[ $dgr1 ])) {
 					$matrix[ $dgr1 ][ $dgr2 ] = array_merge( $matrix[ $dgr1 ][ $dgr2 ], $repository[ $dgr1 ][ $dgr2 ]);
@@ -97,8 +114,8 @@ function adjacency_matrix( $manifest, $sources ) {
 	}
 
 	// Second, create the cached adjacency matrix and compress it
-	if( ! file_exists( "$DATASOURCES/cache" . $_SESSION[ 'sources' ] )) {
-		mkdir( "$DATASOURCES/cache" . $_SESSION[ 'sources' ]);
+	if( ! file_exists( "$DATASOURCES/cache/" . $_SESSION[ 'sources' ] )) {
+		mkdir( "$DATASOURCES/cache/" . $_SESSION[ 'sources' ]);
 	}
 
 	$zip = new ZipArchive();
@@ -125,16 +142,32 @@ function typeahead_cache( $file, $manifest, $sources ) {
 	$repositories = array_filter( $sources, "filter_by_host_manifest" );
 
 	// ===== MOST COMMON CASE
-	// GeneDive "all" adjacency matrix requested
-	if( count( $repositories ) == 1 && $repositories[ 0 ] == 'all' ) {
+	$source = $repositories[ 0 ];
+	if( count( $repositories ) == 1 ) {
 
-		$cache = "$DATASOURCES/all/$file.json";
-		$fp = fopen( $cache, 'r' );
+		// GeneDive "all" adjacency matrix requested
+	  if(	in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
 
-		header( "Content-type: text/plain" );
-		header( "Content-length: " . filesize( $cache ));
-		fpassthru( $fp );
-		exit();
+			$cache = "$DATASOURCES/$source/$file.json";
+			$fp = fopen( $cache, 'r' );
+
+			header( "Content-type: text/plain" );
+			header( "Content-length: " . filesize( $cache ));
+			fpassthru( $fp );
+			exit();
+
+		// Single user-provided data source adjacency matrix requested
+		} else {
+			$key   = substr( sha1( $source ), 0, 8 );
+			$cache = "$DATASOURCES/$key/$file.json";
+			if( ! file_exists( $cache )) { print "Missing '$file.json' for $source\n"; exit( 1 ); }
+			$fp = fopen( $cache, 'r' );
+
+			header( "Content-type: text/plain" );
+			header( "Content-length: " . filesize( $cache ));
+			fpassthru( $fp );
+			exit();
+		}
 	}
 
 	// ===== COMBINATION OF SOURCES PREVIOUSLY CACHED
