@@ -34,6 +34,7 @@ switch( $_GET[ 'get' ]) {
 function filter_by_host_manifest( $element ) {
 // ============================================================
 	global $manifest;
+	if( $element == 'all' ) { return true; }
 	return array_key_exists( $element, $manifest );
 }
 

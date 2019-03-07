@@ -5,6 +5,7 @@
     <!-- Bootstrap and Modules -->
     <script src="static/bootstrap/bootstrap.min.js"></script>
     <script src="static/bootstrap/bootstrap-slider/bootstrap-slider.min.js"></script>
+    <script src="static/bootstrap/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 
     <!-- Typeahead -->
     <script src="static/typeahead/typeahead.bundle.min.js"></script>
@@ -78,7 +79,7 @@
     <!-- Core Controller -->
     <script src="static/genedive/controller.js?random=<?php echo $random_string; ?>"></script>
 
-    <?php include( 'datasource-manager.php' ) ?>
+    <?php include( 'datasource/manager.php' ) ?>
 
   </body>
 </html>

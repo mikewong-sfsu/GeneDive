@@ -34,6 +34,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap-slider/bootstrap-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap-toggle/bootstrap-toggle.min.css">
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="static/fonts/css/fontawesome.min.css">
