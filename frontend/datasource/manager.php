@@ -56,18 +56,22 @@
 </div>
 
 <script>
-GeneDive.datasources = <?php echo base64_decode( $_SESSION[ 'sources' ]) ?>;
+GeneDive.datasource = {};
+GeneDive.datasource.list = <?php echo base64_decode( $_SESSION[ 'sources' ]) ?>;
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 // ===== INITIALIZE DATASOURCE MANAGER
 var listitem = $( '.datasource-list-item' ).detach();
-Object.entries( manifest ).forEach(([ key, datasource ]) => {
-    let entry = listitem.clone();
-    entry.find( '.name' ).html( datasource.name );
-    entry.find( '.description' ).html( datasource.description );
-    let toggle = entry.find( 'input.datasource-toggle' );
-    toggle.attr({ id: datasource.id, name: datasource.id });
-    $( '#datasource-manager .list-group' ).append( entry );
-});
+GeneDive.datasource.refreshUI = () => {
+    Object.entries( manifest ).forEach(([ key, datasource ]) => {
+        let entry = listitem.clone();
+        entry.find( '.name' ).html( datasource.name );
+        entry.find( '.description' ).html( datasource.description );
+        let toggle = entry.find( 'input.datasource-toggle' );
+        toggle.attr({ id: datasource.id, name: datasource.id });
+        $( '#datasource-manager .list-group' ).append( entry );
+    });
+};
+GeneDive.datasource.refreshUI();
 
 let add_entry = $( '.datasource-add' ).detach();
 $( '#datasource-manager .list-group' ).append( add_entry );
@@ -78,9 +82,27 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
     $( 'input.datasource-toggle' ).bootstrapToggle( 'destroy' ).bootstrapToggle();
     $( 'input.datasource-toggle' ).each(( i, item ) => { 
         let key      = $( item ).attr( 'id' );
-        let all      = [ 'plos-pmc', 'pharmgkb' ].includes( key ) && GeneDive.datasources.includes( 'all' );
-        let selected = GeneDive.datasources.includes( key );
+        let all      = [ 'plos-pmc', 'pharmgkb' ].includes( key ) && GeneDive.datasource.list.includes( 'all' );
+        let selected = GeneDive.datasource.list.includes( key );
         if( all || selected ) { $( item ).bootstrapToggle( 'on' ); } else { $( item ).bootstrapToggle( 'off' );}
+    });
+    $( 'input.datasource-toggle' ).change(( ev ) => {
+        GeneDive.datasource.list = $( 'input.datasource-toggle' ).map(( i, item ) => { 
+            let key = $( item ).attr( 'id' ); 
+            if( $( item ).prop( 'checked' )) { return key; } else { return null; }
+        }).toArray();
+        if( [ 'plos-pmc', 'pharmgkb' ].every(( item ) => { return GeneDive.datasource.list.includes( item ); })) {
+            GeneDive.datasource.list = [ 'all' ];
+        }
+        let value = btoa( JSON.stringify( GeneDive.datasource.list ));
+        $.ajax({
+            url: `/datasource/change.php?value=${value}`,
+            method: 'GET'
+        })
+        .done(( message ) => {
+            console.log( message, GeneDive.datasource.list );
+        })
+        .fail(( error ) => { console.log( error ); });
     });
 });
 </script>
