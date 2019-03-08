@@ -337,7 +337,6 @@ class Controller {
    @callergraph
    */
   onInteractionsLoaded(interactions) {
-    console.log( interactions ); // MW
     try {
       this.loading.loadingTableAndGraph();
       let thisClass = this;
