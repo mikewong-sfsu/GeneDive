@@ -42,7 +42,7 @@ class Search {
     $.when( 
       GeneDiveCache[ 'gene_id' ],
       GeneDiveCache[ 'disease_id' ],
-      GeneDiveCache[ 'chemical_id' ],
+      GeneDiveCache[ 'drug_id' ],
       GeneDiveCache[ 'set_id' ]
     ).done(( ev ) => { this.initTypeahead(); });
 
@@ -380,7 +380,7 @@ class Search {
   }
 
   initTypeahead() {
-    console.log( `Initializing Typeahead with ${AUTOCOMPLETE_GENE.length} genes, ${AUTOCOMPLETE_CHEMICAL.length} drugs, ${AUTOCOMPLETE_DISEASE.length} diseases, and ${AUTOCOMPLETE_GENE_SET.length} gene sets` );
+    console.log( `Initializing Typeahead with ${AUTOCOMPLETE_GENE.length} genes, ${AUTOCOMPLETE_DRUG.length} drugs, ${AUTOCOMPLETE_DISEASE.length} diseases, and ${AUTOCOMPLETE_GENE_SET.length} gene sets` );
 
     var genes = new Bloodhound({
       local: AUTOCOMPLETE_GENE,
@@ -398,7 +398,7 @@ class Search {
     geneset.initialize();
 
     var chemical = new Bloodhound({
-      local: AUTOCOMPLETE_CHEMICAL,
+      local: AUTOCOMPLETE_DRUG,
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });

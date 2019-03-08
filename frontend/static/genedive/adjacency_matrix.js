@@ -17,6 +17,6 @@ new JSZip.external.Promise(function (resolve, reject) {
 .then(( zipfile ) => {
   zipfile.file( 'adjacency_matrix.json' ).async( 'string' ).then(( data ) => { 
     adjacency_matrix = JSON.parse( data ); 
-    console.log( "Adjacency Matrix loaded from zip" );
+    console.log( `Adjacency matrix loaded from zip with ${Object.keys(adjacency_matrix).length} entries` );
   });
 });

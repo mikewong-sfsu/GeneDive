@@ -21,7 +21,7 @@ switch( $_GET[ 'get' ]) {
 		break;
 	case "gene_id":
 	case "disease_id":
-	case "chemical_id":
+	case "drug_id":
 	case "set_id":
 		typeahead_cache( $_GET[ 'get' ], $manifest, $sources );
 		break;
