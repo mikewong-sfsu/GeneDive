@@ -39,12 +39,7 @@ class Search {
       thisElement.svgMesh  = thisElement.loadFile("/static/genedive/images/linkout-mesh.svg");
     }(this));
 
-    $.when( 
-      GeneDiveCache[ 'gene_id' ],
-      GeneDiveCache[ 'disease_id' ],
-      GeneDiveCache[ 'drug_id' ],
-      GeneDiveCache[ 'set_id' ]
-    ).done(( ev ) => { this.initTypeahead(); });
+    this.initTypeaheadOnCacheLoad();
 
     alertify.set('notifier', 'position', 'top-left');
 
@@ -377,6 +372,15 @@ class Search {
       db = "mesh";
 
     return db;
+  }
+
+  initTypeaheadOnCacheLoad() {
+    $.when( 
+      GeneDiveCache[ 'gene_id' ],
+      GeneDiveCache[ 'disease_id' ],
+      GeneDiveCache[ 'drug_id' ],
+      GeneDiveCache[ 'set_id' ]
+    ).done(( ev ) => { this.initTypeahead(); });
   }
 
   initTypeahead() {
