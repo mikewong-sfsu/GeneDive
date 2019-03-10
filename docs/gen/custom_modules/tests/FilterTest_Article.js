@@ -1,7 +1,7 @@
 
 /**
- @class		FilterTest_Journal
- @brief		Test to check if rows are filtered according to Journal and report errors.
+ @class		FilterTest_Article
+ @brief		Test to check if rows are filtered according to Article and report errors. 
  @details
  @authors	Vaishali Bisht vbisht1@mail.sfsu.edu
  @ingroup	tests
@@ -9,23 +9,21 @@
 
 let Test = require('./Test');
 
-class FilterTest_Journal extends Test {
-
+class FilterTest_Article extends Test {
 
   toString() {
-    return "FilterTest By Journal"
+    return "Filter Test By Article"
   }
 
   get name() {
-    return "FilterTest By Journal";
+    return "Filter Test By Article";
   }
 
   execute() {
 
-    const DGR = "SFTPA1";
+    const DGR = "SP-A";
     const thisClass = this;
     const PAGE = this.page;
-    let numberOfDGRs;
 
 
     return new Promise(async (resolve, reject) => {
@@ -33,39 +31,47 @@ class FilterTest_Journal extends Test {
 
         await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
         await thisClass.searchDGRs([DGR], "1hop").catch((reason) => { reject(reason) });
-        await PAGE.select('.filter-select', 'Journal');
+        await PAGE.select('.filter-select', 'Article');
         await PAGE.click('#add-filter > div.input-group.filter-input-group > span > button');
 
         let rowLength = await PAGE.evaluate(`$('tr.grouped').length`).catch((reason) => { reject(reason) });
 
-        const containData = (journal) => {
+        //console.log('row length article', rowLength);
+        const containData = (articleId) => {
           let rows = document.querySelectorAll('table>tbody>tr');
           for (let i = 0; i < rows.length; rows++) {
-            let currentJournal = rows[i].childNodes[2].textContent;
-            if (currentJournal !== journal) {
+            let value = rows[i].childNodes[3].textContent;
+            if (value !== articleId) {
               return false;
             }
           }
           return true;
         };
-        
 
-        const journal = await PAGE.evaluate(`$('#add-filter > div.input-group.filter-input-group > select :selected').text()`).catch((reason) => { reject(reason) });
+
+        const articleId = await PAGE.evaluate(`$('#add-filter > div.input-group.filter-input-group > select :selected').text()`).catch((reason) => { reject(reason) });
         let validRowsFormat = true;
 
-        //click on every row and check if the child rows contains the selected journal 
-        for(let rowNum=0; rowNum<rowLength; rowNum++) {
+        //click on every row and check if the child rows contains the selected article
+        for (let rowNum = 0; rowNum < rowLength; rowNum++) {
           await PAGE.evaluate(`$('tr.grouped')[${rowNum}].click();`).catch((reason) => { reject(reason) });
-          let validRowsFormat = await PAGE.evaluate(containData, journal).catch((reason) => { reject(reason) });
-          if(!validRowsFormat) {
+          //console.log('clicked, article:', articleId);
+          //await PAGE.waitFor(2000);
+
+          let validRowsFormat = await PAGE.evaluate(containData, articleId).catch((reason) => { reject(reason) });
+          // console.log({ validRowsFormat });
+
+          if (!validRowsFormat) {
             break;
           }
+
           await PAGE.evaluate(`$('.go-back').click()`).catch((reason) => { reject(reason) });
         }
+
         if (validRowsFormat) {
           resolve(thisClass.createResponse(true, "Test Passed", 0));
         } else {
-          reject(`Test failed: No row contains the selected Journal id`);
+          reject(`Test failed: No row contains the selected article id`);
         }
       }
       catch (e) {
@@ -78,4 +84,4 @@ class FilterTest_Journal extends Test {
 }
 
 
-module.exports = FilterTest_Journal;
+module.exports = FilterTest_Article;
