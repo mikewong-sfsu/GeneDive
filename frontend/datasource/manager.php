@@ -49,6 +49,7 @@
 
 <div id="datasource-manager">
     <h4>Data Sources</h4>
+    <p>Enable or disable the data sources below for search. Enabled data sources will be searched for disease, gene, or drug/Rx (DGR) interactions. Click <i>Add a Data Source</i> below to add your own data for GeneDive search and visualization. More information on required data source format can be found <a target="_blank" href="datasource/format.php">here <span class="fa fa-external-link-alt">&nbsp;</span></a>.</p>
     <div class="row">
         <ul class="list-group">
         </ul>
@@ -78,31 +79,42 @@ $( '#datasource-manager .list-group' ).append( add_entry );
 
 let dsm = $( '#datasource-manager' ).detach();
 $( '.datasources' ).off( 'click' ).click(( ev ) => {
-    alertify.confirm( 'Data Source Manager', dsm.html(), () => { alertify.success( 'Ok' ); }, () => { alertify.error( 'Cancel' ); });
+    alertify.confirm( 'Data Source Manager', dsm.html(), 
+        () => { 
+            GeneDive.datasource.list = $( 'input.datasource-toggle' ).map(( i, item ) => { 
+                let key = $( item ).attr( 'id' ); 
+                if( $( item ).prop( 'checked' )) { return key; } else { return null; }
+            }).toArray();
+            let list = GeneDive.datasource.list.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
+            alertify.success( `Now searching on<br>${list}` ); 
+            if( [ 'plos-pmc', 'pharmgkb' ].every(( item ) => { return GeneDive.datasource.list.includes( item ); })) {
+                GeneDive.datasource.list = [ 'all' ];
+            }
+            let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
+            $.ajax({
+                url: `/datasource/change.php?value=${dsl}`,
+                method: 'GET'
+            })
+            .done(( message ) => {
+                console.log( message, GeneDive.datasource.list );
+                LookupTableCache.refresh();
+                AdjacencyMatrix.refresh();
+                GeneDive.search.initTypeaheadOnCacheLoad();
+            })
+            .fail(( error ) => { console.log( error ); });
+        }, 
+        () => { 
+            let datasources = GeneDive.datasource.list.includes( 'all' ) ? [ 'plos-pmc', 'pharmgkb' ] : GeneDive.datasource.list;
+            let list        = datasources.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
+            alertify.message( `Data sources remain unchanged<br>(${list})` ); 
+        }
+    );
     $( 'input.datasource-toggle' ).bootstrapToggle( 'destroy' ).bootstrapToggle();
     $( 'input.datasource-toggle' ).each(( i, item ) => { 
         let key      = $( item ).attr( 'id' );
         let all      = [ 'plos-pmc', 'pharmgkb' ].includes( key ) && GeneDive.datasource.list.includes( 'all' );
         let selected = GeneDive.datasource.list.includes( key );
         if( all || selected ) { $( item ).bootstrapToggle( 'on' ); } else { $( item ).bootstrapToggle( 'off' );}
-    });
-    $( 'input.datasource-toggle' ).change(( ev ) => {
-        GeneDive.datasource.list = $( 'input.datasource-toggle' ).map(( i, item ) => { 
-            let key = $( item ).attr( 'id' ); 
-            if( $( item ).prop( 'checked' )) { return key; } else { return null; }
-        }).toArray();
-        if( [ 'plos-pmc', 'pharmgkb' ].every(( item ) => { return GeneDive.datasource.list.includes( item ); })) {
-            GeneDive.datasource.list = [ 'all' ];
-        }
-        let value = btoa( JSON.stringify( GeneDive.datasource.list ));
-        $.ajax({
-            url: `/datasource/change.php?value=${value}`,
-            method: 'GET'
-        })
-        .done(( message ) => {
-            console.log( message, GeneDive.datasource.list );
-        })
-        .fail(( error ) => { console.log( error ); });
     });
 });
 </script>
