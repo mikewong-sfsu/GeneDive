@@ -36,6 +36,12 @@ class Test {
     return this._LOGIN;
   }
 
+  get DGR() {
+    return this._DGR;
+  }
+  get INTERACTION() {
+    return this._INTERACTION;
+  } 	
   get PAGE_IS_NOT_LOADING() {
     return this._PAGE_IS_NOT_LOADING;
   }
@@ -64,6 +70,9 @@ class Test {
     this._HIGHLIGHT_FILTER = ".highlight-input";
     this._MIN_SCORE = ".min-prob-slider";
     this._FILTER_INPUT = ".filter-input";
+
+    this._INTERACTION = "1hop";//to do : get value from json file
+    this._DGR = ["SRA","HDAC1"];
 
   }
   /**
@@ -295,6 +304,8 @@ class Test {
         let tableElement = $(table)[0];
         let rows = tableElement.rows;
         let DGRNumber = 0;
+	//check display style
+	//if(tableElement.style.display !== "none"){
         for (let r = 0; r < rows.length; r++) {
           if (rows[r].cells[0].tagName.toLowerCase() === "th")
             for (let h = 0; h < rows[r].cells.length; h++) {
@@ -316,12 +327,13 @@ class Test {
                 if (element.childNodes[i].nodeType === 3)
                   text += element.childNodes[i].textContent;
               rowObj[tableHeaders[c]] = text.trim();
+	      rowObj[tableHeaders[c]] = element.textContent;
             }
             returnTableValues.push(rowObj);
-
           }
 
         }
+	//	}
         return returnTableValues;
 
       }, this.TABLE_ELEMENT
