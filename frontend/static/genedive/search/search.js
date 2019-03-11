@@ -19,27 +19,32 @@ class Search {
     this.color = color;
     this.graphsearch = new GraphSearch();
     this.sets = [];
-    this.settingState = false;
-    this.GENES_NAME = "Genes";
-    this.DISEASES_NAME = "Diseases";
-    this.DRUGS_NAME = "Drugs";
-    this.GENESETS_NAME = "Genesets";
-    this.TOPOLOGY_ONE_HOP = "1hop";
-    this.TOPOLOGY_TWO_HOP = "2hop";
+    this.settingState       = false;
+    this.GENES_NAME         = "Genes";
+    this.DISEASES_NAME      = "Diseases";
+    this.DRUGS_NAME         = "Drugs";
+    this.GENESETS_NAME      = "Genesets";
+    this.TOPOLOGY_ONE_HOP   = "1hop";
+    this.TOPOLOGY_TWO_HOP   = "2hop";
     this.TOPOLOGY_THREE_HOP = "3hop";
-    this.TOPOLOGY_CLIQUE = "clique";
+    this.TOPOLOGY_CLIQUE    = "clique";
 
     // Load the SVG files
-    this.svgNCBI = "";
+    this.svgNCBI  = "";
     this.svgPharm = "";
-    this.svgMesh = "";
+    this.svgMesh  = "";
     (async function (thisElement) {
-      thisElement.svgNCBI = thisElement.loadFile("/static/genedive/images/linkout-ncbi.svg");
+      thisElement.svgNCBI  = thisElement.loadFile("/static/genedive/images/linkout-ncbi.svg");
       thisElement.svgPharm = thisElement.loadFile("/static/genedive/images/linkout-pharmgkb.svg");
-      thisElement.svgMesh = thisElement.loadFile("/static/genedive/images/linkout-mesh.svg");
+      thisElement.svgMesh  = thisElement.loadFile("/static/genedive/images/linkout-mesh.svg");
     }(this));
 
-    this.initTypeahead();
+    $.when( 
+      GeneDiveCache[ 'gene_id' ],
+      GeneDiveCache[ 'disease_id' ],
+      GeneDiveCache[ 'drug_id' ],
+      GeneDiveCache[ 'set_id' ]
+    ).done(( ev ) => { this.initTypeahead(); });
 
     alertify.set('notifier', 'position', 'top-left');
 
@@ -375,9 +380,10 @@ class Search {
   }
 
   initTypeahead() {
+    console.log( `Initializing Typeahead with ${AUTOCOMPLETE_GENE.length} genes, ${AUTOCOMPLETE_DRUG.length} drugs, ${AUTOCOMPLETE_DISEASE.length} diseases, and ${AUTOCOMPLETE_GENE_SET.length} gene sets` );
 
     var genes = new Bloodhound({
-      local: AUTOCOMPLETE_SYMBOL,
+      local: AUTOCOMPLETE_GENE,
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });
@@ -385,14 +391,14 @@ class Search {
 
 
     var geneset = new Bloodhound({
-      local: AUTOCOMPLETE_SYMBOL_SET,
+      local: AUTOCOMPLETE_GENE_SET,
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });
     geneset.initialize();
 
     var chemical = new Bloodhound({
-      local: AUTOCOMPLETE_CHEMICAL,
+      local: AUTOCOMPLETE_DRUG,
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('symbol'),
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });

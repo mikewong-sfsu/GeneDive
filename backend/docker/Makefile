@@ -38,6 +38,12 @@ cache:
 devel: check-keys
 	cp -f dockerfiles/devel Dockerfile
 
+push:
+	./bin/push
+
+push-test:
+	./bin/push --dry
+
 production:
 	mkdir -p devel/backend/docker
 	cp -f dockerfiles/production Dockerfile

@@ -20,11 +20,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Typeahead Files -->
-    <script src="static/genedive/json/gene_id.json?random=<?php echo $random_string; ?>"></script>
-    <script src="static/genedive/json/chemical_id.json?random=<?php echo $random_string; ?>"></script>
-    <script src="static/genedive/json/disease_id.json?random=<?php echo $random_string; ?>"></script>
-    <script src="static/genedive/json/symbol_id.json?random=<?php echo $random_string; ?>"></script>
     <!-- see footer.php for all other JS source -->
 
     <!-- Fonts -->
@@ -33,6 +28,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap-slider/bootstrap-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap-toggle/bootstrap-toggle.min.css">
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="static/fonts/css/fontawesome.min.css">
