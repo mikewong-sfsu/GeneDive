@@ -40,7 +40,7 @@ class FilterTest_DGR extends Test {
 
                 const containData = (dgr) => {
                     let rows = document.querySelectorAll('table>tbody>tr');
-                    for (let i = 0; i < rows.length; rows++) {
+                    for (let i = 0; i < rows.length; i++) {
                         let value = rows[i].childNodes[0].textContent;
                         if (value !== dgr) {
                             return false;
@@ -54,7 +54,7 @@ class FilterTest_DGR extends Test {
                 let validRowsFormat = true;
                 for (let rowNum = 0; rowNum < rowLength; rowNum++) {
                     await PAGE.evaluate(`$('tr.grouped')[${rowNum}].click();`).catch((reason) => { reject(reason) });
-                    let validRowsFormat = await PAGE.evaluate(containData, dgr).catch((reason) => { reject(reason) });
+                    validRowsFormat = await PAGE.evaluate(containData, dgr).catch((reason) => { reject(reason) });
                     // console.log('clicked, DGR:', dgr );
                     if (!validRowsFormat) {
                         break;

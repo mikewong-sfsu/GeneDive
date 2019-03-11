@@ -36,10 +36,9 @@ class FilterTest_Article extends Test {
 
         let rowLength = await PAGE.evaluate(`$('tr.grouped').length`).catch((reason) => { reject(reason) });
 
-        //console.log('row length article', rowLength);
         const containData = (articleId) => {
           let rows = document.querySelectorAll('table>tbody>tr');
-          for (let i = 0; i < rows.length; rows++) {
+          for (let i = 0; i < rows.length; i++) {
             let value = rows[i].childNodes[3].textContent;
             if (value !== articleId) {
               return false;
@@ -55,11 +54,8 @@ class FilterTest_Article extends Test {
         //click on every row and check if the child rows contains the selected article
         for (let rowNum = 0; rowNum < rowLength; rowNum++) {
           await PAGE.evaluate(`$('tr.grouped')[${rowNum}].click();`).catch((reason) => { reject(reason) });
-          //console.log('clicked, article:', articleId);
-          //await PAGE.waitFor(2000);
 
-          let validRowsFormat = await PAGE.evaluate(containData, articleId).catch((reason) => { reject(reason) });
-          // console.log({ validRowsFormat });
+          validRowsFormat = await PAGE.evaluate(containData, articleId).catch((reason) => { reject(reason) });
 
           if (!validRowsFormat) {
             break;

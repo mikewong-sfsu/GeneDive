@@ -1,7 +1,7 @@
 
 /**
  @class		Highlight Test
- @brief		Test to check if rows are highlighted and report any error
+ @brief		Test to check if highlighted rows contains the keyword and report any error
  @details
  @authors	Vaishali Bisht vbisht1@mail.sfsu.edu
  @ingroup	tests
@@ -40,21 +40,20 @@ class Highlight extends Test {
 
         await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
         await thisClass.searchDGRs([NODE_1], "1hop").catch((reason) => { reject(reason) });
-
         await PAGE.click('body > div.main-display > div.control-view > div.module.highlight-module.require-dgr-search > input');
         await PAGE.keyboard.type(searchWord, { delay: thisClass._TYPING_SPEED });
-       // await PAGE.waitFor(1000);
         PAGE.keyboard.down('Enter');
-       // await PAGE.waitFor(2000);
 
 
        let rowLength = await PAGE.evaluate(`$('tr.highlight-row').length`).catch((reason) => { reject(reason) });
-       //console.log('LENGTH HIGHLIGHT: ', rowLength)
+
+       if (rowLength<0){
+         reject(`Test failed: No row highlighted`);
+       }
 
         const containData = (searchWord) => {
          let rows = document.querySelectorAll('table>tbody>tr.highlight-row');
-        // console.log('CHild ROWS: ', rows);
-         for (let i = 0; i < rows.length; rows++) {
+         for (let i = 0; i < rows.length; i++) {
            let content = rows[i].childNodes[5].textContent;
            if (!content.includes(searchWord)) {
                 return false;
@@ -68,22 +67,18 @@ class Highlight extends Test {
        let validRowsFormat = true;
        for (let rowNum = 0; rowNum < rowLength; rowNum++) {
          await PAGE.evaluate(`$('tr.grouped.highlight-row')[${rowNum}].click();`).catch((reason) => { reject(reason) });
-         let validRowsFormat = await PAGE.evaluate(containData, searchWord).catch((reason) => { reject(reason) });
-         //await PAGE.waitFor(1000);
-         //console.log('clicked, row num:', rowNum);
-         //console.log({ validRowsFormat });
+         validRowsFormat = await PAGE.evaluate(containData, searchWord).catch((reason) => { reject(reason) });
          if (!validRowsFormat) {
            break;
          }
 
-        // console.log('back clicked, Highlight:  ', searchWord);
          await PAGE.evaluate(`$('.go-back').click()`).catch((reason) => { reject(reason) });
        }
 
         if (validRowsFormat) {
           resolve(thisClass.createResponse(true, "Test Passed", 0));
         } else {
-          reject(`Test failed: No row highlighted`);
+          reject(`Test failed: One or more highlighted row do not contain the search keyword`);
         }
       }
       catch (e) {
