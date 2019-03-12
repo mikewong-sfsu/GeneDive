@@ -255,11 +255,9 @@ class Search {
             })
         );
 
-
-      this.display.append(item);
-
-      GeneDiveAPI.alternativeIDs(set.ids[0]).then((returnedResult)=>{
-        this.setLinks(JSON.parse(returnedResult.vals), returnedResult.type ,set.id);
+      this.display.append( item );
+      GeneDiveAPI.alternativeIDs( set.ids[0] ).then( ( returnedResult ) => {
+        this.setLinks( JSON.parse(returnedResult.vals ), returnedResult.type ,set.id);
       }).catch((error) => {GeneDive.handleException(error)});
     }
 
@@ -384,6 +382,7 @@ class Search {
   }
 
   initTypeahead() {
+    GeneDive.loadLandingPage();
     console.log( `Initializing Typeahead with ${AUTOCOMPLETE_GENE.length} genes, ${AUTOCOMPLETE_DRUG.length} drugs, ${AUTOCOMPLETE_DISEASE.length} diseases, and ${AUTOCOMPLETE_GENE_SET.length} gene sets` );
 
     var genes = new Bloodhound({
@@ -392,7 +391,6 @@ class Search {
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });
     genes.initialize();
-
 
     var geneset = new Bloodhound({
       local: AUTOCOMPLETE_GENE_SET,
@@ -451,12 +449,12 @@ class Search {
     $('.twitter-typeahead').css('width', '100%');
 
     // When suggestions box opens, put cursor on first result
-    $('.twitter-typeahead input').on('typeahead:render', function () {
+    $('.twitter-typeahead input').off( 'typeahead:render' ).on( 'typeahead:render', () => {
       $('.tt-suggestion').first().addClass('tt-cursor');
     });
 
     // The action we take when a typeahead element is selected
-    this.input.on('typeahead:selected', (event, item, set_name) => {
+    this.input.off( 'typeahead:selected' ).on( 'typeahead:selected', (event, item, set_name) => {
 
       // Case: Gene w/ Disambiguation
       if (item.values.length > 1 && set_name !== this.GENESETS_NAME) {
