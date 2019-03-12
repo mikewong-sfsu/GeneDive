@@ -382,6 +382,7 @@ class Search {
   }
 
   initTypeahead() {
+    GeneDive.loadLandingPage();
     console.log( `Initializing Typeahead with ${AUTOCOMPLETE_GENE.length} genes, ${AUTOCOMPLETE_DRUG.length} drugs, ${AUTOCOMPLETE_DISEASE.length} diseases, and ${AUTOCOMPLETE_GENE_SET.length} gene sets` );
 
     var genes = new Bloodhound({
@@ -390,7 +391,6 @@ class Search {
       queryTokenizer: Bloodhound.tokenizers.whitespace
     });
     genes.initialize();
-
 
     var geneset = new Bloodhound({
       local: AUTOCOMPLETE_GENE_SET,

@@ -78,12 +78,6 @@ class Loading {
       this.setProgressAmount(percentComplete*(this.DOWNLOAD_PROGRESS_END - this.LOADING_PROGRESS_END)+this.LOADING_PROGRESS_END);
       this.loadingInfo.text(`Downloading ${this.interactionsCount !== null ? this.interactionsCount : ""} Interactions`);
     }
-
-
-    // This was bad, using custom headers is bad.
-    // let interactionsCount = event.currentTarget.getResponseHeader("custom-interactions-count");
-    // this.setInteractionsLoadingCount(interactionsCount);
-
   }
 
   xhrLoadingCall() {
@@ -97,7 +91,4 @@ class Loading {
 
     return xhr;
   }
-
-
-
 }

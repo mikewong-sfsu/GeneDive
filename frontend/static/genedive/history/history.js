@@ -64,7 +64,7 @@ class History{
     state.interactions = this.controller.interactions;
 
     // Search, Probability, and Filter state
-    state.search = this.controller.search.exportSearchState();
+    state.search     = this.controller.search.exportSearchState();
     state.probfilter = this.controller.probfilter.getMinimumProbability();
     state.textfilter = this.controller.textfilter.exportFilterState();
 
@@ -80,6 +80,8 @@ class History{
     // Graph state
     state.graph = this.controller.graph.exportGraphState();
 
+    // Datasource state
+    state.datasource = { list: this.controller.datasource.list };
 
     // Does a deep copy of the state
     return JSON.parse(JSON.stringify(state));
@@ -143,6 +145,8 @@ class History{
 
     // Set Graph state
     this.controller.graph.importGraphState(state.graph, this.controller.search.sets);
+
+    // MW TODO Set state for datasources to have it work well together
 
     if (this.controller.search.amountOfDGRsSearched() === 0)
       this.controller.loadLandingPage();

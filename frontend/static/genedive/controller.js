@@ -62,6 +62,9 @@ class Controller {
 
     // This will prevent auto saving states from triggering while the state is being updated.
     this.history.stateIsBeingUpdated = false;
+
+    this.loadSpinners();
+
   }
 
   /**
@@ -342,7 +345,6 @@ class Controller {
       let thisClass = this;
       setTimeout(function(){
         try{
-          console.log(interactions);
           thisClass.yScrollReset();
           thisClass.interactions = JSON.parse(interactions).results;
           thisClass.cleanUpData();
@@ -396,7 +398,7 @@ class Controller {
       if (this.onWindowResizedTimeout !== undefined)
         window.clearTimeout(this.onWindowResizedTimeout);
       this.onWindowResizedTimeout = window.setTimeout(function (geneDiveObj) {
-        console.debug("Resized", geneDiveObj);
+        console.debug( "Resized", geneDiveObj );
         geneDiveObj.graph.resetGraphViewSize();
         delete geneDiveObj.onWindowResizedTimeout;
       }, 500, this);
