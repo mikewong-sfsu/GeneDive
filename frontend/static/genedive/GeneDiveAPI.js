@@ -79,7 +79,8 @@ GeneDiveAPI.geneNames = ( ids ) => new Promise( ( resolve, reject ) => {
 /// @function GeneDiveAPI.alternativeIDs
 /// Given a dgr id, returns all it's various IDs
 /// @param {String} a single id
-GeneDiveAPI.alternativeIDs = ( id) => new Promise( ( resolve, reject ) => {
+GeneDiveAPI.alternativeIDs = ( id ) => new Promise( ( resolve, reject ) => {
+
     id = GeneDiveAPI._stringifyIDs( id );
     const request = new XMLHttpRequest();
 

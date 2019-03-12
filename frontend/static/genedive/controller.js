@@ -342,6 +342,7 @@ class Controller {
       let thisClass = this;
       setTimeout(function(){
         try{
+          console.log(interactions);
           thisClass.yScrollReset();
           thisClass.interactions = JSON.parse(interactions).results;
           thisClass.cleanUpData();
