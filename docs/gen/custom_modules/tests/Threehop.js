@@ -10,7 +10,7 @@ class Threehop extends Test{
   return 0;
 	}
 
-  name(){
+  get name(){
   return "3-Hop";
 	}
 
@@ -38,7 +38,7 @@ class Threehop extends Test{
 				await this.checkNHop(this.DGR,tableContents,3).catch((reason)=>{reject(reason)});
 			
 			//test passed
-			resolve(this.createResponse(true,`Tested ${this.INTERACTION} successfully`,this.priority));
+			resolve(this.createResponse(true,`Tested 3-Hop successfully`,this.priority));
 		}catch(e){
 		  console.log(e);
 			//test failed

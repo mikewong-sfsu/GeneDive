@@ -10,14 +10,14 @@ class Clique extends Test{
   return 0;
 	}
 
-  name(){
+  get name(){
   return "Clique";
 	}
 
   execute(){
   const EVALUATE_SETS = "$('.search-item').length";
   const tableCol = ["DGR1","DGR2"];
-  const DGR = ["SRA"];
+  const DGR = ["SRAG"];
 	
   return new Promise(async(resolve,reject)=>{
 		try{

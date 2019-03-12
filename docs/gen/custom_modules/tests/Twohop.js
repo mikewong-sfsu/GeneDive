@@ -10,7 +10,7 @@ class Twohop extends Test{
   return 0;
 	}
 
-  name(){
+  get name(){
   return "2-Hop";
 	}
 
@@ -38,7 +38,7 @@ class Twohop extends Test{
 			await this.checkNHop(this.DGR,tableContents,2).catch((reason)=>{reject(reason)});
 			
 			//test passed
-			resolve(this.createResponse(true,`Tested ${this.INTERACTION} successfully`,this.priority));
+			resolve(this.createResponse(true,`Tested 2-Hop successfully`,this.priority));
 		}catch(e){
 		  console.log(e);
 			//test failed

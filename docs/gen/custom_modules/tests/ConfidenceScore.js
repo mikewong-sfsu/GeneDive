@@ -10,7 +10,7 @@ class ConfidenceScore extends Test{
   return 0;
 	}
 
-  name(){
+  get name(){
   return "Confidence Score";
 	}
 

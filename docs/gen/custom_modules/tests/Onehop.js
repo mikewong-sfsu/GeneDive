@@ -10,7 +10,7 @@ class Onehop extends Test{
   return 0;
 	}
 
-  name(){
+  get name(){
   return "1-Hop";
 	}
 
