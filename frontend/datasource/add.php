@@ -21,6 +21,32 @@
   width: 80%;
 }
 
+.form-group {
+  height: 240px;
+}
+
+label {
+  margin: 12px 0 0 6px;
+}
+
+small {
+  margin: 0 0 0 6px;
+}
+
+form button{
+  position: absolute;
+  bottom: 0;
+}
+
+form button[type="submit"] {
+  right: 15px;
+}
+
+form button.cancel {
+  right: 180px;
+}
+
+
   </style>
 
 </head>
@@ -28,6 +54,26 @@
 <body>
   <div class="container">
     <h1>Add a Data Source</h1>
+    <p>All fields are required.</p>
+    <div class="row">
+      <div class="col-xs-2"></div>
+      <div class="col-xs-8">
+        <form action="/datasource/import.php" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control"name="dsname" id="dsname" placeholder="My Data Source"/>
+            <label for="dsdesc">Description</label>
+            <input type="text" class="form-control"name="dsdesc" id="dsdesc" placeholder="My DGR interaction data"/>
+            <label for="dsfile">Filename</label>
+            <input type="file" class="form-control"name="dsfile" id="dsfile"/>
+            <small id="dsfile-privacy" class="form-text form-muted">Your data is kept local and private to your computer</small>
+          </div>
+          <button class="btn btn-danger cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Import Data Source</button>
+        </form>
+      </div>
+      <div class="col-xs-2"></div>
+    </div>
 
     <h2>Required File Format</h2>
     <p>The file format must be comma-separated values (CSV), with required
@@ -111,6 +157,12 @@
 
   <!-- Alertify -->
   <script src="/static/alertify/js/alertify.min.js"></script>
+
+  <script>
+$( "form button.cancel" ).off( 'click' ).click(( ev ) => {
+  window.close();
+});
+  </script>
 
 </body>
 
