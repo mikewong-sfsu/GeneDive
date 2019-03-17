@@ -27,6 +27,10 @@
         width: 100px;
     }
 
+    .datasource-add-page {
+        display: none;
+    }
+
 </style>
 
 <li class="datasource-list-item list-group-item">
@@ -39,17 +43,8 @@
     </div>
 </li>
 
-<a class="datasource-add list-group-item">
-    <div class="datasource-info">
-        <h5 class="name"><span class="fa fa-plus-circle"></span> Add a Data Source</h5>
-        <p class="description">Import your own data to search and view in GeneDive</p>
-    </div>
-</a>
-
-
 <div id="datasource-manager">
-    <h4>Data Sources</h4>
-    <p>Enable or disable the data sources below for search. Enabled data sources will be searched for disease, gene, or drug/Rx (DGR) interactions. Click <i>Add a Data Source</i> below to add your own data for GeneDive search and visualization. More information on required data source format can be found <a target="_blank" href="datasource/format.php">here <span class="fa fa-external-link-alt">&nbsp;</span></a>.</p>
+    <p>Enable or disable the data sources below for search. Enabled data sources will be searched for disease, gene, or drug/Rx (DGR) interactions. </p>
     <div class="row">
         <ul class="list-group">
         </ul>
@@ -74,12 +69,10 @@ GeneDive.datasource.refreshUI = () => {
 };
 GeneDive.datasource.refreshUI();
 
-let add_entry = $( '.datasource-add' ).detach();
-$( '#datasource-manager .list-group' ).append( add_entry );
-
+// ===== DATASOURCE MANAGER DIALOG
 let dsm = $( '#datasource-manager' ).detach();
 $( '.datasources' ).off( 'click' ).click(( ev ) => {
-    alertify.confirm( 'Data Source Manager', dsm.html(), 
+    alertify.confirm( 'Data Sources', dsm.html(), 
         () => { 
             GeneDive.datasource.list = $( 'input.datasource-toggle' ).map(( i, item ) => { 
                 let key = $( item ).attr( 'id' ); 

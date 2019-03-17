@@ -116,7 +116,8 @@
     <div class="module download-module">
       <button type="button" data-toggle="tooltip-initial" data-placement="top" title="Download the current graph image, the current state, state history, and a CSV of the interactions." class="btn btn-default download" disabled>Download Results</button>
       <button type="button" class="btn btn-default upload">Upload Results</button>
-      <button type="button" class="btn btn-default datasources">Manage Data Sources</button>
+      <button type="button" class="btn btn-default datasources">Select Data Sources</button>
+      <a class="btn btn-block btn-default datasource-add" href="datasource/add.php" target="_blank">Add a Data Source</a>
     </div>
 
     <div class="module about-module">
