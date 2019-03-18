@@ -22,4 +22,18 @@ function read_manifest() {
 	$manifest = json_decode( $content, true );
 	return $manifest;
 }
+
+// ============================================================
+function write_manifest( $manifest ) {
+// ============================================================
+	global $DATASOURCES;
+	$copy = $manifest;
+	foreach( $copy as $key => $value ) {
+		$copy[ $key ][ 'description' ] = preg_replace( '/"/', '\\"', $copy[ $key ][ 'description' ]);
+	}
+	$content = json_encode( $manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
+	$fp = fopen( "$DATASOURCES/manifest.json", 'w' );
+	fwrite( $fp, $content );
+	fclose( $fp );
+}
 ?>

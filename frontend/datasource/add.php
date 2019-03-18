@@ -21,14 +21,6 @@
   width: 80%;
 }
 
-.form-group {
-  height: 240px;
-}
-
-label {
-  margin: 12px 0 0 6px;
-}
-
 small {
   margin: 0 0 0 6px;
 }
@@ -58,18 +50,24 @@ form button.cancel {
     <div class="row">
       <div class="col-xs-2"></div>
       <div class="col-xs-8">
-        <form action="/datasource/import.php" method="post" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control"name="dsname" id="dsname" placeholder="My Data Source"/>
-            <label for="dsdesc">Description</label>
-            <input type="text" class="form-control"name="dsdesc" id="dsdesc" placeholder="My DGR interaction data"/>
-            <label for="dsfile">Filename</label>
-            <input type="file" class="form-control"name="dsfile" id="dsfile"/>
-            <small id="dsfile-privacy" class="form-text form-muted">Your data is kept local and private to your computer</small>
+        <form action="/datasource/import.php" method="post" enctype="multipart/form-data" class="form-horizontal">
+          <div class="form-group row">
+            <label for="dsname" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10"><input type="text" class="form-control"name="dsname" id="dsname" placeholder="My Data Source"/></div>
           </div>
-          <button class="btn btn-danger cancel">Cancel</button>
-          <button type="submit" class="btn btn-primary">Import Data Source</button>
+          <div class="form-group">
+            <label for="dsdesc" class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-10"><input type="text" class="form-control"name="dsdesc" id="dsdesc" placeholder="My DGR interaction data"/></div>
+          </div>
+          <div class="form-group">
+            <label for="dsfile" class="col-sm-2 control-label">Filename</label>
+            <div class="col-sm-10"><input type="file" class="form-control"name="dsfile" id="dsfile"/>
+            <small id="dsfile-privacy" class="form-text form-muted">Your data is kept local and private to your computer</small></div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-danger cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary">Import Data Source</button>
+          </div>
         </form>
       </div>
       <div class="col-xs-2"></div>

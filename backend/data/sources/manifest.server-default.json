@@ -1,0 +1,20 @@
+{
+   "plos-pmc" :
+   {
+      "description" : "Extracted DGR interactions from the Public Library of Science (PLoS) and PubMed Central (PMC) using DeepDive <a target=\"_blank\" href=\"https://www.ncbi.nlm.nih.gov/pubmed/26338771\">[Mallory 2016]&nbsp;<span class=\"fa fa-external-link-alt\">&nbsp;</span></a>",
+      "host" : "http://localhost:8080",
+      "id"   : "plos-pmc",
+      "name" : "PLOS-PMC",
+      "path" : "plos-pmc",
+      "user" : "GeneDive"
+   },
+   "pharmgkb" :
+   {
+      "description" : "Curated DGR interactions from <a target=\"_blank\" href=\"https://www.pharmgkb.org\">PharmGKB <span class=\"fa fa-external-link-alt\">&nbsp;</span></a>",
+      "host" : "http://localhost:8080",
+      "id"   : "pharmgkb",
+      "name" : "PharmGKB",
+      "path" : "pharmgkb",
+      "user" : "GeneDive"
+   }
+}
