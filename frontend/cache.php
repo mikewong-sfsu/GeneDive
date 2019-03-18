@@ -50,8 +50,7 @@ function adjacency_matrix( $manifest, $sources ) {
 
 		// Single user-provided data source adjacency matrix requested
 		} else {
-			$key   = substr( sha1( $source ), 0, 8 );
-			$cache = "$DATASOURCES/$key/adjacency_matrix.json.zip";
+			$cache = "$DATASOURCES/$source/adjacency_matrix.json.zip";
 			send_file( $cache, 'rb' );
 		}
 	}
@@ -87,8 +86,7 @@ function typeahead_cache( $file, $manifest, $sources ) {
 
 		// Single user-provided data source typeahead cache requested
 		} else {
-			$key   = substr( sha1( $source ), 0, 8 );
-			$cache = "$DATASOURCES/$key/$file.json";
+			$cache = "$DATASOURCES/$source/$file.json";
 			if( ! file_exists( $cache )) { print "Missing '$file.json' for $source\n"; exit( 1 ); }
 			send_file( $cache );
 		}
