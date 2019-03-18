@@ -146,7 +146,7 @@ function write_cache( $file, $data, $compress=false ) {
 	if( ! file_exists( $path )) { mkdir( $path ); }
 	if( ! file_exists( $sourcefile )) {
 		$fp = fopen( $sourcefile, 'w' );
-		fwrite( $fp, json_encode( base64_decode( $sources )));
+		fwrite( $fp, base64_decode( $sources ) . "\n" );
 		fclose( $fp );
 	}
 
@@ -158,7 +158,7 @@ function write_cache( $file, $data, $compress=false ) {
 		$zip->close();
 
 	} else {
-		$fp = fopen( $cache, 'w' );
+		$fp = fopen( $file, 'w' );
 		fwrite( $fp, json_encode( $data ));
 		fclose( $fp );
 	}
