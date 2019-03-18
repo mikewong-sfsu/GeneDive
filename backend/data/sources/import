@@ -1,0 +1,166 @@
+#! /usr/bin/perl
+
+use Text::CSV qw( csv );
+use List::Util qw( any none uniq );
+use JSON::XS;
+
+my $file         = shift;
+my $path         = path( $file );
+my @required     = qw( mention1 mention2 id1 id2 type1 type2 );
+my @optional     = qw( journal article_id pubmed_id sentence_id mention1_offset mention2_offset probability context section );
+my $alias        = { id1 => 'geneids1', id2 => 'geneids2' };
+my @aliases      = map { $_ } values %$alias;
+my $interactions = csv( in => validate( $file ), encoding => 'utf-8', headers => "auto" );
+
+foreach my $type (qw( gene drug disease )) {
+	my $hash = {};
+	extract_ids( $type, $hash, $_ ) foreach @$interactions;
+	hash_to_cache( $type, $path, $hash );
+}
+
+my $denied = [ grep { my $field = $_; none { $field eq $_ } (@required, @optional, @aliases) } keys %{$interactions->[ 0 ]}];
+foreach my $interaction (@$interactions) {
+	delete $interaction->{ $_ } foreach @$denied;
+	foreach my $key (keys %$interaction) {
+		next unless( exists $alias->{ $key });
+		$interaction->{ $alias->{ $key }} = $interaction->{ $_ };
+		delete $interaction->{ $_ };
+	}
+}
+
+my $out = $file;
+$out =~ s/\.csv$/.import.sql/;
+my $last = $#$interactions;
+open FILE, ">:encoding(UTF-8)", $out or die $!;
+print FILE insert_table();
+my $group = 1000; # Max number of rows for INSERT for SQLite3
+my @columns = map { exists $alias->{ $_ } ? $alias->{ $_ } : $_ } (@required, @optional);
+foreach my $i ( 0 .. $last ) {
+	my $end_of_data    = ($i == $last);
+	my $start_of_group = (($i % $group) == 0);
+	my $end_of_group   = ($i % $group == ($group - 1));
+	if( $start_of_group ) { 
+		printf FILE "insert into interactions (%s) values\n", join( ', ', @columns );
+	};
+	my $interaction = $interactions->[ $i ];
+	my @values = ();
+	foreach my $key (@columns) {
+		my $exists  = exists $interaction->{ $key };
+		my $numeric = qr/^(probability|mention1_offset|mention2_offset)$/;
+		if( $key =~ $numeric ) {
+			if( $exists ) { push @values, $interaction->{ $key }; }
+			else          { push @values, 'NULL'; }
+		} else {
+			if( $exists ) { push @values, double_quote( $interaction->{ $key } ); }
+			else          { push @values, 'NULL'; }
+		}
+	}
+	printf FILE "( %s )%s", join( ', ', @values ), ( $end_of_group || $end_of_data ? ";\n\n" : ",\n" );
+	
+}
+close FILE;
+
+# ============================================================
+sub double_quote {
+# ============================================================
+	my $value = shift;
+	$value =~ s/"/""/g;
+	return "\"$value\"";
+}
+
+# ============================================================
+sub path {
+# ============================================================
+	my $file  = shift;
+	my @paths = split /\//, $file; pop @paths;
+	my $path  = join( '/', @paths ) || '.';
+
+	return $path;
+}
+
+# ============================================================
+sub extract_ids {
+# ============================================================
+	my $type  = shift;
+	my $hash  = shift;
+	my $entry = shift;
+
+	foreach my $i ( 1, 2 ) {
+		next unless( $entry->{ "type$i" } eq ucfirst $type );
+		my $id     = $entry->{ "geneids$i" };
+		my $symbol = $entry->{ "mention$i" };
+		push @{$hash->{ $symbol }}, $id;
+	}
+}
+
+# ============================================================
+sub hash_to_cache {
+# ============================================================
+	my $type = shift;
+	my $path = shift;
+	my $hash = shift;
+	my $json = new JSON::XS();
+
+	my $cache = [];
+	foreach my $key (sort { $a cmp $b } keys %$hash) {
+		push @$cache, { symbol => $key, values => [ uniq @{$hash->{ $key }} ]};
+	}
+
+	open FILE, ">$path/$type" . '_id.json' or die $!;
+	print FILE $json->canonical->encode( $cache );
+	close FILE;
+}
+
+# ============================================================
+sub insert_table {
+# ============================================================
+return <<EOF;
+CREATE TABLE IF NOT EXISTS interactions (
+	id INTEGER NOT NULL, 
+	journal TEXT, 
+	article_id TEXT, 
+	pubmed_id TEXT, 
+	sentence_id TEXT, 
+	mention1_offset INTEGER, 
+	mention2_offset INTEGER, 
+	mention1 TEXT collate nocase, 
+	mention2 TEXT collate nocase, 
+	geneids1 TEXT, 
+	geneids2 TEXT, 
+	probability FLOAT, 
+	context TEXT, 
+    section TEXT, 
+	type1 CHARACTER(1), 
+	type2 CHARACTER(1),
+	PRIMARY KEY (id)
+);
+CREATE INDEX IF NOT EXISTS gid1 on interactions(geneids1);
+CREATE INDEX IF NOT EXISTS gid2 on interactions(geneids2);
+EOF
+}
+
+# ============================================================
+sub validate {
+# ============================================================
+	my $file     = shift;
+
+	open FILE, $file or die $!;
+	my $header = <FILE>;
+	$header =~ s/\s*$//;
+	close FILE;
+	my @headers = split /,\s*/, $header;
+
+	# ===== ENFORCE REQUIRED FIELDS
+	foreach my $required (@required) {
+		my $aliases = exists $alias->{ $required } ? [ $alias->{ $required } ] : [];
+		unless( grep { 
+			my $field = $_;
+			$field eq $required || any { $field eq $_ } @{$aliases}
+		} @headers ) {
+			printf( "{\"result\":\"error\",\"line\":1,\"description\":\"Missing required field '%s'\"}\n", $required );
+			exit( 1 );
+		}
+	}
+
+	return $file;
+}
