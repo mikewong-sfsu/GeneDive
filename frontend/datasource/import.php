@@ -29,12 +29,9 @@
     }
     move_uploaded_file( $_FILES[ 'dsfile' ][ 'tmp_name' ], $file );
 
-    echo "Importing data...<br>";
-    $import = `/usr/bin/perl /usr/local/genedive/backend/data/sources/import $file`;
-    if( $import ) {
-      var_dump( $import );
-      exit( 1 );
-    }
+    echo "Importing data...<br><ul>\n";
+    echo `/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1`;
+    echo "</ul>\n";
 
     echo "Loading data into database...<br>";
     $sqlite = `/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql`;
@@ -48,6 +45,6 @@
     $manifest[ $id ] = $datasource;
     write_manifest( $manifest );
 
-    echo "<script>setTimeout(() => { window.location = '/search.php'; }, 1500 );</script>";
+    echo "<script>setTimeout(() => { window.location = '/search.php'; }, 2500 );</script>";
   }
 ?>

@@ -4,7 +4,7 @@ use Text::CSV qw( csv );
 use List::Util qw( any none uniq );
 use JSON::XS;
 
-my $file         = shift;
+my $file         = shift; # Absolute path
 my $path         = path( $file );
 my @required     = qw( mention1 mention2 id1 id2 type1 type2 );
 my @optional     = qw( journal article_id pubmed_id sentence_id mention1_offset mention2_offset probability context section );
@@ -12,53 +12,50 @@ my $alias        = { id1 => 'geneids1', id2 => 'geneids2' };
 my @aliases      = map { $_ } values %$alias;
 my $interactions = csv( in => validate( $file ), encoding => 'utf-8', headers => "auto" );
 
+# ===== GENERATE ADJACENCY MATRIX
+print "<li>Building <i>adjacency matrix</i></li>\n";
+adjacency_matrix( $path, $interactions );
+
+# ===== GENERATE TYPEAHEAD LOOKUP CACHES
 foreach my $type (qw( gene drug disease )) {
 	my $hash = {};
 	extract_ids( $type, $hash, $_ ) foreach @$interactions;
 	hash_to_cache( $type, $path, $hash );
+	print "<li>Building <i>$type typeahead lookup cache</i></li>\n";
 }
+`ln -s $path/../all/set_id.json $path/set_id.json` unless -e "$path/set_id.json"; # Symbolically link Set ID file
 
-my $denied = [ grep { my $field = $_; none { $field eq $_ } (@required, @optional, @aliases) } keys %{$interactions->[ 0 ]}];
-foreach my $interaction (@$interactions) {
-	delete $interaction->{ $_ } foreach @$denied;
-	foreach my $key (keys %$interaction) {
-		next unless( exists $alias->{ $key });
-		$interaction->{ $alias->{ $key }} = $interaction->{ $_ };
-		delete $interaction->{ $_ };
-	}
-}
+filter_columns( $interactions );
+print "<li>Building <i>SQL import statements</i></li>\n";
+write_sql( $path, $interactions );
 
-my $out = $file;
-$out =~ s/\.csv$/.import.sql/;
-my $last = $#$interactions;
-open FILE, ">:encoding(UTF-8)", $out or die $!;
-print FILE insert_table();
-my $group = 1000; # Max number of rows for INSERT for SQLite3
-my @columns = map { exists $alias->{ $_ } ? $alias->{ $_ } : $_ } (@required, @optional);
-foreach my $i ( 0 .. $last ) {
-	my $end_of_data    = ($i == $last);
-	my $start_of_group = (($i % $group) == 0);
-	my $end_of_group   = ($i % $group == ($group - 1));
-	if( $start_of_group ) { 
-		printf FILE "insert into interactions (%s) values\n", join( ', ', @columns );
-	};
-	my $interaction = $interactions->[ $i ];
-	my @values = ();
-	foreach my $key (@columns) {
-		my $exists  = exists $interaction->{ $key };
-		my $numeric = qr/^(probability|mention1_offset|mention2_offset)$/;
-		if( $key =~ $numeric ) {
-			if( $exists ) { push @values, $interaction->{ $key }; }
-			else          { push @values, 'NULL'; }
-		} else {
-			if( $exists ) { push @values, double_quote( $interaction->{ $key } ); }
-			else          { push @values, 'NULL'; }
-		}
+# ============================================================
+sub adjacency_matrix {
+# ============================================================
+	my $path         = shift;
+	my $interactions = shift;
+
+	my $matrix = {};
+	my $gid1   = $alias->{ id1 };
+	my $gid2   = $alias->{ id2 };
+	die "Aliases changed" unless $gid1 && $gid2;
+
+	foreach my $interaction (@$interactions) {
+		my $a    = exists $interaction->{ id1 } ? $interaction->{ id1 } : $interaction->{ $gid1 };
+		my $b    = exists $interaction->{ id2 } ? $interaction->{ id2 } : $interaction->{ $gid2 };
+		($a, $b) = sort { $a cmp $b } ($a, $b); # Enforce ascii-sorted order
+		my $p    = exists $interaction->{ probability } ? $interaction->{ probability } : 0.7;
+
+		$matrix->{ $a }{ $b } = [] if not exists $matrix->{ $a }{ $b };
+		$matrix->{ $a }{ $b } = [ sort { $a <=> $b } (($p*1000), @{ $matrix->{ $a }{ $b }})];
 	}
-	printf FILE "( %s )%s", join( ', ', @values ), ( $end_of_group || $end_of_data ? ";\n\n" : ",\n" );
-	
+
+	my $json = new JSON::XS();
+	open FILE, ">$path/adjacency_matrix.json" or die $!;
+	print FILE $json->canonical->encode( $matrix );
+	close FILE;
+	`cd $path && /usr/bin/zip -mr adjacency_matrix.json.zip adjacency_matrix.json`;
 }
-close FILE;
 
 # ============================================================
 sub double_quote {
@@ -69,13 +66,18 @@ sub double_quote {
 }
 
 # ============================================================
-sub path {
+sub filter_columns {
 # ============================================================
-	my $file  = shift;
-	my @paths = split /\//, $file; pop @paths;
-	my $path  = join( '/', @paths ) || '.';
-
-	return $path;
+	my $interactions = shift;
+	my $denied = [ grep { my $field = $_; none { $field eq $_ } (@required, @optional, @aliases) } keys %{$interactions->[ 0 ]}];
+	foreach my $interaction (@$interactions) {
+		delete $interaction->{ $_ } foreach @$denied;
+		foreach my $key (keys %$interaction) {
+			next unless( exists $alias->{ $key });
+			$interaction->{ $alias->{ $key }} = $interaction->{ $_ };
+			delete $interaction->{ $_ };
+		}
+	}
 }
 
 # ============================================================
@@ -140,6 +142,16 @@ EOF
 }
 
 # ============================================================
+sub path {
+# ============================================================
+	my $file  = shift;
+	my @paths = split /\//, $file; pop @paths;
+	my $path  = join( '/', @paths ) || '.';
+
+	return $path;
+}
+
+# ============================================================
 sub validate {
 # ============================================================
 	my $file     = shift;
@@ -163,4 +175,42 @@ sub validate {
 	}
 
 	return $file;
+}
+
+# ============================================================
+sub write_sql {
+# ============================================================
+	my $path         = shift;
+	my $interactions = shift;
+
+	my $file = "$path/data.import.sql";
+	my $last = $#$interactions;
+	open FILE, ">:encoding(UTF-8)", $file or die $!;
+	print FILE insert_table();
+	my $group = 1000; # Max number of rows for INSERT for SQLite3
+	my @columns = map { exists $alias->{ $_ } ? $alias->{ $_ } : $_ } (@required, @optional);
+	foreach my $i ( 0 .. $last ) {
+		my $end_of_data    = ($i == $last);
+		my $start_of_group = (($i % $group) == 0);
+		my $end_of_group   = ($i % $group == ($group - 1));
+		if( $start_of_group ) { 
+			printf FILE "insert into interactions (%s) values\n", join( ', ', @columns );
+		};
+		my $interaction = $interactions->[ $i ];
+		my @values = ();
+		foreach my $key (@columns) {
+			my $exists  = exists $interaction->{ $key };
+			my $numeric = qr/^(probability|mention1_offset|mention2_offset)$/;
+			if( $key =~ $numeric ) {
+				if( $exists ) { push @values, $interaction->{ $key }; }
+				else          { push @values, 'NULL'; }
+			} else {
+				if( $exists ) { push @values, double_quote( $interaction->{ $key } ); }
+				else          { push @values, 'NULL'; }
+			}
+		}
+		printf FILE "( %s )%s", join( ', ', @values ), ( $end_of_group || $end_of_data ? ";\n\n" : ",\n" );
+		
+	}
+	close FILE;
 }
