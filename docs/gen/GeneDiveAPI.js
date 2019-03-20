@@ -78,8 +78,6 @@ const save_test_success = (result) => {
   test_results.push(result);
 };
 
-
-
 // Processs a single test
 const do_test = async (test, browser, json_data) => {
   let promise;
@@ -91,15 +89,18 @@ const do_test = async (test, browser, json_data) => {
     save_test_success(reason);
     page.close();
   }).
-   catch((reason) => {
-      page.screenshot({path: `${singleTest.name}-error.png`});
+   catch( async (reason) => {
+    //  console.log('page', page);
+      await page.screenshot({path: `${singleTest.name}-error.png`});
       console.log(`${singleTest.toString()}: ${COLOR.FgRed}FAIL${COLOR.Reset}`);
-      //console.log(reason);
+      console.log('Reason for failure: ', reason);
       save_test_success(reason);
       page.close();
     }	);
   return promise;
 };
+
+
 
 /**
  * @fn       Number.prototype.pad
