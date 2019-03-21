@@ -132,7 +132,7 @@ for (let i = 0; i < ARGUMENTS.length; i++)
 
   let promises = [];
   // Create Browser
-  const browser = await puppeteer.launch({headless: false,
+  const browser = await puppeteer.launch({headless: true,
 	  args:['--no-sandbox','--disable-setuid-sandbox'],
   	  ignoreHTTPSErrors: true});
 
