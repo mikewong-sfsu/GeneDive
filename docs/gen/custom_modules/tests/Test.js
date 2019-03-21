@@ -16,7 +16,7 @@ class Test {
   get FILTER_INPUT(){
     return this._FILTER_INPUT;
   }
- 
+
   get HIGHLIGHT_FILTER() {
     return this._HIGHLIGHT_FILTER;
   }
@@ -41,7 +41,7 @@ class Test {
   }
   get INTERACTION() {
     return this._INTERACTION;
-  } 	
+  }
   get PAGE_IS_NOT_LOADING() {
     return this._PAGE_IS_NOT_LOADING;
   }
@@ -72,7 +72,7 @@ class Test {
     this._FILTER_INPUT = ".filter-input";
 
     this._INTERACTION = "1hop";//to do : get value from json file
-    this._DGR = ["SRA","HDAC1"];
+    this._DGR = ["SRAG","NXF1"];
 
   }
   /**
@@ -160,12 +160,12 @@ class Test {
           await thisClass.page.click(SEARCH_FIELD).catch((reason) => {reject(reason);}); // click on element
  // Will try to input the search text over and over until it finally fills it in, or 5 tries have passed
     for (let j = 0; !fieldHasCorrectValue && j < 5; j++) {
-	  await thisClass.page.type(SEARCH_FIELD,dgr,{delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters 
+	  await thisClass.page.type(SEARCH_FIELD,dgr,{delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters
 	    fieldHasCorrectValue = await thisClass.page.evaluate((e) => document.querySelector(e).value, SEARCH_FIELD) === dgr;
 	     if(fieldHasCorrectValue)
 		    break;
 	    await thisClass.page.waitFor(30); // Wait a few seconds for autocomplete
-	    
+
 	       }
 
         // If it still couldn't enter the value
@@ -202,7 +202,7 @@ class Test {
           reject(reason);
         });
     });
-  } 
+  }
 
   clickOnNodeInGraph(nodeName) {
     const PAGE = this.page;
@@ -347,17 +347,17 @@ class Test {
 
   goBackInHistory() {
     const thisClass = this;
-    const UNDO_BUTTON = ".module button.undo";
+    const UNDO_BUTTON = ".btn.undo";
     return new Promise(async function (resolve, reject) {
-
       // if the button isn't disabled, click it and return true
-      if(await thisClass.page.evaluate(`!$("${UNDO_BUTTON}")[0].disabled`))
+      let flag = await thisClass.page.evaluate(`!$("${UNDO_BUTTON}")[0].disabled`);
+      if(flag)
       {
         await thisClass.page.click(UNDO_BUTTON).catch((reason)=>{reject(reason)});
-        resolve(true);
+        //resolve(flag);
       }
       // if the button is disabled, return false
-        resolve(false);
+        resolve(flag);
     });
   }
 
@@ -367,7 +367,20 @@ class Test {
   }
 
   goForwardInHistory() {
-    return this.page.click(".module button.redo");
+    //return this.page.click(".module button.redo");
+    const thisClass = this;
+    const REDO_BUTTON = ".btn.redo";
+    return new Promise(async function (resolve, reject) {
+
+      // if the button isn't disabled, click it and return true
+      if(await thisClass.page.evaluate(`!$("${REDO_BUTTON}")[0].disabled`))
+      {
+        await thisClass.page.click(REDO_BUTTON).catch((reason)=>{reject(reason)});
+        resolve(true);
+      }
+      // if the button is disabled, return false
+        resolve(false);
+    });
     // return this.page.evaluate("GeneDive.goForwardInStateHistory()");
   }
 

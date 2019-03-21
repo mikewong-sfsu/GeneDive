@@ -1,5 +1,5 @@
 let Test = require('./Test');
-//let Interactions = require('./Interactions')
+const tableCol = ["DGR1","DGR2","Max Conf Scr"];
 class ConfidenceScore extends Test{
 
   toString(){
@@ -16,10 +16,7 @@ class ConfidenceScore extends Test{
 
   execute(){
   const EVALUATE_SETS = "$('.search-item').length";
-  const tableCol = ["DGR1","DGR2","Max Conf Scr"];
   const Confidence = ['#low-confidence','#medium-confidence','#high-confidence'];
-
-  //Object.assign(this,Interactions);
   return new Promise(async(resolve,reject)=>{
 		try{
 			let rejectReason = "";
@@ -47,7 +44,6 @@ class ConfidenceScore extends Test{
 				tableContents = await this.getTableContents().catch((reason)=>{reject(reason)});
 				let display = await this.page.evaluate((display)=>{return $('.table')[0].style.display})
 						.catch((reason)=>{reject(reason)});
-	
 				let minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
 								.catch((reason)=>{reject(reason)})
 				if(display !== "none"){
@@ -69,33 +65,33 @@ class ConfidenceScore extends Test{
 	}
 
 	//OneHop test
-  checkOneHop(DGR,tableContents){
-	const tableCol = ["DGR1","DGR2"];
-		return new Promise((resolve,reject)=>{
-		try{
-		for(let row in tableContents){
-			let foundFlag = false;
-			for(let i in DGR){
-				//test direct interaction with DGR
-				//check if the gene is present in either 1st or 2nd column
-				if(tableContents[row][tableCol[0]].indexOf(DGR[i])!== -1 ||
-					tableContents[row][tableCol[1]].indexOf(DGR[i])!== -1){
-					foundFlag = true;
-					break;
-				}
-			}
-				if(!foundFlag)
-				reject(`direct interaction of ${DGR} is not present`);
-		}
-			//test passed successfully
-			resolve();
-		}catch(e){
-			console.log(e);
-			reject(e);
-		}
-		
-	});
-  }
+  // checkOneHop(DGR,tableContents){
+	// const tableCol = ["DGR1","DGR2"];
+	// 	return new Promise((resolve,reject)=>{
+	// 	try{
+	// 	for(let row in tableContents){
+	// 		let foundFlag = false;
+	// 		for(let i in DGR){
+	// 			//test direct interaction with DGR
+	// 			//check if the gene is present in either 1st or 2nd column
+	// 			if(tableContents[row][tableCol[0]].indexOf(DGR[i])!== -1 ||
+	// 				tableContents[row][tableCol[1]].indexOf(DGR[i])!== -1){
+	// 				foundFlag = true;
+	// 				break;
+	// 			}
+	// 		}
+	// 			if(!foundFlag)
+	// 			reject(`direct interaction of ${DGR} is not present`);
+	// 	}
+	// 		//test passed successfully
+	// 		resolve();
+	// 	}catch(e){
+	// 		console.log(e);
+	// 		reject(e);
+	// 	}
+  //
+	// });
+  // }
 
 }
 

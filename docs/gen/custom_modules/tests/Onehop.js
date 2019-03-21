@@ -1,5 +1,9 @@
 let Test = require('./Test');
-//let Interactions = require('./Interactions')
+let Interactions = require('./Interactions');
+let Mixin = require('./Mixins');
+Mixin.mixin( Test, Interactions, "checkOneHop" );
+//Object.assign(Test.prototype, Interactions); //does not identify the fucntions in Interactions
+//Interactions.call(Test.prototype); needs invocking object instance with new
 class Onehop extends Test{
 
   toString(){
@@ -16,8 +20,6 @@ class Onehop extends Test{
 
   execute(){
   const EVALUATE_SETS = "$('.search-item').length";
-	const tableCol = ["DGR1","DGR2"];
-  //Object.assign(this,Interactions);
   return new Promise(async(resolve,reject)=>{
 		try{
 			let rejectReason = "";
@@ -45,36 +47,6 @@ class Onehop extends Test{
 		}
 	})
 	}
-
-	//OneHop test
-  checkOneHop(DGR,tableContents){
-	const tableCol = ["DGR1","DGR2"];
-		return new Promise((resolve,reject)=>{
-		try{
-		for(let row in tableContents){
-			let foundFlag = false;
-			for(let i in DGR){
-				//test direct interaction with DGR
-				//check if the gene is present in either 1st or 2nd column
-				if(tableContents[row][tableCol[0]].indexOf(DGR[i])!== -1 ||
-					tableContents[row][tableCol[1]].indexOf(DGR[i])!== -1){
-					foundFlag = true;
-					break;
-				}
-			}
-				if(!foundFlag)
-				reject(`direct interaction of ${DGR} is not present`);
-		}
-			//test passed successfully
-			resolve();
-		}catch(e){
-			console.log(e);
-			reject(e);
-		}
-		
-	});
-  }
-
 }
 
 module.exports = Onehop;
