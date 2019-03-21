@@ -31,38 +31,27 @@ class UploadResultsTest extends Test {
         return new Promise(async (resolve, reject) => {
             try {
                 await thisClass.startAtSearchPage().catch((reason) => { reject(reason); });
-
                 await PAGE.click('button.btn.btn-default.upload');
 
                 const input = await PAGE.$('input[type="file"]');
-                await PAGE.waitFor(2000);
                 console.log('dir', __dirname);
 
                 await input.uploadFile(__dirname + UploadFile);
-                await PAGE.waitFor(20000);
 
-                const checkState = (args) => {
-                    console.log('HEllo');
+                await PAGE.waitFor(100);//await required for DOM to render
+
+                const checkState = async (args) => {
+                    const highlightText = document.querySelector('.highlight-input').value;
                     const dgr = document.querySelector('.name').textContent;
-                    const highlightText = document.querySelector('body > div.main-display > div.control-view > div.module.highlight-module.require-dgr-search > input').value;
-                    console.log('DGR, HIGHLIHT', args.DGR, ', ', args.HIGHLIGHT);
-                    console.log('dgr, highlight', dgr, ', ', highlightText);
+                 //   console.log('dgr&highlight=', dgr, ', ', highlightText);
                     
                     if (dgr === args.DGR && highlightText === args.HIGHLIGHT) {
-                        console.log('HEY', DGR, ', ', HIGHLIGHT);
                         return true;
                     }
                     return false;
                 };
                 
-
-                console.log('ffff');
-
-
                 const validRowsFormat = await PAGE.evaluate(checkState, {DGR, HIGHLIGHT}).catch((reason) => { reject(reason) });
-                await PAGE.waitFor(9000);
-
-                console.log('ffffddd');
 
                 if (validRowsFormat) {
                     resolve(thisClass.createResponse(true, 'Test Passed', 0));
@@ -78,6 +67,5 @@ class UploadResultsTest extends Test {
     }
 
 }
-
 
 module.exports = UploadResultsTest;

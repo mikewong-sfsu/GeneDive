@@ -90,8 +90,7 @@ const do_test = async (test, browser, json_data) => {
     page.close();
   }).
    catch( async (reason) => {
-    //  console.log('page', page);
-      await page.screenshot({path: `${singleTest.name}-error.png`});
+      await page.screenshot({ path: `${SCREENSHOTS_FOLDER}${singleTest.name}-error.png`});
       console.log(`${singleTest.toString()}: ${COLOR.FgRed}FAIL${COLOR.Reset}`);
       console.log('Reason for failure: ', reason);
       save_test_success(reason);
@@ -133,7 +132,7 @@ for (let i = 0; i < ARGUMENTS.length; i++)
 
   let promises = [];
   // Create Browser
-  const browser = await puppeteer.launch({headless: true,
+  const browser = await puppeteer.launch({headless: false,
 	  args:['--no-sandbox','--disable-setuid-sandbox'],
   	  ignoreHTTPSErrors: true});
 
