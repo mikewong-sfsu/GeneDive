@@ -8,7 +8,7 @@
 */
 
 const OXYGEN_CONFIG_FILE = "doxygen.cfg";
-const SCREENSHOTS_PHANTOMJS_FILE = "GeneDiveAPI.js";
+const geneDiveApi = "GeneDiveAPI.js";
 const CONFIG_DIRECTORY = __dirname;
 const LOG_DIRECTORY = "./log";
 const { exec } = require('child_process');
@@ -38,7 +38,7 @@ function write_file(file)
 		console.log('directory does not exist');
 		log_files.mkdirSync(LOG_DIRECTORY, {recursive: true});
 	} else {
-		console.log({ LOG_DIRECTORY });
+		//console.log({ LOG_DIRECTORY });
 		console.log('directory exist');
 	}
 
@@ -94,18 +94,18 @@ doxygen_exec.on('close', function (code) {
 */
 
 console.log("Starting Screenshots process");
-var phantom_exec = exec('node ' + SCREENSHOTS_PHANTOMJS_FILE, 
+var puppeteer_exec = exec('node ' + geneDiveApi, 
 	{cwd: CONFIG_DIRECTORY })
 
-phantom_exec.stdout.on('data', function (data) {
+puppeteer_exec.stdout.on('data', function (data) {
 	append_log("screenshots_output.log", data);
 });
 
-phantom_exec.stderr.on('data', function (data) {
+puppeteer_exec.stderr.on('data', function (data) {
 	append_log("screenshots_error.log", data);
 });
 
-phantom_exec.on('close', function (code) {
+puppeteer_exec.on('close', function (code) {
     console.log("Screenshots process exited with " + code);
     write_file("screenshots_output.log");
 	write_file("screenshots_error.log");
