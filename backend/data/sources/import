@@ -6,11 +6,12 @@ use JSON::XS;
 
 my $file         = shift; # Absolute path
 my $path         = path( $file );
-my @required     = qw( mention1 mention2 id1 id2 type1 type2 );
+my @required     = qw( mention1 mention2 geneids1 geneids2 type1 type2 );
 my @optional     = qw( journal article_id pubmed_id sentence_id mention1_offset mention2_offset probability context section );
-my $alias        = { id1 => 'geneids1', id2 => 'geneids2' };
-my @aliases      = map { $_ } values %$alias;
 my $interactions = csv( in => validate( $file ), encoding => 'utf-8', headers => "auto" );
+
+# ===== CLEANUP
+cleanup( $interactions );
 
 # ===== GENERATE ADJACENCY MATRIX
 print "<li>Building <i>adjacency matrix</i></li>\n";
@@ -36,15 +37,12 @@ sub adjacency_matrix {
 	my $interactions = shift;
 
 	my $matrix = {};
-	my $gid1   = $alias->{ id1 };
-	my $gid2   = $alias->{ id2 };
-	die "Aliases changed" unless $gid1 && $gid2;
 
 	foreach my $interaction (@$interactions) {
-		my $a    = exists $interaction->{ id1 } ? $interaction->{ id1 } : $interaction->{ $gid1 };
-		my $b    = exists $interaction->{ id2 } ? $interaction->{ id2 } : $interaction->{ $gid2 };
+		my $a    = $interaction->{ geneids1 };
+		my $b    = $interaction->{ geneids2 };
 		($a, $b) = sort { $a cmp $b } ($a, $b); # Enforce ascii-sorted order
-		my $p    = exists $interaction->{ probability } ? $interaction->{ probability } : 0.7;
+		my $p    = $interaction->{ probability };
 
 		$matrix->{ $a }{ $b } = [] if not exists $matrix->{ $a }{ $b };
 		$matrix->{ $a }{ $b } = [ sort { $a <=> $b } (($p*1000), @{ $matrix->{ $a }{ $b }})];
@@ -55,6 +53,17 @@ sub adjacency_matrix {
 	print FILE $json->canonical->encode( $matrix );
 	close FILE;
 	`cd $path && /usr/bin/zip -mr adjacency_matrix.json.zip adjacency_matrix.json`;
+}
+
+# ============================================================
+sub cleanup {
+# ============================================================
+	my $interactions = shift;
+	foreach my $i (@$interactions) {
+		if( exists $i->{ id1 }) { $i->{ geneids1 } = $i->{ id1 }; delete $i->{ id1 }; }
+		if( exists $i->{ id2 }) { $i->{ geneids2 } = $i->{ id2 }; delete $i->{ id2 }; }
+		if( ! exists $i->{ probability }) { $i->{ probability } = 0.7; }
+	}
 }
 
 # ============================================================
@@ -69,23 +78,18 @@ sub double_quote {
 sub filter_columns {
 # ============================================================
 	my $interactions = shift;
-	my $denied = [ grep { my $field = $_; none { $field eq $_ } (@required, @optional, @aliases) } keys %{$interactions->[ 0 ]}];
+	my $denied = [ grep { my $field = $_; none { $field eq $_ } (@required, @optional) } keys %{$interactions->[ 0 ]}];
 	foreach my $interaction (@$interactions) {
 		delete $interaction->{ $_ } foreach @$denied;
-		foreach my $key (keys %$interaction) {
-			next unless( exists $alias->{ $key });
-			$interaction->{ $alias->{ $key }} = $interaction->{ $_ };
-			delete $interaction->{ $_ };
-		}
 	}
 }
 
 # ============================================================
 sub extract_ids {
 # ============================================================
-	my $type  = shift;
-	my $hash  = shift;
-	my $entry = shift;
+	my $type    = shift;
+	my $hash    = shift;
+	my $entry   = shift;
 
 	foreach my $i ( 1, 2 ) {
 		next unless( $entry->{ "type$i" } eq ucfirst $type );
@@ -161,6 +165,7 @@ sub validate {
 	$header =~ s/\s*$//;
 	close FILE;
 	my @headers = split /,\s*/, $header;
+	my $alias = { geneids1 => 'id1', geneids2 => 'id2' };
 
 	# ===== ENFORCE REQUIRED FIELDS
 	foreach my $required (@required) {
@@ -206,7 +211,7 @@ sub write_sql {
 				else          { push @values, 'NULL'; }
 			} else {
 				if( $exists ) { push @values, double_quote( $interaction->{ $key } ); }
-				else          { push @values, 'NULL'; }
+				else          { push @values, ''; }
 			}
 		}
 		printf FILE "( %s )%s", join( ', ', @values ), ( $end_of_group || $end_of_data ? ";\n\n" : ",\n" );
