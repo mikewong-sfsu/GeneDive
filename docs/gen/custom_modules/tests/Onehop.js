@@ -1,6 +1,6 @@
 let Test = require('./Test');
-let Interactions = require('./Interactions');
-let Mixin = require('./Mixins');
+let Interactions = require('./../mixin/Interactions');
+let Mixin = require('./../mixin/Mixin');
 Mixin.mixin( Test, Interactions, "checkOneHop" );
 //Object.assign(Test.prototype, Interactions); //does not identify the fucntions in Interactions
 //Interactions.call(Test.prototype); needs invocking object instance with new

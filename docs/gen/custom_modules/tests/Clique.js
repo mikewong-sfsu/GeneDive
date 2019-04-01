@@ -1,6 +1,6 @@
 let Test = require('./Test');
-let Interactions = require('./Interactions');
-var Mixin = require('./Mixins');
+let Interactions = require('./../mixin/Interactions');
+var Mixin = require('./../mixin/Mixin');
 Mixin.mixin( Test, Interactions, "checkClique" );
 class Clique extends Test{
 
