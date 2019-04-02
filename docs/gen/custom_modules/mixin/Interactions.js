@@ -1,3 +1,10 @@
+/**
+ *@class			Interactions
+ *@breif			Interaction modes test - 1Hop,2Hop,3Hop,Clique
+ *@details
+ *@authors		Nayana Laxmeshwar	nlaxmeshwar@mail.sfsu.edu
+ *@ingroup		Features
+ */
 const TABLE_COL = ["DGR1","DGR2"];
 class Interactions{
   toString(){

@@ -1,3 +1,10 @@
+/**
+ *@class			Mixins
+ *@breif			Custom mixin class
+ *@details
+ *@authors		Nayana Laxmeshwar	nlaxmeshwar@mail.sfsu.edu
+ *@ingroup		mixin
+ */
 var Mixins = {
   // Extend an existing object with a method from another
 mixin( targetClass, sourceClass ) {

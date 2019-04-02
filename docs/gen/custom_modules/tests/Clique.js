@@ -1,3 +1,10 @@
+/**
+ *@class			Clique
+ *@breif			interaction mode - clique
+ *@details
+ *@authors		Nayana Laxmeshwar	nlaxmeshwar@mail.sfsu.edu
+ *@ingroup		
+ */
 let Test = require('./Test');
 let Interactions = require('./../mixin/Interactions');
 var Mixin = require('./../mixin/Mixin');

@@ -1,7 +1,18 @@
+/**
+ *@class			ConfidenceScore
+ *@breif			check varying confidence score
+ *@details
+ *@authors		Nayana Laxmeshwar	nlaxmeshwar@mail.sfsu.edu
+ *@ingroup		feature test
+ */
 let Test = require('./Test');
-let ConfidenceMixin = require('./../mixin/ConfidenceScore.js');
+let ConfidenceMixin = require('./../mixin/ConfidenceScore');
+let Interactions = require('./../mixin/Interactions');
 let Mixin = require('./../mixin/Mixin');
-Mixin.mixin(Test,ConfidenceMixin,"checkConfidence");
+ Mixin.mixin(Test,ConfidenceMixin,"checkConfidence");
+ Mixin.mixin(Test,Interactions,"checkOneHop");
+//var Mixin = require('mixin-deep');
+//var res = Mixin(Test,Interactions);
 const tableCol = ["DGR1","DGR2","Max Conf Scr"];
 class ConfidenceScore extends Test{
 

@@ -1,7 +1,16 @@
+/**
+ *@class			OneHop
+ *@breif			OneHop regression test
+ *@details
+ *@authors		Nayana Laxmeshwar	nlaxmeshwar@mail.sfsu.edu
+ *@ingroup		regression testing
+ */
 let Test = require('./Test');
-let Interactions = require('./../mixin/Interactions');
+//let Mixin = require('mixin-deep');
 let Mixin = require('./../mixin/Mixin');
-Mixin.mixin( Test, Interactions, "checkOneHop" );
+let Interactions = require('./../mixin/Interactions');
+ Mixin.mixin( Test, Interactions, "checkOneHop" );
+//Mixin(Test,Interactions,ConfidenceScore);
 //Object.assign(Test.prototype, Interactions); //does not identify the fucntions in Interactions
 //Interactions.call(Test.prototype); needs invocking object instance with new
 class Onehop extends Test{
@@ -17,7 +26,7 @@ class Onehop extends Test{
   get name(){
   return "1-Hop";
 	}
-
+//test method execution
   execute(){
   const EVALUATE_SETS = "$('.search-item').length";
   return new Promise(async(resolve,reject)=>{
@@ -37,7 +46,35 @@ class Onehop extends Test{
 			}
 			//get table of contents
 			let tableContents = await this.getTableContents().catch((reason)=>{reject(reason)});
+      //test 1-hop
 			await this.checkOneHop(this.DGR,tableContents).catch((reason)=>{reject(reason)});
+      //test ConfidenceScore
+      await this.checkConfidence().catch((reason)=>{reject(reason)});
+      //test undo/redo
+      //test undo
+					var undo = await this.goBackInHistory().catch((reason)=>{reject(reason)});
+          console.log(undo);
+
+					if(undo){
+					var minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
+								.catch((reason)=>{reject(reason)})
+          console.log(minScore);
+					if(minScore != 0.85)
+						reject('Undo is not working correctly');
+				  //test redo
+					var redo = 	await this.goForwardInHistory().catch((reason)=>{reject(reason)});
+          console.log(redo);
+          if(redo){
+					minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
+								.catch((reason)=>{reject(reason)})
+          console.log(minScore);
+					if(minScore != 0.95)
+						reject('Redo is not working correctly');
+          }
+				}
+				else{
+						reject('Undo is not working correctly');
+				}
 			//test passed
 			resolve(this.createResponse(true,`Tested 1-Hop successfully`,this.priority));
 		}catch(e){

@@ -1,6 +1,13 @@
+/**
+ *@class			Undo_Redo
+ *@breif			Check History
+ *@details
+ *@authors		Nayana Laxmeshwar	nlaxmeshwar@mail.sfsu.edu
+ *@ingroup		Feature Test
+ */
 let Test = require('./Test');
-let Interactions = require('./Interactions');
-let Mixin = require('./Mixins');
+let Interactions = require('./../mixin/Interactions');
+let Mixin = require('./../mixin/Mixin');
 Mixin.mixin( Test, Interactions );
 class Undo_Redo extends Test{
 
@@ -64,6 +71,7 @@ class Undo_Redo extends Test{
 					if(undo){
 					var minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
 								.catch((reason)=>{reject(reason)})
+          console.log(minScore);
 					if(minScore != 0.7)
 						reject('Undo is not working correctly');
 				  //test redo
