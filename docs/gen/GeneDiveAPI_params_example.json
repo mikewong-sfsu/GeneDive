@@ -4,6 +4,14 @@
   "default_width": 1920,
   "default_height": 949,
   "screenshots_folder": "../img/gen/",
-  "login": "testwork1@test.com",
-  "password": "testwork"
+  "login": "testwork@test.com",
+  "password": "testwork",
+  "register":{"email":"testwork2@test.com",
+              "password":"testwork2",
+              "confirm":"confirm",
+              "name":"testing",
+              "organization":"SFSU",
+              "title":"ms",
+              "role":"Other",
+              "usage":"Testing registration"}
 }
