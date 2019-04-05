@@ -50,7 +50,7 @@ class FilterTest_Article_Combined extends Test {
           return true;
         };
 
-        if (TYPE != 'not') {
+        if (TYPE !== 'not') {
           await PAGE.click('#add-filter > div.input-group.filter-input-group > span > button');
         } else {
           await PAGE.click('#add-filter > div.top-row > div > span:nth-child(2) > input[type="radio"]');

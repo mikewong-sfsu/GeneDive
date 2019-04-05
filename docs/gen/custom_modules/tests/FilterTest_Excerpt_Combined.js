@@ -49,7 +49,7 @@ class FilterTest_Excerpt_Combined extends Test {
         };
         
 
-        if (TYPE != 'not') {
+        if (TYPE !== 'not') {
           await PAGE.click('#add-filter > div.input-group.filter-input-group > input');
         }else{
           await PAGE.click('#add-filter > div.top-row > div > span:nth-child(2) > input[type="radio"]');
