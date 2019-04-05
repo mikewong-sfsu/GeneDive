@@ -33,8 +33,6 @@ class  RemoveDGR extends Test {
         const DGRs = ['SP-A','Tino'];
         const thisClass = this;
         const PAGE = this.page;
-        let numberOfDGRs;
-
 
         return new Promise(async (resolve, reject) => {
             try {
@@ -66,28 +64,19 @@ class  RemoveDGR extends Test {
                 if (rowLength_MutipleDGRS < 1) {
                     reject('Mutilple DGR: Please select a combination of DGRs that have atleast one record')
                 }
-                
-                await PAGE.waitFor(3000);
 
                 //removing DGRs
                 for (let i = 0; i < DGRs.length; i++) {
                     await PAGE.evaluate(`$('.remove').click();`).catch((reason) => { reject(reason) });
                 }
-                await PAGE.waitFor(4000);
 
                 let value_mutiple = await PAGE.evaluate(`$('.table-hover').css('display')`).catch((reason) => { reject(reason) });
-                console.log('DISPLAY2:', value)
+                // console.log('DISPLAY2:', value)
 
                 if (value_mutiple !== 'none') {
                     return reject('Single DGR: Test failed, DGR not removed as the table contains the records');
                 }
                 
-                await PAGE.waitFor(3000);
-
-                // $('.search-sets').children().each(function () {
-                //     alert(this.innerText); // "this" is the current element in the loop
-                // });
-               
                 resolve(thisClass.createResponse(true, "Test Passed", 0));
               
             }
