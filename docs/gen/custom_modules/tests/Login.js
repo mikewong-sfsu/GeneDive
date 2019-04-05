@@ -26,8 +26,19 @@ class Login extends Test {
   execute() {
     const thisClass = this;
     const PAGE = this.page;
+    return new Promise(async(resolve,reject)=>{
+      try{
+        //user login
+        await this.userLogin();
+        //logout after login
+        await this.userLogout();
+        resolve(thisClass.createResponse(true,"Successfully logged in",0));
+      }catch(e){
+        reject(e);
+      }
+    });
 
-    return new Promise(async (resolve, reject) => {
+/*    return new Promise(async (resolve, reject) => {
       try{
         // If any errors happen on the page, fail the test
         // thisClass.hookToConsoleErrors();
@@ -49,12 +60,12 @@ class Login extends Test {
         resolve(thisClass.createResponse(true,"Successfully logged in",0));
       }
       catch (e) {
-	console.log(e);      
+	console.log(e);
         reject(e);
       }
-    })
-
+    })*/
   }
+
 }
 
 
