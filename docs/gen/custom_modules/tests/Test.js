@@ -36,6 +36,10 @@ class Test {
     return this._LOGIN;
   }
 
+  get registrationDetails(){
+    return this._registrationDetails;
+  }
+
   get DGR() {
     return this._DGR;
   }
@@ -70,7 +74,7 @@ class Test {
     this._HIGHLIGHT_FILTER = ".highlight-input";
     this._MIN_SCORE = ".min-prob-slider";
     this._FILTER_INPUT = ".filter-input";
-
+    this._registrationDetails = global_data.register;
     this._INTERACTION = "1hop";//to do : get value from json file
     this._DGR = ["SRAG","NXF1"];
 
