@@ -53,21 +53,17 @@ class Onehop extends Test{
       //test undo/redo
       //test undo
 					var undo = await this.goBackInHistory().catch((reason)=>{reject(reason)});
-          console.log(undo);
 
 					if(undo){
 					var minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
 								.catch((reason)=>{reject(reason)})
-          console.log(minScore);
 					if(minScore != 0.85)
 						reject('Undo is not working correctly');
 				  //test redo
 					var redo = 	await this.goForwardInHistory().catch((reason)=>{reject(reason)});
-          console.log(redo);
           if(redo){
 					minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
 								.catch((reason)=>{reject(reason)})
-          console.log(minScore);
 					if(minScore != 0.95)
 						reject('Redo is not working correctly');
           }

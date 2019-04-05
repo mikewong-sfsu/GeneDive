@@ -6,14 +6,14 @@
  *@ingroup		Registartion mixin
  */
 let Test = require('./Test');
-const sqlite = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3').verbose();
 class Registration extends Test{
  execute(){
 return new Promise(async(resolve,reject)=>{
     try{
-	//await this.validateRegistration();
-	this.deleteFromdB();
-	resolve();
+	await this.validateRegistration();
+	await this.deleteFromdB();
+	resolve(this.createResponse(true,"Successfully Registered",0));	
     }catch(e){
 	reject(e);
     }
@@ -35,10 +35,7 @@ return new Promise(async(resolve,reject)=>{
         }
         //enter all the details
 	let inputData = "#"+i;
-	      console.log(inputData);
         await this.page.click(inputData);
-	      console.log("after clicking");
-	      console.log(this.registrationDetails[i]);
         await this.page.keyboard.type(this.registrationDetails[i], {delay:this._TYPING_SPEED});
       }
         //click on the register button
@@ -46,11 +43,10 @@ return new Promise(async(resolve,reject)=>{
         await this.page.waitForNavigation( {timeout: 5000,waitUntil: 'networkidle2'}).catch(()=>{
         });
         //if navigates back to domain registration successful
-	 console.log(this.page.url());
         if(this.page.url().split("/").pop() !=="index.php"){
           reject("Was not redirected to login page");
         }
-      resolve(this.createResponse(true,"Successfully Registered",0));
+      resolve();
     }catch(e){
       reject(e);
     }
@@ -58,16 +54,32 @@ return new Promise(async(resolve,reject)=>{
 }
  
  deleteFromdB(){
-	const db = new sqlite.Database('./../../../../backend/data/users.sqlite',(err)=>{
+  return new Promise((resolve,reject)=>{
+    try{
+	//open a database connection
+	let userdBpath = require('path').resolve(__dirname,'../../../../backend/data/users.sqlite');
+	let db = new sqlite3.Database(userdBpath,sqlite3.OPEN_READWRITE,(err)=>{
 		if(err)
-			return console.log(err);
+			reject(err);
 		console.log("database accessed");
- });
+ 	});
+	 //delete the newly registered account
+	 db.run(`DELETE FROM user WHERE email=?`,this.registrationDetails["email"],(err)=>{
+		 if (err)
+			 reject(err);
+		 console.log("deleted new user");
+	});
+	 //close the connection 
  	db.close((err)=>{
 		if(err)
-			console.log(err);
-		console.log("database connected closed");
+			reject(err);
+		console.log("database connection closed");
 	});
- }
+	resolve();
+     }catch(e){
+        reject(e);
+     }
+    });
+  }
 }
 module.exports = Registration;
