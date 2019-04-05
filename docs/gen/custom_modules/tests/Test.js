@@ -117,6 +117,51 @@ class Test {
       reject("The Test class must be inherited for implementation.");
     })
   }
+//LOGIN
+userLogin(){
+  return new Promise(async(resolve,reject)=>{
+    try{
+      console.log("Connecting to " + this.DOMAIN);
+      await this.page.goto(this.DOMAIN, {waitUntil: 'networkidle2'}).catch((reason)=>{reject(`Unable to connect. ${reason}`)});
+      if (this.LOGIN === undefined || this.PASSWORD === undefined)
+        reject("Login or Password not set");
+      await this.page.click("input#email");
+      await this.page.keyboard.type(this.LOGIN, {delay:this._TYPING_SPEED});
+      await this.page.click("input#password");
+      await this.page.keyboard.type(this.PASSWORD, {delay:this._TYPING_SPEED});
+      await this.page.click("button");
+      await this.page.waitForNavigation( {timeout: 5000,waitUntil: 'networkidle2'}).catch(()=>{
+      });
+      if(this.page.url().split("/").pop() !=="search.php"){
+        reject("Was not redirected to search.php");
+      }
+      //if logged in successfully
+      resolve();
+    }catch(e){
+      reject(e);
+    }
+  });
+}
+
+//logout
+userLogout(){
+  return new Promise(async(resolve,reject)=>{
+    try{
+      //logout
+      await this.page.click('a.logoutbtn')[0].catch((reason) => {
+        reject(reason)
+      });
+      //navigate to index.php
+      if(this.page.url().split("/").pop() !=="index.php"){
+        reject("Was not redirected to search.php");
+      }
+      //logged of Successfully
+      resolve();
+    }catch(e){
+      reject(e);
+    }
+  });
+}
 
 //navigate to search page
   startAtSearchPage() {
