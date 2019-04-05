@@ -6,21 +6,36 @@
  *@ingroup		Registartion mixin
  */
 let Test = require('./Test');
-const sqlite3 = require('sqlite3').verbose();
+let RegistrationMixin = require('./../mixin/Registration');
+var Mixin = require('./../mixin/Mixin');
+Mixin.mixin( Test, RegistrationMixin );
+
 class Registration extends Test{
+  toString() {
+    return "Registration";
+  }
+
+  get priority(){
+    return 0;
+  }
+
+  get name(){
+    return "Registration";
+  }
+
  execute(){
 return new Promise(async(resolve,reject)=>{
     try{
 	await this.validateRegistration();
 	await this.deleteFromdB();
-	resolve(this.createResponse(true,"Successfully Registered",0));	
+	resolve(this.createResponse(true,"Successfully Registered",0));
     }catch(e){
 	reject(e);
     }
   });
  }
 
-  validateRegistration(){
+  /*validateRegistration(){
   return new Promise(async(resolve,reject)=>{
     try{
       await this.page.goto(this.DOMAIN, {waitUntil: 'networkidle2'}).catch((reason)=>{reject(`Unable to connect. ${reason}`)});
@@ -52,12 +67,13 @@ return new Promise(async(resolve,reject)=>{
     }
   });
 }
- 
+
  deleteFromdB(){
   return new Promise((resolve,reject)=>{
     try{
+  const sqlite3 = require('sqlite3').verbose();
+  let userdBpath = require('path').resolve(__dirname,'../../../../backend/data/users.sqlite');
 	//open a database connection
-	let userdBpath = require('path').resolve(__dirname,'../../../../backend/data/users.sqlite');
 	let db = new sqlite3.Database(userdBpath,sqlite3.OPEN_READWRITE,(err)=>{
 		if(err)
 			reject(err);
@@ -69,7 +85,7 @@ return new Promise(async(resolve,reject)=>{
 			 reject(err);
 		 console.log("deleted new user");
 	});
-	 //close the connection 
+	 //close the connection
  	db.close((err)=>{
 		if(err)
 			reject(err);
@@ -81,5 +97,6 @@ return new Promise(async(resolve,reject)=>{
      }
     });
   }
+  */
 }
 module.exports = Registration;
