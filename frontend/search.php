@@ -121,7 +121,7 @@
     </div>
 
     <div class="module about-module">
-      <a href="/help.html" target="_blank">Help</a>
+      <a class="helplink"href="/help.html" target="_blank">Help</a>
     </div>
   </div>
 
