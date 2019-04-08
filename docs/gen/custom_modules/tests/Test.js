@@ -58,8 +58,8 @@ class Test {
     return "Test";
   }
 
-  constructor(page, global_data) {
-
+  constructor(page,browser, global_data) {
+    this._browser = browser;
     this._page = page;
     this._DOMAIN = global_data.domain;
     this._SEARCH_PAGE = global_data.search_page;
@@ -148,12 +148,15 @@ userLogout(){
   return new Promise(async(resolve,reject)=>{
     try{
       //logout
-      await this.page.click('a.logoutbtn')[0].catch((reason) => {
+      await this.page.evaluate(`$('a.logoutbtn')[0].click()`).catch((reason) => {
         reject(reason)
       });
+      await this.page.waitForNavigation( {timeout: 5000,waitUntil: 'networkidle2'}).catch(()=>{
+      });
+	
       //navigate to index.php
       if(this.page.url().split("/").pop() !=="index.php"){
-        reject("Was not redirected to search.php");
+        reject("Was not redirected to index.php");
       }
       //logged of Successfully
       resolve();
@@ -171,6 +174,8 @@ userLogout(){
         .catch((reason) => {
 		reject(reason);
         });
+	//await this.userLogin();
+	    
 	    await thisClass.page.goto(thisClass.DOMAIN + thisClass.SEARCH_PAGE, {waitUntil: 'networkidle2'})
         .then((reason) => {
           resolve(reason);
@@ -442,6 +447,10 @@ userLogout(){
 
 
     }
+  }
+
+  get browser(){
+    return this._browser;
   }
 
   get page() {

@@ -31,7 +31,7 @@ class Login extends Test {
         //user login
         await this.userLogin();
         //logout after login
-        await this.userLogout();
+        //await this.userLogout();
         resolve(thisClass.createResponse(true,"Successfully logged in",0));
       }catch(e){
         reject(e);

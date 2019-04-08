@@ -24,19 +24,26 @@ class Help extends Test{
     return new Promise(async(resolve,reject)=>{
       try{
         //navigate to search page
-  			await this.startAtSearchPage().catch((reason)=>{reject(reason)});
+  	await this.startAtSearchPage().catch((reason)=>{reject(reason)});
         //Help link
-        await this.page.click('.module.about-module a.helplink')[0].catch((reason) => {
+        await this.page.evaluate(`$('.module.about-module a.helplink')[0].click()`).catch((reason) => {
           reject(reason)
         });
-        const newPage = await newPagePromise;
-        console.log(newPage);
-        //navigate to help.html
-        if(newPage.url().split("/").pop() !=="help.html"){
-          reject("Was not redirected to help.html");
+	
+        const newTab = await this.browser.newPage();
+	const pages = await this.browser.pages();
+	var flag = false;
+	for(const page of pages){
+	//console.log(page.url());
+	if(page.url().split("/").pop() == "help.html")
+	  flag = true;
+	}
+        //help.html opened in new tab
+        if(!flag){
+          reject("New tab with help.html not opened");
         }
-        newPage.close()
-        resolve(thisClass.createResponse(true,"Successfully navigated to Help page",0));
+        newTab.close()
+        resolve(this.createResponse(true,"Successfully opened the Help page in new tab",0));
       }catch(e){
         reject(e);
       }
