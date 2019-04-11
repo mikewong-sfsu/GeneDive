@@ -22,13 +22,9 @@
     }
     .datasource-list-item .datasource-actions .toggle {
         position: absolute;
-        top: 10px;
+        top: 28px;
         left: 10px;
         width: 100px;
-    }
-
-    .datasource-add-page {
-        display: none;
     }
 
 </style>
@@ -55,6 +51,7 @@
 GeneDive.datasource = {};
 GeneDive.datasource.list = <?php echo base64_decode( $_SESSION[ 'sources' ]) ?>;
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
+
 // ===== INITIALIZE DATASOURCE MANAGER
 var listitem = $( '.datasource-list-item' ).detach();
 GeneDive.datasource.refreshUI = () => {
@@ -73,6 +70,8 @@ GeneDive.datasource.refreshUI();
 let dsm = $( '#datasource-manager' ).detach();
 $( '.datasources' ).off( 'click' ).click(( ev ) => {
     alertify.confirm( 'Data Sources', dsm.html(), 
+
+	// OK button behavior
         () => { 
             GeneDive.datasource.list = $( 'input.datasource-toggle' ).map(( i, item ) => { 
                 let key = $( item ).attr( 'id' ); 
@@ -96,6 +95,8 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
             })
             .fail(( error ) => { console.log( error ); });
         }, 
+
+	// Cancel button behavior
         () => { 
             let datasources = GeneDive.datasource.list.includes( 'all' ) ? [ 'plos-pmc', 'pharmgkb' ] : GeneDive.datasource.list;
             let list        = datasources.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );

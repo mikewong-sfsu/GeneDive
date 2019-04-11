@@ -16,7 +16,7 @@ class Test {
   get FILTER_INPUT(){
     return this._FILTER_INPUT;
   }
- 
+
   get HIGHLIGHT_FILTER() {
     return this._HIGHLIGHT_FILTER;
   }
@@ -36,12 +36,16 @@ class Test {
     return this._LOGIN;
   }
 
+  get registrationDetails(){
+    return this._registrationDetails;
+  }
+
   get DGR() {
     return this._DGR;
   }
   get INTERACTION() {
     return this._INTERACTION;
-  } 	
+  }
   get PAGE_IS_NOT_LOADING() {
     return this._PAGE_IS_NOT_LOADING;
   }
@@ -54,8 +58,8 @@ class Test {
     return "Test";
   }
 
-  constructor(page, global_data) {
-
+  constructor(page,browser, global_data) {
+    this._browser = browser;
     this._page = page;
     this._DOMAIN = global_data.domain;
     this._SEARCH_PAGE = global_data.search_page;
@@ -70,9 +74,9 @@ class Test {
     this._HIGHLIGHT_FILTER = ".highlight-input";
     this._MIN_SCORE = ".min-prob-slider";
     this._FILTER_INPUT = ".filter-input";
-
+    this._registrationDetails = global_data.register;
     this._INTERACTION = "1hop";//to do : get value from json file
-    this._DGR = ["SRA","HDAC1"];
+    this._DGR = ["SRAG","NXF1"];
 
   }
   /**
@@ -113,7 +117,56 @@ class Test {
       reject("The Test class must be inherited for implementation.");
     })
   }
+//LOGIN
+userLogin(){
+  return new Promise(async(resolve,reject)=>{
+    try{
+      console.log("Connecting to " + this.DOMAIN);
+      await this.page.goto(this.DOMAIN, {waitUntil: 'networkidle2'}).catch((reason)=>{reject(`Unable to connect. ${reason}`)});
+      if (this.LOGIN === undefined || this.PASSWORD === undefined)
+        reject("Login or Password not set");
+      await this.page.click("input#email");
+      await this.page.keyboard.type(this.LOGIN, {delay:this._TYPING_SPEED});
+      await this.page.click("input#password");
+      await this.page.keyboard.type(this.PASSWORD, {delay:this._TYPING_SPEED});
+      await this.page.click("button");
+      await this.page.waitForNavigation( {timeout: 5000,waitUntil: 'networkidle2'}).catch(()=>{
+      });
+      if(this.page.url().split("/").pop() !=="search.php"){
+        reject("Was not redirected to search.php");
+      }
+      //if logged in successfully
+      resolve();
+    }catch(e){
+      reject(e);
+    }
+  });
+}
 
+//logout
+userLogout(){
+  return new Promise(async(resolve,reject)=>{
+    try{
+      //logout
+      await this.page.evaluate(`$('a.logoutbtn')[0].click()`).catch((reason) => {
+        reject(reason)
+      });
+      await this.page.waitForNavigation( {timeout: 5000,waitUntil: 'networkidle2'}).catch(()=>{
+      });
+	
+      //navigate to index.php
+      if(this.page.url().split("/").pop() !=="index.php"){
+        reject("Was not redirected to index.php");
+      }
+      //logged of Successfully
+      resolve();
+    }catch(e){
+      reject(e);
+    }
+  });
+}
+
+//navigate to search page
   startAtSearchPage() {
     const thisClass = this;
     return new Promise(async function (resolve, reject) {
@@ -121,6 +174,8 @@ class Test {
         .catch((reason) => {
 		reject(reason);
         });
+	//await this.userLogin();
+	    
 	    await thisClass.page.goto(thisClass.DOMAIN + thisClass.SEARCH_PAGE, {waitUntil: 'networkidle2'})
         .then((reason) => {
           resolve(reason);
@@ -131,7 +186,7 @@ class Test {
     })
 
   }
-
+//search method
   searchDGRs(dgrs, type) {
     const SEARCH_FIELD = ".search-input";
     const ALLOWED_TYPES = {"clique": true, "1hop": true, "2hop": true, "3hop": true,};
@@ -160,12 +215,11 @@ class Test {
           await thisClass.page.click(SEARCH_FIELD).catch((reason) => {reject(reason);}); // click on element
  // Will try to input the search text over and over until it finally fills it in, or 5 tries have passed
     for (let j = 0; !fieldHasCorrectValue && j < 5; j++) {
-	  await thisClass.page.type(SEARCH_FIELD,dgr,{delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters 
-	    fieldHasCorrectValue = await thisClass.page.evaluate((e) => document.querySelector(e).value, SEARCH_FIELD) === dgr;
+	     await thisClass.page.type(SEARCH_FIELD,dgr,{delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters
+	     fieldHasCorrectValue = await thisClass.page.evaluate((e) => document.querySelector(e).value, SEARCH_FIELD) === dgr;
 	     if(fieldHasCorrectValue)
-		    break;
-	    await thisClass.page.waitFor(30); // Wait a few seconds for autocomplete
-	    
+		     break;
+	     await thisClass.page.waitFor(30); // Wait a few seconds for autocomplete
 	       }
 
         // If it still couldn't enter the value
@@ -175,35 +229,16 @@ class Test {
         thisClass.page.keyboard.press('Enter').catch((reason) => {
           reject(reason);
         });
-        await thisClass.page.waitFor(100);
+        await thisClass.page.waitFor(100);//wait for page to load
         await thisClass.waitForPageToFinishLoading().catch((reason) => {
           reject(reason);
         });
-
       }
-
       resolve(`Completed ${type} search of ${dgrs}`);
-
     });
   }
 
-  screenShotEntirePage(filename) {
-    const thisClass = this;
-    const screenshot_location = this.SCREENSHOTS_FOLDER + filename;
-    return new Promise(async function (resolve, reject) {
-      let element = await thisClass.page.$('.main-display').catch((reason) => {
-        reject(reason)
-      });
-      element.screenshot({path: screenshot_location})
-        .then((reason) => {
-          resolve(reason);
-        })
-        .catch((reason) => {
-          reject(reason);
-        });
-    });
-  } 
-
+//Graph - click on node
   clickOnNodeInGraph(nodeName) {
     const PAGE = this.page;
 
@@ -259,43 +294,7 @@ class Test {
       resolve(`Node ${nodeName} clicked`)
     })
   }
-
-  highlightText(text, clear){
-    const thisClass = this;
-
-
-    // By default, the field will be cleared
-    if(clear === undefined)
-      clear = true;
-
-
-    return new Promise(async function (resolve, reject) {
-
-      // Clear field
-      if(clear)
-        await thisClass.page.evaluate((e) => {
-          document.querySelector(e).value = ""
-        }, thisClass.HIGHLIGHT_FILTER);
-
-      // Get current value
-      let currentFilterValue = await thisClass.page.evaluate(
-        (filter) => {return $(filter).val()}, thisClass.HIGHLIGHT_FILTER
-      ).catch((reason) => {reject(reason);});
-
-      // click the field and type in
-      await thisClass.page.click(thisClass.HIGHLIGHT_FILTER).catch((reason) => {reject(reason);});
-      await thisClass.page.keyboard.type(text, {delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters
-      let newValue = await thisClass.page.evaluate(
-        (filter) => {return $(filter).val()}, thisClass.HIGHLIGHT_FILTER
-      ).catch((reason) => {reject(reason);});
-
-      if(newValue !== currentFilterValue + text)
-        reject(`When typing in  "${text}", the final value in the field didn't match`);
-      resolve("Correct value typed in filter");
-    });
-
-  }
-
+//get table of contents
   getTableContents() {
     return this.page.evaluate(
       (table) => {
@@ -340,36 +339,94 @@ class Test {
     )
   }
 
-
+//wait for page to load
   waitForPageToFinishLoading() {
     return this.page.waitForFunction(this.PAGE_IS_NOT_LOADING);
   }
 
-  goBackInHistory() {
-    const thisClass = this;
-    const UNDO_BUTTON = ".module button.undo";
-    return new Promise(async function (resolve, reject) {
+  //highlight rows in table
+    highlightText(text, clear){
+      const thisClass = this;
+      // By default, the field will be cleared
+      if(clear === undefined)
+        clear = true;
 
+      return new Promise(async function (resolve, reject) {
+        // Clear field
+        if(clear)
+          await thisClass.page.evaluate((e) => {
+            document.querySelector(e).value = ""
+          }, thisClass.HIGHLIGHT_FILTER);
+
+        // Get current value
+        let currentFilterValue = await thisClass.page.evaluate(
+          (filter) => {return $(filter).val()}, thisClass.HIGHLIGHT_FILTER
+        ).catch((reason) => {reject(reason);});
+
+        // click the field and type in
+        await thisClass.page.click(thisClass.HIGHLIGHT_FILTER).catch((reason) => {reject(reason);});
+        await thisClass.page.keyboard.type(text, {delay: thisClass._TYPING_SPEED}).catch((reason) => {reject(reason);}); // type in characters
+        let newValue = await thisClass.page.evaluate(
+          (filter) => {return $(filter).val()}, thisClass.HIGHLIGHT_FILTER
+        ).catch((reason) => {reject(reason);});
+
+        if(newValue !== currentFilterValue + text)
+          reject(`When typing in  "${text}", the final value in the field didn't match`);
+        resolve("Correct value typed in filter");
+      });
+    }
+
+  //navigate back - undo
+  goBackInHistory() {
+    const UNDO_BUTTON = ".btn.undo";
+    const thisClass = this;
+    return new Promise(async function (resolve, reject) {
       // if the button isn't disabled, click it and return true
-      if(await thisClass.page.evaluate(`!$("${UNDO_BUTTON}")[0].disabled`))
+      let flag = await thisClass.page.evaluate(`!$("${UNDO_BUTTON}")[0].disabled`);
+      if(flag)
       {
         await thisClass.page.click(UNDO_BUTTON).catch((reason)=>{reject(reason)});
-        resolve(true);
       }
-      // if the button is disabled, return false
-        resolve(false);
+      // if the button is disabled, return false else true
+        resolve(flag);
     });
   }
 
-  canGoBackInHistory(){
-    const UNDO_BUTTON = ".btn.undo";
 
-  }
-
+  //navigate forward - redo
   goForwardInHistory() {
-    return this.page.click(".module button.redo");
-    // return this.page.evaluate("GeneDive.goForwardInStateHistory()");
-  }
+      const REDO_BUTTON = ".btn.redo";
+      const thisClass = this;
+      return new Promise(async function (resolve, reject) {
+
+        // if the button isn't disabled, click it and return true
+        if(await thisClass.page.evaluate(`!$("${REDO_BUTTON}")[0].disabled`))
+        {
+          await thisClass.page.click(REDO_BUTTON).catch((reason)=>{reject(reason)});
+          resolve(true);
+        }
+        // if the button is disabled, return false else true
+          resolve(false);
+      });
+    }
+
+    //take screenshot of the page
+      screenShotEntirePage(filename) {
+        const thisClass = this;
+        const screenshot_location = this.SCREENSHOTS_FOLDER + filename;
+        return new Promise(async function (resolve, reject) {
+          let element = await thisClass.page.$('.main-display').catch((reason) => {
+            reject(reason)
+          });
+          element.screenshot({path: screenshot_location})
+            .then((reason) => {
+              resolve(reason);
+            })
+            .catch((reason) => {
+              reject(reason);
+            });
+        });
+      }
 
   /**
    * Creates the response to send back. The data sent back should contain Timestamp, Test Name, Error message and code,
@@ -390,6 +447,10 @@ class Test {
 
 
     }
+  }
+
+  get browser(){
+    return this._browser;
   }
 
   get page() {

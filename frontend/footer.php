@@ -79,7 +79,7 @@
     <!-- Core Controller -->
     <script src="static/genedive/controller.js?random=<?php echo $random_string; ?>"></script>
 
-    <?php include( 'datasource/manager.php' ) ?>
+    <?php include( 'datasource/select.php' ) ?>
 
   </body>
 </html>

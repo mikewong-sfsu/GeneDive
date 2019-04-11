@@ -117,11 +117,11 @@
       <button type="button" data-toggle="tooltip-initial" data-placement="top" title="Download the current graph image, the current state, state history, and a CSV of the interactions." class="btn btn-default download" disabled>Download Results</button>
       <button type="button" class="btn btn-default upload">Upload Results</button>
       <button type="button" class="btn btn-default datasources">Select Data Sources</button>
-      <a class="btn btn-block btn-default datasource-add" href="datasource/add.php" target="_blank">Add a Data Source</a>
+      <a class="btn btn-block btn-default datasource-add" href="datasource/manage.php" target="_blank">Add or Remove Data Sources</a>
     </div>
 
     <div class="module about-module">
-      <a href="/help.html" target="_blank">Help</a>
+      <a class="helplink"href="/help.html" target="_blank">Help</a>
     </div>
   </div>
 
@@ -129,6 +129,7 @@
 
     <!-- Table View -->
     <div class="table-view ui-widget-content panel-top">
+      <div class="logout"><b>Welcome User,</b><span style="float:right;"><a class="logoutbtn" href="?logout"><b>Logout</b></a></span></div>
       <div class="messaging-and-controls require-dgr-search">
         <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
         <span class="metadata"></span>

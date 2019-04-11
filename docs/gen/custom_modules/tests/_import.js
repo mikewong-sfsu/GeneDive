@@ -14,7 +14,7 @@ let path = require('path');
 
 // These file names will be skipped
 // path.parse(__filename).name is this file
-const IGNORED_NAMES = [path.parse(__filename).name, "Test",];
+const IGNORED_NAMES = [path.parse(__filename).name, "Test","Interactions","Mixins","Undo_Redo_mixin"];
 
 // The location to import from.
 // __dirname is the location of this file.

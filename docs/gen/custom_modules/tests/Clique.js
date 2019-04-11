@@ -1,5 +1,14 @@
+/**
+ *@class			Clique
+ *@breif			interaction mode - clique
+ *@details
+ *@authors		Nayana Laxmeshwar	nlaxmeshwar@mail.sfsu.edu
+ *@ingroup		
+ */
 let Test = require('./Test');
-
+let Interactions = require('./../mixin/Interactions');
+var Mixin = require('./../mixin/Mixin');
+Mixin.mixin( Test, Interactions, "checkClique" );
 class Clique extends Test{
 
   toString(){
@@ -16,19 +25,14 @@ class Clique extends Test{
 
   execute(){
   const EVALUATE_SETS = "$('.search-item').length";
-  const tableCol = ["DGR1","DGR2"];
   const DGR = ["SRAG"];
-	
+
   return new Promise(async(resolve,reject)=>{
 		try{
 			let rejectReason = "";
 			//navigate to search page
 			await this.startAtSearchPage().catch((reason)=>{reject(reason)});
-			//check the type of interactions
-			//temporary fix
-			//for(let i in this.DGR){
-				await this.searchDGRs(DGR,"clique").catch((reason)=>{reject(reason)});
-			//}
+			await this.searchDGRs(DGR,"clique").catch((reason)=>{reject(reason)});
 			//count the DGR
 			let numberOfDGR = await this.page.evaluate(EVALUATE_SETS).catch((reason)=>{reject(reason)});
 			if(numberOfDGR !== DGR.length){
@@ -46,47 +50,6 @@ class Clique extends Test{
 			reject(this.createResponse(false,e,this.priority));
 		}
 	})
-	}
-
-
-	//clique test
-	checkClique(DGR,tableContents){
-	const tableCol = ["DGR1","DGR2"];
-		return new Promise((resolve,reject)=>{
-			try{
-				if(DGR.length > 1)
-					reject("Clique mode limited to 1 gene");
-				var foundFlag = false;
-				var directInteraction = new Set();
-				directInteraction.add(DGR[0]);
-				//find all the direct interactions with the given Gene
-				for(let row in tableContents){
-					//check if the given gene is in DGR1
-					if(tableContents[row][tableCol[0]].indexOf(DGR[0])!== -1){
-						directInteraction.add(tableContents[row][tableCol[1]]);
-						tableContents[row][tableCol[0]] = DGR[0];
-					}
-					//check if the given gene is in DGR2
-					else if(tableContents[row][tableCol[1]].indexOf(DGR[0])!== -1){
-						directInteraction.add(tableContents[row][tableCol[0]]);
-						tableContents[row][tableCol[1]] = DGR[0];
-					}
-				}
-				//find all the interactions of the interactants
-				for(let row in tableContents){
-				//check if any of the genes are other than the DGR or its interactants
-				if(!(directInteraction.has(tableContents[row][tableCol[1]]) ||
-							directInteraction.has(tableContents[row][tableCol[0]]))){
-					reject("Invalid interactions found");
-				}
-				}
-				//test passed successfully
-				resolve();
-			}catch(e){
-				console.log(e);
-				reject(e);
-			}
-		});
 	}
 
 }

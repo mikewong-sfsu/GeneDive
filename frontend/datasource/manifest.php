@@ -36,4 +36,52 @@ function write_manifest( $manifest ) {
 	fwrite( $fp, $content );
 	fclose( $fp );
 }
+
+// ============================================================
+function add_datasource( $manifest, $datasource ) {
+// ============================================================
+	global $DATASOURCES;
+	$path = $DATASOURCES . '/' . $datasource[ 'path' ];
+	$file = $path . '/data.csv';
+	if( ! file_exists( $path )) {
+		mkdir( $path );
+		chmod( $path, 0777 );
+	}
+	move_uploaded_file( $_FILES[ 'dsfile' ][ 'tmp_name' ], $file );
+
+	echo "Importing data...<br><ul>\n";
+	echo `/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1`;
+	echo "</ul>\n";
+
+	echo "Loading data into database...<br>";
+	$sqlite = `/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql`;
+	if( $sqlite ) {
+		var_dump( $import );
+		exit( 1 );
+	}
+
+	echo "Updating manifest...<br>";
+	$id = $datasource[ 'id' ];
+	$manifest[ $id ] = $datasource;
+	write_manifest( $manifest );
+
+	echo "<script>setTimeout(() => { window.location = '/search.php'; }, 2500 );</script>";
+}
+
+// ============================================================
+function remove_datasource( $manifest, $datasource_id ) {
+// ============================================================
+	global $DATASOURCES;
+	if( ! in_array( $datasource_id, $manifest )) {
+		return;
+	}
+	$datasource = $manifest[ $datasource_id ];
+
+	$path = $DATASOURCES . '/' . $datasource[ 'path' ];
+	system( "rm -rf $path" );
+	unset( $manifest[ $datasource_id ]);
+
+	write_manifest( $manifest );
+}
+
 ?>
