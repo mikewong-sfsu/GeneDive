@@ -1,85 +1,83 @@
-/**
- *@class			OneHop
- *@breif			OneHop regression test
- *@details
- *@authors		Nayana Laxmeshwar	nlaxmeshwar@mail.sfsu.edu
- *@ingroup		regression testing
- */
-let Test = require('./Test');
-//let Mixin = require('mixin-deep');
-let Mixin = require('./../mixin/Mixin');
-let Interactions = require('./../mixin/Interactions');
- Mixin.mixin( Test, Interactions, "checkOneHop" );
-//Mixin(Test,Interactions,ConfidenceScore);
-//Object.assign(Test.prototype, Interactions); //does not identify the fucntions in Interactions
-//Interactions.call(Test.prototype); needs invocking object instance with new
-class Onehop extends Test{
 
+/**
+ @class		OneHopTest
+ @brief		Test the one hop for gene and report errors
+ @details
+ @authors	Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
+ @ingroup	tests
+*/
+
+let Test = require('./Test');
+
+class OneHop extends Test {
   toString(){
-  return "1-Hop";
-	}
+    return "OneHop"
+  }
 
   get priority(){
-  return 0;
-	}
+    return 0;
+  }
 
   get name(){
-  return "1-Hop";
-	}
-//test method execution
-  execute(){
-  const EVALUATE_SETS = "$('.search-item').length";
-  return new Promise(async(resolve,reject)=>{
-		try{
-			let rejectReason = "";
-			//navigate to search page
-			await this.startAtSearchPage().catch((reason)=>{reject(reason)});
-			//check the type of interactions
-			for(let i in this.DGR){
-				await this.searchDGRs([this.DGR[i]],"1hop").catch((reason)=>{reject(reason)});
-			}
-			//count the DGR
-			let numberOfDGR = await this.page.evaluate(EVALUATE_SETS).catch((reason)=>{reject(reason)});
-			if(numberOfDGR !== this.DGR.length){
-				let reason = `Test Failed:expected ${this.DGR.length} DGR, ${numberOfDGR} found`;
-				reject(this.createResponse(false,reason,this.priority));
-			}
-			//get table of contents
-			let tableContents = await this.getTableContents().catch((reason)=>{reject(reason)});
-      //test 1-hop
-			await this.checkOneHop(this.DGR,tableContents).catch((reason)=>{reject(reason)});
-      //test ConfidenceScore
-      await this.checkConfidence().catch((reason)=>{reject(reason)});
-      //test undo/redo
-      //test undo
-					var undo = await this.goBackInHistory().catch((reason)=>{reject(reason)});
+    return "OneHop";
+  }
 
-					if(undo){
-					var minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
-								.catch((reason)=>{reject(reason)})
-					if(minScore != 0.85)
-						reject('Undo is not working correctly');
-				  //test redo
-					var redo = 	await this.goForwardInHistory().catch((reason)=>{reject(reason)});
-          if(redo){
-					minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
-								.catch((reason)=>{reject(reason)})
-					if(minScore != 0.95)
-						reject('Redo is not working correctly');
-          }
-				}
-				else{
-						reject('Undo is not working correctly');
-				}
-			//test passed
-			resolve(this.createResponse(true,`Tested 1-Hop successfully`,this.priority));
-		}catch(e){
-		  console.log(e);
-			//test failed
-			reject(this.createResponse(false,e,this.priority));
-		}
-	})
+  execute(){
+    const thisClass = this;
+    const PAGE = this.page;
+    const HOP = "1hop";
+    const DGR = ["SFTPA1","SFTPA2"];
+    const EVALUATE_SETS = "$('.search-item').length"
+    const TEST_FIELDS = ["DGR1","DGR2","Max Conf Scr","Sample Excerpt"];
+    const SEARCH_EXCERPT = "Sample Excerpt";
+    return new Promise(async (resolve,reject) =>{
+      try{
+	await this.startAtSearchPage().catch((reason)=>{reject(reason)});
+	//loop through the set of DGRS
+	let i,numberOfDGR;
+	for(i in DGR){
+	  await this.searchDGRs([DGR[i]],HOP).catch((reason)=>{reject(reason)});
+	  //check result of the DGR pair
+	  numberOfDGR = await this.page.evaluate(EVALUATE_SETS).catch((reason)=>{reject(reason)});
 	}
+	if(numberOfDGR !== DGR.length){
+	  reject(`Test Failed : There should be atleast 1 DGR being searched on adding to set.${numberOfDGR} were found.`);
+	}
+	let minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE).catch((reason)=>{reject(reason)});
+	//get table values for filtering
+	let tableContents = await this.getTableContents().catch((reason)=>{reject(reason)});
+	//loop through the table and filter based on excerpt
+	var row,col;
+	for(row in tableContents){
+	  for(col in TEST_FIELDS){
+	    let content = tableContents[row][TEST_FIELDS[col]];
+	    //check if the filter value are all greater than minimum confidence
+	    if(col == 2 && content < minScore)
+		reject("Confidence Score less than Minimum confidence Score");
+ 	    //check value is highlighted based on highlight filter
+	    if(col == 3){
+	    content = content.split(" ")[0];
+	    await this.highlightText(content);
+	    //check if the row is highlighted
+	    if(await this.isRowHighlighted(row).catch((reason)=>{reject(reason)}))
+	      reject(`Highlight did not work on row ${row} when typing in ${content}`);
+	    }
+	  }
+	}
+	resolve(this.createResponse(true,"successfully tested OneHop filter",0));
+
+      }catch(e){
+	console.log(e);
+	reject(e);
+      }
+    });
+  }
+  isRowHighlighted(row){
+    const HIGHLIGHT_ROW = ".highlight-row";
+    return this.page.evaluate((table,highlightRow,row)=>{
+	    return $(table)[0].rows[row].classList.contains(highlightRow);
+ 	    },this.TABLE_ELEMENT,HIGHLIGHT_ROW,row);
+  }
 }
 
-module.exports = Onehop;
+module.exports = OneHop
