@@ -27,7 +27,7 @@ class RegressionTest extends Test {
 
     execute() {
 
-        const DGR = ['SP-A', 'TINO'];
+        const DGR = ['SP-A', 'Tino'];
         const thisClass = this;
         const PAGE = this.page;
         const TYPE = 'not'; //TYPE specifies if the article is to be filtered by IS or NOT
@@ -50,7 +50,7 @@ class RegressionTest extends Test {
                 const test = new Test_Mixin();
 
                 await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
-                await thisClass.searchDGRs([DGR], "1hop").catch((reason) => { reject(reason) });
+                await thisClass.searchDGRs(DGR, "1hop").catch((reason) => { reject(reason) });
         
                 // await test.validateFilter_Article(PAGE).catch((reason) => { reject(reason) });
                 //  await test.validateFilter_Excerpt(PAGE, 'xyz').catch((reason) => { reject(reason) });
@@ -58,7 +58,9 @@ class RegressionTest extends Test {
                 //  await test.validateFilter_DGR(PAGE).catch((reason) => { reject(reason) });
 
                 // await test.validateHighlight(PAGE, 'antioxidant').catch((reason)=> {reject(reason)});
-                await test.validateGroupBy_DGRPair(PAGE).catch((reason)=> {reject(reason)});
+                await test.validateGroupBy_Article(PAGE, DGR).catch((reason) => { reject(reason) });
+                await test.validateGroupBy_DGRPair(PAGE, DGR).catch((reason)=> {reject(reason)});
+                
 
 
                 
