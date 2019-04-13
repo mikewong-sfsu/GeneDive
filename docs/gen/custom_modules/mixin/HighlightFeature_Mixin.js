@@ -23,15 +23,12 @@ class HighlightFeature_Mixin {
   }
 
 
-  validateHighlight(page, searchText){
-    const PAGE = this.page;
-    const SEARCH_TEXT = this.searchText;
-
+  validateHighlight(PAGE, SEARCH_TEXT){
 
     return new Promise(async (resolve, reject) => {
       try {
         await PAGE.click('body > div.main-display > div.control-view > div.module.highlight-module.require-dgr-search > input');
-        await PAGE.keyboard.type(SEARCH_TEXT, { delay: thisClass._TYPING_SPEED });
+        await PAGE.keyboard.type(SEARCH_TEXT, { delay: 20 });
         PAGE.keyboard.down('Enter');
 
 
@@ -66,9 +63,9 @@ class HighlightFeature_Mixin {
         }
 
         if (validRowsFormat) {
-          resolve(thisClass.createResponse(true, "Test Passed", 0));
+          resolve();
         } else {
-          reject(`Test failed: One or more highlighted row do not contain the search keyword`);
+          reject('Highlight Feature Mixin: One or more highlighted row do not contain the search keyword');
         }
       }
       catch (e) {

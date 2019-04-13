@@ -14,24 +14,11 @@ class GroupByFeature_Mixin {
     return "GroupByFeature_Mixin";
   }
 
-  constructor(page, dgrs) {
-    this.PAGE = page;
-    this.DGRs = dgrs
-  }
 
-  validateGroupBy_DGRPair() {
-    const PAGE = this.PAGE;
-    const DGRs = this.DGRs;
-
+  validateGroupBy_DGRPair(PAGE, DGRs) {
     return new Promise(async (resolve, reject) => {
-
       try {
-
-        // await thisClass.startAtSearchPage().catch((reason) => { reject(reason); });
-        // await thisClass.searchDGRs(DGRs, '1hop').catch((reason) => { reject(reason); });
-
         const rowLength = await PAGE.evaluate(`$('tr.grouped').length`).catch((reason) => { reject(reason); });
-
 
         const containData = (dgrs) => {
           const rows = document.querySelectorAll('table>tbody>tr');
@@ -64,9 +51,9 @@ class GroupByFeature_Mixin {
         }
 
         if (validRowsFormat) {
-          resolve(thisClass.createResponse(true, 'Test Passed', 0));
+          resolve('Group By DGRPair Test Passed');
         } else {
-          reject('Test failed: One or more row does not contain the selected DGR Pair');
+          reject('Group By DGRPair: One or more row does not contain the selected DGR Pair');
         }
       }
       catch (e) {
@@ -78,15 +65,11 @@ class GroupByFeature_Mixin {
   }
 
 
-  validateGroupBy_Article() {
-    const PAGE = this.PAGE;
-    const DGRs = this.DGRs;
+  validateGroupBy_Article(PAGE, DGRs) {
 
     return new Promise(async (resolve, reject) => {
 
       try {
-        // await thisClass.startAtSearchPage().catch((reason) => { reject(reason); });
-        // await thisClass.searchDGRs(DGRs, '1hop').catch((reason) => { reject(reason); });
         await PAGE.click('body > div.main-display > div.control-view > div.module.grouper-module.require-dgr-search > div.btn-group.table-grouping > button:nth-child(2)');
         const rowLength = await PAGE.evaluate(`$('tr.grouped').length`).catch((reason) => { reject(reason); });
 
@@ -139,9 +122,9 @@ class GroupByFeature_Mixin {
         }
 
         if (validRowsFormat) {
-          resolve(thisClass.createResponse(true, 'Test Passed', 0));
+          resolve('Group By Article Test Passed');
         } else {
-          reject('Test failed: One or more row is not grouped by article id for the selected DGR Pair');
+          reject('Group By Article: One or more row is not grouped by article id for the selected DGR Pair');
         }
       }
       catch (e) {

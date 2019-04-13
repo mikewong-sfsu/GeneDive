@@ -11,27 +11,25 @@
 class FilterFeature_Mixin {
 
   toString() {
-    return "Filter Test By Article"
+    return "FilterFeature_Mixin"
   }
 
   get name() {
-    return "Filter Test By Article";
+    return "FilterFeature_Mixin";
   }
 
-  constructor(page) {
-    this.PAGE = page;
-  }
+  // constructor(page) {
+  //   this.PAGE = page;
+  //   // this.TYPING_SPEED = 30;
+  // }
 
-  validateFilter_Article(page, type='is'){
-
-    const PAGE = this.PAGE
-    this.TYPE = type;
+  validateFilter_Article(PAGE, type = 'is',){
 
     return new Promise(async (resolve, reject) => {
       try {
 
-        // await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
-        // await thisClass.searchDGRs([DGR], "1hop").catch((reason) => { reject(reason) });
+        // console.log('INSIDE PROMISE PAGE:', PAGE);
+
         await PAGE.select('.filter-select', 'Article');
 
         const containData = (articleId, type) => {
@@ -50,7 +48,7 @@ class FilterFeature_Mixin {
           return true;
         };
 
-        if (TYPE !== 'not') {
+        if (type !== 'not') {
           await PAGE.click('#add-filter > div.input-group.filter-input-group > span > button');
         } else {
           await PAGE.click('#add-filter > div.top-row > div > span:nth-child(2) > input[type="radio"]');
@@ -66,7 +64,7 @@ class FilterFeature_Mixin {
         for (let rowNum = 0; rowNum < rowLength; rowNum++) {
           await PAGE.evaluate(`$('tr.grouped')[${rowNum}].click();`).catch((reason) => { reject(reason) });
 
-          validRowsFormat = await PAGE.evaluate(containData, articleId, TYPE).catch((reason) => { reject(reason) });
+          validRowsFormat = await PAGE.evaluate(containData, articleId, type).catch((reason) => { reject(reason) });
 
           if (!validRowsFormat) {
             break;
@@ -76,9 +74,9 @@ class FilterFeature_Mixin {
         }
 
         if (validRowsFormat) {
-          resolve(thisClass.createResponse(true, "Test Passed", 0));
+          resolve();
         } else {
-          reject(`Test failed: No row contains the selected article id`);
+          reject('ValidateFilter_Article: No row contains the selected article id');
         }
       }
       catch (e) {
@@ -90,13 +88,10 @@ class FilterFeature_Mixin {
 
 
 
-  validateFilter_DGR(page, type = 'is'){
-    this.TYPE = type;
-
+  validateFilter_DGR(PAGE, type = 'is'){
+    
     return new Promise(async (resolve, reject) => {
       try {
-        // await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
-        // await thisClass.searchDGRs([DGR], "1hop").catch((reason) => { reject(reason) });
 
         await PAGE.select('.filter-select', 'DGR');
 
@@ -113,7 +108,7 @@ class FilterFeature_Mixin {
           return true;
         };
 
-        if (TYPE !== 'not') {
+        if (type !== 'not') {
           await PAGE.click('#add-filter > div.input-group.filter-input-group > span > button');
         } else {
           await PAGE.click('#add-filter > div.top-row > div > span:nth-child(2) > input[type="radio"]');
@@ -129,7 +124,7 @@ class FilterFeature_Mixin {
         let validRowsFormat = true;
         for (let rowNum = 0; rowNum < rowLength; rowNum++) {
           await PAGE.evaluate(`$('tr.grouped')[${rowNum}].click();`).catch((reason) => { reject(reason) });
-          validRowsFormat = await PAGE.evaluate(containData, dgr, TYPE).catch((reason) => { reject(reason) });
+          validRowsFormat = await PAGE.evaluate(containData, dgr, type).catch((reason) => { reject(reason) });
           if (!validRowsFormat) {
             break;
           }
@@ -139,9 +134,9 @@ class FilterFeature_Mixin {
 
 
         if (validRowsFormat) {
-          resolve(thisClass.createResponse(true, "Test Passed", 0));
+          resolve('Test Passed');
         } else {
-          reject(`Test failed: No row contains the selected DGR`);
+          reject('ValidateFilter_DGR: No row contains the selected DGR');
         }
       }
       catch (e) {
@@ -152,9 +147,7 @@ class FilterFeature_Mixin {
   }
 
 
-  validateFilter_Journal(page, type = 'is'){
-    this.TYPE = type;
-
+  validateFilter_Journal(PAGE, type = 'is'){
     return new Promise(async (resolve, reject) => {
       try {
 
@@ -177,7 +170,7 @@ class FilterFeature_Mixin {
         };
 
 
-        if (TYPE !== 'not') {
+        if (type !== 'not') {
           await PAGE.click('#add-filter > div.input-group.filter-input-group > span > button');
         } else {
           await PAGE.click('#add-filter > div.top-row > div > span:nth-child(2) > input[type="radio"]');
@@ -192,16 +185,16 @@ class FilterFeature_Mixin {
         //click on every row and check if the child rows contains the selected journal 
         for (let rowNum = 0; rowNum < rowLength; rowNum++) {
           await PAGE.evaluate(`$('tr.grouped')[${rowNum}].click();`).catch((reason) => { reject(reason) });
-          validRowsFormat = await PAGE.evaluate(containData, journal, TYPE).catch((reason) => { reject(reason) });
+          validRowsFormat = await PAGE.evaluate(containData, journal, type).catch((reason) => { reject(reason) });
           if (!validRowsFormat) {
             break;
           }
           await PAGE.evaluate(`$('.go-back').click()`).catch((reason) => { reject(reason) });
         }
         if (validRowsFormat) {
-          resolve(thisClass.createResponse(true, "Test Passed", 0));
+          resolve('Test Passed');
         } else {
-          reject(`Test failed: No row contains the selected Journal id`);
+          reject('ValidateFilter_Journal: No row contains the selected Journal id');
         }
       }
       catch (e) {
@@ -212,14 +205,10 @@ class FilterFeature_Mixin {
 
   }
 
-  validateFilter_Excerpt(page, type = 'is') {
-    this.TYPE = type;
-
+  validateFilter_Excerpt(PAGE, searchWord, type = 'is') {
     return new Promise(async (resolve, reject) => {
       try {
 
-        // await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
-        // await thisClass.searchDGRs([DGR], "1hop").catch((reason) => { reject(reason) });
         await PAGE.select('.filter-select', 'Excerpt');
 
         const containData = (searchWord, type) => {
@@ -236,15 +225,15 @@ class FilterFeature_Mixin {
         };
 
 
-        if (TYPE !== 'not') {
+        if (type !== 'not') {
           await PAGE.click('#add-filter > div.input-group.filter-input-group > input');
         } else {
           await PAGE.click('#add-filter > div.top-row > div > span:nth-child(2) > input[type="radio"]');
           await PAGE.click('#add-filter > div.input-group.filter-input-group > input');
         }
 
-        await PAGE.keyboard.type(searchWord, { delay: thisClass._TYPING_SPEED });
-        // await PAGE.waitFor(1000);
+        await PAGE.keyboard.type(searchWord, { delay: '30' });
+        await PAGE.waitFor(100);
         PAGE.keyboard.down('Enter');
 
         let rowLength = await PAGE.evaluate(`$('tr.grouped').length`).catch((reason) => { reject(reason) });
@@ -252,7 +241,7 @@ class FilterFeature_Mixin {
         //click on every row and check if the child rows contains the search keyword in excerpt.  
         for (let rowNum = 0; rowNum < rowLength; rowNum++) {
           await PAGE.evaluate(`$('tr.grouped')[${rowNum}].click();`).catch((reason) => { reject(reason) });
-          validRowsFormat = await PAGE.evaluate(containData, searchWord, TYPE).catch((reason) => { reject(reason) });
+          validRowsFormat = await PAGE.evaluate(containData, searchWord, type).catch((reason) => { reject(reason) });
           if (!validRowsFormat) {
             break;
           }
@@ -261,9 +250,9 @@ class FilterFeature_Mixin {
 
 
         if (validRowsFormat) {
-          resolve(thisClass.createResponse(true, "Test Passed", 0));
+          resolve('Test Passed', 0);
         } else {
-          reject(`Test failed: No row contains the search keyword in the sample excerpt`);
+          reject('ValidateFilter_Excerpt: No row contains the search keyword in the sample excerpt');
         }
       }
       catch (e) {
