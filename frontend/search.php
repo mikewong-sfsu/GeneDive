@@ -121,7 +121,7 @@
     </div>
 
     <div class="module about-module">
-      <a href="/help.html" target="_blank">Help</a>
+      <a class="helplink"href="/help.html" target="_blank">Help</a>
     </div>
   </div>
 
@@ -129,7 +129,7 @@
 
     <!-- Table View -->
     <div class="table-view ui-widget-content panel-top">
-      <div class="logout"><b>Welcome User,</b><span style="float:right;"><a href="?logout"><b>Logout</b></a></span></div>
+      <div class="logout"><b>Welcome User,</b><span style="float:right;"><a class="logoutbtn" href="?logout"><b>Logout</b></a></span></div>
       <div class="messaging-and-controls require-dgr-search">
         <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
         <span class="metadata"></span>

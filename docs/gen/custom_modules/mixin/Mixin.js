@@ -16,7 +16,8 @@ mixin( targetClass, sourceClass ) {
       }
       // provide all methods
       else {
-          for ( var methodName in sourceClass.prototype ) {
+          for (var methodName of Object.getOwnPropertyNames(sourceClass.prototype)) { //added by Vaishali
+        //   for ( var methodName in sourceClass.prototype ) { //sourceClass.prototype not working 
 
               // check to make sure the receiving class doesn't
               // have a method of the same name as the one currently

@@ -21,9 +21,7 @@ class Registration {
           reject(reason)
         });
         //check if all the inputs are entered
-        console.log(this.registrationDetails);
         for (let i in this.registrationDetails) {
-          console.log(i);
           if (this.registrationDetails[i] === undefined) {
             reject(`${this.registration[i]} is not defined`);
           }
