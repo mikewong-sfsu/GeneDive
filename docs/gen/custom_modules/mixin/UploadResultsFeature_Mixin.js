@@ -9,19 +9,11 @@
 
 class UploadResultsFeature_Mixin {
 
-    toString() {
-        return 'Upload Results Test';
-    }
-
-    get name() {
-        return 'Upload Results Test';
-    }
-
     validateUpload(PAGE) {
 
         const DGR = 'SP-A';
         const HIGHLIGHT = 'TINO';
-        const UploadFile = '/GeneDive-20190220-010302.zip'
+        const UploadFile = '/GeneDive_UploadTest.zip'
         
         return new Promise(async (resolve, reject) => {
             try {

@@ -6,18 +6,15 @@
 */
 class GroupByFeature_Mixin {
 
-  toString() {
-    return "GroupByFeature_Mixin"
-  }
-
-  get name() {
-    return "GroupByFeature_Mixin";
-  }
-
-
   validateGroupBy_DGRPair(PAGE, DGRs) {
     return new Promise(async (resolve, reject) => {
       try {
+
+        if (!DGRs) {
+          reject('validateGroupBy_Article : Please provide DGR pair');
+        }
+
+        await PAGE.click('body > div.main-display > div.control-view > div.module.grouper-module.require-dgr-search > div.btn-group.table-grouping > button:nth-child(1)');
         const rowLength = await PAGE.evaluate(`$('tr.grouped').length`).catch((reason) => { reject(reason); });
 
         const containData = (dgrs) => {
@@ -51,13 +48,13 @@ class GroupByFeature_Mixin {
         }
 
         if (validRowsFormat) {
-          resolve('Group By DGRPair Test Passed');
+          resolve('Group By DGR Pair Test Passed');
         } else {
           reject('Group By DGRPair: One or more row does not contain the selected DGR Pair');
         }
       }
       catch (e) {
-        reject(e);
+        reject(`validateGroupBy_DGRPair: ${e}`);
       }
 
     });
@@ -70,6 +67,11 @@ class GroupByFeature_Mixin {
     return new Promise(async (resolve, reject) => {
 
       try {
+       
+        if (!DGRs) {
+          reject('validateGroupBy_Article : Please provide DGR pair');
+        }
+        
         await PAGE.click('body > div.main-display > div.control-view > div.module.grouper-module.require-dgr-search > div.btn-group.table-grouping > button:nth-child(2)');
         const rowLength = await PAGE.evaluate(`$('tr.grouped').length`).catch((reason) => { reject(reason); });
 
@@ -128,7 +130,7 @@ class GroupByFeature_Mixin {
         }
       }
       catch (e) {
-        reject(e);
+        reject(`validateGroupBy_Article: ${e}`);
       }
 
     });

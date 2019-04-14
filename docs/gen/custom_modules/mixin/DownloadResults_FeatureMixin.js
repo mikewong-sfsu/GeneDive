@@ -11,15 +11,6 @@ let Test = require('./Test');
 
 class DownloadResultsFeature_Mixin extends Test {
 
-    toString() {
-        return 'Download Results Feature_Mixin';
-    }
-
-    get name() {
-        return 'Download Results Feature_Mixin';
-    }
-
-
     validateHighlight(page){
         const PAGE = this.page;
 

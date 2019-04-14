@@ -10,19 +10,6 @@
 
 class FilterFeature_Mixin {
 
-  toString() {
-    return "FilterFeature_Mixin"
-  }
-
-  get name() {
-    return "FilterFeature_Mixin";
-  }
-
-  // constructor(page) {
-  //   this.PAGE = page;
-  //   // this.TYPING_SPEED = 30;
-  // }
-
   validateFilter_Article(PAGE, type = 'is',){
 
     return new Promise(async (resolve, reject) => {
@@ -74,13 +61,15 @@ class FilterFeature_Mixin {
         }
 
         if (validRowsFormat) {
+          await PAGE.evaluate(`$('body > div.main-display > div.control-view > div.module.filter-module.require-dgr-search > div > div > i').click()`).catch((reason) => { reject(reason)});
+          // await PAGE.waitFor(3000);
           resolve();
         } else {
           reject('ValidateFilter_Article: No row contains the selected article id');
         }
       }
       catch (e) {
-        reject(e);
+        reject(`ValidateFilter_Article: ${e}`);
       }
 
     });
@@ -134,13 +123,15 @@ class FilterFeature_Mixin {
 
 
         if (validRowsFormat) {
-          resolve('Test Passed');
+          await PAGE.evaluate(`$('body > div.main-display > div.control-view > div.module.filter-module.require-dgr-search > div > div > i').click()`).catch((reason) => { reject(reason) });          
+          // await PAGE.waitFor(3000);
+          resolve();
         } else {
           reject('ValidateFilter_DGR: No row contains the selected DGR');
         }
       }
       catch (e) {
-        reject(e);
+        reject(`ValidateFilter_DGR: ${e}`);
       }
     });
 
@@ -189,13 +180,15 @@ class FilterFeature_Mixin {
           await PAGE.evaluate(`$('.go-back').click()`).catch((reason) => { reject(reason) });
         }
         if (validRowsFormat) {
-          resolve('Test Passed');
+          await PAGE.evaluate(`$('body > div.main-display > div.control-view > div.module.filter-module.require-dgr-search > div > div > i').click()`).catch((reason) => { reject(reason) });          
+          // await PAGE.waitFor(3000);
+          resolve();
         } else {
           reject('ValidateFilter_Journal: No row contains the selected Journal id');
         }
       }
       catch (e) {
-        reject(e);
+        reject(`ValidateFilter_Journal: ${e}`);
       }
 
     });
@@ -247,13 +240,15 @@ class FilterFeature_Mixin {
 
 
         if (validRowsFormat) {
-          resolve('Test Passed', 0);
+          await PAGE.evaluate(`$('body > div.main-display > div.control-view > div.module.filter-module.require-dgr-search > div > div > i').click()`).catch((reason) => { reject(reason) });          
+          // await PAGE.waitFor(3000);
+          resolve();
         } else {
           reject('ValidateFilter_Excerpt: No row contains the search keyword in the sample excerpt');
         }
       }
       catch (e) {
-        reject(e);
+        reject(`ValidateFilter_Excerpt: ${e}`);
       }
 
     });

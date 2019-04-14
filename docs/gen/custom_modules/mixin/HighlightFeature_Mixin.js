@@ -10,33 +10,22 @@
 
 class HighlightFeature_Mixin {
 
-  toString() {
-    return 'Highlight Feature Mixin'
-  }
-
-  get priority() {
-    return 0;
-  }
-
-  get name() {
-    return 'Highlight Feature Mixin';
-  }
-
 
   validateHighlight(PAGE, SEARCH_TEXT){
 
     return new Promise(async (resolve, reject) => {
       try {
+       
+        if (!SEARCH_TEXT) {
+          reject('Please provide SEARCH TEXT');
+        }
+       
         await PAGE.click('body > div.main-display > div.control-view > div.module.highlight-module.require-dgr-search > input');
         await PAGE.keyboard.type(SEARCH_TEXT, { delay: 20 });
         PAGE.keyboard.down('Enter');
 
 
         let rowLength = await PAGE.evaluate(`$('tr.highlight-row').length`).catch((reason) => { reject(reason) });
-
-        if (rowLength < 0) {
-          reject(`Test failed: No row highlighted`);
-        }
 
         const containData = (SEARCH_TEXT) => {
           let rows = document.querySelectorAll('table>tbody>tr.highlight-row');
@@ -69,7 +58,7 @@ class HighlightFeature_Mixin {
         }
       }
       catch (e) {
-        reject(e);
+        reject(`validateHighlight: ${e}`);
       }
 
     });

@@ -13,13 +13,6 @@ const reqPromise = require('request-promise');
 
 class PubmedLinkFeature_Mixin{
 
-    toString() {
-        return "PubmedLink Feature Mixin"
-    }
-
-    get name() {
-        return "PubmedLink Feature Mixin";
-    }
 
     validateLink(PAGE) {
 
@@ -60,9 +53,8 @@ class PubmedLinkFeature_Mixin{
                 });
             }
             catch (e) {
-                reject(e);
+                reject(`validateLink: ${e}`);
             }
-
         });
 
     }
