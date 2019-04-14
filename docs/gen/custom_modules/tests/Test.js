@@ -58,8 +58,13 @@ class Test {
     return "Test";
   }
 
+<<<<<<< HEAD
+  constructor(page, browser, global_data) {
+
+=======
   constructor(page,browser, global_data) {
     this._browser = browser;
+>>>>>>> f381d8c21eb017dbfdddfded45d435ae3a0d355c
     this._page = page;
     this._DOMAIN = global_data.domain;
     this._SEARCH_PAGE = global_data.search_page;
@@ -77,7 +82,6 @@ class Test {
     this._registrationDetails = global_data.register;
     this._INTERACTION = "1hop";//to do : get value from json file
     this._DGR = ["SRAG","NXF1"];
-
   }
   /**
    * Binds to console.error and uncaught exceptions. Upon an error happening, the reject method is called with the error details
@@ -121,7 +125,8 @@ class Test {
 userLogin(){
   return new Promise(async(resolve,reject)=>{
     try{
-      console.log("Connecting to " + this.DOMAIN);
+      const thisClass = this;
+      console.log("Connecting to " + thisClass.DOMAIN);
       await this.page.goto(this.DOMAIN, {waitUntil: 'networkidle2'}).catch((reason)=>{reject(`Unable to connect. ${reason}`)});
       if (this.LOGIN === undefined || this.PASSWORD === undefined)
         reject("Login or Password not set");
@@ -238,6 +243,17 @@ userLogout(){
     });
   }
 
+  allNodes(){
+    return this.page.evaluate(() => {
+    let nodes = GeneDive.graph.graph.nodes();
+    let arr = {}
+    for (let i = 0; i < nodes.length; i++){
+      arr[nodes[i].data().name] = nodes[i].position();
+    }
+    return arr;
+  })
+  }
+
 //Graph - click on node
   clickOnNodeInGraph(nodeName) {
     const PAGE = this.page;
@@ -254,14 +270,15 @@ userLogout(){
       }, nodeName).catch((reason) => {
         reject(reason)
       });
-
       // Get the node position
       let node_pos = await PAGE.evaluate((nodeName) => {
         let nodes = GeneDive.graph.graph.nodes();
-        for (let i = 0; i < nodes.length; i++)
+        for (let i = 0; i < nodes.length; i++){
+
           if (nodes[i].data().name === nodeName) {
             return nodes[i].position();
           }
+        }
 
         return null;
 
