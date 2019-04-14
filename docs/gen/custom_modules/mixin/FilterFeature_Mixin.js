@@ -119,7 +119,7 @@ class FilterFeature_Mixin {
 
         const dgr = await PAGE.evaluate(`$('#add-filter > div.input-group.filter-input-group > select :selected').text()`).catch((reason) => { reject(reason) });
 
-        await PAGE.waitFor(4000);
+        
 
         let validRowsFormat = true;
         for (let rowNum = 0; rowNum < rowLength; rowNum++) {
@@ -150,9 +150,6 @@ class FilterFeature_Mixin {
   validateFilter_Journal(PAGE, type = 'is'){
     return new Promise(async (resolve, reject) => {
       try {
-
-        // await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
-        // await thisClass.searchDGRs([DGR], "1hop").catch((reason) => { reject(reason) });
         await PAGE.select('.filter-select', 'Journal');
 
         const containData = (journal, type) => {

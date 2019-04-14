@@ -12,6 +12,8 @@ let Mixin = require('../mixin/Mixin');
 let FilterFeature_Mixin = require('../mixin/FilterFeature_Mixin');
 let HighlightFeature_Mixin = require('../mixin/HighlightFeature_Mixin');
 let GroupByFeature_Mixin = require('../mixin/GroupByFeature_Mixin');
+let UploadResultsFeature_Mixin = require('../mixin/UploadResultsFeature_Mixin');
+let PubmedLinkFeature_Mixin = require('../mixin/PubmedLinkFeature_Mixin');
 
 console.log({ FilterFeature_Mixin });
 
@@ -47,6 +49,9 @@ class RegressionTest extends Test {
                 Mixin.mixin(Test_Mixin, FilterFeature_Mixin);
                 Mixin.mixin(Test_Mixin, HighlightFeature_Mixin);
                 Mixin.mixin(Test_Mixin, GroupByFeature_Mixin);
+                Mixin.mixin(Test_Mixin,UploadResultsFeature_Mixin);
+                Mixin.mixin(Test_Mixin, UploadResultsFeature_Mixin);
+                Mixin.mixin(Test_Mixin,PubmedLinkFeature_Mixin);
                 const test = new Test_Mixin();
 
                 await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
@@ -58,11 +63,13 @@ class RegressionTest extends Test {
                 //  await test.validateFilter_DGR(PAGE).catch((reason) => { reject(reason) });
 
                 // await test.validateHighlight(PAGE, 'antioxidant').catch((reason)=> {reject(reason)});
-                await test.validateGroupBy_Article(PAGE, DGR).catch((reason) => { reject(reason) });
-                await test.validateGroupBy_DGRPair(PAGE, DGR).catch((reason)=> {reject(reason)});
                 
-
-
+                await test.validateGroupBy_Article(PAGE, DGR).catch((reason) => { reject(reason) });
+                // await test.validateGroupBy_DGRPair(PAGE, DGR).catch((reason)=> {reject(reason)});
+                await test.validateLink(PAGE).catch((reason) => { reject(reason) });
+               
+                // await test.validateUpload(PAGE).catch((reason) => { reject(reason) });
+                
                 
                 resolve();
             }
