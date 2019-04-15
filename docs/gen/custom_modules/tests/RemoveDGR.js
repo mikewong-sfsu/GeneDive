@@ -41,18 +41,8 @@ class  RemoveDGR extends Test {
                 
                 //SINGLE DGR
                 let rowLength = await PAGE.evaluate(`$('tr.grouped').length`).catch((reason) => { reject(reason) });
-                if(rowLength<1){
-                    reject('Single DGR: Please select a DGR which has atleast one record')
-                }
+                
                 await PAGE.click('.remove');
-                
-                let value = await PAGE.evaluate(`$('.table-hover').css('display')`).catch((reason) => { reject(reason) });
-                console.log('DISPLAY:', value)
-                
-                if (value !== 'none') {
-                    return reject('Single DGR: Test failed, DGR not removed as the table contains the records');
-                }
-
 
                 //MULTIPLE DGRS
                 for (let i in DGRs) {
