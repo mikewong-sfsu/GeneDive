@@ -22,7 +22,7 @@ class UploadResultsTest extends Test {
     execute() {
 
         const DGR = 'SP-A';
-        const HIGHLIGHT = 'TINO';
+        const HIGHLIGHT = 'Tino';
         const UploadFile = '/GeneDive_UploadTest.zip'
         
         const thisClass = this;
@@ -34,7 +34,7 @@ class UploadResultsTest extends Test {
                 await PAGE.click('button.btn.btn-default.upload');
 
                 const input = await PAGE.$('input[type="file"]');
-                console.log('dir', __dirname);
+                // console.log('dir', __dirname);
 
                 await input.uploadFile(__dirname + UploadFile);
 
