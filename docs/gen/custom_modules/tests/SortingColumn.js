@@ -30,9 +30,7 @@ class SortingColumn extends Test {
         const HEADER_DGR = 1;
         const HEADER_CONFIDENCES_SCORE= 7;
 
-
         const SORTING_TYPE = 'ASC'; // 'DESC'
-        let numberOfDGRs;
 
 
         return new Promise(async (resolve, reject) => {
@@ -41,9 +39,6 @@ class SortingColumn extends Test {
                 await thisClass.searchDGRs([DGR], "1hop").catch((reason) => { reject(reason) });
                 
                 const rowLength = await PAGE.evaluate(`$('tr.grouped').length`).catch((reason) => { reject(reason) });
-                if (rowLength < 1) {
-                    reject('Test failed: No rows to sort in the table');
-                }
 
                 const clickHeader = (num, sortingType) => {
                     const value = document.querySelector(`table > thead > tr > th:nth-child(${num})`);
