@@ -22,7 +22,7 @@ mixin( targetClass, sourceClass ) {
               // check to make sure the receiving class doesn't
               // have a method of the same name as the one currently
               // being processed (avoid overloading)
-              if ( !Object.hasOwnProperty(targetClass.prototype, methodName) ) {
+              if (methodName != 'constructor' && !Object.hasOwnProperty(targetClass.prototype, methodName) ) {
                   targetClass.prototype[methodName] = sourceClass.prototype[methodName];
               }
           }

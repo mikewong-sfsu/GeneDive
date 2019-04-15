@@ -23,7 +23,7 @@ class UploadResultsTest extends Test {
 
         const DGR = 'SP-A';
         const HIGHLIGHT = 'TINO';
-        const UploadFile = '/GeneDive-20190220-010302.zip'
+        const UploadFile = '/GeneDive_UploadTest.zip'
         
         const thisClass = this;
         const PAGE = this.page;

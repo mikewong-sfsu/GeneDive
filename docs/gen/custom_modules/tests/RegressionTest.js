@@ -36,41 +36,61 @@ class RegressionTest extends Test {
         const searchWord_excerpt = 'cutting';
 
         return new Promise(async (resolve, reject) => {
-            let isResolved = false;
             try {
-                class Test_Mixin { };
-                class hello {
-                     hi(){
-                        console.log('HELLO');
-                    }
-                }
-                
-                class TestMixin {};
-                Mixin.mixin(Test_Mixin, FilterFeature_Mixin);
-                Mixin.mixin(Test_Mixin, HighlightFeature_Mixin);
-                Mixin.mixin(Test_Mixin, GroupByFeature_Mixin);
-                Mixin.mixin(Test_Mixin,UploadResultsFeature_Mixin);
-                Mixin.mixin(Test_Mixin, UploadResultsFeature_Mixin);
-                Mixin.mixin(Test_Mixin,PubmedLinkFeature_Mixin);
-                const test = new Test_Mixin();
 
+                class Test_Mixin {};
+                Mixin.mixin(Test_Mixin, FilterFeature_Mixin);
+                // Mixin.mixin(Test_Mixin, HighlightFeature_Mixin);
+                // Mixin.mixin(Test_Mixin, GroupByFeature_Mixin);
+                // Mixin.mixin(Test_Mixin, UploadResultsFeature_Mixin);
+                // Mixin.mixin(Test_Mixin, PubmedLinkFeature_Mixin);
+                // const test = new Test_Mixin();
                 await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
                 await thisClass.searchDGRs(DGR, "1hop").catch((reason) => { reject(reason) });
-        
-                // await test.validateFilter_Article(PAGE).catch((reason) => { reject(reason) });
-                //  await test.validateFilter_Excerpt(PAGE, 'xyz').catch((reason) => { reject(reason) });
-                 //await test.validateFilter_Journal(PAGE).catch((reason) => { reject(reason) });
-                //  await test.validateFilter_DGR(PAGE).catch((reason) => { reject(reason) });
 
-                // await test.validateHighlight(PAGE, 'antioxidant').catch((reason)=> {reject(reason)});
-                
-                await test.validateGroupBy_Article(PAGE, DGR).catch((reason) => { reject(reason) });
-                // await test.validateGroupBy_DGRPair(PAGE, DGR).catch((reason)=> {reject(reason)});
+                /*Test all features separately
+                await test.validateFilter_Article(PAGE).catch((reason) => { reject(reason) });
+                await test.validateFilter_Journal(PAGE).catch((reason) => { reject(reason) });
+                await test.validateFilter_DGR(PAGE).catch((reason) => { reject(reason) });
                 await test.validateLink(PAGE).catch((reason) => { reject(reason) });
-               
-                // await test.validateUpload(PAGE).catch((reason) => { reject(reason) });
+                await test.validateUpload(PAGE).catch((reason) => { reject(reason) });
+
+                await test.validateGroupBy_Article(PAGE, DGR).catch((reason) => { reject(reason) });
+                await test.validateGroupBy_DGRPair(PAGE, DGR).catch((reason)=> {reject(reason)});
+                await test.validateFilter_Excerpt(PAGE, 'xyz').catch((reason) => { reject(reason) });
+                await test.validateHighlight(PAGE, 'antioxidant').catch((reason)=> {reject(reason)});
+                */
+
+                let featureArray = []
+
+                for (var methodName of Object.getOwnPropertyNames(Test_Mixin.prototype)) {
+                    if (methodName != 'constructor') {
+                        featureArray.push(Test_Mixin.prototype[methodName]);
+                    }
+                }
+
+                console.log({featureArray});
+
                 
-                
+                // Fisher Yates shuffle algorithm
+                function shuffle(array) {
+                    let curIdx = array.length, tempValue, randomIdx;
+                    while (0 !== curIdx) {
+                        randomIdx = Math.floor(Math.random() * curIdx);
+                        curIdx -= 1;
+                        tempValue = array[curIdx];
+                        array[curIdx] = array[randomIdx];
+                        array[randomIdx] = tempValue;
+                    }
+                    return array;
+                }
+
+                featureArray = shuffle(featureArray)
+                console.log({ featureArray });
+
+                for (let i in featureArray) {
+                    await featureArray[i](PAGE).catch((reason) => { reject(reason) });
+                }
                 resolve();
             }
             catch (e) {
