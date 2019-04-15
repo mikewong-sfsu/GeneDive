@@ -41,18 +41,25 @@ class RegressionTest extends Test {
             try {
 
                 class Test_Mixin {};
+                Mixin.mixin(Test_Mixin, FilterFeature_Mixin, 'validateFilter_Article', 'validateFilter_Journal', 'validateFilter_DGR', 'validateLink', 'validateUpload');
+                
                 // Mixin.mixin(Test_Mixin, FilterFeature_Mixin);
                 // Mixin.mixin(Test_Mixin, DownloadResultsFeature_Mixin);
-                // Mixin.mixin(Test_Mixin, SortingColumnFeature_Mixin);
+                 Mixin.mixin(Test_Mixin, SortingColumnFeature_Mixin);
                 // Mixin.mixin(Test_Mixin, HighlightFeature_Mixin);
                 // Mixin.mixin(Test_Mixin, GroupByFeature_Mixin);
-                // Mixin.mixin(Test_Mixin, UploadResultsFeature_Mixin);
-                // Mixin.mixin(Test_Mixin, PubmedLinkFeature_Mixin);
+                 Mixin.mixin(Test_Mixin, UploadResultsFeature_Mixin);
+                 Mixin.mixin(Test_Mixin, PubmedLinkFeature_Mixin);
                 
                 const test = new Test_Mixin();
                 await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
                 await thisClass.searchDGRs(DGR, "1hop").catch((reason) => { reject(reason) });
-                
+                // await test.validateSortingColumn(PAGE, 'DESC').catch((reason) => { reject(reason) });
+                // await test.validateFilter_Article(PAGE).catch((reason) => { reject(reason) });
+                // await test.validateFilter_Journal(PAGE).catch((reason) => { reject(reason) });
+                // await test.validateFilter_DGR(PAGE).catch((reason) => { reject(reason) });
+                // await test.validateLink(PAGE).catch((reason) => { reject(reason) });
+               //  await test.validateUpload(PAGE).catch((reason) => { reject(reason) });
 
                 /*Test all features separately
                 await test.validateFilter_Article(PAGE).catch((reason) => { reject(reason) });
@@ -60,13 +67,13 @@ class RegressionTest extends Test {
                 await test.validateFilter_DGR(PAGE).catch((reason) => { reject(reason) });
                 await test.validateLink(PAGE).catch((reason) => { reject(reason) });
                 await test.validateUpload(PAGE).catch((reason) => { reject(reason) });
-                await test.validateDownload(PAGE, downloadLocation).catch((reason) => { reject(reason) });
+                
 
                 await test.validateGroupBy_Article(PAGE, DGR).catch((reason) => { reject(reason) });
                 await test.validateGroupBy_DGRPair(PAGE, DGR).catch((reason)=> {reject(reason)});
                 await test.validateFilter_Excerpt(PAGE, 'xyz').catch((reason) => { reject(reason) });
                 await test.validateHighlight(PAGE, 'antioxidant').catch((reason)=> {reject(reason)});
-                await test.validateUpload(PAGE).catch((reason) => { reject(reason) });
+                await test.validateDownload(PAGE, downloadLocation).catch((reason) => { reject(reason) });
                 */
 
                 let featureArray = []
@@ -94,11 +101,11 @@ class RegressionTest extends Test {
                 }
 
                 featureArray = shuffle(featureArray)
-                console.log({ ShuffledFeatureArray });
+                console.log({ 'ShuffledFeatureArray': featureArray });
 
-                // for (let i in featureArray) {
-                //     await featureArray[i](PAGE).catch((reason) => { reject(reason) });
-                // }
+                for (let i in featureArray) {
+                    await featureArray[i](PAGE).catch((reason) => { reject(reason) });
+                }
                 resolve();
             }
             catch (e) {
