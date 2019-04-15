@@ -18,7 +18,7 @@
 
   // Load User
   $pdo  = new PDO( PDO_GENEDIVE_USERS );
-  $stmt = $pdo->prepare("SELECT email, password FROM user WHERE email = :email");
+  $stmt = $pdo->prepare("SELECT name, email, password FROM user WHERE email = :email");
 
   if($stmt === false)
     returnToLoginError("Error looking up username in users database.");
@@ -37,6 +37,7 @@
   // Set session and redirect
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $email;
+  $_SESSION[ 'name' ]    = $row[ 'name' ];
   header("Location: search.php");
 
   function returnToLoginError($errorMsg = "Error")

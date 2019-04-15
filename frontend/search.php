@@ -118,6 +118,7 @@
       <button type="button" class="btn btn-default upload">Upload Results</button>
       <button type="button" class="btn btn-default datasources">Select Data Sources</button>
       <a class="btn btn-block btn-default datasource-add" href="datasource/manage.php" target="_blank">Add or Remove Data Sources</a>
+      <div class="user-info-and-logout" style="margin-top: 20px;"><b>Hello, <?= $_SESSION[ 'name' ] ?></b><a class="btn btn-default btn-block" href="?logout"><b>Logout</b></a></div>
     </div>
 
     <div class="module about-module">
@@ -129,7 +130,6 @@
 
     <!-- Table View -->
     <div class="table-view ui-widget-content panel-top">
-      <div class="logout"><b>Welcome User,</b><span style="float:right;"><a class="logoutbtn" href="?logout"><b>Logout</b></a></span></div>
       <div class="messaging-and-controls require-dgr-search">
         <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
         <span class="metadata"></span>
