@@ -3,6 +3,7 @@
         max-width: 800px !important;
     }
     .datasource-list-item {
+	display: none;
         height: 96px;
     }
     .datasource-list-item .datasource-info {
@@ -56,7 +57,7 @@ var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' )
 var listitem = $( '.datasource-list-item' ).detach();
 GeneDive.datasource.refreshUI = () => {
     Object.entries( manifest ).forEach(([ key, datasource ]) => {
-        let entry = listitem.clone();
+        let entry = listitem.clone().css({ display: 'block' });
         entry.find( '.name' ).html( datasource.name );
         entry.find( '.description' ).html( datasource.description );
         let toggle = entry.find( 'input.datasource-toggle' );
