@@ -8,7 +8,8 @@
 */
 
 
-var Test = require('./Test');
+const Test = require('./Test');
+const sw = require('stopword');
 
 class Highlight extends Test {
 
@@ -31,26 +32,39 @@ class Highlight extends Test {
     const NODE_1 = "SP-A";
     const thisClass = this;
     const PAGE = this.page;
-    const searchWord = 'treatment';
-    let numberOfDGRs;
 
 
     return new Promise(async (resolve, reject) => {
       try {
 
         await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
-        await thisClass.searchDGRs([NODE_1], "1hop").catch((reason) => { reject(reason) });
+        await thisClass.searchDGRs([NODE_1], '1hop').catch((reason) => { reject(reason) });
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        const getRowsContentArr = (getRandomNumber) => {
+           let rows = document.querySelectorAll('table>tbody>tr');
+           let number = Math.floor(Math.random() * ((rows.length-1) - 0) + 0);
+           console.log({number});
+           let content = rows[number].childNodes[7].textContent;
+           return content.split(' ');
+        } 
+
+        let  contentArr = await PAGE.evaluate(getRowsContentArr, getRandomNumber() ).catch((reason) => { reject(reason) });
+        let newArr = sw.removeStopwords(contentArr);
+        let searchWord  = newArr[getRandomNumber(0,newArr.length-1)];
+        console.log({searchWord});        
+
+
         await PAGE.click('body > div.main-display > div.control-view > div.module.highlight-module.require-dgr-search > input');
         await PAGE.keyboard.type(searchWord, { delay: thisClass._TYPING_SPEED });
         PAGE.keyboard.down('Enter');
 
 
-       let rowLength = await PAGE.evaluate(`$('tr.highlight-row').length`).catch((reason) => { reject(reason) });
-
-       if (rowLength<0){
-         reject(`Test failed: No row highlighted`);
-       }
-
+       let rowLength = await PAGE.evaluate(`$('tr.highlight-row').length`).catch((reason) => { reject(`No row highlighted:  ${reason}`) });
+     
         const containData = (searchWord) => {
          let rows = document.querySelectorAll('table>tbody>tr.highlight-row');
          for (let i = 0; i < rows.length; i++) {
@@ -76,6 +90,7 @@ class Highlight extends Test {
        }
 
         if (validRowsFormat) {
+
           resolve(thisClass.createResponse(true, "Test Passed", 0));
         } else {
           reject(`Test failed: One or more highlighted row do not contain the search keyword`);
