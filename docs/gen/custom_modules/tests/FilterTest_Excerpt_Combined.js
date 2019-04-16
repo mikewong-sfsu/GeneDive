@@ -6,7 +6,8 @@
  @ingroup	tests
 */
 
-let Test = require('./Test');
+const Test = require('./Test');
+const sw = require('stopword');
 
 class FilterTest_Excerpt_Combined extends Test {
 
@@ -24,16 +25,23 @@ class FilterTest_Excerpt_Combined extends Test {
     const DGR = "SP-A";
     const thisClass = this;
     const PAGE = this.page;
-    const searchWord = 'terminal';
+    // const searchWord = 'terminal';
     const TYPE = 'is'; //TYPE specifies if the excerpt is to be filtered by IS or NOT
 
 
     return new Promise(async (resolve, reject) => {
       try {
-
         await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
         await thisClass.searchDGRs([DGR], "1hop").catch((reason) => { reject(reason) });
-       
+        
+        const getRowsContentArr = () => {
+           let rows = document.querySelectorAll('table>tbody>tr');
+           let number = Math.floor(Math.random() * ((rows.length-1) - 0) + 0);
+           console.log({number});
+           let content = rows[number].childNodes[7].textContent;
+           content = content.split(/[ ;,.()]+/);
+           return content;
+        } 
 
         const containData = (searchWord, type) => {
           let rows = document.querySelectorAll('table>tbody>tr');
@@ -48,6 +56,10 @@ class FilterTest_Excerpt_Combined extends Test {
           return true;
         };
         
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        };
+
 
         if (TYPE !== 'not') {
           await PAGE.click('#add-filter > div.input-group.filter-input-group > input');
@@ -56,6 +68,13 @@ class FilterTest_Excerpt_Combined extends Test {
           await PAGE.click('#add-filter > div.input-group.filter-input-group > input');
         }
         
+        let contentArr = await PAGE.evaluate(getRowsContentArr).catch((reason) => { reject(reason) });
+        let newArr = sw.removeStopwords(contentArr);
+        let searchWord  = newArr[getRandomNumber(0,newArr.length-1)];
+        console.log({searchWord}); 
+
+        await PAGE.waitFor(9000);
+
         await PAGE.keyboard.type(searchWord, { delay: thisClass._TYPING_SPEED });
         // await PAGE.waitFor(1000);
         PAGE.keyboard.down('Enter');

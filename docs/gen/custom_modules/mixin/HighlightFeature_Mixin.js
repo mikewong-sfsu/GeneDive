@@ -11,14 +11,31 @@
 class HighlightFeature_Mixin {
 
 
-  validateHighlight(PAGE, SEARCH_TEXT){
+  validateHighlight(PAGE){
 
     return new Promise(async (resolve, reject) => {
+      
+      const sw = require('stopword');
+      
       try {
-       
-        if (!SEARCH_TEXT) {
-          reject('Please provide SEARCH TEXT');
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
         }
+
+        const getRowsContentArr = () => {
+           let rows = document.querySelectorAll('table>tbody>tr');
+           let number = Math.floor(Math.random() * ((rows.length-1) - 0) + 0);
+           console.log({number});
+           let content = rows[number].childNodes[7].textContent;
+           return content.split(/[ ;,.()]+/);
+        } 
+
+        let  contentArr = await PAGE.evaluate(getRowsContentArr).catch((reason) => { reject(reason) });
+        let newArr = sw.removeStopwords(contentArr);
+        const SEARCH_TEXT  = newArr[getRandomNumber(0,newArr.length-1)];
+        console.log({ HighlightText : SEARCH_TEXT});   
+
        
         await PAGE.click('body > div.main-display > div.control-view > div.module.highlight-module.require-dgr-search > input');
         await PAGE.keyboard.type(SEARCH_TEXT, { delay: 20 });

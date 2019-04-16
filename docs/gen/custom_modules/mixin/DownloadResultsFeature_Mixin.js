@@ -23,7 +23,8 @@ class DownloadResultsFeature_Mixin{
                 await PAGE._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadLocation });
 
                 //Download folder of the user
-                 console.log('DownloadLocation', downloadLocation);
+                //  console.log('DownloadLocation', downloadLocation);
+                await PAGE.waitFor(4000); //required for the file to be downloaded
                 var files = fs.readdirSync(downloadLocation);
                 const filteredFiles = files.filter((file) => { return file.indexOf('GeneDive-') !== -1; });
 

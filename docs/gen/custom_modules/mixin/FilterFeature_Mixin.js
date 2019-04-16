@@ -195,10 +195,11 @@ class FilterFeature_Mixin {
 
   }
 
-  validateFilter_Excerpt(PAGE, searchWord, type = 'is') {
+  validateFilter_Excerpt(PAGE, type = 'is') {
     return new Promise(async (resolve, reject) => {
       try {
 
+        const sw = require('stopword');
         await PAGE.select('.filter-select', 'Excerpt');
 
         const containData = (searchWord, type) => {
@@ -214,6 +215,18 @@ class FilterFeature_Mixin {
           return true;
         };
 
+           const getRowsContentArr = () => {
+            let rows = document.querySelectorAll('table>tbody>tr');
+            let number = Math.floor(Math.random() * ((rows.length-1) - 0) + 0);
+            console.log({number});
+            let content = rows[number].childNodes[7].textContent;
+            return content.split(/[ ;,.()]+/);
+        } 
+
+        
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        };
 
         if (type !== 'not') {
           await PAGE.click('#add-filter > div.input-group.filter-input-group > input');
@@ -221,6 +234,12 @@ class FilterFeature_Mixin {
           await PAGE.click('#add-filter > div.top-row > div > span:nth-child(2) > input[type="radio"]');
           await PAGE.click('#add-filter > div.input-group.filter-input-group > input');
         }
+
+
+        const contentArr = await PAGE.evaluate(getRowsContentArr).catch((reason) => { reject(reason) });
+        const newArr = sw.removeStopwords(contentArr);
+        const searchWord  = newArr[getRandomNumber(0,newArr.length-1)];
+        console.log('Search word Excerpt: ', searchWord); 
 
         await PAGE.keyboard.type(searchWord, { delay: '30' });
         await PAGE.waitFor(100);

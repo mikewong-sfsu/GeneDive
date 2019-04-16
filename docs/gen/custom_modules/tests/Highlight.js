@@ -44,15 +44,15 @@ class Highlight extends Test {
             return Math.floor(Math.random() * (max - min) + min);
         }
 
-        const getRowsContentArr = (getRandomNumber) => {
+        const getRowsContentArr = () => {
            let rows = document.querySelectorAll('table>tbody>tr');
            let number = Math.floor(Math.random() * ((rows.length-1) - 0) + 0);
            console.log({number});
            let content = rows[number].childNodes[7].textContent;
-           return content.split(' ');
+           return content.split(/[ ;,.()]+/);
         } 
 
-        let  contentArr = await PAGE.evaluate(getRowsContentArr, getRandomNumber() ).catch((reason) => { reject(reason) });
+        let  contentArr = await PAGE.evaluate(getRowsContentArr).catch((reason) => { reject(reason) });
         let newArr = sw.removeStopwords(contentArr);
         let searchWord  = newArr[getRandomNumber(0,newArr.length-1)];
         console.log({searchWord});        

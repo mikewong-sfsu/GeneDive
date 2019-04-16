@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "mixin-deep": "^2.0.0",
-    "sqlite3": "^4.0.6"
+    "sqlite3": "^4.0.6",
+    "stopword": "^0.2.4"
   }
 }

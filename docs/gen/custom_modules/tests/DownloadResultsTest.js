@@ -33,16 +33,15 @@ class DownloadResultsTest extends Test {
                 await thisClass.startAtSearchPage().catch((reason) => { reject(reason); });
                 await thisClass.searchDGRs(DGR, '1hop').catch((reason) => { reject(reason); });
                 await PAGE.click('button.btn.btn-default.download');
-                await PAGE.waitFor(2000);
-
                
               //  var dir = '/Users/vaishalibisht/Downloads/';      
                 await PAGE.click('button.ajs-button.ajs-ok');
                 await PAGE._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadLocation });
 
                 //Download folder of the user  
-                console.log('downloadLocation', downloadLocation); 
-                // var files = fs.readdirSync(dir);
+                // console.log('downloadLocation', downloadLocation); 
+                await PAGE.waitFor(4000);//required for the file to be downloaded
+                
                 var files = fs.readdirSync(downloadLocation);
                 const filteredFiles = files.filter((file) => { return file.indexOf('GeneDive-') !== -1; });
 
@@ -56,19 +55,23 @@ class DownloadResultsTest extends Test {
 
                 const date = new Date();
                 const dateTimeStr = date.getFullYear() + (date.getMonth()).pad(2) + (date.getDate()).pad(2);
-                // console.log('dateTIME sTR', date.getMonth());
+                //  console.log('dateTIME sTR', date.getMonth());
+                //  console.log('dateTIMEStr', dateTimeStr);
+                 
+
 
                 const downloadedFile = filteredFiles[0];
                 if (downloadedFile.includes(`GeneDive-${dateTimeStr}`) && downloadedFile.endsWith('zip')) {
-                    //delete the downloaded file
+                    // delete the downloaded file
                     fs.unlink((downloadLocation + downloadedFile), function (err) {
                         if (err) throw err;
                         console.log('Downloaded File deleted!');
                     });
+
                     resolve(thisClass.createResponse(true, 'Test Passed', 0));
 
                 } else {
-                    reject('Test failed: File is not downloaded in your selected folder');
+                    reject('Test failed: File is not in your downloaded folder');
                 }
             }
             catch (e) {

@@ -13,7 +13,7 @@
  [Puppeteer](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md) is a NoeJS package maintained by Google designed to allow automation of headless Chrome.
  @ingroup tests
  */
-const HEADLESS_MODE = false;
+const HEADLESS_MODE = true;
 const ARGUMENTS = process.argv;
 const JSON_FILE = "GeneDiveAPI_params_example.json";
 const tests = require('./custom_modules/tests/_import.js');
@@ -82,7 +82,7 @@ const save_test_success = (result) => {
 const do_test = async (test, browser, json_data) => {
   let promise;
   let page = await browser.newPage();
-  let singleTest = new test(page, json_data);
+  let singleTest = new test(page, browser, json_data);
 
   promise = singleTest.execute().then((reason) => {
     console.log(`${singleTest.toString()}: ${COLOR.FgGreen}PASS${COLOR.Reset}`);
@@ -132,7 +132,7 @@ for (let i = 0; i < ARGUMENTS.length; i++)
 
   let promises = [];
   // Create Browser
-  const browser = await puppeteer.launch({headless: true,
+  const browser = await puppeteer.launch({headless: HEADLESS_MODE,
 	  args:['--no-sandbox','--disable-setuid-sandbox'],
   	  ignoreHTTPSErrors: true});
 
