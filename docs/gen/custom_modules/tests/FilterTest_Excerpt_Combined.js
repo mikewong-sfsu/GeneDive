@@ -22,7 +22,7 @@ class FilterTest_Excerpt_Combined extends Test {
 
   execute() {
 
-    const DGR = "SP-A";
+    const DGR = ['SP-A'];
     const thisClass = this;
     const PAGE = this.page;
     // const searchWord = 'terminal';
@@ -32,29 +32,37 @@ class FilterTest_Excerpt_Combined extends Test {
     return new Promise(async (resolve, reject) => {
       try {
         await thisClass.startAtSearchPage().catch((reason) => { reject(reason) });
-        await thisClass.searchDGRs([DGR], "1hop").catch((reason) => { reject(reason) });
+        await thisClass.searchDGRs(DGR, "1hop").catch((reason) => { reject(reason) });
         
         const getRowsContentArr = () => {
            let rows = document.querySelectorAll('table>tbody>tr');
            let number = Math.floor(Math.random() * ((rows.length-1) - 0) + 0);
-           console.log({number});
            let content = rows[number].childNodes[7].textContent;
            content = content.split(/[ ;,.()]+/);
            return content;
         } 
 
+
         const containData = (searchWord, type) => {
+          let result = true;
           let rows = document.querySelectorAll('table>tbody>tr');
-          for (let i = 0; i < rows.length; i++) {
-            let content = rows[i].childNodes[5].textContent;
-            if (type === 'is' && !content.includes(searchWord)) {
-              return false;
-            } else if (type === 'not' && content.includes(searchWord)){
-              return false;
-            }
+          if(type =='is'){
+            for (let i = 0; i < rows.length; i++) {
+              let content = rows[i].childNodes[5].textContent.toLowerCase();
+              if(!content.includes(searchWord)){
+                  return false;
+              }
+            }  
+          }else{
+            for (let i = 0; i < rows.length; i++) {
+                let content = rows[i].childNodes[5].textContent.toLowerCase();
+                if(content.includes(searchWord)){
+                    return false;
+                }
+            } 
           }
-          return true;
-        };
+          return result;
+        }          
         
         function getRandomNumber(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
@@ -70,10 +78,10 @@ class FilterTest_Excerpt_Combined extends Test {
         
         let contentArr = await PAGE.evaluate(getRowsContentArr).catch((reason) => { reject(reason) });
         let newArr = sw.removeStopwords(contentArr);
-        let searchWord  = newArr[getRandomNumber(0,newArr.length-1)];
+        let searchWord  = newArr[getRandomNumber(0,newArr.length-1)].toLowerCase();
         console.log({searchWord}); 
 
-        await PAGE.waitFor(9000);
+       
 
         await PAGE.keyboard.type(searchWord, { delay: thisClass._TYPING_SPEED });
         // await PAGE.waitFor(1000);
@@ -90,7 +98,6 @@ class FilterTest_Excerpt_Combined extends Test {
           }
           await PAGE.evaluate(`$('.go-back').click()`).catch((reason) => { reject(reason) });
         }
-
 
         if (validRowsFormat) {         
           resolve(thisClass.createResponse(true, "Test Passed", 0));
