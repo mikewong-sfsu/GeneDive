@@ -4,6 +4,8 @@
 apt-get update
 apt-get install -y apt-utils
 apt-get install -y \
+        build-essential \
+        libssl-dev \
         sqlite3 \
         libsqlite3-dev \
         python3-pip \
@@ -13,6 +15,13 @@ apt-get install -y \
 # Add Zip extensions to PHP 7.2
 docker-php-ext-configure zip --with-libzip
 docker-php-ext-install zip
+
+# Install Perl Module Manager and Modules
+curl -L https://cpanmin.us | perl - App::cpanminus
+cpanm install \
+        List::Util \
+        Text::CSV \
+        JSON::XS
 
 # Delete paths
 rm -rf /usr/local/genedive /var/www/html
@@ -28,3 +37,6 @@ chmod a+w /usr/local/genedive/sessions
 
 # Allow permissions so user database can be updated for registrations
 chmod a+w /genedive/backend/data /genedive/backend/data/users.sqlite
+
+# Allow permissions to allow autovivification of manifest.json from server default
+chmod a+w /genedive/backend/data/sources
