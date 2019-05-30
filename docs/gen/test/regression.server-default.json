@@ -1,5 +1,5 @@
 {
-  "domain": "http://localhost:8080/",
+  "domain": "http://localhost:80/",
   "search_page": "search.php",
   "default_width": 1920,
   "default_height": 949,
