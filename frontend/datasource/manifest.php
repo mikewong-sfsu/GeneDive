@@ -18,6 +18,7 @@ function filter_by_host_manifest( $element ) {
 function read_manifest() {
 // ============================================================
 	global $DATASOURCES;
+	if( ! file_exists( "$DATASOURCES/manifest.json" )) { copy( "$DATASOURCES/manifest.server-default.json", "$DATASOURCES/manifest.json" ); }
 	$content  = file_get_contents( "$DATASOURCES/manifest.json" );
 	$manifest = json_decode( $content, true );
 	return $manifest;
