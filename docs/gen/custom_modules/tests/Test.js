@@ -7,7 +7,10 @@
  * @ingroup    tests
  */
 
-class Test {
+var Mixins = require('./Mixins');
+
+
+class Test extends Mixins{
 
   get MIN_SCORE(){
     return this._MIN_SCORE;
@@ -62,6 +65,7 @@ class Test {
   }
 
   constructor(page,browser, global_data) {
+    super();
     this._browser = browser;
     this._page = page;
     this._DOMAIN = global_data.domain;
@@ -87,6 +91,8 @@ class Test {
    * @param reject A reject function from a promise
    * @return {Promise}
    */
+
+
   hookToConsoleErrors() {
 
     let thisClass = this;
@@ -116,6 +122,7 @@ class Test {
    * @return {Promise}
    */
   async execute() {
+    console.log('inside test');
     return new Promise((resolve, reject) => {
       reject("The Test class must be inherited for implementation.");
     })
@@ -355,6 +362,17 @@ userLogout(){
     )
   }
 
+//get the column number according to filter type
+  getColumnNumber(filterType) {
+    let rows = document.querySelectorAll('thead tr th');
+    for (let i = 0; i < rows.length; i++) {
+      if (rows[i].innerHTML.includes(filterType)) {
+        return i;
+      }
+    }
+    return console.error('Row not found');
+  }
+  
 //wait for page to load
   waitForPageToFinishLoading() {
     return this.page.waitForFunction(this.PAGE_IS_NOT_LOADING);

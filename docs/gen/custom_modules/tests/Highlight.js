@@ -49,7 +49,7 @@ class Highlight extends Test {
            let number = Math.floor(Math.random() * ((rows.length-1) - 0) + 0);
            console.log({number});
            let content = rows[number].childNodes[7].textContent;
-           return content.split(/[ ;,.()]+/);
+           return content.split(/[ ;~,.()]+/);
         } 
 
         let  contentArr = await PAGE.evaluate(getRowsContentArr).catch((reason) => { reject(reason) });
