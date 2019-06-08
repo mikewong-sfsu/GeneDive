@@ -4,9 +4,11 @@
 apt-get update
 apt-get install -y \
         apt-utils \
-		gnupg2 \
-        git \
-        vim
+		gnupg2 \            # GPG for secure communication
+        git \               # git for source code versioning
+        vim \               # vim for vasic text editing
+		iputils-ping \      # ping to test/debug network setup
+		telnet              # telnet to open network communication for testing/debugging
 
 # Get NodeJS v10 and Puppeteer
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
@@ -37,3 +39,4 @@ eval `ssh-agent -s` > /dev/null 2>&1
 ssh-add -D 2>/dev/null
 ssh-add /root/.ssh/genedive-github.key 2>/dev/null
 cd /genedive && git pull
+

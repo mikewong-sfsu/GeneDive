@@ -2,9 +2,8 @@
  *  This group handles site testing
  */
 
-
 /**
- @brief      Screenshot Generation Script
+ @brief      GeneDive Automation Framework
  @file       GeneDiveAPI.js
  @author     Jack Cole jcole2@mail.sfsu.edu
  @date       2017-11-11
@@ -13,218 +12,64 @@
  [Puppeteer](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md) is a NoeJS package maintained by Google designed to allow automation of headless Chrome.
  @ingroup tests
  */
-const HEADLESS_MODE = false;
-const ARGUMENTS = process.argv;
-const JSON_FILE = "GeneDiveAPI_params_example.json";
-const tests = require('./custom_modules/tests/_import.js');
-const puppeteer = require('puppeteer');
-const test_results = [];
-const RESULTS_FILE = `./log/GeneDiveAPI-results-{timestamp}.json`;
-const HTML_FILE = `./log/GeneDiveAPI-results-{timestamp}.html`;
-const COLOR = {
-  Reset: "\x1b[0m",
-  Bright: "\x1b[1m",
-  Dim: "\x1b[2m",
-  Underscore: "\x1b[4m",
-  Blink: "\x1b[5m",
-  Reverse: "\x1b[7m",
-  Hidden: "\x1b[8m",
 
-  FgBlack: "\x1b[30m",
-  FgRed: "\x1b[31m",
-  FgGreen: "\x1b[32m",
-  FgYellow: "\x1b[33m",
-  FgBlue: "\x1b[34m",
-  FgMagenta: "\x1b[35m",
-  FgCyan: "\x1b[36m",
-  FgWhite: "\x1b[37m",
+class GeneDive {
 
-  BgBlack: "\x1b[40m",
-  BgRed: "\x1b[41m",
-  BgGreen: "\x1b[42m",
-  BgYellow: "\x1b[43m",
-  BgBlue: "\x1b[44m",
-  BgMagenta: "\x1b[45m",
-  BgCyan: "\x1b[46m",
-  BgWhite: "\x1b[47m",
+	constructor( options ) {
+		this.results   = [];
+		this.puppeteer = require( 'puppeteer' );
+		this.fs        = require( 'fs' );
+		try {
+			if( typeof options == 'string' && this.fs.existsSync( options )) {
+				this.options = JSON.parse( this.fs.readFileSync( options ));
+
+			} else if( typeof options == 'object' ) {
+				this.options = options;
+			}
+
+			this.options.puppeteer                   = this.options.puppeteer || {};
+			this.options.puppeteer.headless          = this.options.puppeteer.headless          || true;
+			this.options.puppeteer.devtools          = this.options.puppeteer.devtools          || false; // If true, disables headless and displays devtools; useful for debugging
+			this.options.puppeteer.args              = this.options.puppeteer.args              || [ '--no-sandbox', '--disable-setuid-sandbox' ];
+			this.options.puppeteer.ignoreHTTPSErrors = this.options.puppeteer.ignoreHTTPSErrors || true;
+		}
+		catch (err) {
+			console.error( err );
+			console.error( "Error when loading " + JSON_FILE + ", terminating program." );
+			process.exit( 1 );
+		}
+	}
+
+	start() {
+		return this.browser = this.puppeteer.launch( this.options.puppeteer );
+	}
+
+	log( result ) {
+		this.results.push( result );
+	}
+
+	async run( Test ) {
+		let page    = await this.browser.newPage();
+		let test    = new Test( page, this.browser, this.options ); // MW none of these options are necessary; should be a Factory method
+		let tty     = { pass: "\x1b[32mPASS\x1b[0m", fail: "\x1b[31mFAIL\x1b[0m" }; // The colors are somewhere between helpful and more trouble than their worth
+		let results = test.execute().then(( reason ) => {
+			console.log( `${tty.pass} ${test.toString()}` );
+			this.log( reason );
+			page.close();
+
+		}).catch( async ( reason ) => {
+			console.log( `${tty.fail} ${test.toString()}` );
+			console.log( `Reason for failure: ${reason}` );
+			this.log( reason );
+			page.close();
+		});
+		return results;
+	}
+
+	save( file ) {
+		let data = JSON.stringify( { puppeteer => this.options.puppeteer, results => this.results } );
+		this.fs.writeFileSync( file, data, ( err ) => { if( err ) { throw err; }});
+	}
 };
 
-let json_data;
-
-// Load the JSON file as an object
-let fs = require("fs");
-try {
-  json_data = JSON.parse(fs.readFileSync(JSON_FILE));
-}
-catch (err) {
-  console.error(err);
-  console.error("Error when loading " + JSON_FILE + ", terminating program.");
-  process.exit(1);
-}
-
-
-
-
-// Make sure the screenshots folder exists
-const SCREENSHOTS_FOLDER = json_data.screenshots_folder;
-console.log("The screenshots will be saved to " + SCREENSHOTS_FOLDER);
-if (!fs.existsSync(SCREENSHOTS_FOLDER)) {
-  console.log("Screenshots directory does not exist. Making " + SCREENSHOTS_FOLDER);
-  fs.mkdirSync(SCREENSHOTS_FOLDER);
-}
-
-// Save any results from a completed test
-const save_test_success = (result) => {
-  test_results.push(result);
-};
-
-// Processs a single test
-const do_test = async (test, browser, json_data) => {
-  let promise;
-  let page = await browser.newPage();
-  let singleTest = new test(page, browser, json_data);
-
-  promise = singleTest.execute().then((reason) => {
-    console.log(`${singleTest.toString()}: ${COLOR.FgGreen}PASS${COLOR.Reset}`);
-    save_test_success(reason);
-    page.close();
-  }).
-   catch( async (reason) => {
-      await page.screenshot({ path: `${SCREENSHOTS_FOLDER}${singleTest.name}-error.png`});
-      console.log(`${singleTest.toString()}: ${COLOR.FgRed}FAIL${COLOR.Reset}`);
-      console.log('Reason for failure: ', reason);
-      save_test_success(reason);
-      page.close();
-    }	); 
-  return promise;
-};
-
-
-
-/**
- * @fn       Number.prototype.pad
- * @brief    Takes a number and turns it into a String with padded zeroes
- * @details  This takes a number, converts it to a String, and adds leading zeroes if the size is greater than the
- * number of digits.
- * @example  (57).pad(5); // 00057
- * @size    Int The desired length of the String
- * @callergraph
- */
-Number.prototype.pad = function (size) {
-  let s = String(this);
-  while (s.length < (size || 2)) {
-    s = "0" + s;
-  }
-  return s;
-};
-
-// Process arguments
-let arguments_trimmed = [];
-for (let i = 0; i < ARGUMENTS.length; i++)
-  if (ARGUMENTS[i] === __filename) {
-    arguments_trimmed = ARGUMENTS.slice(i + 1);
-    break;
-  }
-
-// Start Puppeteer testing
-(async () => {
-
-
-  let promises = [];
-  // Create Browser
-  const browser = await puppeteer.launch({
-    headless: HEADLESS_MODE, devtools: true,
-	  args:['--no-sandbox','--disable-setuid-sandbox'],
-  	  ignoreHTTPSErrors: true});
-
-  // Go to login page, login, and then close the page
-  await do_test(tests.Login, browser, json_data)
-    .catch(((e) => {
-      console.log({ e });
-      process.exit(0);
-    }));
-
-  if (arguments_trimmed.length > 0){
-  // Execute the tests passed in as arguments //individual tests
-    for (let key in arguments_trimmed) {
-	console.log(arguments_trimmed[key]);
-      if(arguments_trimmed[key] !== Login )
-        await do_test(tests[arguments_trimmed[key]], browser, json_data);
-	 }
-  }
-  else{
-  // Execute every test
-    for (let key in tests) {
-	if (key === "Login")
-        continue;
-      await do_test(tests[key], browser, json_data);
-    }
-  }
-
-
-  await Promise.all(promises).catch((reason)=>{console.error(`ERROR awaiting all promises: ${reason}`)});
-
-  // Enabled for testing
-  // console.log(test_results);
-
-  // Save log
-  let date =  new Date();
-  let timestamp = date.getFullYear()
-    + (date.getMonth()).pad(2)
-    + (date.getDate()).pad(2)
-    + "-"
-    + (date.getHours()).pad(2)
-    + (date.getMinutes()).pad(2)
-    + (date.getSeconds()).pad(2);
-  let filename = RESULTS_FILE.replace("{timestamp}", timestamp);
-  fs.writeFileSync(filename, JSON.stringify(test_results), 'utf8');
-  let htmlfilename = HTML_FILE.replace("{timestamp}", timestamp);
-  fs.writeFileSync(htmlfilename,createTable(test_results),'utf8');
-	
-  // Close Browser
-  try{
-    browser.close().catch((reason)=>{console.error(`ERROR closing browser: ${reason}`)});
-  }catch (e) {
-
-  }
-
-  return "All tests finished."
-})()
-  .catch((reason)=>{
-    console.error(`ERROR in main process: ${reason}`);
-    process.exit(0);
-  })
-  // Exit from Node
-  .then((reason)=>{
-    console.log(`Program complete: ${reason}`);
-    process.exit(0);
-  });
-//convert JSON to table in HTML
-  function createTable(json_file){
-    var col = [];
-    var row,key;
-    for( row in json_file){
-	for(key in json_file[row]){
-	  if (col.indexOf(key) === -1)
-	    col.push(key);
-      }
-    }
-    //create table
-    var table_text = "";
-   // data = JSON.parse(json_file);
-    table_text +="<table>";
-    table_text +="<tr>";
-    for(key in col){
-      table_text += "<th>" + col[key] + "</th>";
-    }
-    table_text += "</tr>";
-    for(row in json_file){
-      table_text +="<tr>";
-      for(key in col){
-	table_text +="<td>" + json_file[row][col[key]] + "</td>";
-      }
-      table_text +="</tr>";
-    }
-    table_text +="</table>";
-    return table_text; 
-  }	  
+module.exports = GeneDive;
