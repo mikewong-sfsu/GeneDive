@@ -68,7 +68,7 @@ class PubmedLink extends Test {
                 Promise.all(promises).then((data) => {
                     return resolve(thisClass.createResponse(true, 'Test Passed', 0));
                 }).catch((err) => {
-                    return reject('TEST FAILED: The one or more pubmed link did not work')
+                    return reject(`Pubmed Link Feature Test Failed : ${url} pubmed link did not work`);
                 });
             }
             catch (e) {
