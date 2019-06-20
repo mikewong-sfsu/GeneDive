@@ -7,84 +7,43 @@
  * @ingroup    tests
  */
 
-var Mixins = require('./Mixins');
+class Test {
 
+	get TYPING_SPEED() { return this._TYPING_SPEED; }
+	get PASSWORD() { return this._PASSWORD; }
+	get LOGIN() { return this._LOGIN; }
+	get registrationDetails(){ return this._registrationDetails; }
+	get DGR() { return this._DGR; }
+	get INTERACTION() { return this._INTERACTION; }
+	get PAGE_IS_NOT_LOADING() { return this._PAGE_IS_NOT_LOADING; }
+	get downloadLocation(){ return this._downloadLocation; }
+	get priority() { return 100; }
+	get name() { return "Test"; }
 
-class Test extends Mixins{
-
-  get MIN_SCORE(){
-    return this._MIN_SCORE;
-  }
-
-  get FILTER_INPUT(){
-    return this._FILTER_INPUT;
-  }
-
-  get HIGHLIGHT_FILTER() {
-    return this._HIGHLIGHT_FILTER;
-  }
-  get TABLE_ELEMENT() {
-    return this._TABLE_ELEMENT;
-  }
-
-  get TYPING_SPEED() {
-    return this._TYPING_SPEED;
-  }
-
-  get PASSWORD() {
-    return this._PASSWORD;
-  }
-
-  get LOGIN() {
-    return this._LOGIN;
-  }
-
-  get registrationDetails(){
-    return this._registrationDetails;
-  }
-
-  get DGR() {
-    return this._DGR;
-  }
-  get INTERACTION() {
-    return this._INTERACTION;
-  }
-  get PAGE_IS_NOT_LOADING() {
-    return this._PAGE_IS_NOT_LOADING;
-  }
-
-  get downloadLocation(){
-    return this._downloadLocation;
-  }
-  get priority() {
-    return 100;
-  }
-
-  get name() {
-    return "Test";
-  }
-
-  constructor(page,browser, global_data) {
-    super();
-    this._browser = browser;
-    this._page = page;
-    this._DOMAIN = global_data.domain;
-    this._SEARCH_PAGE = global_data.search_page;
-    this._DEFAULT_HEIGHT = global_data.default_height;
-    this._DEFAULT_WIDTH = global_data.default_width;
-    this._SCREENSHOTS_FOLDER = global_data.screenshots_folder;
+  constructor( page, browser, options ) {
+    this._browser             = browser;
+    this._page                = page;
+    this._DOMAIN              = options.domain;
+    this._SEARCH_PAGE         = options.search_page;
+    this._DEFAULT_HEIGHT      = options.default_height;
+    this._DEFAULT_WIDTH       = options.default_width;
+    this._SCREENSHOTS_FOLDER  = options.screenshots_folder;
     this._PAGE_IS_NOT_LOADING = "GeneDive.spinneractive === false";
-    this._LOGIN = global_data.login;
-    this._PASSWORD = global_data.password;
-    this._TYPING_SPEED = 30;
-    this._TABLE_ELEMENT = ".table";
-    this._HIGHLIGHT_FILTER = ".highlight-input";
-    this._MIN_SCORE = ".min-prob-slider";
-    this._FILTER_INPUT = ".filter-input";
-    this._registrationDetails = global_data.register;
-    this._INTERACTION = "1hop";//to do : get value from json file
-    this._DGR = ["SRAG","NXF1"];
-    this._downloadLocation = global_data.downloadLocation;
+    this._LOGIN               = options.login;
+    this._PASSWORD            = options.password;
+    this._TYPING_SPEED        = 30;
+    this._registrationDetails = options.register;
+    this._INTERACTION         = "1hop";//to do : get value from json file
+    this._DGR                 = ["SRAG","NXF1"];
+    this._downloadLocation    = options.downloadLocation;
+
+	this.ui = { element : {
+			table          : '.table', // TABLE
+			minProbSlider  : '.min-prob-slider', // MIN_SCORE
+			highlightInput : '.highlight-input', // HIGHLIGHT_FILTER
+			filterInput    : '.filter-input', // FILTER_INPUT
+		}
+	}
   }
   /**
    * Binds to console.error and uncaught exceptions. Upon an error happening, the reject method is called with the error details
@@ -358,8 +317,8 @@ userLogout(){
 	//	}
         return returnTableValues;
 
-      }, this.TABLE_ELEMENT
-    )
+      }, this.ui.element.table
+    );
   }
 
 //get the column number according to filter type
@@ -375,7 +334,7 @@ userLogout(){
   
 //wait for page to load
   waitForPageToFinishLoading() {
-    return this.page.waitForFunction(this.PAGE_IS_NOT_LOADING);
+    return this.page.waitForFunction( this.PAGE_IS_NOT_LOADING );
   }
 
   //highlight rows in table
@@ -515,21 +474,5 @@ userLogout(){
 
 
 }
-/**
- * @fn       Number.prototype.pad
- * @brief    Takes a number and turns it into a String with padded zeroes
- * @details  This takes a number, converts it to a String, and adds leading zeroes if the size is greater than the
- * number of digits.
- * @example  (57).pad(5); // 00057
- * @size    Int The desired length of the String
- * @ingroup tests
- */
-Number.prototype.pad = function (size) {
-  let s = String(this);
-  while (s.length < (size || 2)) {
-    s = "0" + s;
-  }
-  return s;
-};
 
 module.exports = Test;

@@ -7,8 +7,6 @@
  @ingroup	tests
 */
 
-let Test = require('./Test');
-
 class OneHop extends Test {
   toString(){
     return "OneHop"
@@ -22,7 +20,7 @@ class OneHop extends Test {
     return "OneHop";
   }
 
-  execute(){
+  execute() {
     const thisClass = this;
     const PAGE = this.page;
     const HOP = "1hop";
@@ -43,7 +41,7 @@ class OneHop extends Test {
 	if(numberOfDGR !== DGR.length){
 	  reject(`Test Failed : There should be atleast 1 DGR being searched on adding to set.${numberOfDGR} were found.`);
 	}
-	let minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE).catch((reason)=>{reject(reason)});
+	let minScore = await this.page.evaluate((filter)=>{return $(filter).val()}, this.ui.element.minProbSlider ).catch((reason)=>{reject(reason)});
 	//get table values for filtering
 	let tableContents = await this.getTableContents().catch((reason)=>{reject(reason)});
 	//loop through the table and filter based on excerpt

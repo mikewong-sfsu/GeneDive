@@ -40,8 +40,9 @@ class GeneDive {
 		}
 	}
 
-	start() {
-		return this.browser = this.puppeteer.launch( this.options.puppeteer );
+	async start() {
+		this.browser = await this.puppeteer.launch( this.options.puppeteer );
+		return this;
 	}
 
 	log( result ) {
@@ -67,7 +68,7 @@ class GeneDive {
 	}
 
 	save( file ) {
-		let data = JSON.stringify( { puppeteer => this.options.puppeteer, results => this.results } );
+		let data = JSON.stringify( { puppeteer: this.options.puppeteer, results: this.results } );
 		this.fs.writeFileSync( file, data, ( err ) => { if( err ) { throw err; }});
 	}
 };

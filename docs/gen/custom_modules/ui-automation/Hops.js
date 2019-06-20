@@ -1,40 +1,39 @@
 /**
- *@class			Interactions
- *@breif			Interaction modes test - 1Hop,2Hop,3Hop,Clique
+ *@class Hops
+ *@brief Search modes - 1Hop, 2Hop, 3Hop, Clique
  *@details
- *@authors		Nayana Laxmeshwar	nlaxmeshwar@mail.sfsu.edu
- *@ingroup		Features
+ *@authors Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
+ *@ingroup Features
  */
-const TABLE_COL = ["DGR1","DGR2"];
-class Interactions{
-  toString(){
-  return "Interactions";
+const TABLE_COL = [ "DGR1", "DGR2" ];
+class Interactions {
+  toString() {
+    return "Interactions";
   }
 
-  get priority(){
-  return 0;
+  get priority() {
+    return 0;
   }
 
   get name(){
   return "Interactions";
   }
 //OneHop test
-  checkOneHop(DGR,tableContents){
-  return new Promise((resolve,reject)=>{
-  try{
-  for(let row in tableContents){
+  checkOneHop( DGR, tableContents ) {
+  return new Promise(( resolve, reject ) => {
+  try {
+  for( let row in tableContents ) {
     let foundFlag = false;
     for(let i in DGR){
       //test direct interaction with DGR
       //check if the gene is present in either 1st or 2nd column
-      if(tableContents[row][TABLE_COL[0]].indexOf(DGR[i])!== -1 ||
-        tableContents[row][TABLE_COL[1]].indexOf(DGR[i])!== -1){
+      if( tableContents[row][TABLE_COL[0]].indexOf(DGR[i])!== -1 || tableContents[row][TABLE_COL[1]].indexOf(DGR[i])!== -1 ) {
         foundFlag = true;
         break;
       }
     }
-      if(!foundFlag)
-      reject(`direct interaction of ${DGR} is not present`);
+      if( !foundFlag )
+      reject( `direct interaction of ${DGR} is not present` );
   }
     //test passed successfully
     resolve();

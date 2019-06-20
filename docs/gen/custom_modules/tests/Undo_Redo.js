@@ -56,7 +56,7 @@ class Undo_Redo extends Test{
 				let display = await this.page.evaluate((display)=>{return $('.table')[0].style.display})
 						.catch((reason)=>{reject(reason)});
 
-				let minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
+				let minScore = await this.page.evaluate((filter)=>{return $(filter).val()}, this.ui.element.minProbSlider )
 								.catch((reason)=>{reject(reason)})
 				if(display !== "none"){
 				for(let row in tableContents){
@@ -69,7 +69,7 @@ class Undo_Redo extends Test{
 			//test undo
 					var undo = await this.goBackInHistory().catch((reason)=>{reject(reason)});
 					if(undo){
-					var minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
+					var minScore = await this.page.evaluate((filter)=>{return $(filter).val()}, this.ui.element.minProbSlider )
 								.catch((reason)=>{reject(reason)})
           console.log(minScore);
 					if(minScore != 0.7)
@@ -77,7 +77,7 @@ class Undo_Redo extends Test{
 				  //test redo
 					var redo = 	await this.goForwardInHistory().catch((reason)=>{reject(reason)});
           if(redo){
-					minScore = await this.page.evaluate((filter)=>{return $(filter).val()},this.MIN_SCORE)
+					minScore = await this.page.evaluate((filter)=>{return $(filter).val()}, this.ui.element.minProbSlider )
 								.catch((reason)=>{reject(reason)})
 					if(minScore != 0.85)
 						reject('Redo is not working correctly');
