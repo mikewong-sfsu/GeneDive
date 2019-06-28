@@ -38,6 +38,7 @@
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $email;
   $_SESSION[ 'name' ]    = $row[ 'name' ];
+  if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( '["all"]' ); };
   header("Location: search.php");
 
   function returnToLoginError($errorMsg = "Error")
