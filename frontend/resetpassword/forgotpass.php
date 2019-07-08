@@ -1,14 +1,12 @@
 <?php
 
-require_once "../session.php";
+	require_once "../session.php";
 
-  if ( !file_exists("../data/credentials.php") ) {
-    $_SESSION[ 'is_auth' ] = false;
-    $_SESSION[ 'error' ] = "Reset is currently disabled.";
+	if( ! file_exists( '/usr/local/genedive/data/credentials.php' )) {
+		$_SESSION[ 'error' ] = 'Reset is currently disabled.';
 
-    header("Location: ../index.php");
-  }
-
+		header( 'Location: ../index.php' );
+	}
 ?>
 
 <html>
@@ -50,8 +48,8 @@ require_once "../session.php";
           }
 
             $_SESSION['message'] = NULL;
-            $_SESSION['error'] = NULL;
-            $_SESSION['reset'] = NULL;
+            $_SESSION['error']   = NULL;
+            $_SESSION['reset']   = NULL;
           ?>
 
           <form action="sendresetlink.php" method="post">
@@ -59,7 +57,7 @@ require_once "../session.php";
               <label for="email">Email Address</label>
               <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required>
             </div>
-            <button type="submit" name="login-submit" class="btn btn-primary">Reset Password</button> <a href="/">Back to GeneDive</a>
+            <a class="btn btn-warning" href="/">Back to GeneDive</a><button type="submit" name="reset-password-submit" class="btn btn-primary pull-right" id="reset-password">Reset Password</button> 
           </form>
         </div>
       </div>
