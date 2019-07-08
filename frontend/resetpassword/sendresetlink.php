@@ -11,7 +11,7 @@
   require '../PHPMailer/src/SMTP.php';
 
 require_once "../session.php";
-require_once "../../data/credentials.php";
+require_once "/usr/local/genedive/data/credentials.php";
 
 
   // Some basic validation - we got a valid email and a password?
