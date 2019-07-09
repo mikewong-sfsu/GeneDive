@@ -51,7 +51,8 @@ class TableSummaryGene extends ResultsTable {
     // Table will zoom into group on row click
     for ( let group of Object.keys( this.interactions ) ) {
       let tr = $(document.createElement("tr"))
-        .addClass("grouped")
+        .addClass('grouped')
+        .attr({ id: `group-${group.substr( 0, 8 )}` })
         .data("group", group)
         .on("click", ( event ) => { 
           GeneDive.tablestate.zoomed = true;

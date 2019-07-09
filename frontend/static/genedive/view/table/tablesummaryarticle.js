@@ -48,7 +48,8 @@ class TableSummaryArticle extends ResultsTable {
     // Table will zoom into group on row click
     for ( let group of Object.keys( this.interactions ) ) {
       let tr = $(document.createElement("tr"))
-        .addClass("grouped")
+        .addClass('grouped')
+        .attr({ id: `group-${group.substr( 0, 8 )}` })
         .data("group", group)
         .data("toggle", "tooltip")
         .prop("title", "View All Interactions in Group")
