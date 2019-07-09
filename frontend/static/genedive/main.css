@@ -41,6 +41,12 @@ body {
   /* resize: vertical; */
 }
 
+th.rotate {
+  height: 90px;
+  white-space: nowrap;
+  transform: rotate( 330deg );
+}
+
 .graph-view {
   height: 100%;
 }
