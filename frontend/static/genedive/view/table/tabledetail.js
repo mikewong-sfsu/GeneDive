@@ -71,8 +71,12 @@ class TableDetail extends ResultsTable {
       let pubmed_link = this.buildPubmedLink(i.pubmed_id);
       let displayedID = i.pubmed_id;
 
-      tr.append($(document.createElement("td")).html(i.mention1));
-      tr.append($(document.createElement("td")).html(i.mention2));
+      // Synonym styling
+      let mention1 = i.mention1_synonym ? this.addSynonym(i.mention1, i.mention1_synonym) : i.mention1;
+      let mention2 = i.mention2_synonym ? this.addSynonym(i.mention2, i.mention2_synonym) : i.mention2;
+
+      tr.append($(document.createElement("td")).html(mention1));
+      tr.append($(document.createElement("td")).html(mention2));
       tr.append($(document.createElement("td")).html(i.journal));
       tr.append($(document.createElement("td")).text(displayedID).addClass("numeric"));
       // tr.append($(document.createElement("td")).text((i.section)));
