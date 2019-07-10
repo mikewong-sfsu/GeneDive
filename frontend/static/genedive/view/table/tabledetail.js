@@ -44,13 +44,13 @@ class TableDetail extends ResultsTable {
     let tr = $(document.createElement("tr"));
     thead.append(tr);
 
-    tr.append($(document.createElement("th")).html("DGR<sub>1</sub>").css("width", "8%"));
-    tr.append($(document.createElement("th")).html("DGR<sub>2</sub>").css("width", "8%"));
-    tr.append($(document.createElement("th")).text("Journal").css("width", "8%"));
-    tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "120px"));
-    tr.append($(document.createElement("th")).html("Conf.<br>Score").addClass("numeric").css("width", "120px"));
-    tr.append($(document.createElement("th")).text("Excerpt").css("min-width", "40%"));
-    tr.append($(document.createElement("th")).text("Pubmed").css("width","40px"));
+    tr.append($(document.createElement("th")).html("DGR<sub>1</sub>").css("width", "8%").attr({ id : 'th-dgr1', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}));
+    tr.append($(document.createElement("th")).html("DGR<sub>2</sub>").css("width", "8%").attr({ id : 'th-dgr2', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}));
+    tr.append($(document.createElement("th")).text("Journal").css("width", "8%").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher for the citation supporting the interaction"}));
+    tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "120px").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher article accession number"}));
+    tr.append($(document.createElement("th")).html("C. Score").addClass("numeric").css("width", "120px").attr({ id : 'th-cscore', "toggle": "tooltip", "title": "The confidence score (likelihood) for interaction accuracy"}));
+    tr.append($(document.createElement("th")).text("Excerpt").css("min-width", "40%").attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "The article excerpt that states the interaction"}));
+    tr.append($(document.createElement("th")).text("Pubmed").css("width","40px").attr({ id : 'th-pubmed', "toggle": "tooltip", "title": "A PubMed link to the article (if available)"}));
 
     this.table.append(thead);
   }
