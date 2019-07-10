@@ -50,7 +50,7 @@ class TableDetail extends ResultsTable {
     tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "120px"));
     tr.append($(document.createElement("th")).html("Conf.<br>Score").addClass("numeric").css("width", "120px"));
     tr.append($(document.createElement("th")).text("Excerpt").css("min-width", "40%"));
-    tr.append($(document.createElement("th")).text("Pubmed").css("width","40px");
+    tr.append($(document.createElement("th")).text("Pubmed").css("width","40px"));
 
     this.table.append(thead);
   }
