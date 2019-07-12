@@ -241,17 +241,16 @@ class Search {
     for (let set of this.sets) {
       let item = undefined;
 
-
-
       item = $("<div/>")
-        .addClass("search-item")
+        .addClass(`search-item`)
+        .attr({ 'data-dgr-symbol': set.name, 'data-dgr-id': JSON.stringify( set.ids )})
         .css("background-color", set.color)
         .append($("<span/>").addClass("name").text(set.name))
         .append($("<span/>").addClass(`${set.id}-links`))
         .append(
-          $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.name)
-            .on('click', (event) => {
-              this.removeSearchSet($(event.target).data("id"));
+          $("<i/>").addClass("fa fa-times text-danger remove").data("symbol", set.name)
+            .off( 'click' ).on('click', (event) => {
+              this.removeSearchSet($(event.target).data("symbol"));
             })
         );
 
