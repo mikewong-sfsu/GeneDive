@@ -2,6 +2,10 @@
 
 ## 2-Hop Test
 
+## Clique Test
+
+Aliases in the summary are inconsistent (TNF, TNF-alpha, etc)
+
 ## GroupBy Test
 
 **Search:** *OneHop* `SP-A`
