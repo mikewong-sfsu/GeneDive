@@ -10,11 +10,6 @@ apt-get install -y \
 		iputils-ping \      # ping to test/debug network setup
 		telnet              # telnet to open network communication for testing/debugging
 
-# Get NodeJS v10 and Puppeteer
-curl -sL https://deb.nodesource.com/setup_10.x | bash -
-apt-get install -y nodejs
-cd /usr/lib/node_modules && npm i puppeteer
-
 # Add keys
 mkdir -p /root/.ssh
 chmod 700 /root/.ssh

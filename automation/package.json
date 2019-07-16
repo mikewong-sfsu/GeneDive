@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "mathjs": "^6.0.3",
     "mixin-deep": "^2.0.0",
     "sqlite3": "^4.0.6",
     "stopword": "^0.2.4"
