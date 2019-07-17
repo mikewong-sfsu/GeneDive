@@ -2,7 +2,7 @@
 // MW This entire file is a good example of overengineering too soon
 define('IS_DOCKER_CONTAINER', getenv("IS_DOCKER_CONTAINER"));
 
-define('GENEDIVE_DATA_FILE',  '/usr/local/genedive/data/data.sqlite'); // MW Deprecated
+define('GENEDIVE_DATA_FILE',  '/usr/local/genedive/data/sources/all/data.sqlite');
 define('GENEDIVE_USERS_FILE', '/usr/local/genedive/data/users.sqlite');
 
 // Docker stuff
@@ -16,6 +16,6 @@ define("PYTHON_IMPORT_FILE", ENVIRONMENT_SCRIPTS_FOLDER."/import_interactions.py
 
 set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__)). "/../phpseclib/");
 
-define("PDO_GENEDIVE_DATA",'sqlite:'.GENEDIVE_DATA_FILE ); // MW Deprecated
+define("PDO_GENEDIVE_DATA",'sqlite:'.GENEDIVE_DATA_FILE );
 define("PDO_GENEDIVE_USERS",'sqlite:'.GENEDIVE_USERS_FILE );
 
