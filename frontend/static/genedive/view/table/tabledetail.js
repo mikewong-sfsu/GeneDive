@@ -9,6 +9,7 @@ class TableDetail extends ResultsTable {
       return;
     }
     this.interactions = this.interactions[group];
+    this.group        = `group-${group.substr( 0, 8 )}`;
     this.amountOfEntries = this.interactions.length;
     this.highlight_count = _.reduce(_.map(this.interactions, i => i.highlight ? 1 : 0), (acc, i) => acc + i);
     this.showBackButton();
@@ -58,9 +59,11 @@ class TableDetail extends ResultsTable {
   drawBody() {
     let tbody = $(document.createElement("tbody"));
 
-    for (let i of this.interactions) {
+    for( let j = 0; j < this.interactions.length; j++ ) {
+      let i = this.interactions[ j ];
 
       let tr = $(document.createElement("tr"));
+      tr.attr({ id: `${this.group}-row${j}` });
 
       if (i.highlight) {
         tr.addClass("highlight-row");
@@ -78,7 +81,6 @@ class TableDetail extends ResultsTable {
       tr.append($(document.createElement("td")).html(mention2));
       tr.append($(document.createElement("td")).html(i.journal));
       tr.append($(document.createElement("td")).text(displayedID).addClass("numeric"));
-      // tr.append($(document.createElement("td")).text((i.section)));
       tr.append($(document.createElement("td")).text(Number(i.probability).toFixed(3)).addClass("numeric"));
       tr.append($(document.createElement("td")).html(this.adjustExcerpt(i)));
       if (i.pubmed_id !== "0")
