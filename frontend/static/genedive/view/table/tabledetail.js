@@ -63,7 +63,7 @@ class TableDetail extends ResultsTable {
       let i = this.interactions[ j ];
 
       let tr = $(document.createElement("tr"));
-      tr.attr({ id: `${this.group}-row${j}` });
+      tr.attr({ id: `${this.group}-row-${j}` });
 
       if (i.highlight) {
         tr.addClass("highlight-row");
