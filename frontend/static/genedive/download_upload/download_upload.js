@@ -375,6 +375,7 @@ If you feel that we are not abiding by this privacy policy, you should contact u
                 let textObj = JSON.parse(text);
                 console.debug(textObj);
                 GeneDive.history.importEntireProgramStates(textObj);
+				GeneDive.probfilter.showProbabilityFilter();
               })
             } catch (e) {
               thisDownloadUpload.handleException(e);
