@@ -12,7 +12,6 @@
     <div class="module control-module">
             <div class="btn-group" style="width: 100%">
                 <button type="button" class="btn btn-default undo" data-toggle="tooltip-initial" data-placement="bottom" title="Undo the last action you made" disabled><i class="fas fa-undo"></i><span class="button-text">Undo</span></button>
-                <!--<button type="button" class="btn btn-default reset-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <span class="button-text">Redraw Graph</span></button>-->
                 <button type="button" class="btn btn-default redo" data-toggle="tooltip-initial" data-placement="bottom" title="Redo the last action you undid" disabled><span class="button-text">Redo</span><i class="fas fa-redo"></i></button>
             </div>
     </div>
@@ -179,7 +178,7 @@
 
     <!-- Graph View -->
     <div class="graph-view panel-bottom">
-                        <button type="button" class="module control-module btn-group btn btn-default reset-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <i class="fa fa-refresh" aria-hidden="true"></i> <span class="button-text">Redraw Graph</span></button>
+      <button type="button" class="module control-module btn-group btn btn-default redraw-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <i class="fa fa-refresh" aria-hidden="true"></i> <span class="button-text">Redraw Graph</span></button>
       <div class="absent">
         <div>View Absent Nodes List</div>
       </div>

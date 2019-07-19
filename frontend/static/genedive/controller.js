@@ -27,7 +27,7 @@ class Controller {
     this.graph          = new GraphView( "graph" );
     this.download       = new DownloadUpload( ".download-module button.download", ".download-module button.upload");
     this.datasources    = undefined; // MW
-    this.controls       = new Controls( ".control-module button.undo", ".control-module button.redo", "button.reset-graph" );
+    this.controls       = new Controls( ".control-module button.undo", ".control-module button.redo", "button.redraw-graph" );
     this.history        = new History( this );
     this.loading        = new Loading(".loading-container", ".loading-info", ".loading-container .progress-bar");
     this.localdb        = new LocalDB(this);
