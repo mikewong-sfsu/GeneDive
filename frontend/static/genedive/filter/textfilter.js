@@ -100,10 +100,9 @@ class TextFilter {
 
   }
 
-
-
   addFilter() {
-    this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val(), $(".filter-dropdown option:selected",this.currentValueInput).text());
+    let displayValue = this.currentValueInput.hasClass( 'filter-text' ) ? this.currentValueInput.val() : this.currentValueInput.children( 'option:selected' ).text();
+    this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val(), displayValue );
   }
 
   addFilterSet(attribute, is, value, displayValue) {
@@ -124,7 +123,6 @@ class TextFilter {
     this.display.html("");
 
     for (let set of this.sets) {
-      console.log( this.sets );
       let item = $("<div/>")
         .addClass("filter-item")
         .addClass(set.is ? "filter-is" : "filter-not")
