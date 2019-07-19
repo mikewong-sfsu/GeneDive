@@ -132,7 +132,7 @@ class TextFilter {
         .append($("<span/>").addClass("is").text(set.is ? "is" : "not"))
         .append($("<span/>").addClass("value").text(set.displayValue))
         .append(
-          $("<i/>").addClass("fa fa-times text-danger remove").attr({ 'data-filter-id', set.id })
+          $("<i/>").addClass("fa fa-times text-danger remove").attr({ 'data-filter-id': set.id })
             .off( 'click' )
             .on('click', ( ev ) => {
               this.removeFilterSet($( ev .target).attr( 'data-filter-id' ));
