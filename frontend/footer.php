@@ -19,6 +19,7 @@
 
     <!-- Alertify -->
     <script src="static/alertify/js/alertify.min.js"></script>
+    <script src="static/genedive/alertify-defaults.js"></script>
 
     <!-- TableSorter -->
     <script src="static/tablesorter/jquery.tablesorter.min.js"></script>
