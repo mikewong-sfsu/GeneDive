@@ -108,7 +108,9 @@ class TextFilter {
   }
 
   addFilterSet(attribute, is, value, displayValue) {
-    this.sets.push(new FilterSet(attribute, is, value, displayValue));
+    let filter = new FilterSet( attribute, is, value, displayValue );
+    if( this.sets.find( f => f.id == filter.id )) { alertify.error( 'Filter already applied' ); return; }
+    this.sets.push( filter );
     this.renderDisplay();
     GeneDive.onAddFilter();
   }
