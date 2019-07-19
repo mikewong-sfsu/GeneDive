@@ -16,7 +16,7 @@ class ResultsTable {
       return `
       <a class="pubmedLink" href='/api/external_link.php?action=pubmed&pubmedID=${pubmedID}' target='_blank'>
         <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        <i class="fa fa-link" aria-hidden="true"></i>
+        <i class="fa fa-link" aria-hidden="true">&nbsp;</i>
       </a>`;
 
   }
