@@ -103,8 +103,7 @@ class TextFilter {
 
 
   addFilter() {
-    this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val(), $("option:selected",this.currentValueInput).text());
-    //this.currentValueInput.val($("option:eq(0)",this.currentValueInput).val());
+    this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val(), $(".filter-dropdown option:selected",this.currentValueInput).text());
   }
 
   addFilterSet(attribute, is, value, displayValue) {
