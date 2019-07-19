@@ -123,16 +123,19 @@ class TextFilter {
     this.display.html("");
 
     for (let set of this.sets) {
+      console.log( this.sets );
       let item = $("<div/>")
         .addClass("filter-item")
         .addClass(set.is ? "filter-is" : "filter-not")
+        .attr({ id: set.id })
         .append($("<span/>").addClass("attribute").text(set.attribute))
         .append($("<span/>").addClass("is").text(set.is ? "is" : "not"))
         .append($("<span/>").addClass("value").text(set.displayValue))
         .append(
-          $("<i/>").addClass("fa fa-times text-danger remove").data("id", set.id)
-            .on('click', (event) => {
-              this.removeFilterSet($(event.target).data("id"))
+          $("<i/>").addClass("fa fa-times text-danger remove").attr({ 'data-filter-id', set.id })
+            .off( 'click' )
+            .on('click', ( ev ) => {
+              this.removeFilterSet($( ev .target).attr( 'data-filter-id' ));
             })
         );
 
@@ -286,11 +289,11 @@ class TextFilter {
 }
 
 class FilterSet {
-  constructor(attribute, is, value,displayValue) {
-    this.id = attribute + value;
-    this.attribute = attribute;
-    this.is = is;
-    this.value = value;
+  constructor( attribute, is, value, displayValue ) {
+    this.id           = 'filter-' + (sha256( `${attribute}-${is}-${value}` ).substr( 0, 8 ));
+    this.attribute    = attribute;
+    this.is           = is;
+    this.value        = value;
     this.displayValue = displayValue;
   }
 }
