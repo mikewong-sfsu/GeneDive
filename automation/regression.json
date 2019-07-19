@@ -2,9 +2,7 @@
 	"puppeteer" : {
 		"closeOnFail": false,
 		"search_page": "search.php",
-		"headless" : false,
-		"default_width": 1920,
-		"default_height": 949
+		"headless" : false
 	},
 	"url": "http://localhost:8080/",
 	"login": "testwork1@test.com",
