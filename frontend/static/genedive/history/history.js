@@ -138,6 +138,7 @@ class History{
     // Search, Probability, and Filter state
     this.controller.search.importSearchState(state.search);
     this.controller.probfilter.setMinimumProbability(state.probfilter);
+	this.controller.probfilter.showProbabilityFilter(); 
     this.controller.textfilter.importFilterState(state.textfilter);
 
     //Highlighter
