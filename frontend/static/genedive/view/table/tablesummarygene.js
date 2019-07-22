@@ -35,12 +35,12 @@ class TableSummaryGene extends ResultsTable {
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%" ) );
     tr.append( $(document.createElement("th")).text( "DGR" ).css("width","8%").attr({"toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
     tr.append( $(document.createElement("th")).text( "DGR" ).css("width","8%").attr({"toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
-    tr.append( $(document.createElement("th")).text( "# Mentions" ).addClass("numeric").attr({"toggle": "tooltip", "title": "Number of interactions between other DGRs and your query"}) );
-    tr.append( $(document.createElement("th")).text( "# Articles" ).addClass("numeric header").attr({"toggle": "tooltip", "title": "Number of articles that were accessed by the relationship algorithm"}) ); // MW TODO: Why do I need to manually add header?
+    tr.append( $(document.createElement("th")).text( "# Mentions" ).css("width","8%").addClass("numeric").attr({"toggle": "tooltip", "title": "Number of interactions between other DGRs and your query"}) );
+    tr.append( $(document.createElement("th")).text( "# Articles" ).css("width","8%").addClass("numeric header").attr({"toggle": "tooltip", "title": "Number of articles that were accessed by the relationship algorithm"}) ); // MW TODO: Why do I need to manually add header?
     tr.append( $(document.createElement("th")).text( "Conf Scr Dist" ).attr({"toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
     tr.append( $(document.createElement("th")).text( "Max Conf Scr" ).addClass("numeric").attr({"toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
-    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width","40%").attr({"toggle": "tooltip", "title": "A selection from the article that the algorithm selected to imply a relationship"}) );
-
+    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).attr({"toggle": "tooltip", "title": "A selection from the article that the algorithm selected to imply a relationship"}) );
+    tr.append( $(document.createElement("th")).text( "Theme" ).attr({"toggle": "tooltip", "title": "A selection from the article that the algorithm selected to imply a relationship"}) ); 
     this.table.append(thead);
   }
 
@@ -85,7 +85,8 @@ class TableSummaryGene extends ResultsTable {
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( this.adjustExcerpt(row) ) );
-      
+    tr.append( $(document.createElement("td")).text( row.addendum) );
+  
       tbody.append(tr);
     }
 

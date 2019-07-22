@@ -7,7 +7,7 @@ use JSON::XS;
 my $file         = shift; # Absolute path
 my $path         = path( $file );
 my @required     = qw( mention1 mention2 geneids1 geneids2 type1 type2 );
-my @optional     = qw( journal article_id pubmed_id sentence_id mention1_offset mention2_offset probability context section );
+my @optional     = qw( journal article_id pubmed_id sentence_id mention1_offset mention2_offset probability context section addendum);
 my $interactions = csv( in => validate( $file ), encoding => 'utf-8', headers => "auto" );
 
 # ===== CLEANUP
@@ -92,7 +92,11 @@ sub extract_ids {
 	my $entry   = shift;
 
 	foreach my $i ( 1, 2 ) {
-		next unless( $entry->{ "type$i" } eq ucfirst $type );
+		#print($entry->{"type$i"});
+		print("  ");
+		print"type",($type);
+		next unless( $entry->{ "type$i" } eq $type );
+		print("equals");
 		my $id     = $entry->{ "geneids$i" };
 		my $symbol = $entry->{ "mention$i" };
 		push @{$hash->{ $symbol }}, $id;
@@ -138,6 +142,7 @@ CREATE TABLE IF NOT EXISTS interactions (
     section TEXT, 
 	type1 CHARACTER(1), 
 	type2 CHARACTER(1),
+	addendum TEXT,
 	PRIMARY KEY (id)
 );
 CREATE INDEX IF NOT EXISTS gid1 on interactions(geneids1);
@@ -211,7 +216,7 @@ sub write_sql {
 				else          { push @values, 'NULL'; }
 			} else {
 				if( $exists ) { push @values, double_quote( $interaction->{ $key } ); }
-				else          { push @values, ''; }
+				else          { push @values, double_quote(''); }
 			}
 		}
 		printf FILE "( %s )%s", join( ', ', @values ), ( $end_of_group || $end_of_data ? ";\n\n" : ",\n" );
