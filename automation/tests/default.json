@@ -1,0 +1,8 @@
+{
+	"puppeteer" : {
+		"headless" : false
+	},
+	"url": "http://localhost:8080/",
+	"login": "testwork1@test.com",
+	"password": "testwork"
+}
