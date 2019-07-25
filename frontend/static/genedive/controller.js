@@ -648,7 +648,7 @@ class Controller {
    @callergraph
    */
   addSynonyms() {
-    this.filtrate = Synonym.findSynonyms(this.search.sets, this.filtrate);  // Static class
+    this.filtrate = Synonym.findSynonyms( this.search.sets, this.filtrate );
   }
 
   /**

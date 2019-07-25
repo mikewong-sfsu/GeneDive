@@ -1,6 +1,8 @@
 class ResultsTable {
 
+  // ============================================================
   constructor ( table, interactions ) {
+  // ============================================================
     this.table = $(table);
     this.interactions = interactions;
     this.table.html("");
@@ -8,8 +10,9 @@ class ResultsTable {
     $(".messaging-and-controls").show();
   }
   
-  // build pubmed link
+  // ============================================================
   buildPubmedLink ( pubmedID ) {
+  // ============================================================
     if(pubmedID === "N/A")
       return "N/A";
     else
@@ -21,29 +24,39 @@ class ResultsTable {
 
   }
 
+  // ============================================================
   updateMessage ( message ) {
+  // ============================================================
     $('.table-view .messaging-and-controls .metadata').html(message);
   }
 
+  // ============================================================
   hideBackButton () {
+  // ============================================================
     $('.table-view .messaging-and-controls .go-back').css('visibility', 'hidden');
   }
 
+  // ============================================================
   showBackButton () {
+  // ============================================================
     $('.table-view .messaging-and-controls .go-back').css('visibility', 'visible');
   }
 
-  // synonymize gene
+  // ============================================================
   addSynonym ( gene, synonym ) {
+  // ============================================================
     return `${gene} <span class="text-muted">[aka ${synonym}]</span>`;
   }
 
-  // color excerpt
+  // ============================================================
   styleExcerpt ( excerpt, symbol, color ) {
+  // ============================================================
     return excerpt.replace( new RegExp( `#(${symbol})#`, 'i' ), `<span style="color:${color};">$1</span>` );
   }
 
+  // ============================================================
   initHistogram ( group, probabilities ) {
+  // ============================================================
     // Init histogram
     d3.select(`#d3-${group}`)
       .datum( this.interactions[group].map( i => i.probability ) )
@@ -57,7 +70,9 @@ class ResultsTable {
       );
   }
 
+  // ============================================================
   adjustExcerpt(row){
+  // ============================================================
     let excerpt = row.context;
      if(row.context.trim().toLocaleLowerCase() === "source: pharmgkb"){
        excerpt = `Source: <a href="/api/external_link.php?action=pharmgkb_combination&dgr1=${row.geneids1}&dgr2=${row.geneids2}" target="_blank" onclick="event.stopPropagation()" class="pharmgkb-excerpt-link">PharmGKB #${row.mention1}# #${row.mention2}# Combination <i class="fas fa-external-link-alt"></i></a>`

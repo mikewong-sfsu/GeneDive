@@ -6,6 +6,7 @@ test.help            = require( 'tests/help' );
 test.login           = require( 'tests/Login' );
 test.oneHop          = require( 'tests/OneHop' );
 test.twoHop          = require( 'tests/TwoHop' );
+test.threeHop        = require( 'tests/ThreeHop' );
 test.removeDGR       = require( 'tests/RemoveDGR' );
 test.clique          = require( 'tests/Clique' );
 test.sorting         = require( 'tests/SortingColumn' );
