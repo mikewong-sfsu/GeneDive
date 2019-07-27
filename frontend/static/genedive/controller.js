@@ -219,7 +219,7 @@ class Controller {
       let cur_toplogy = this.search.selectedTopology();
       if(cur_toplogy === this.search.TOPOLOGY_TWO_HOP || cur_toplogy === this.search.TOPOLOGY_THREE_HOP)
         this.search.setTopology(this.search.TOPOLOGY_ONE_HOP);
-      this.search.addSearchSet(name, id, type, true);
+      this.search.addSearchTerm(name, id, type, true);
       this.runSearch();
     } catch (e) {
       this.handleException(e);
@@ -235,7 +235,7 @@ class Controller {
   onNodeGraphShiftClickHold(name, id, type, deferRunSearch) {
     try {
 
-      this.search.addSearchSet(name, id, type, deferRunSearch)
+      this.search.addSearchTerm(name, id, type, deferRunSearch)
     } catch (e) {
       this.handleException(e);
     }

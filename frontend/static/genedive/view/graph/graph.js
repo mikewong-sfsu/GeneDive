@@ -69,7 +69,7 @@ class GraphView {
   draw(interactions, sets) {
 
     this.resetHiddenNodes();
-    this.currentSetsID = SearchSet.getIDOfSearchSetArray(sets);
+    this.currentSetsID = SearchTerm.getIDOfSearchTermArray(sets);
 
     let nodes = this.createNodes(interactions);
     let edges = this.createEdges(interactions);
@@ -109,7 +109,7 @@ class GraphView {
    */
   update(interactions, sets) {
 
-    // If it's a new search set, redraw graph. Concats all the searchset ids
+    // If it's a new search set, redraw graph. Concats all the search term ids
     // if (this.currentSetsID !== SearchSet.getIDOfSearchSetArray(sets))
     //   this.draw(interactions, sets);
 

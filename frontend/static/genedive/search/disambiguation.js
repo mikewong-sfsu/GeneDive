@@ -38,7 +38,7 @@ class Disambiguation {
           if ( closeEvent.index === 0 ) return;  // Cancel
           let selected = $(".disambiguation-form .list-group-item-action.active");
 
-          GeneDive.search.addSearchSet( selected.data("name"), [selected.val()], selected.data("type") );
+          GeneDive.search.addSearchTerm( selected.data("name"), [selected.val()], selected.data("type") );
 
         }
       }});
@@ -116,7 +116,7 @@ class Disambiguation {
     let name = element.getAttribute('data-name');
     let id = element.getAttribute('data-id');
     let type = element.getAttribute('data-type');
-    GeneDive.search.addSearchSet( name, [id], type );
+    GeneDive.search.addSearchTerm( name, [id], type );
 
   }
 

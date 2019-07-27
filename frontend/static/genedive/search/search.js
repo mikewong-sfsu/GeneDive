@@ -95,11 +95,11 @@ class Search {
     return xhr.response
   }
 
-  addSearchSet(name, ids, type, deferRunSearch = false) {
+  addSearchTerm(name, ids, type, deferRunSearch = false) {
 
     try {
 
-      if (this.hasSearchSet(name)) {
+      if (this.hasSearchTerm(name)) {
         alertify.notify("Gene already in search.", "", "3");
         return;
       }
@@ -113,14 +113,14 @@ class Search {
             return;
           }
 
-          this.sets.push(new SearchSet(name, ids, type));
+          this.sets.push(new SearchTerm(name, ids, type));
           break;
 
         case this.TOPOLOGY_ONE_HOP:
         case this.TOPOLOGY_TWO_HOP:
         case this.TOPOLOGY_THREE_HOP:
         default:
-          this.sets.push(new SearchSet(name, ids, type));
+          this.sets.push(new SearchTerm(name, ids, type));
           break;
       }
 
@@ -135,7 +135,7 @@ class Search {
 
   }
 
-  removeSearchSet(identifier, deferRunSearch = false) {
+  removeSearchTerm(identifier, deferRunSearch = false) {
     this.sets = this.sets.filter((set) => set.name !== identifier && set.ids[0] !== identifier);
 
     this.renderDisplay();
@@ -250,7 +250,7 @@ class Search {
         .append(
           $("<i/>").addClass("fa fa-times text-danger remove").data("symbol", set.name)
             .off( 'click' ).on('click', (event) => {
-              this.removeSearchSet($(event.target).data("symbol"));
+              this.removeSearchTerm($(event.target).data("symbol"));
             })
         );
 
@@ -463,7 +463,7 @@ class Search {
       }
 
       // Case: Gene w/o Disambiguation || Search Set
-      this.addSearchSet(item.symbol, item.values, set_name);
+      this.addSearchTerm(item.symbol, item.values, set_name);
       this.input.typeahead("val", "");
 
     });
@@ -493,7 +493,7 @@ class Search {
 
   }
 
-  hasSearchSet(name) {
+  hasSearchTerm(name) {
     return this.sets.filter(s => s.name == name).length > 0;
   }
 
@@ -554,22 +554,23 @@ class Search {
 
 }
 
-class SearchSet {
+class SearchTerm {
   constructor(name, ids, type) {
-    this.id = sha256(name).slice(0, 30);
-    this.name = name;
-    this.type = type;
-    this.ids = ids.map(i => String(i));
-    this.color = "#cccccc";
+    this.id     = sha256( name ).substr( 0, 12 );
+    this.name   = name;
+    this.type   = type;
+    this.ids    = ids.map(i => String(i));
+    this.color  = "#cccccc";
     this.entity = "";
 
-    switch (this.ids[0][0]) {
+    switch ( this.ids[0].substr( 0, 1 )) {
       case "C":
         this.entity = "chemical";
         break;
 
       case "D":
         this.entity = "disease";
+        break;
 
       default:
         this.entity = "gene";
@@ -577,13 +578,13 @@ class SearchSet {
   }
 
   /**
-   @fn       SearchSet.getIDOfSearchSetArray
-   @brief    Gets ID of SearchSet Array
-   @details  Takes a SearchSet Array and generates a new ID out of all of them
-   @param    sets A SearchSet Array
+   @fn       SearchTerm.getIDOfSearchTermArray
+   @brief    Gets ID of SearchTerm Array
+   @details  Takes a SearchTerm Array and generates a new ID out of all of them
+   @param    sets A SearchTerm Array
    @callergraph
    */
-  static getIDOfSearchSetArray(sets) {
+  static getIDOfSearchTermArray(sets) {
     return sha256(sets.map(set => {
       return set.id
     }).join("")).slice(0, 30);
