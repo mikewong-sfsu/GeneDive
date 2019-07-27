@@ -72,8 +72,8 @@ class TableSummaryGene extends ResultsTable {
       row.articles = Object.keys( rows.reduce(( acc, cur ) => { let article = cur.article_id; if( ! defined( article )) { return acc; } acc[ article ] = true; return acc; }, {})).length;
 
       // Synonym styling
-      let mention1 = row.mention1_synonym ? this.addSynonym(row.mention1, row.mention1_synonym) : row.mention1;
-      let mention2 = row.mention2_synonym ? this.addSynonym(row.mention2, row.mention2_synonym) : row.mention2;
+      let mention1 = row.synonym1 ? this.addSynonym(row.mention1, row.synonym1) : row.mention1;
+      let mention2 = row.synonym2 ? this.addSynonym(row.mention2, row.synonym2) : row.mention2;
 
       let excerpt = this.styleExcerpt( row.context, row.mention1, row.mention1_color );
           excerpt = this.styleExcerpt( excerpt, row.mention2, row.mention2_color );

@@ -74,8 +74,8 @@ class TableDetail extends ResultsTable {
       let displayedID = i.pubmed_id;
 
       // Synonym styling
-      let mention1 = i.mention1_synonym ? this.addSynonym(i.mention1, i.mention1_synonym) : i.mention1;
-      let mention2 = i.mention2_synonym ? this.addSynonym(i.mention2, i.mention2_synonym) : i.mention2;
+      let mention1 = i.synonym1 ? this.addSynonym(i.mention1, i.synonym1) : i.mention1;
+      let mention2 = i.synonym2 ? this.addSynonym(i.mention2, i.synonym2) : i.mention2;
 
       tr.append($(document.createElement("td")).html(mention1));
       tr.append($(document.createElement("td")).html(mention2));

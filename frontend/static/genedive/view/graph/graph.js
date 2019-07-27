@@ -221,8 +221,8 @@ class GraphView {
     let nodes = {};
 
     interactions.forEach(i => {
-      let i1name = i.mention1 + (i.mention1_synonym != null ? `[aka ${i.mention1_synonym}]` : "");
-      let i2name = i.mention2 + (i.mention2_synonym != null ? `[aka ${i.mention2_synonym}]` : "");
+      let i1name = i.mention1 + (i.synonym1 != null ? `[aka ${i.synonym1}]` : "");
+      let i2name = i.mention2 + (i.synonym2 != null ? `[aka ${i.synonym2}]` : "");
 
       if (!nodes.hasOwnProperty(i.geneids1)) {
         nodes[i.geneids1] = {group: 'nodes', data: {id: i.geneids1, name: i1name, color: i.mention1_color, type:i.type1}};

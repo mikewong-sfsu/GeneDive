@@ -644,7 +644,7 @@ class Controller {
   /**
    @fn       Controller.addSynonyms
    @brief
-   @details  Synonym static method will add mention1_synonym and mention2_synonym to interactions as synonym or null if none needed.
+   @details  Synonym static method will add synonym1 and synonym2 to interactions as synonym or null if none needed.
    @callergraph
    */
   addSynonyms() {
