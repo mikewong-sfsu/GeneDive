@@ -122,16 +122,17 @@ class GraphView {
 
     // Produce a set of unique DGRs from the interactions list
     let interactionDGRs = {};
-    for(let i in interactions)
+    for(let i of interactions)
     {
-      let interaction = interactions[i];
-      interactionDGRs[interaction.geneids1] = {
-        color: interaction.mention1_color,
-        shape:this.getShapeFromType(interaction.type1),
+      interactionDGRs[i.geneids1] = {
+        name:  i.mention1 + (i.synonym1 != null ? ` [aka ${i.synonym1}]` : "" ),
+        color: i.mention1_color,
+        shape: this.getShapeFromType(i.type1),
       };
-      interactionDGRs[interaction.geneids2] = {
-        color: interaction.mention2_color,
-        shape:this.getShapeFromType(interaction.type2),
+      interactionDGRs[i.geneids2] = {
+        name:  i.mention2 + (i.synonym2 != null ? ` [aka ${i.synonym2}]` : "" ),
+        color: i.mention2_color,
+        shape:this.getShapeFromType(i.type2),
       };
     }
 
@@ -195,8 +196,12 @@ class GraphView {
       if(node === undefined)
         continue;
       let nodeData = node.data();
+      let expectedName  = interactionDGRs[nodeData.id].name;
       let expectedColor = interactionDGRs[nodeData.id].color;
       let expectedShape = interactionDGRs[nodeData.id].shape;
+
+      if(node.data( 'name' ) !== expectedName )
+        node.data( 'name', expectedName );
 
       if(node.style("background-color") !== expectedColor)
         node.style("background-color", expectedColor);
@@ -221,8 +226,8 @@ class GraphView {
     let nodes = {};
 
     interactions.forEach(i => {
-      let i1name = i.mention1 + (i.synonym1 != null ? `[aka ${i.synonym1}]` : "");
-      let i2name = i.mention2 + (i.synonym2 != null ? `[aka ${i.synonym2}]` : "");
+      let i1name = i.mention1 + (i.synonym1 != null ? ` [aka ${i.synonym1}]` : "" );
+      let i2name = i.mention2 + (i.synonym2 != null ? ` [aka ${i.synonym2}]` : "" );
 
       if (!nodes.hasOwnProperty(i.geneids1)) {
         nodes[i.geneids1] = {group: 'nodes', data: {id: i.geneids1, name: i1name, color: i.mention1_color, type:i.type1}};
