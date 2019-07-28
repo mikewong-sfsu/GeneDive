@@ -37,7 +37,7 @@ class Grouper {
 
   _sortGroups ( groups ) {
     for ( let g of Object.keys(groups) ) {
-      groups[g].sort( ( a, b ) => a.probability > b.probability );
+      groups[g].sort(( a, b ) => a.probability - b.probability );
     }
     return groups;
   }
