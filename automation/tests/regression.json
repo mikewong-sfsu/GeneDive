@@ -1,1 +1,18 @@
-user.json
+{
+	"puppeteer" : {
+		"headless" : false
+	},
+	"url": "http://localhost:8080/",
+	"login": "testwork1@test.com",
+	"password": "testwork",
+	"register": {
+		"email":"testwork1@test.com",
+		"password":"testwork",
+		"confirm":"testwork",
+		"name":"testing",
+		"organization":"SFSU",
+		"title":"ms",
+		"role":"o",
+		"usage":"Testing registration"
+	}
+}

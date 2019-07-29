@@ -1,6 +1,8 @@
 // Test Driver
+process.env.NODE_PATH = `./lib:${process.env.NODE_PATH}`;
+require( 'module' ).Module._initPaths();
 const os             = require( 'os' );
-const GeneDive       = require( 'GeneDiveAPI' );
+const GeneDive       = require( 'GeneDiveAutomation' );
 let   test           = {};
 test.help            = require( 'tests/help' );
 test.login           = require( 'tests/Login' );
