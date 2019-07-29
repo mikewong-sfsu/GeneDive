@@ -6,11 +6,11 @@
  @ingroup	Search
 */
 
-const Test    = require( '../tests/Test' );
-const Score   = require( '../ui-automation/Score' );
-const Table   = require( '../ui-automation/view/Table' );
-const Graph   = require( '../ui-automation/view/Graph' );
-const Network = require( '../ui-automation/view/Network' );
+const Test    = require( 'Test' );
+const Score   = require( '../automation/Score' );
+const Table   = require( '../automation/view/Table' );
+const Graph   = require( '../automation/view/Graph' );
+const Network = require( '../automation/view/Network' );
 const mixwith = require( 'mixwith' );
 const mix     = mixwith.mix;
 

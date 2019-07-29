@@ -8,9 +8,9 @@
  * @ingroup   SearchTools
 */
 
-const Test    = require( '../tests/Test' );
-const Table   = require( '../ui-automation/view/Table' );
-const GroupBy = require( '../ui-automation/GroupBy' );
+const Test    = require( 'Test' );
+const Table   = require( '../automation/view/Table' );
+const GroupBy = require( '../automation/GroupBy' );
 const mixwith = require( 'mixwith' );
 const mix     = mixwith.mix;
 

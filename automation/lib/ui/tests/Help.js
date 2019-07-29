@@ -6,7 +6,7 @@
  * @ingroup Help
  */
 
-const Test = require('./Test');
+const Test = require('Test');
 
 class Help extends Test {
 	get name(){ return "Help Link"; }

@@ -3,7 +3,7 @@
  * @brief     Filter management API
  * @details   Automates the filtering features
  * @authors   Mike Wong mikewong@sfsu.edu
- * @ingroup   MVC
+ * @ingroup   SearchTools
  */
 
 let Filter = (superclass) => class extends superclass {

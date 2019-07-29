@@ -7,8 +7,8 @@
  @ingroup	Table
 */
 
-const Test    = require('./Test');
-const Table   = require( '../ui-automation/view/Table' );
+const Test    = require('Test');
+const Table   = require( '../automation/view/Table' );
 const mixwith = require( 'mixwith' );
 const mix     = mixwith.mix;
 

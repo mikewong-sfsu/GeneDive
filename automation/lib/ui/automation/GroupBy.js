@@ -5,7 +5,7 @@
  *            "group-by" modality for GeneDive results. Currently this comprises two
  *            buttons near the bottom of the control bar (aka control view).
  * @authors   Mike Wong mikewong@sfsu.edu
- * @ingroup   GroupBy
+ * @ingroup   MVC
  */
 
 let GroupBy = (superclass) => class extends superclass {

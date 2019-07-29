@@ -3,7 +3,7 @@
  * @brief     Results confidence score threshold
  * @details   Automates the confidence score threshold slider and preselect buttons
  * @authors   Mike Wong mikewong@sfsu.edu
- * @ingroup   MVC
+ * @ingroup   SearchTools
  */
 
 let Score = (superclass) => class extends superclass {

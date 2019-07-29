@@ -8,10 +8,10 @@
 */
 
 
-const Test      = require('./Test');
-const Highlight = require( '../ui-automation/Highlight' );
-const Table     = require( '../ui-automation/view/Table' );
-const Graph     = require( '../ui-automation/view/Graph' );
+const Test      = require('Test');
+const Highlight = require( '../automation/Highlight' );
+const Table     = require( '../automation/view/Table' );
+const Graph     = require( '../automation/view/Graph' );
 const mixwith   = require( 'mixwith' );
 const mix       = mixwith.mix;
 

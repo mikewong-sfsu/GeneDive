@@ -5,9 +5,9 @@
  * @authors Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
  * @ingroup SearchTools
  */
-const Test    = require( '../tests/Test' );
-const Table   = require( '../ui-automation/view/Table' );
-const Score   = require( '../ui-automation/Score' );
+const Test    = require( 'Test' );
+const Table   = require( '../automation/view/Table' );
+const Score   = require( '../automation/Score' );
 const mixwith = require( 'mixwith' );
 const mix     = mixwith.mix;
 

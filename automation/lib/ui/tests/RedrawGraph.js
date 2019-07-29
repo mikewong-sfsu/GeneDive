@@ -6,8 +6,8 @@
  * @ingroup Graph
  */
 
-const Test    = require( '../tests/Test' );
-const Graph   = require( '../ui-automation/view/Graph' );
+const Test    = require( 'Test' );
+const Graph   = require( '../automation/view/Graph' );
 const mixwith = require( 'mixwith' );
 const mix     = mixwith.mix;
 

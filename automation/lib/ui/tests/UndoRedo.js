@@ -6,11 +6,11 @@
  * @ingroup SystemState
 **/
 
-const Test    = require('./Test');
-const Score   = require( '../ui-automation/Score' );
-const History = require( '../ui-automation/History' );
-const Filter  = require( '../ui-automation/Filter' );
-const Table   = require( '../ui-automation/view/Table' );
+const Test    = require('Test');
+const Score   = require( '../automation/Score' );
+const History = require( '../automation/History' );
+const Filter  = require( '../automation/Filter' );
+const Table   = require( '../automation/view/Table' );
 const mixwith = require( 'mixwith' );
 const mix     = mixwith.mix;
 

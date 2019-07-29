@@ -4,7 +4,7 @@
  * @details   Automates the Registration UI. Requires options.register to have
  *            all relevant fields in the registration page.
  * @authors   Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup   Registration
+ * @ingroup   UserAccount
  */
 
 /**

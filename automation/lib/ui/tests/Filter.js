@@ -7,9 +7,9 @@
  * @ingroup SearchTools
  **/
 
-const Test    = require( '../tests/Test' );
-const Filter  = require( '../ui-automation/Filter' );
-const Table   = require( '../ui-automation/view/Table' );
+const Test    = require( 'Test' );
+const Filter  = require( '../automation/Filter' );
+const Table   = require( '../automation/view/Table' );
 const mixwith = require( 'mixwith' );
 const mix     = mixwith.mix;
 

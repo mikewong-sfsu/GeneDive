@@ -6,8 +6,8 @@
  * @ingroup  UserAccount
 **/
 
-const Test         = require( 'tests/Test' );
-const Registration = require( 'ui-automation/Registration' );
+const Test         = require( 'Test' );
+const Registration = require( '../automation/Registration' );
 const mixwith      = require( 'mixwith' );
 const mix          = mixwith.mix;
 

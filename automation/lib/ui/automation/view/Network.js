@@ -1,3 +1,10 @@
+/**
+ * @class     Network
+ * @brief     Simple graph network library
+ * @details   Other available libraries focus on rendering and are too complex for our needs
+ * @authors   Mike Wong mikewong@sfsu.edu
+ * @ingroup   MVC
+ */
 class Network {
 	constructor() {
 		this.nodes = new Set();

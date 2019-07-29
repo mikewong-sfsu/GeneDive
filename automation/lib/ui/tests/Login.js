@@ -6,7 +6,7 @@
  @authors    Mike Wong mikewong@sfsu.edu, Jack Cole jcole2@mail.sfsu.edu
  @ingroup    UserAccount
  */
-let Test = require( './Test' );
+let Test = require( 'Test' );
 
 class Login extends Test {
 	get name()     { return "Login"; }

@@ -8,12 +8,12 @@
 
 const fs       = require( 'fs' );
 const os       = require( 'os' );
-const Test     = require( '../tests/Test' );
-const Table    = require( '../ui-automation/view/Table' );
-const Graph    = require( '../ui-automation/view/Graph' );
-const Score    = require( '../ui-automation/Score' );
-const Filter   = require( '../ui-automation/Filter' );
-const SaveLoad = require( '../ui-automation/SaveLoad' );
+const Test     = require( 'Test' );
+const Table    = require( '../automation/view/Table' );
+const Graph    = require( '../automation/view/Graph' );
+const Score    = require( '../automation/Score' );
+const Filter   = require( '../automation/Filter' );
+const SaveLoad = require( '../automation/SaveLoad' );
 const mixwith  = require( 'mixwith' );
 const mix      = mixwith.mix;
 

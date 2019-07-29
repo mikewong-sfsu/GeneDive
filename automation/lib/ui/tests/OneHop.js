@@ -6,9 +6,9 @@
  * @ingroup Search
 */
 
-const Test    = require( '../tests/Test' );
-const Table   = require( '../ui-automation/view/Table' );
-const Graph   = require( '../ui-automation/view/Graph' );
+const Test    = require( 'Test' );
+const Table   = require( '../automation/view/Table' );
+const Graph   = require( '../automation/view/Graph' );
 const mixwith = require( 'mixwith' );
 const mix     = mixwith.mix;
 

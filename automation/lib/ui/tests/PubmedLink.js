@@ -7,9 +7,9 @@
  * @ingroup Table
 */
 
-const Test       = require( 'tests/Test' );
-const Table      = require( 'ui-automation/view/Table' );
-const PubmedLink = require( 'ui-automation/PubmedLink' );
+const Test       = require( 'Test' );
+const Table      = require( '../automation/view/Table' );
+const PubmedLink = require( '../automation/PubmedLink' );
 const mixwith    = require( 'mixwith' );
 const mix        = mixwith.mix;
 

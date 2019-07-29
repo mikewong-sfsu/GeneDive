@@ -3,7 +3,7 @@
  * @brief     Highlight management API
  * @details   Automates the highlight features
  * @authors   Mike Wong mikewong@sfsu.edu
- * @ingroup   MVC
+ * @ingroup   SearchTools
  */
 
 let Highlight = (superclass) => class extends superclass {
