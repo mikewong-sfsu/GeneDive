@@ -25,7 +25,7 @@ class RedrawGraph extends mix( Test ).with( Graph ) {
 				await this.oneHop();
 				await this.search( dgr );
 
-				await this.click( 'button.reset-graph');
+				await this.click( 'button.redraw-graph');
 
 				let { hub, spokes } = await this.getOneHopGraphHubAndSpokes( dgr );
 				let deviation       = this.getOneHopGraphDeviation( hub, spokes );

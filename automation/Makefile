@@ -1,2 +1,2 @@
 test:
-	node test/regression.js
+	node tests/regression.js
