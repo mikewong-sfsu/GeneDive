@@ -24,12 +24,11 @@ class RedrawGraph extends mix( Test ).with( Graph ) {
 				await this.login();
 				await this.oneHop();
 				await this.search( dgr );
-
-				await this.click( 'button.redraw-graph');
+				await this.graph.redraw();
 
 				let { hub, spokes } = await this.getOneHopGraphHubAndSpokes( dgr );
 				let deviation       = this.getOneHopGraphDeviation( hub, spokes );
-				let pass            = (deviation.distances < 2) && (deviation.angles < 10);
+				let pass            = (deviation.distances < 2) && (deviation.angles < 10); // Thresholds experimentally determined
 
 				if( ! pass ) { reject( `On graph re-rendering, distances vary by ${deviation.distances.toFixed( 2 )} and angles vary by ${deviation.angles.toFixed( 2 )}` ); }
 
@@ -75,7 +74,7 @@ class RedrawGraph extends mix( Test ).with( Graph ) {
 		let distances   = spokes.map( spoke => distance( hub, spoke ));
 		let angles      = spokes.map( spoke => angle( hub, spoke )).sort( numerically ).reduce(( result, angle, i, arr ) => { result.push( i == 0 ? (360 + angle - arr[ arr.length - 1 ]) : angle - arr[ i - 1 ]); return result; }, []);
 
-		let scale       = 20 * Math.log( spokes.length ) - 50; scale = scale > 0 ? scale : 1; // Found by plotting ABI-1, BRCA1, IL24, TNFSF1, VEGFA and taking the logarithmic regression
+		let scale       = 20 * Math.log( spokes.length ) - 50; scale = scale > 0 ? scale : 1; // Regression line found by plotting ABI-1, BRCA1, IL24, TNFSF1, VEGFA and taking the logarithmic regression
 		let deviation   = { distances: stddev( distances )/scale, angles: stddev( angles )};
 
 		return deviation;

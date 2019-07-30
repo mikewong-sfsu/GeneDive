@@ -20,10 +20,10 @@
     <div class="module search-module">
       <div class="topology-row">
         <div class="btn-group topology-selector" style="width:100%;" role="group" aria-label="...">
-          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGR to view all direct interactions with the DGR. Provide multiple DGRs or DGR sets to view interactions between all input DGRs." style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGR to view all direct interactions with the DGR. Provide multiple DGRs or DGR sets to view interactions between all input DGRs."    style="width:25%;" type="button" class="btn btn-default active" data-type="1hop">1-Hop</button>
           <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two or more DGRs as input. GeneDive will show interactions between the two DGRs through up to 1 (one) intermediary DGR."                 style="width:25%;" type="button" class="btn btn-default"        data-type="2hop">2-Hop</button>
           <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide two or more DGRs as input. GeneDive will show interactions between the two DGRs through up to 2 (two) intermediary DGRs."                style="width:25%;" type="button" class="btn btn-default"        data-type="3hop">3-Hop</button>
-          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGR as input. GeneDive will show those DGRs that interact with input DGR and one of its interactants."        style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
+          <button data-toggle="tooltip-initial" data-placement="bottom" title="Provide one DGR as input. GeneDive will show those DGRs that interact with input DGR and one of its interactants."                               style="width:25%;" type="button" class="btn btn-default"        data-type="clique">Clique</button>
         </div>
       </div>
 
@@ -104,8 +104,8 @@
       </div>
 
       <div class="btn-group table-grouping" style="width:100%;" role="group" aria-label="...">
-        <button style="width:50%;" type="button" class="btn btn-default active" data-type="dgr">DGR Pair</button>
-        <button style="width:50%;" type="button" class="btn btn-default" data-type="article">Article</button>
+        <button style="width:50%;" type="button" class="btn btn-default active" id="group-by-dgr-pair" data-type="dgr">DGR Pair</button>
+        <button style="width:50%;" type="button" class="btn btn-default"        id="group-by-article"  data-type="article">Article</button>
       </div>
     </div>
 

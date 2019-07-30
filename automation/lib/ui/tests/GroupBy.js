@@ -11,11 +11,12 @@
 const Test    = require( 'Test' );
 const Table   = require( '../automation/view/Table' );
 const GroupBy = require( '../automation/GroupBy' );
+const Score   = require( '../automation/Score' );
 const mixwith = require( 'mixwith' );
 const mix     = mixwith.mix;
 
-class GroupByTest extends mix( Test ).with( Table, GroupBy ) {
-    get name() { return 'Group By DGR Pair'; }
+class GroupByTest extends mix( Test ).with( Score, Table, GroupBy ) {
+    get name() { return 'Grouping'; }
 
     execute() {
 
@@ -23,14 +24,25 @@ class GroupByTest extends mix( Test ).with( Table, GroupBy ) {
 
 			let test = { groupBy: {
 				dgrPair: async () => {
+
+					let synonyms = ( dgr ) => { 
+						let match = dgr.match( /(?<commonName>.*?)\s+\[aka\s+(?<synonym>[^\]]+)\]/ );
+						if( match ) {
+							return new RegExp( `${match.groups.commonName}|${match.groups.synonym}` );
+						} else {
+							return new RegExp( dgr );
+						}
+					}
+
 					await this.groupBy.dgrPair();
 
 					let table = await this.table.details();
 					let pass  = table.every(( group ) => { 
-						let groupPair = [ group.DGR1, group.DGR2 ]; 
+						let groupPair = [ synonys( group.DGR1 ), synonyms( group.DGR2 )]; 
 						return group.details.every(( row ) => { 
-							let matches = ( a, b ) => { return a.every( x => b.includes( x )) && b.every( x => a.includes( x )); }
-							let rowPair = [ row.DGR1, row.DGR2 ]; return matches( rowPair, groupPair ); 
+							let matches = ( a, b ) => { return a.every( x => b.some( re => x.match( re ))); }
+							let rowPair = [ row.DGR1, row.DGR2 ]; 
+							return matches( rowPair, groupPair ); 
 						}); 
 					});
 
@@ -41,7 +53,7 @@ class GroupByTest extends mix( Test ).with( Table, GroupBy ) {
 					await this.groupBy.article();
 
 					let table = await this.table.details();
-					let pass  = table.every(( group ) => { return group.details.every( row => row.Article == group.Article ); });
+					let pass  = table.every(( group ) => { return group.details.every( row => row[ 'Article ID' ] == group.Article ); });
 
 					if( ! pass ) { reject( 'One or more Article groupings are heterogenous (not grouped by article)' ); }
 				}
@@ -53,6 +65,7 @@ class GroupByTest extends mix( Test ).with( Table, GroupBy ) {
                 await this.login();
 				await this.oneHop();
                 await this.search( dgr );
+				await this.confidence.score.setSlider( 0.90 );
 
 				// Start with Group By Article, since Group By Pair is the default
 				test.groupBy.article();

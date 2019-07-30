@@ -20,7 +20,7 @@ let GroupBy = (superclass) => class extends superclass {
 		};
 	}
 
-	groupByDGRPair() { return this.click( '.btn[data-type="dgr"]' ); }
-	groupByArticle() { return this.click( '.btn[data-type="article"]' ); }
+	groupByDGRPair() { return this.click( '#group-by-dgr-pair' ); }
+	groupByArticle() { return this.click( '#group-by-article' ); }
 }
 module.exports = GroupBy;
