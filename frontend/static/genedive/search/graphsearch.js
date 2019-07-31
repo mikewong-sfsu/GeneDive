@@ -1,6 +1,6 @@
 /* 
   GraphSearch
-  Author: Brook Thomas
+  Author: Mike Wong, Brook Thomas
 
   Uses the adjacency matrix to perform pre-database search of interactions.
 */
@@ -8,7 +8,7 @@
 class GraphSearch {
 
   constructor () {
-    this.genes = new Set(); // Used by nHop/dfs only
+    this.dgrs = new Set(); // Used by nHop/dfs only
   }
 
   clique ( geneid, minProb ) {
@@ -39,31 +39,29 @@ class GraphSearch {
 
      
     /**
-     * @description DGRs in pathways between origin and destination with at most n hops.
-     If support is specified, these intermediaries must have an interaction with
-     at least one other intermediary.
-     * @param dgr_sets {Array} The DGRs to find intermediaries
+     * @description Find pairwise paths of n-hops or fewer between all
+     * user-provided search terms. If support is specified, these
+     * intermediaries must have an interaction with at least one other
+     * intermediary.
+     * @param terms {Array} The user-provided search terms
      * @param n Number of intermediate hops
      * @param support
      * @returns {GraphResult}
      */
-  nHop( dgr_sets, n, support ) {
-    this.genes.clear();
-    let ids_searched = [];
-    // Build list of ids
-    for(let set = 0;set < dgr_sets.length;set++)
-        ids_searched = ids_searched.concat(dgr_sets[set].ids);
-
+  nHop( terms, n, support ) {
+    this.dgrs.clear();
+    let dgrs = terms.reduce(( dgrs, term ) => { dgrs = dgrs.concat( term.ids ); return dgrs; }, []);
 
     // Do a depth first search starting at each DGR and ending at any other DGR in the search set
-    for(let id = 0;id < ids_searched.length;id++)
-    {
-      let destinations = new Set(ids_searched);
-      destinations.delete(ids_searched[id]);
-      this._dfs( [ids_searched[id]], destinations, n );
+    for( let i = 0; i < dgrs.length; i++ ) {
+      let start = dgrs[ i ];
+      for( let j = i + 1; j < dgrs.length; j++ ) {
+        let stop = dgrs[ j ];
+        this._dfs( [ start ], stop, n );
+      }
     }
 
-    let intermediaries = _.without( Array.from(this.genes), ids_searched );
+    let intermediaries = _.without( Array.from( this.dgrs ), dgrs );
 
     if ( support ) {
       let supported = intermediaries.filter( i => this.hasInteraction( i, intermediaries ) );
@@ -76,54 +74,55 @@ class GraphSearch {
 
     /**
      * @description Internal depth-first-search method used by the nHop search wrapper
-     * @param chain {Array} The current chain. When first calling _dfs, this should contain one id where the start is
-     * @param destinations {Set} The nodes that when found, we add to the genes list
+     * @param path {Array} The current path under traversal. When first calling _dfs, this should contain just the starting node
+     * @param stop When this node is reached, stop traversal and record the path to include in the nHop filtered graph
      * @param n Remaining number of nodes to traverse
      * @private
      */
-  _dfs ( chain, destinations, n) {
+  _dfs ( path, stop, max ) {
 
-    // Prevent loopback
-    if ( _.uniq(chain).length < chain.length ) return;
-
-    if ( chain.length > 1 && destinations.has(_.last(chain))) {
-        chain.forEach( i => this.genes.add( i ) );
+    // Recursion exit condition: Reached our desired stop
+    let last = path[ path.length - 1 ];
+    if ( last == stop ) {
+        path.forEach( i => this.dgrs.add( i ));
         return;
     }
 
-    if ( n === 0 ) return;
+    // Recursion exit condition: path exceeds max hop limit
+    if ( path.length > max ) return;
 
-    //  When we get interactants, exclude the parent or we'll backtrack at every step
-    let interactants = _.without( this.getInteractants( _.last(chain) ), [ _.last(chain) ] )
-    for ( let i of interactants ) {
-        this._dfs( _.concat( chain, i ), destinations, n - 1 );
+    let interactions = this.getInteractions( last );
+    for ( let i of interactions ) {
+        if( i == last )         { continue; } // Don't traverse self-loops
+        if( path.includes( i )) { continue; } // Don't traverse cycles
+        this._dfs( path.concat( i ), stop, max );
     }
   }
 
   /* SUPPORT METHODS */ 
   // This also applies the filter constraint from FilterControls.
-  getInteractants( gene ) {
-    let interactants, min_probability;
-    try{
-      min_probability = (GeneDive.probfilter.getMinimumProbability()) * 1000;
-      interactants = Object.getOwnPropertyNames( adjacency_matrix[gene] );
-      interactants = interactants.filter( i => adjacency_matrix[gene][i].some( x => x >= min_probability ) );
-    }catch (e) {
-      interactants = [];
-      console.error("getInteractants had an error with "+gene);
-      console.error(e);
+  getInteractions( gene ) {
+    let neighbors = Object.keys( adjacency_matrix[ gene ]);
+    let byCutoff  = ( n, cutoff ) => { let scores = adjacency_matrix[ gene ][ n ]; return scores.some( score => score >= cutoff )};
+    try {
+      let cutoff = (GeneDive.probfilter.getMinimumProbability()) * 1000;
+      return neighbors.filter( n => byCutoff( n, cutoff ));
+
+    } catch ( e ) {
+      console.error( `getInteractions had an error with ${gene}` );
+      console.error( e );
+      return [];
     }
-    return interactants;
   }
 
   hasInteraction( gene, candidates ) {
-    return _.intersection( this.getInteractants( gene ), candidates ).length > 0 ? true : false;
+    return _.intersection( this.getInteractions( gene ), candidates ).length > 0 ? true : false;
   }
 }
 
 class GraphResult {
   constructor ( interactants, non_interactants ) {
-    this.interactants = interactants;
+    this.interactants     = interactants;
     this.non_interactants = non_interactants;
   }
 }
