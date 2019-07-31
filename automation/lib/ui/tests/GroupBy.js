@@ -24,26 +24,25 @@ class GroupByTest extends mix( Test ).with( Score, Table, GroupBy ) {
 
 			let test = { groupBy: {
 				dgrPair: async () => {
+					let synonyms = ( dgr1, dgr2 ) => { 
+						let pattern = '';
+						let match   = undefined;
 
-					let synonyms = ( dgr ) => { 
-						let match = dgr.match( /(?<commonName>.*?)\s+\[aka\s+(?<synonym>[^\]]+)\]/ );
-						if( match ) {
-							return new RegExp( `${match.groups.commonName}|${match.groups.synonym}` );
-						} else {
-							return new RegExp( dgr );
-						}
+						match = dgr1.match( /(?<commonName>.*?)\s+\[aka\s+(?<synonym>[^\]]+)\]/ );
+						if( match ) { pattern += `${match.groups.commonName}|${match.groups.synonym}` } else { pattern += dgr1; }
+
+						match = dgr2.match( /(?<commonName>.*?)\s+\[aka\s+(?<synonym>[^\]]+)\]/ );
+						if( match ) { pattern += `|${match.groups.commonName}|${match.groups.synonym}` } else { pattern += `|${dgr2}`; }
+
+						return new RegExp( pattern );
 					}
 
 					await this.groupBy.dgrPair();
 
 					let table = await this.table.details();
 					let pass  = table.every(( group ) => { 
-						let groupPair = [ synonys( group.DGR1 ), synonyms( group.DGR2 )]; 
-						return group.details.every(( row ) => { 
-							let matches = ( a, b ) => { return a.every( x => b.some( re => x.match( re ))); }
-							let rowPair = [ row.DGR1, row.DGR2 ]; 
-							return matches( rowPair, groupPair ); 
-						}); 
+						let groupDGRs = synonyms( group.DGR1, group.DGR2 );
+						return group.details.every( row => row.DGR1.match( groupDGRs ) && row.DGR2.match( groupDGRs ));
 					});
 
 					if( ! pass ) { reject( 'One or more DGR Pair groupings are heterogenous (not grouped by DGR pairs)' ); }
@@ -68,12 +67,10 @@ class GroupByTest extends mix( Test ).with( Score, Table, GroupBy ) {
 				await this.confidence.score.setSlider( 0.90 );
 
 				// Start with Group By Article, since Group By Pair is the default
-				test.groupBy.article();
-				test.groupBy.dgrPair();
+				await test.groupBy.article();
+				await test.groupBy.dgrPair();
 
-				// Clean up after ourselves
-				delete Array.prototype.equals; 
-
+				resolve( this.result( true, "Grouping feature works as tested" ));
             } catch ( e ) {
                 reject( e );
             }

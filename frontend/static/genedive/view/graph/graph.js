@@ -229,12 +229,12 @@ class GraphView {
       let i1name = i.mention1 + (i.synonym1 != null ? ` [aka ${i.synonym1}]` : "" );
       let i2name = i.mention2 + (i.synonym2 != null ? ` [aka ${i.synonym2}]` : "" );
 
-      if (!nodes.hasOwnProperty(i.geneids1)) {
-        nodes[i.geneids1] = {group: 'nodes', data: {id: i.geneids1, name: i1name, color: i.mention1_color, type:i.type1}};
+      if( ! i.geneids1 in nodes ) {
+        nodes[ i.geneids1 ] = { group: 'nodes', data: {id: i.geneids1, name: i1name, color: i.mention1_color, type: i.type1 }};
       }
 
-      if (!nodes.hasOwnProperty(i.geneids2)) {
-        nodes[i.geneids2] = {group: 'nodes', data: {id: i.geneids2, name: i2name, color: i.mention2_color, type:i.type2}};
+      if( ! i.geneids2 in nodes ) {
+        nodes[ i.geneids2 ] = { group: 'nodes', data: {id: i.geneids2, name: i2name, color: i.mention2_color, type: i.type2 }};
       }
     });
 
@@ -282,21 +282,21 @@ class GraphView {
     let edges = {};
 
     interactions.forEach(i => {
-      let key = [i.geneids1, i.geneids2].sort().join("_");
+      let id = [ i.geneids1, i.geneids2 ].sort().join( '_' );
 
-      if (!edges.hasOwnProperty(key)) {
-        edges[key] = {
+      if (! id in edges ) {
+        edges[ id ] = {
           group: 'edges',
-          data: {id: key, source: i.geneids1, target: i.geneids2, highlight: i.highlight, count: 1}
+          data: { id: id, source: i.geneids1, target: i.geneids2, highlight: i.highlight, count: 1 }
         };
         return;
       }
 
-      edges[key].data.count++;
+      edges[ id ].data.count++;
 
       // Even if we've added the edge, check highlighting and increment edge count
-      if (i.highlight && !edges[key].data.highlight) {
-        edges[key].data.highlight = true;
+      if (i.highlight && !edges[ id ].data.highlight) {
+        edges[ id ].data.highlight = true;
       }
 
     });
