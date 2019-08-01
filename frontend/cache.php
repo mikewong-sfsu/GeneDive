@@ -42,17 +42,10 @@ function adjacency_matrix( $manifest, $sources ) {
 	$source = $datasources[ 0 ];
 	if( count( $datasources ) == 1 ) {
 
-		// GeneDive 'all', 'pharmgkb', or 'plos-pmc' adjacency matrix requested
-	 	if(	in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
-
-			$cache = "$DATASOURCES/$source/adjacency_matrix.json.zip";
-			send_file( $cache, 'rb' );
-
 		// Single user-provided data source adjacency matrix requested
-		} else {
-			$cache = "$DATASOURCES/$source/adjacency_matrix.json.zip";
-			send_file( $cache, 'rb' );
-		}
+		// This includes: 'all', 'pharmgkb', or 'plos-pmc' 
+    $cache = "$DATASOURCES/$source/adjacency_matrix.json.zip";
+    send_file( $cache, 'rb' );
 	}
 
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED

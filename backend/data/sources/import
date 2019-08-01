@@ -41,11 +41,11 @@ sub adjacency_matrix {
 	foreach my $interaction (@$interactions) {
 		my $a    = $interaction->{ geneids1 };
 		my $b    = $interaction->{ geneids2 };
-		($a, $b) = sort { $a cmp $b } ($a, $b); # Enforce ascii-sorted order
 		my $p    = $interaction->{ probability };
 
 		$matrix->{ $a }{ $b } = [] if not exists $matrix->{ $a }{ $b };
 		$matrix->{ $a }{ $b } = [ sort { $a <=> $b } (($p*1000), @{ $matrix->{ $a }{ $b }})];
+    $matrix->{ $b }{ $a } = $matrix->{ $a }{ $b }; # Enforce bidirectionality
 	}
 
 	my $json = new JSON::XS();

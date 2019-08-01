@@ -73,10 +73,10 @@ class GraphSearch {
   }
 
     /**
-     * @description Internal depth-first-search method used by the nHop search wrapper
+     * @description Depth-first-search method to grow paths that meet the start, stop, and length criteria
      * @param path {Array} The current path under traversal. When first calling _dfs, this should contain just the starting node
      * @param stop When this node is reached, stop traversal and record the path to include in the nHop filtered graph
-     * @param n Remaining number of nodes to traverse
+     * @param max Maximum length of the path
      * @private
      */
   _dfs ( path, stop, max ) {
