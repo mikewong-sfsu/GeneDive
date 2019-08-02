@@ -11,6 +11,7 @@ test.twoHop          = require( 'ui/tests/TwoHop' );
 test.threeHop        = require( 'ui/tests/ThreeHop' );
 test.removeDGR       = require( 'ui/tests/RemoveDGR' );
 test.clique          = require( 'ui/tests/Clique' );
+test.cache           = require( 'data/tests/Cache' );
 test.sorting         = require( 'ui/tests/SortingColumn' );
 test.confidence      = require( 'ui/tests/ConfidenceScore' );
 test.groupBy         = require( 'ui/tests/GroupBy' );
@@ -66,6 +67,9 @@ let userbot = new GeneDive( 'tests/regression.json' );
 	// ===== STATE FEATURES
 	await userbot.run( test.undoRedo );
 	await userbot.run( test.saveload );
+
+	// ===== BACKEND SYSTEMS
+	await userbot.run( test.cache );
 
 	await userbot.stop();
 	await userbot.saveResults( 'RegressionTests' );

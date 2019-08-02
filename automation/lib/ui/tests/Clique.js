@@ -46,10 +46,11 @@ class Clique extends mix( Test ).with( Table ) {
 				let others  = results.filter( row => ! row.DGR1.match( regex ) && ! row.DGR2.match( regex )).reduce(( friends, row ) => { friends.push( row.DGR1 ); friends.push( row.DGR2 ); return friends; }, []);
 				let pass    = others.every( dgr => friends.find( friend => friend.match( synonyms( dgr ))));
 				let missing = new Set();
-				others.forEach( node => { let found = friends.find( friend => friend.match( synonyms( node ))); if( ! found ) { missing.add( node ); }});
-				console.log( 'FRIENDS', friends, 'MISSING', [ ... missing ] );
 
-				if( ! pass ) { reject( 'There is at least one neighbor to the DGR that interacts with a non-neighbor of the DGR' ); }
+				others.forEach( node => { let found = friends.find( friend => friend.match( synonyms( node ))); if( ! found ) { missing.add( node ); }});
+				missing = [ ... missing ].join( ', ' );
+
+				if( ! pass ) { reject( `The following DGRs interacts with a non-neighbor of the DGR: ${missing}` ); }
 
 				resolve( this.result( true, "Successfully searched using clique topology mode" ));
 			} catch( e ) {
