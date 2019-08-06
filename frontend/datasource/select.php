@@ -92,7 +92,10 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
                 console.log( message, GeneDive.datasource.list );
                 LookupTableCache.refresh();
                 AdjacencyMatrix.refresh();
-                GeneDive.search.initTypeaheadOnCacheLoad();
+		GeneDive.search.initTypeaheadOnCacheLoad();
+		//refresh the search set and graph
+		GeneDive.search.clearSearch();
+		GeneDive.onRemoveDGR();
             })
             .fail(( error ) => { console.log( error ); });
         }, 
@@ -109,7 +112,8 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
         let key      = $( item ).attr( 'id' );
         let all      = [ 'plos-pmc', 'pharmgkb' ].includes( key ) && GeneDive.datasource.list.includes( 'all' );
         let selected = GeneDive.datasource.list.includes( key );
-        if( all || selected ) { $( item ).bootstrapToggle( 'on' ); } else { $( item ).bootstrapToggle( 'off' );}
+	if( all || selected ) { $( item ).bootstrapToggle( 'on' ); } 
+    //else { $( item ).bootstrapToggle( 'off' );} //commented to fix the toggle reset 
     });
 });
 </script>

@@ -30,7 +30,7 @@ class LocalDB {
         probability FLOAT,
         context VARCHAR(256),
         section VARCHAR(64), reactome INTEGER, type1 CHARACTER(1), type2 CHARACTER(1),
-        PRIMARY KEY (id)
+	PRIMARY KEY (id)
       );`)
     });
     this.controller = controller;

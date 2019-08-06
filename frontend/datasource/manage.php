@@ -10,7 +10,8 @@
   <link rel="stylesheet" type="text/css" href="/static/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/static/fonts/css/fontawesome.min.css">
   <link rel="stylesheet" type="text/css" href="/static/fonts/css/fa-solid.min.css">
-  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
   <title>Add or Remove a Data Source</title>
   <style>
 
@@ -36,7 +37,12 @@ small {
   width: 100%;
 }
 
-form button{
+button{
+  margin: auto;
+  position:relative;
+}
+
+form button {
   position: relative;
   bottom: 0;
 }
@@ -70,7 +76,7 @@ form button.cancel {
   height: 96px;
 }
 
-.datasource-list-item .datasource-actions .datasource-remove {
+.datasource-list-item .datasource-actions {
   position: absolute;
   top: 32px;
 }
@@ -204,11 +210,11 @@ form button.cancel {
       <div class="col-xs-2"></div>
       <div class="col-xs-8">
         <div class="panel panel-primary">
-          <div class="panel-heading"><h3 class="panel-title">Remove a User-Provided Data Source</h3></div>
-          <div class="panel-body">
+	  <div class="panel-heading"><h3 class="panel-title">Remove a User-Provided Data Source</h3></div>
+	  <div class="panel-body">
             <ul class="list-group" id="datasources">
-            </ul>
-          </div>
+	    </ul>
+	  </div>
         </div>
       </div>
       <div class="col-xs-2"></div>
@@ -217,13 +223,18 @@ form button.cancel {
   </div>
 
 <li class="datasource-list-item list-group-item">
+   <!--form  method="post" action"/datasource/remove.php"-->
     <div class="datasource-info">
         <h5 class="name">Name</h5>
         <p class="description">Description</p>
     </div>
     <div class="datasource-actions">
-        <button class="btn btn-xs btn-danger datasource-remove"><span class="fas fa-trash"></span>&nbsp;Remove</button>
+	<!--input type="hidden" class="form-control" name="ds_id" id="datasource_id"-->
+	<!--/*onclick=remove_datasource(this)*/-->
+	<button class="btn btn-xs btn-danger btn_remove " id="datasource-remove"><span class="fas fa-trash"></span>&nbsp;Remove</button>
+
     </div>
+<!--/form-->
 </li>
 
   <!-- JQuery -->
@@ -236,7 +247,8 @@ form button.cancel {
   <script src="/static/bootstrap/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 
   <!-- Alertify -->
-  <script src="/static/alertify/js/alertify.min.js"></script>
+  <!--script src="/static/alertify/js/alertify.min.js"></script-->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/alertify.min.js"></script>
 
   <script>
 $( "form button.cancel" ).off( 'click' ).click(( ev ) => {
@@ -253,11 +265,34 @@ Object.entries( manifest ).forEach(([ id, datasource ]) => {
   let entry = listitem.clone();
   entry.find( '.name' ).html( datasource.name );
   entry.find( '.description' ).html( datasource.description );
+  entry.find('.datasource_id').html(datasource.id);
+  entry.attr('id',datasource.id);
   let toggle = entry.find( 'input.datasource-toggle' );
   toggle.attr({ id: datasource.id, name: datasource.id });
   $( '#datasources' ).append( entry );
 });
-  </script>
+
+$('.btn_remove').on('click',function(){
+  var ds_id = this.parentNode.parentNode.id;
+  var ds_name = document.getElementById(ds_id).children[0].children[0].innerHTML
+  var retVal = confirm("Do you confirm to delete \"" + ds_name + "\"?");
+  if( retVal == true ) {
+   $.ajax({
+     url:"./remove.php",
+     type:"POST",
+     dataType:'html',
+     data:{"ds_id" : ds_id},
+     success:function(result){
+       	location.reload();
+	//alert(result);
+     }
+   }); 
+    return true;
+  } else {
+    return false;
+  }
+})
+</script>
 
 </body>
 
