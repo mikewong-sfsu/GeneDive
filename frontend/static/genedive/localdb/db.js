@@ -30,7 +30,6 @@ class LocalDB {
         probability FLOAT,
         context VARCHAR(256),
         section VARCHAR(64), reactome INTEGER, type1 CHARACTER(1), type2 CHARACTER(1),
-	[addendum] VARCHAR(MAX),
 	PRIMARY KEY (id)
       );`)
     });
@@ -52,7 +51,6 @@ class LocalDB {
     this.requiredHeaders.add("reactome");
     this.requiredHeaders.add("type1");
     this.requiredHeaders.add("type2");
-    this.requiredHeaders.add("addendum");
   }
 
   /**
@@ -137,10 +135,9 @@ class LocalDB {
       line.section,
       line.reactome,
       line.type1,
-      line.type2,
-      line.addendum];
+      line.type2];
     this.db.transaction( (tx) => {
-      tx.executeSql(`insert into interactions ( journal, article_id, pubmed_id, sentence_id, mention1_offset, mention2_offset, mention1, mention2, geneids1, geneids2, probability, context, section, reactome , type1, type2, addendum) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?,?);`,
+      tx.executeSql(`insert into interactions ( journal, article_id, pubmed_id, sentence_id, mention1_offset, mention2_offset, mention1, mention2, geneids1, geneids2, probability, context, section, reactome , type1, type2) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?);`,
         interaction)
     });
   }
