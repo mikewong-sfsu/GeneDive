@@ -13,14 +13,14 @@
  [Puppeteer](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md) is a NoeJS package maintained by Google designed to allow automation of headless Chrome.
  @ingroup tests
  */
-const HEADLESS_MODE = false;
+const HEADLESS_MODE = true;
 const ARGUMENTS = process.argv;
-const JSON_FILE = "GeneDiveAPI_params_example.json";
-const tests = require('./custom_modules/tests/_import.js');
+const JSON_FILE = "test/regression.json";
+const tests = require('../custom_modules/tests/_import.js');
 const puppeteer = require('puppeteer');
 const test_results = [];
-const RESULTS_FILE = `./log/GeneDiveAPI-results-{timestamp}.json`;
-const HTML_FILE = `./log/GeneDiveAPI-results-{timestamp}.html`;
+const RESULTS_FILE = `../log/GeneDiveAPI-results-{timestamp}.json`;
+const HTML_FILE = `../log/GeneDiveAPI-results-{timestamp}.html`;
 const COLOR = {
   Reset: "\x1b[0m",
   Bright: "\x1b[1m",
@@ -95,7 +95,7 @@ const do_test = async (test, browser, json_data) => {
       console.log('Reason for failure: ', reason);
       save_test_success(reason);
       page.close();
-    }	); 
+    }	);
   return promise;
 };
 
@@ -132,15 +132,13 @@ for (let i = 0; i < ARGUMENTS.length; i++)
 
   let promises = [];
   // Create Browser
-  const browser = await puppeteer.launch({
-    headless: HEADLESS_MODE, devtools: true,
+  const browser = await puppeteer.launch({headless: HEADLESS_MODE,
 	  args:['--no-sandbox','--disable-setuid-sandbox'],
   	  ignoreHTTPSErrors: true});
 
   // Go to login page, login, and then close the page
   await do_test(tests.Login, browser, json_data)
-    .catch(((e) => {
-      console.log({ e });
+    .catch((() => {
       process.exit(0);
     }));
 
