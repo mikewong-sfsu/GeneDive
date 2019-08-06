@@ -73,7 +73,8 @@ function add_datasource( $manifest, $datasource ) {
 function remove_datasource( $manifest, $datasource_id ) {
 // ============================================================
 	global $DATASOURCES;
-	if( ! in_array( $datasource_id, $manifest )) {
+	if( ! array_key_exists( $datasource_id, $manifest )) {
+		echo "not in array";
 		return;
 	}
 	$datasource = $manifest[ $datasource_id ];
@@ -81,7 +82,8 @@ function remove_datasource( $manifest, $datasource_id ) {
 	$path = $DATASOURCES . '/' . $datasource[ 'path' ];
 	system( "rm -rf $path" );
 	unset( $manifest[ $datasource_id ]);
-
+	//echo {$datasource_id}  " deleted successfully";
+	echo "datasource deleted successfully";
 	write_manifest( $manifest );
 }
 
