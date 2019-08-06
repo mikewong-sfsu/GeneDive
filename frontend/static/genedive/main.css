@@ -22,6 +22,7 @@ body {
   min-width: 350px;
   z-index: 20;
   overflow-y: scroll;
+  overflow-x: hidden;
   border-right:2px solid gray;
   box-shadow: 1px 0px 1px 0px rgba(128,128,128,0.75);
   background-color: rgb(247,247,247);
@@ -125,7 +126,7 @@ h5 {
 .titlebar .menu.dropdown .dropdown-menu { top: 40px; left: 124px; }
 
 .module {
-  padding: 24px 18px;
+  padding: 6px 18px;
 }
 
 .probability-module{
