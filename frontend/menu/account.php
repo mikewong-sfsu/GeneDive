@@ -3,7 +3,7 @@
   <div class="dropdown-menu">
     <div class="dropdown-item">Hello, <?= $_SESSION[ 'name' ] ?></div>
     <hr />
-    <div class="dropdown-item"><a href="/resetpassword/forgotpass.php">Reset password</a></div>
-    <div class="dropdown-item"><a href="?logout">Logout</a></div>
+    <div class="dropdown-item"><a class="reset-password" href="/resetpassword/forgotpass.php">Reset password</a></div>
+    <div class="dropdown-item"><a class="logout" href="?logout">Logout</a></div>
   </div>
 </div>
