@@ -18,7 +18,7 @@ if( file_exists( $db )) {
 	echo json_encode( $alt_ids );
 } else {
 
-	$fp = fopen( "$server/api/alt_ids.php?id=$id" );
+	$fp = fopen( "$server/api/alt_ids.php?id=$id", 'r' );
 	fpassthru( $fp );
 	
 }

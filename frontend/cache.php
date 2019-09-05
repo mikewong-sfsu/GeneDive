@@ -112,6 +112,7 @@ function send_file( $file, $mode = 'r' ) {
 	$fp = fopen( $file, $mode );
 	header( "Content-type: text/plain" );
 	header( "Content-length: " . filesize( $file ));
+  header( "Access-Control-Allow-Origin: *" );
 	fpassthru( $fp );
 	exit();
 }

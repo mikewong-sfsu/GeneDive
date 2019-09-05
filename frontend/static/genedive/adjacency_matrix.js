@@ -4,7 +4,8 @@ class AdjacencyMatrix {
 
   static refresh() {
       new JSZip.external.Promise(function (resolve, reject) {
-        JSZipUtils.getBinaryContent( '/cache.php?get=adjacency_matrix', function(err, data) {
+        // JSZipUtils.getBinaryContent( '/cache.php?get=adjacency_matrix', function(err, data) {
+        JSZipUtils.getBinaryContent( 'https://staging.genedive.net/cache.php?get=adjacency_matrix', function(err, data) {
           if( err ) {
             reject( err );
           } else {
