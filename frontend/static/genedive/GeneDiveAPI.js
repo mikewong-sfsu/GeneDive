@@ -96,7 +96,7 @@ GeneDiveAPI.alternativeIDs = ( id ) => new Promise( ( resolve, reject ) => {
         reject( new Error(this.statusText) );
     };
 
-    request.open( "GET", `/api/aliases.php?id=${id}` );
+    request.open( "GET", `/api/alt_ids.php?id=${id}` );
     request.send();
 });
 

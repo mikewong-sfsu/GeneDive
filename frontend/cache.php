@@ -1,6 +1,7 @@
 <?php
 require_once( 'session.php' );
 require_once( 'datasource/manifest.php' );
+require_once( 'datasource/proxy.php' ); // Defines $server
 
 /* ============================================================
  * cache.php
@@ -12,7 +13,6 @@ require_once( 'datasource/manifest.php' );
 if( ! isset( $_GET[ 'get' ] )) { exit; }
 if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( '["all"]' ); };
 
-$server  = "https://staging.genedive.net";
 $sources = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
 
 // ===== DISPATCH TABLE
