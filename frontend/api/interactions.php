@@ -2,12 +2,14 @@
 
 require_once "../auth.php";
 require_once "../datasource/manifest.php";
+require_once "../datasource/proxy.php"; // defines $server
 require_once "../phpLib/environment.php";
 
 $ids         = $_GET[ 'ids' ];
 $gids        = explode( ',', preg_replace('/[^0-9A-Za-z:,]/', '', $ids ));
 $minProb     = $_GET[ 'minProb' ];
-$datasources = json_decode( base64_decode( $_SESSION[ 'sources' ]));
+$sources     = $_GET[ 'sources' ] ? $_GET[ 'sources' ] : $_SESSION[ 'sources' ];
+$datasources = json_decode( base64_decode( $sources ));
 $query       = NULL;
 $results     = [];
 $errors      = [];
@@ -67,15 +69,18 @@ function proxy_query( $source, $ids, $minProb ) {
 // ============================================================
   global $manifest;
   global $errors;
+  global $server;
+  if( $source == 'all' ) { $manifest[ 'all' ][ 'host' ] = $server; }
 
-  $request  = $manifest[ $source ][ host ] . "/interactions.php?ids=$ids&minProb=$minProb";
-  $response = file_get_contents( $request );
+  $request  = $manifest[ $source ][ 'host' ] . "/api/interactions.php?ids=" . urlencode( $ids ) . "&minProb=$minProb&sources=" . base64_encode( json_encode( $source ));
+  $response = json_decode( file_get_contents( $request ), true );;
 
-  if( ! $proxy[ 'response' ]) { 
-     array_push( $errors, "DataSource Error: $source not available at '" . $manifest[ $source ][ host ] . "'" );
+  if( ! $response ) { 
+     array_push( $errors, "DataSource Error: Source '$source' not available at '$request'" );
     return null; 
   }
 
-  return json_decode( $proxy[ 'response' ], true );
+
+  return $response[ 'results' ];
 }
 ?>

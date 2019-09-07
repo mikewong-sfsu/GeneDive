@@ -10,8 +10,7 @@ class LookupTableCache {
 		[ 'gene_id', 'disease_id', 'drug_id', 'set_id' ].forEach(( cache ) => {
 
 			GeneDiveCache[ cache ] = $.ajax({
-				// url: `cache.php?get=${cache}`,
-				url: `https://staging.genedive.net/cache.php?get=${cache}`,
+				url: `cache.php?get=${cache}`,
 				method: "GET"
 			})
 			.then(( contents ) => {

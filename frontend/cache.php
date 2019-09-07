@@ -120,6 +120,7 @@ function send_file( $file, $mode = 'r' ) {
 // ============================================================
 function send_proxy( $cache, $mode = 'r' ) {
 // ============================================================
+  global $server;
 	$fp = fopen( "$server/cache.php?get=$cache", $mode );
 	fpassthru( $fp );
 	exit();
