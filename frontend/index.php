@@ -1,4 +1,19 @@
-<?php require_once "session.php" ?>
+<?php 
+  require_once( "session.php" );
+  require_once( "datasource/proxy.php" );
+  $selection_file = "/usr/local/genedive/data/sources/selection.json";
+  if( file_exists( $selection_file )) {
+    $selected = json_decode( file_get_contents( $selection_file ), true );
+    if( 
+      in_array( 'all',      $selected[ 'datasources' ]) ||
+      in_array( 'pharmgkb', $selected[ 'datasources' ]) ||
+      in_array( 'plos-pmc', $selected[ 'datasources' ])
+    ) {
+      header( "Location: $server/index.php?proxy=true" ); // MW Workaround for now
+      exit();
+    }
+  }
+?>
 
 <head>
     <meta charset="utf-8">
