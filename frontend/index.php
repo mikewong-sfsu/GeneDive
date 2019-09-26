@@ -2,19 +2,20 @@
   require_once( "session.php" );
   require_once( "datasource/proxy.php" );
   $selection_file = "/usr/local/genedive/data/sources/selection.json";
+  $use_native_ds  = false;
   if( file_exists( $selection_file )) {
-    $selected = json_decode( file_get_contents( $selection_file ), true );
-    if( 
-      in_array( 'all',      $selected[ 'datasources' ]) ||
-      in_array( 'pharmgkb', $selected[ 'datasources' ]) ||
-      in_array( 'plos-pmc', $selected[ 'datasources' ])
-    ) {
-      header( "Location: $server/index.php?proxy=true" ); // MW Workaround for now
-      exit();
-    }
+    $selected      = json_decode( file_get_contents( $selection_file ), true );
+    $ds            = $selected[ 'datasources' ];
+    $use_native_ds = in_array( 'all', $ds ) || in_array( 'pharmgkb', $ds ) || in_array( 'plos-pmc', $ds );
+  }
+
+  // Local datasources selected; no need for login
+  if( ! $use_native_ds ) {
+    $_SESSION[ 'is_auth' ] = true;
+    $_SESSION[ 'name' ]    = 'User';
+    header( 'Location: search.php' );
   }
 ?>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -42,7 +43,12 @@
 
 
     <div class="login">
+<?php if( $use_native_ds ): ?>
+      <form action="<?=$server ?>/login.php" method="post">
+        <input type="hidden" name="proxy" value="true">
+<?php else: ?>
       <form action="login.php" method="post">
+<?php endif ?>
         <div class="form-group">
           <label for="email">Email Address</label>
           <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address" required>

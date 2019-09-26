@@ -37,7 +37,13 @@
   $_SESSION[ 'email' ]   = $email;
   $_SESSION[ 'name' ]    = $row[ 'name' ];
   if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( '["all"]' ); };
-  header( 'Location: search.php' );
+  if( isset( $_POST[ 'proxy' ])) {
+    $clone = $_SESSION;
+    $clone[ 'id' ] = session_id();
+    header( 'Location: localhost:8080/search.php' );
+  } else {
+    header( 'Location: search.php' );
+  }
 
   function login_error( $errorMsg = 'Error' )
   {
