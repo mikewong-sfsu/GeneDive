@@ -32,18 +32,14 @@
     login_error( 'Invalid email or password. ' . FORGOT_PASS_LINK );
 
 
-  // Set session and redirect
+  // Login successful. Set session and redirect
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $email;
   $_SESSION[ 'name' ]    = $row[ 'name' ];
   if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( '["all"]' ); };
-  if( isset( $_POST[ 'proxy' ])) {
-    $clone = $_SESSION;
-    $clone[ 'id' ] = session_id();
-    header( 'Location: localhost:8080/search.php' );
-  } else {
-    header( 'Location: search.php' );
-  }
+
+  header( 'Location: search.php' );
+  exit();
 
   function login_error( $errorMsg = 'Error' )
   {
