@@ -16,14 +16,4 @@ if( isset( $_REQUEST[ 'logout' ])) {
   header( 'location: index.php' );
   exit;
 }
-
-if( isset( $_REQUEST[ 'proxy' ])) {
-  $id      = session_id();
-  $clone   = $_SESSION;
-  $clone[ 'id' ] = $id;
-  $session = base64_encode( json_encode( $clone ));
-  header( "location: localhost:8080//search.php?key=$session" );
-  exit;
-}
-
 ?>
