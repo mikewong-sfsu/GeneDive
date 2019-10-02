@@ -13,11 +13,11 @@
   }
 
   // Proxy login
-  if( isset( $_POST[ 'id' ])) {
+  if( isset( $_POST[ 'token' ])) {
     $_SESSION[ 'is_auth' ] = true;
     $_SESSION[ 'email' ]   = $_POST[ 'email' ];
     $_SESSION[ 'name' ]    = $_POST[ 'name' ];
-    $_SESSION[ 'id' ]      = $_POST[ 'id' ];
+    $_SESSION[ 'token' ]   = $_POST[ 'token' ];
     $_SESSION[ 'sources' ] = $_POST[ 'sources' ];
     $response = json_encode([ 'is_auth' => true ]);
     header( 'Access-Control-Allow-Origin: ' . PROXY );
