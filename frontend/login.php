@@ -42,12 +42,14 @@
   if( isset( $_POST[ 'proxy' ])) {
     $clone = $_SESSION;
     $clone[ 'id' ] = session_id();
-    echo json_encode( $clone );
+    $response = json_encode( $clone );
+    echo $response;
     exit();
 
   // Otherwise proceed to search page
   } else {
-    header( 'Location: search.php' );
+    $response = json_encode([ 'is_auth' => true ]);
+    echo $response;
     exit();
   }
 

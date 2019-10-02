@@ -60,8 +60,9 @@
         <button id="login-submit" name="login-submit" class="btn btn-primary">Login</button> or <a class="register" href="registration.php">Register</a>
       </form>
       <script>
-        let data = { email : $( '#id' ).val(), password: $( '#password' ).val(), 'login-submit' : true };
         $( '#login-submit' ).off( 'click' ).click(( ev ) => {
+          ev.preventDefault();
+          let data = { email : $( '#email' ).val(), password: $( '#password' ).val(), 'login-submit' : true };
           $.post(
 <?php if( $use_native_ds ): ?>
             "<?=$server?>/login.php",
