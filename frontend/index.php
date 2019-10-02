@@ -25,6 +25,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="static/genedive/index.css">
+    <script src="static/jquery/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 
@@ -43,11 +44,9 @@
 
 
     <div class="login">
+      <form>
 <?php if( $use_native_ds ): ?>
-      <form action="<?=$server ?>/login.php" method="post">
         <input type="hidden" name="proxy" value="true">
-<?php else: ?>
-      <form action="login.php" method="post">
 <?php endif ?>
         <div class="form-group">
           <label for="email">Email Address</label>
@@ -55,11 +54,27 @@
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <a class="forgot-password" href="resetpassword/forgotpass.php">Forgot your password?</a>
           <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+          <a class="forgot-password" href="resetpassword/forgotpass.php">Forgot your password?</a>
         </div>
-        <button type="submit" name="login-submit" class="btn btn-primary">Login</button> or <a class="register" href="registration.php">Register</a>
+        <button id="login-submit" name="login-submit" class="btn btn-primary">Login</button> or <a class="register" href="registration.php">Register</a>
       </form>
+      <script>
+        let data = { email : $( '#id' ).val(), password: $( '#password' ).val(), 'login-submit' : true };
+        $( '#login-submit' ).off( 'click' ).click(( ev ) => {
+          $.post(
+<?php if( $use_native_ds ): ?>
+            "<?=$server?>/login.php",
+<?php else: ?>
+            "login.php",
+<?php endif ?>
+            data,
+            ( response ) => {
+              console.log( 'RECEIVED', response );
+            }
+          );
+        });
+      </script>
 
       <!--  Display Success Message -->
       <?php 

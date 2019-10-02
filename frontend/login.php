@@ -38,8 +38,18 @@
   $_SESSION[ 'name' ]    = $row[ 'name' ];
   if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( '["all"]' ); };
 
-  header( 'Location: search.php' );
-  exit();
+  // If proxy, send auth token
+  if( isset( $_POST[ 'proxy' ])) {
+    $clone = $_SESSION;
+    $clone[ 'id' ] = session_id();
+    echo json_encode( $clone );
+    exit();
+
+  // Otherwise proceed to search page
+  } else {
+    header( 'Location: search.php' );
+    exit();
+  }
 
   function login_error( $errorMsg = 'Error' )
   {
