@@ -29,7 +29,7 @@
   $unknown_user = $row == false;
   $bad_password = $row[ 'password' ] !== $password;
   if ( $unknown_user || $bad_password )
-    login_error( 'Invalid email or password. ' . FORGOT_PASS_LINK );
+    login_error( 'Invalid email or password.<br>' . FORGOT_PASS_LINK );
 
 
   // Login successful. Set session and redirect
@@ -53,10 +53,10 @@
     exit();
   }
 
-  function login_error( $errorMsg = 'Error' )
+  function login_error( $message = 'Error' )
   {
-        $_SESSION[ 'error' ] = $errorMsg;
-        header( 'Location: index.php' );
-        exit;
+    $response = json_encode([ 'error' => $message ]);
+    echo $response;
+    exit;
   }
 ?>

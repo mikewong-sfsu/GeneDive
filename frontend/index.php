@@ -25,7 +25,11 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="static/genedive/index.css">
+    <link rel="stylesheet" href="static/alertify/css/alertify.min.css">
+    <link rel="stylesheet" href="static/alertify/css/alertify.bootstrap.min.css">
     <script src="static/jquery/jquery-3.2.1.min.js"></script>
+    <script src="static/alertify/js/alertify.min.js"></script>
+    <script src="static/genedive/alertify-defaults.js"></script>
 </head>
 <body>
 
@@ -71,7 +75,9 @@
 <?php endif ?>
             data,
             ( response ) => {
-              console.log( 'RECEIVED', response );
+              response = JSON.parse( response );
+              if( response.is_auth )    { window.location = 'search.php'; }
+	      else if( response.error ) { alertify.error( response.error, 30 ); }
             }
           );
         });
