@@ -4,14 +4,30 @@
   define( 'FORGOT_PASS_LINK', '<a href="resetpassword/forgotpass.php">Forgot your password?</a>' );
 
   // Not form submission; maybe bot or spider
-  if ( ! isset($_POST[ 'login-submit' ])) { return; }
+  if ( ! isset($_POST[ 'login-submit' ])) { 
+    $response = json_encode([ 'error' => 'malformed login' ]);
+    echo $response;
+    exit(); 
+  }
+
+  // Proxy login
+  if( isset( $_POST[ 'id' ])) {
+    $_SESSION[ 'is_auth' ] = true;
+    $_SESSION[ 'email' ]   = $_POST[ 'email' ];
+    $_SESSION[ 'name' ]    = $_POST[ 'name' ];
+    $_SESSION[ 'id' ]      = $_POST[ 'id' ];
+    $_SESSION[ 'sources' ] = $_POST[ 'sources' ];
+    $response = json_encode([ is_auth => true ]);
+    echo $response;
+    exit();
+  }
 
   // Did we get an email and password?
   $incomplete = !( isset( $_POST[ 'email' ]) && isset( $_POST[ 'password' ] ));
   if ( $incomplete )
     login_error( 'Please enter an email and password to login.' );
   
-  $email = $_POST[ 'email' ];
+  $email    = $_POST[ 'email' ];
   $password = hash( "sha256", $_POST[ 'password' ] );
 
   // Load User
@@ -31,7 +47,6 @@
   if ( $unknown_user || $bad_password )
     login_error( 'Invalid email or password.<br>' . FORGOT_PASS_LINK );
 
-
   // Login successful. Set session and redirect
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $email;
@@ -41,7 +56,7 @@
   // If proxy, send auth token
   if( isset( $_POST[ 'proxy' ])) {
     $clone = $_SESSION;
-    $clone[ 'id' ] = session_id();
+    $clone[ 'token' ] = session_id();
     $response = json_encode( $clone );
     echo $response;
     exit();

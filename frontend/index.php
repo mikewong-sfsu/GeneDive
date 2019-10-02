@@ -6,13 +6,17 @@
   if( file_exists( $selection_file )) {
     $selected      = json_decode( file_get_contents( $selection_file ), true );
     $ds            = $selected[ 'datasources' ];
-    $use_native_ds = in_array( 'all', $ds ) || in_array( 'pharmgkb', $ds ) || in_array( 'plos-pmc', $ds );
+    $use_all       = in_array( 'all', $ds );
+    $use_pharmgkb  = in_array( 'pharmgkb', $ds );
+    $use_deepdive  = in_array( 'plos-pmc', $ds );
+    $use_native_ds = $use_all || $use_pharmgkb || $use_deepdive;
+    $sans_native   = array_filter( $ds, function ( $source ) { return $source != "all" && $source != "pharmgkb" && $source != "plos-pmc"; });
   }
 
   // Local datasources selected; no need for login
   if( ! $use_native_ds ) {
     $_SESSION[ 'is_auth' ] = true;
-    $_SESSION[ 'name' ]    = 'User';
+    $_SESSION[ 'name' ]    = 'Local User';
     header( 'Location: search.php' );
   }
 ?>
@@ -49,9 +53,6 @@
 
     <div class="login">
       <form>
-<?php if( $use_native_ds ): ?>
-        <input type="hidden" name="proxy" value="true">
-<?php endif ?>
         <div class="form-group">
           <label for="email">Email Address</label>
           <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address" required>
@@ -66,20 +67,41 @@
       <script>
         $( '#login-submit' ).off( 'click' ).click(( ev ) => {
           ev.preventDefault();
-          let data = { email : $( '#email' ).val(), password: $( '#password' ).val(), 'login-submit' : true };
-          $.post(
-<?php if( $use_native_ds ): ?>
-            "<?=$server?>/login.php",
-<?php else: ?>
-            "login.php",
-<?php endif ?>
-            data,
-            ( response ) => {
-              response = JSON.parse( response );
-              if( response.is_auth )    { window.location = 'search.php'; }
-	      else if( response.error ) { alertify.error( response.error, 30 ); }
+
+          let data = { email : $( '#email' ).val(), password: $( '#password' ).val(), proxy: <?php echo $use_native_ds ? 'true' : 'false' ?>, 'login-submit' : true };
+          console.log( 'SENDING', data );
+          $.post({
+            url: <?php if( $use_native_ds ) { echo "\"$server/login.php\""; } else { echo "\"login.php\""; } ?>,
+            data: data
+          })
+
+          // Receive response from server
+          .done(( response ) => {
+            response = JSON.parse( response );
+            console.log( 'RESPONSE', response );
+            if( response.error ) { alertify.error( response.error, 30 ); return; }
+            if( response.is_auth ) { 
+              response[ 'login-submit' ] = true;
+              // Propogate session token to proxy
+              $.post( 'login.php', response )
+              .done(( response ) => { console.log( response ); window.location = 'search.php'; })
+              .fail(( error ) => { console.log( error ); })
             }
-          );
+          })
+
+          // No response from server
+          .fail(( error ) => {
+            console.log( 'ERROR', error );
+            alertify.error( 'Server not available<br><?php if( $use_all ): ?>PharmGKB and DeepDive/PLoS-PMC are<?php elseif( $use_pharmgkb ): ?>PharmGKB is<?php elseif( $use_deepdive ): ?>DeepDive on PLoS-PMC is<?php endif ?> not available and will be removed from selected datasources', 30 );
+            let dsl = '<?=base64_encode( json_encode( $sans_native ))?>';
+            return false;
+            $.ajax({ url:  `datasource/change.php?value=${dsl}`, method: 'GET' })
+            .done(( message ) => {
+              window.location = 'search.php';
+            })
+            .fail(( error ) => {
+            });
+          });
         });
       </script>
 
