@@ -2,7 +2,7 @@
   require_once( "session.php" );
   require_once( "datasource/proxy.php" );
   $selection_file = "/usr/local/genedive/data/sources/selection.json";
-  $use_native_ds  = false;
+  $use_native_ds  = true; // The native datasources are selected by default
   if( file_exists( $selection_file )) {
     $selected      = json_decode( file_get_contents( $selection_file ), true );
     $ds            = $selected[ 'datasources' ];
