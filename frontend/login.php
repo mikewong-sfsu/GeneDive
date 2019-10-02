@@ -2,10 +2,12 @@
   require_once "./phpLib/environment.php";
   require_once "session.php";
   define( 'FORGOT_PASS_LINK', '<a href="resetpassword/forgotpass.php">Forgot your password?</a>' );
+  define( 'PROXY', 'http://localhost:8080' );
 
   // Not form submission; maybe bot or spider
   if ( ! isset($_POST[ 'login-submit' ])) { 
     $response = json_encode([ 'error' => 'malformed login' ]);
+    header( 'Access-Control-Allow-Origin: ' . PROXY );
     echo $response;
     exit(); 
   }
@@ -17,7 +19,8 @@
     $_SESSION[ 'name' ]    = $_POST[ 'name' ];
     $_SESSION[ 'id' ]      = $_POST[ 'id' ];
     $_SESSION[ 'sources' ] = $_POST[ 'sources' ];
-    $response = json_encode([ is_auth => true ]);
+    $response = json_encode([ 'is_auth' => true ]);
+    header( 'Access-Control-Allow-Origin: ' . PROXY );
     echo $response;
     exit();
   }
@@ -58,12 +61,14 @@
     $clone = $_SESSION;
     $clone[ 'token' ] = session_id();
     $response = json_encode( $clone );
+    header( 'Access-Control-Allow-Origin: ' . PROXY );
     echo $response;
     exit();
 
   // Otherwise proceed to search page
   } else {
     $response = json_encode([ 'is_auth' => true ]);
+    header( 'Access-Control-Allow-Origin: ' . PROXY );
     echo $response;
     exit();
   }
