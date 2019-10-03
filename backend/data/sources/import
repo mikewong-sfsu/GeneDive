@@ -3,12 +3,15 @@
 use Text::CSV qw( csv );
 use List::Util qw( any none uniq );
 use JSON::XS;
+use Array::Utils qw(:all);
+use Data::Dumper;
 
 my $file         = shift; # Absolute path
 my $path         = path( $file );
 my @required     = qw( mention1 mention2 geneids1 geneids2 type1 type2 );
 my @optional     = qw( journal article_id pubmed_id sentence_id mention1_offset mention2_offset probability context section);
-my $interactions = csv( in => validate( $file ), encoding => 'utf-8', headers => "auto" );
+my $interactions = csv( in => validate( $file ), encoding => 'utf-8');
+$interactions = csv( in => $file, encoding => 'utf-8', headers => "auto");
 
 # ===== CLEANUP
 cleanup( $interactions );
@@ -135,9 +138,10 @@ CREATE TABLE IF NOT EXISTS interactions (
 	geneids2 TEXT, 
 	probability FLOAT, 
 	context TEXT, 
-    section TEXT, 
+    	section TEXT, 
 	type1 CHARACTER(1), 
 	type2 CHARACTER(1),
+	addendum TEXT,
 	PRIMARY KEY (id)
 );
 CREATE INDEX IF NOT EXISTS gid1 on interactions(geneids1);
@@ -178,7 +182,48 @@ sub validate {
 			exit( 1 );
 		}
 	}
-
+	#get additional columns
+	my @add_col = array_minus(@headers, @required);
+	@add_col = array_minus( @add_col, @optional);
+	if (!@add_col){
+	  return $file;
+	}
+	push @optional, "addendum";
+	my $pos =0;
+	my %col2_num = map {$_ => $pos++}@headers;
+	my @slice = map{$col2_num{$_}}@add_col;
+	#convert additional columns to json format
+	my $json = new JSON::XS();
+	my @new_col =();
+	open( FILE, $file ) or die "Cannot open '$file'\n";
+	my $headerFlag = 1;
+	while( $line = <FILE> ) {
+		my %map;
+		my $i = 0;
+		my $row = [split(',',$line)];
+		chomp(@$row);
+		if($headerFlag){
+			push @$row,'addendum';
+			push @new_col, $row;
+			$headerFlag = 0;
+		}
+		else{
+		for($index = 0; $index <= $#headers; $index++)
+		{
+			if ($index == @slice[$i]){
+				$map{"$headers[$index]"} = @$row[$index];
+				$i++;
+			}
+		}
+		push @$row,double_quote($json->canonical->encode(\%map));
+		push @new_col,$row;
+		}
+	}
+	close(FILE);
+	#add new column to file
+	open (FILE,">",$file) or die $! ;
+	print FILE map{join (",",@$_)."\n"}@new_col;
+	close (FILE);
 	return $file;
 }
 
@@ -190,7 +235,7 @@ sub write_sql {
 
 	my $file = "$path/data.import.sql";
 	my $last = $#$interactions;
-	open FILE, ">:encoding(UTF-8)", $file or die $!;
+	open (FILE, '>:encoding(UTF-8)', $file) or die $!;
 	print FILE insert_table();
 	my $group = 1000; # Max number of rows for INSERT for SQLite3
 	my @columns = map { exists $alias->{ $_ } ? $alias->{ $_ } : $_ } (@required, @optional);
