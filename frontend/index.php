@@ -72,7 +72,9 @@
           console.log( 'SENDING', data );
           $.post({
             url: <?php if( $use_native_ds ) { echo "\"$server/login.php\""; } else { echo "\"login.php\""; } ?>,
-            data: data
+            data: data,
+            timeout: 3000,
+            cache: false
           })
 
           // Receive response from server
@@ -92,15 +94,17 @@
           // No response from server
           .fail(( error ) => {
             console.log( 'ERROR', error );
-            alertify.error( 'Server not available<br><?php if( $use_all ): ?>PharmGKB and DeepDive/PLoS-PMC are<?php elseif( $use_pharmgkb ): ?>PharmGKB is<?php elseif( $use_deepdive ): ?>DeepDive on PLoS-PMC is<?php endif ?> not available and will be removed from selected datasources', 30 );
-            let dsl = '<?=base64_encode( json_encode( $sans_native ))?>';
-            return false;
-            $.ajax({ url:  `datasource/change.php?value=${dsl}`, method: 'GET' })
-            .done(( message ) => {
-              window.location = 'search.php';
-            })
-            .fail(( error ) => {
-            });
+            if( error.readyState == 0 ) { // Request not sent; network error
+              alertify.error( 'Server not available<br><?php if( $use_all ): ?>PharmGKB and DeepDive/PLoS-PMC are<?php elseif( $use_pharmgkb ): ?>PharmGKB is<?php elseif( $use_deepdive ): ?>DeepDive on PLoS-PMC is<?php endif ?> not available and will be removed from selected datasources', 30 );
+              let dsl = '<?=base64_encode( json_encode( $sans_native ))?>';
+              $.get({ url:  `datasource/change.php?value=${dsl}` })
+              .done(( message ) => {
+                console.log( 'CHANGE DS', message );
+                window.location = 'search.php';
+              })
+              .fail(( error ) => {
+              });
+            }
           });
         });
       </script>
