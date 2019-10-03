@@ -11,6 +11,7 @@ $datasources = json_decode( base64_decode( $_SESSION[ 'sources' ]));
 $query       = NULL;
 $results     = [];
 $errors      = [];
+$extra_col   = [];
 
 foreach( $datasources as $source ) {
   $local = "$DATASOURCES/$source/data.sqlite";
@@ -18,14 +19,21 @@ foreach( $datasources as $source ) {
   // If the data is not local, retrieve the data via HTTP proxy
   $retrieved = file_exists( $local ) ? query_database( $local, $gids, $minProb ) : proxy_query( $source, $ids, $minProb );
    if( is_null( $retrieved )) { continue; }
+  // Extract additional columns in addendum
+  $addendum = extract_addendum($local);
+  if($addendum){
+    $extra_col = array_unique(array_merge($extra_col,$addendum));
+  }
 
   // Accumulate results
   $results = array_merge( $results, $retrieved );
+  
 }
 
 $response = json_encode([
   "count"   => sizeof( $results ),
   "results" => $results,
+  "add_cols"=> $extra_col,
   "errors"  => $errors
 ]);
 
@@ -59,6 +67,7 @@ function query_database( $file, $gids, $minProb ) {
   $stmt->execute( array_merge( $gids, $gids, [ $minProb ]));
 
   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
   return $results;
 }
 
@@ -77,5 +86,25 @@ function proxy_query( $source, $ids, $minProb ) {
   }
 
   return json_decode( $proxy[ 'response' ], true );
+}
+
+// ============================================================
+function extract_addendum($file ) {
+// ============================================================
+  $cols   = [];
+  $pdo = new PDO( "sqlite:$file" );
+  $query = "SELECT addendum from interactions limit 1;";
+  $stmt = $pdo->query( $query );
+  if($stmt){
+    $results = $stmt->fetch(PDO::FETCH_ASSOC);
+    $addendum = json_decode($results['addendum']);
+    if($addendum !== null){
+      foreach($addendum as $key => $value){
+	array_push($cols,$key);
+      }
+    }
+    return $cols; 
+  }
+  return FALSE;
 }
 ?>
