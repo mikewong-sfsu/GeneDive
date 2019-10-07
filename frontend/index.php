@@ -100,7 +100,7 @@
               $.get({ url:  `datasource/change.php?value=${dsl}` })
               .done(( message ) => {
                 console.log( 'CHANGE DS', message );
-                window.location = 'search.php';
+                setTimeout(() => { window.location = 'search.php'; }, 3000 );
               })
               .fail(( error ) => {
               });
