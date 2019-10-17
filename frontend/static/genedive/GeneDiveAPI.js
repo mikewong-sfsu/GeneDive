@@ -16,12 +16,13 @@ GeneDiveAPI._stringifyIDs = function ( ids ) {
 /// @return jqXHR The ajax request made, so you can call abort() or other methods
 /// @author jcole2@mail.sfsu.edu
 GeneDiveAPI.interactions = function (ids, minProb, token, callback) {
-  ids = GeneDiveAPI._stringifyIDs( ids );
+  ids         = GeneDiveAPI._stringifyIDs( ids );
+  let sources = btoa( JSON.stringify( GeneDive.datasource.list ));
 
   return $.ajax({
     xhr : GeneDive.loading.xhrLoadingCall,
     type: "GET",
-    url: `/api/interactions.php?ids=${ids}&minProb=${minProb}&queryKey=${token}`,
+    url: `/api/interactions.php?ids=${ids}&minProb=${minProb}&queryKey=${token}&sources=${sources}`,
     cache: true,
     success: callback
   });

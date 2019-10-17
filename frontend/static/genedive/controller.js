@@ -605,6 +605,7 @@ class Controller {
     let token = GeneDiveAPI.generateToken();
 
     this.interactionsjqXHR = GeneDiveAPI.interactions(ids, minProb, token, (interactions) => {
+      console.log( interactions );
       this.interactionsjqXHR = null;
       this.interactions_countXHR = null;
       this.onInteractionsLoaded(interactions);

@@ -1,9 +1,21 @@
 <?php
 
-require_once "../auth.php";
 require_once "../datasource/manifest.php";
 require_once "../datasource/proxy.php"; // defines $server
 require_once "../phpLib/environment.php";
+
+if( false ) {
+  $response = json_encode([
+    "count"   => [],
+    "results" => [],
+    "errors"  => ["Unauthorized"]
+  ]);
+
+  header( 'Content-Length: ' . mb_strlen( $response, '8bit' ));
+  header( 'Content-Range: 0' ); // Content-Length header is dropped unless this is set.
+  echo $response;
+  exit();
+}
 
 $ids         = $_GET[ 'ids' ];
 $gids        = explode( ',', preg_replace('/[^0-9A-Za-z:,]/', '', $ids ));
