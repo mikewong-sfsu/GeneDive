@@ -54,7 +54,7 @@
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $email;
   $_SESSION[ 'name' ]    = $row[ 'name' ];
-  if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( '["all"]' ); };
+  if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["all"] )); };
 
   // If proxy, send auth token
   if( isset( $_POST[ 'proxy' ])) {

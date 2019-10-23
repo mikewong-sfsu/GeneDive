@@ -11,7 +11,7 @@ require_once( 'datasource/proxy.php' ); // Defines $server
  */
 
 if( ! isset( $_GET[ 'get' ] )) { exit; }
-if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( '["all"]' ); };
+if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["all"] )); };
 
 $sources = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
 

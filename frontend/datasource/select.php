@@ -1,3 +1,7 @@
+<?php
+  $dslist = json_decode( base64_decode( $_SESSION[ 'sources' ]));
+  if( $dslist == '' ) { $dslist = []; }
+?>
 <style>
     .ajs-dialog {
         max-width: 800px !important;
@@ -50,7 +54,7 @@
 
 <script>
 GeneDive.datasource = {};
-GeneDive.datasource.list = <?php echo base64_decode( $_SESSION[ 'sources' ]) ?>;
+GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 
 // ===== INITIALIZE DATASOURCE MANAGER
