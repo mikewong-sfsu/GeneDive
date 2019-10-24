@@ -1,15 +1,50 @@
 class ResultsTable {
 
   // ============================================================
-  constructor ( table, interactions ) {
+  constructor ( table, interactions, additional_columns ) {
   // ============================================================
     this.table = $(table);
     this.interactions = interactions;
     this.table.html("");
-
+    this.additional_columns = additional_columns;
+    //this.additional_columns = camelCase(additional_columns);
     $(".messaging-and-controls").show();
+    //this.table.attr("id","result-table");
+    //$("#result-table").wrap($("<div/>").css("overflow-x":"scroll"));
+    //this.buildTable = new BuildTable();
   }
   
+//start of change
+// ============================================================
+  camelCase (column_names) {
+  // ============================================================
+for (i in column_names){
+  column_names[i] = column_name[i].replace(/\w\S*/g,
+	  function(txt){
+	    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+	  }
+	);
+}
+return column_names;
+
+}
+
+
+ // ============================================================
+  addcolumns (tr) {
+  // ============================================================
+    //for(let i = 0; i < this.additional_columns; i++)
+      //tr.append($(document.createElement("th"))"testing + " + i);
+     /* <a class="pubmedLink" href='/api/external_link.php?action=pubmed&pubmedID=${pubmedID}' target='_blank'>
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        <i class="fa fa-link" aria-hidden="true"></i>
+      </a>`;*/
+     //return header_col;
+
+  }
+
+//end of change
+
   // ============================================================
   buildPubmedLink ( pubmedID ) {
   // ============================================================

@@ -1,9 +1,30 @@
 /* TABLE */
+table{
+    border-collapse:collapse;
+    border-spacing:0;
+    width:100%
+  
+}
 
-.table-view .table {
-    width: 100%;
+table td{
+    word-wrap:break-word;
+}
+
+.table-wrapper{
+    /*width:100%;*/
+    /*table-layout:fixed;*/
+    overflow-x:auto;
+    /*white-space:nowrap;*/
+}
+.table-view .table-wrapper > .table {
+    /*width: 100%;*/
     table-layout: fixed;
-    word-wrap: break-word;
+    word-wrap:break-word;
+    /*word-break:break-all;*/
+    /*overflow: hidden;
+    overflow-x: visible !important;*/
+    /*display: block;
+    white-space: nowrap;*/
 }
 
 .table-view .table tr.grouped {

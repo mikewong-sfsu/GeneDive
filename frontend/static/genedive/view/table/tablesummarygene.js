@@ -1,10 +1,38 @@
+/*class BuildTable extends ResultsTable{
+	constructor(table,interactions,additional_columns){
+		super(table,interactions,additional_columns);
+		console.log("in BUildTable");
+	}
+
+	drawHeaders(){
+	console.log("in drawHeader of parent");
+	//add_columns(tr);
+        let tr = $('#th-excerpt');
+	console.log("tr:",tr);
+   	for(let i = 0; i< this.additional_columns.length; i++){
+   		tr.append( $(document.createElement("th")).text( this.additional_columns[i] ).attr({ id : 'th-addendum', "toggle": "tooltip", "title": "Addtional information"}) ); 
+   }
+	
+	}
+
+	drawAdditionalColumn(){
+	let thead = $(document.createElement("thead"));
+    	let tr    = $(document.createElement("tr"));
+    	thead.append(tr);
+	
+	}
+
+}*/
 class TableSummaryGene extends ResultsTable {
 
-  constructor ( table, interactions ) {
-    super( table, interactions );
+  constructor ( table, interactions, additional_columns ) {
+    super( table, interactions, additional_columns );
+    console.log("inside tableSUmmarygene: " ,additional_columns);
     this.interactions_count = this.interactions.length;
     this.highlight_count = _.reduce(_.map( this.interactions, i => i.highlight ? 1 : 0 ), (acc,i) => acc + i );
+    console.log("in tablesummerygene",this.interactions);
     this.interactions = GeneDive.grouper.group( this.interactions );
+    console.log("after grouping",this.interactions);
     this.row_id = 1;
 
     // Update topbar - with or without highlight count
@@ -15,7 +43,8 @@ class TableSummaryGene extends ResultsTable {
     }
     
     this.hideBackButton();
-
+    //this.addButton();
+    //this.getColumns();
     this.drawHeaders();
     this.drawBody();
 
@@ -26,12 +55,12 @@ class TableSummaryGene extends ResultsTable {
 
 
   }
-  
+
   drawHeaders ( ) {
     let thead = $(document.createElement("thead"));
     let tr    = $(document.createElement("tr"));
     thead.append(tr);
-
+    //appendHeader.bind(tr)();
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%" ) );
     tr.append( $(document.createElement("th")).html( "DGR<sub>1</sub>" ).css("width","10%").attr({ id : 'th-dgr1', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
     tr.append( $(document.createElement("th")).html( "DGR<sub>2</sub>" ).css("width","10%").attr({ id : 'th-dgr2', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
@@ -39,8 +68,12 @@ class TableSummaryGene extends ResultsTable {
     tr.append( $(document.createElement("th")).text( "# Articles" ).css("width","60px").addClass("numeric rotate").attr({ id : 'th-articles', "toggle": "tooltip", "title": "Number of articles that were accessed by the relationship algorithm"}) );
     tr.append( $(document.createElement("th")).text( "Conf. Score Dist." ).css("width","140px").attr({ id : 'th-cscore-dist', "toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
     tr.append( $(document.createElement("th")).html( "Max Conf.<br>Score" ).css("width","80px").addClass("numeric").attr({ id : 'th-cscore-max', "toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
-    tr.append( $(document.createElement("th")).text( "Sample Excerpt" ).css("width","calc( 80% - 340px )").attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "A selection from the article that the algorithm selected to imply a relationship"}) );
-
+    tr.append( $(document.createElement("th")).html( "Sample Excerpt" ).attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "A selection from the article that the algorithm selected to imply a relationship"}) );
+   console.log("add the additional columns");
+   /*for(let i = 0; i< this.additional_columns.length; i++){
+   tr.append( $(document.createElement("th")).text( this.additional_columns[i] ).attr({ id : 'th-addendum', "toggle": "tooltip", "title": "Addtional information"}) ); 
+   }*/
+    appendHeader.bind(tr,this.additional_columns)();
     this.table.append(thead);
   }
 
@@ -67,7 +100,6 @@ class TableSummaryGene extends ResultsTable {
 
       let rows = this.interactions[group];
       let row  = rows[ rows.length - 1 ];
-
       // Compile number of unique articles
       row.articles = Object.keys( rows.reduce(( acc, cur ) => { let article = cur.article_id; if( ! defined( article )) { return acc; } acc[ article ] = true; return acc; }, {})).length;
 
@@ -86,8 +118,28 @@ class TableSummaryGene extends ResultsTable {
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( this.adjustExcerpt(row) ) );
-  
-      tbody.append(tr);
+      //tr.append( $(document.createElement("td")).html( row.addendum ) ); 
+      //tbody.append(tr);
+//start of change
+/*if(row.addendum){
+  let addendum = JSON.parse(row.addendum);
+  for (let i in this.additional_columns){
+    let key = this.additional_columns[i];
+    if(key in addendum){
+      console.log("hi");
+      tr.append( $(document.createElement("td")).html(addendum[key]) );
+     }
+    else{
+      tr.append($(document.createElement("td")).html(""));
+    }
+  }
+}*/
+appendBody.bind(tr,this.additional_columns,row)();
+
+tbody.append(tr);
+
+//end of change
+
     }
 
     this.table.append(tbody);
@@ -96,6 +148,37 @@ class TableSummaryGene extends ResultsTable {
     for ( let group of Object.keys( this.interactions ) ) {
       this.initHistogram( group, this.interactions[group].map( i => i.probability ) );
     }
+
   }
 
+
 }
+
+
+function appendHeader(additional_columns){
+	console.log("additional columns:",additional_columns);
+	console.log("in the helper function:");
+	for(let i = 0; i<additional_columns.length; i++){
+  	 this.append( $(document.createElement("th")).text( additional_columns[i] ).attr({ id : 'th-addendum', "toggle": "tooltip", "title": "Addtional information"}) ); 
+   }
+	console.log("after adding the columns : ",this);
+
+}
+//class BuildTable{
+function appendBody(additional_columns,row){
+if(row.addendum){
+  let addendum = JSON.parse(row.addendum);
+  for (let i in additional_columns){
+    let key = additional_columns[i];
+    if(key in addendum){
+      console.log("hi");
+      this.append( $(document.createElement("td")).html(addendum[key]) );
+     }
+    else{
+      this.append($(document.createElement("td")).html(""));
+    }
+  }
+}
+
+}
+//}

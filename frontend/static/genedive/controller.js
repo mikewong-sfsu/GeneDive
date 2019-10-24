@@ -35,7 +35,7 @@ class Controller {
     this.tablestate = {zoomed: false, zoomgroup: null};
     this.interactions = null;
     this.filtrate = null;
-
+    this.additional_columns = null;//  NL
     // Saves the table view's Y scroll positions
     this.yScrollSummary = 0;
     // this.yScrollDetail = 0;
@@ -347,6 +347,7 @@ class Controller {
         try{
           thisClass.yScrollReset();
           thisClass.interactions = JSON.parse(interactions).results;
+	  thisClass.additional_columns = JSON.parse(interactions).add_cols;
           thisClass.cleanUpData();
           thisClass.filterInteractions();
           thisClass.colorInteractions();
@@ -665,13 +666,18 @@ class Controller {
   drawTable() {
 
     // We want to create a new table for each iteration as the old one will have prior listener/config/bindings
-    $('.table-view table').remove();
-    $('.table-view').append($("<table/>").addClass("table table-hover"));
+    //$('.table-view table').remove();//uncomment later NL
+    $('.table-wrapper').remove();//NL
+    //$('.table-view').append($("<div/>").addClass("wrapper"));
+    //$('.wrapper').css({overflow:'auto',overflowX:'scroll'});
+    $('.table-view').append($("<table/>").addClass("table table-hover").attr("id","result-table"));
+    $('#result-table').wrap($("<div />").addClass("table-wrapper"));
+	  //css({"overflow-x":"scroll", "width":"100%","table-layout":"fixed","white-space":"nowrap"}));//NL
 
     // First check for zoom condition
 
     if (this.tablestate.zoomed) {
-      let table_detail = new TableDetail(".table-view table", this.filtrate, this.tablestate.zoomgroup);
+      let table_detail = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup);
       // If all the entries were filtered out, render the table summary instead.
       if(table_detail.amountOfEntries > 0)
         return;
@@ -686,9 +692,9 @@ class Controller {
 
     // Otherwise show the appropriate summary view
     if (this.grouper.selected() === "dgr") {
-      new TableSummaryGene(".table-view .table", this.filtrate, ".table-view .topbar .back");
+      new TableSummaryGene(".table-view .table", this.filtrate, this.additional_columns, ".table-view .topbar .back");
     } else {
-      new TableSummaryArticle(".table-view table", this.filtrate, ".table-view .topbar .back");
+      new TableSummaryArticle(".table-view table", this.filtrate, this.additional_columns, ".table-view .topbar .back");
     }
 
   }
