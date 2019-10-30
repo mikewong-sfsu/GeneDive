@@ -84,7 +84,7 @@ function proxy_query( $source, $ids, $minProb ) {
   global $server;
   if( $source == 'all' ) { $manifest[ 'all' ][ 'host' ] = $server; }
 
-  $request  = $manifest[ $source ][ 'host' ] . "/api/interactions.php?ids=" . urlencode( $ids ) . "&minProb=$minProb&sources=" . base64_encode( json_encode( $source ));
+  $request  = $manifest[ $source ][ 'host' ] . "/api/interactions.php?ids=" . urlencode( $ids ) . "&minProb=$minProb&sources=" . base64_encode( json_encode([ $source ]));
   $response = json_decode( file_get_contents( $request ), true );;
 
   if( ! $response ) { 
