@@ -60,6 +60,8 @@ sub cleanup {
 # ============================================================
 	my $interactions = shift;
 	foreach my $i (@$interactions) {
+    $i->{ type1 } = lc $i->{ type1 };
+    $i->{ type2 } = lc $i->{ type2 };
 		if( exists $i->{ id1 }) { $i->{ geneids1 } = $i->{ id1 }; delete $i->{ id1 }; }
 		if( exists $i->{ id2 }) { $i->{ geneids2 } = $i->{ id2 }; delete $i->{ id2 }; }
 		if( ! exists $i->{ probability }) { $i->{ probability } = 0.7; }
