@@ -1,6 +1,7 @@
 <?php
 require_once( 'session.php' );
 require_once( 'datasource/manifest.php' );
+//require('dynamic_view.php');
 
 /* ============================================================
  * cache.php
@@ -28,7 +29,7 @@ switch( $_GET[ 'get' ]) {
 	default:
 		break;
 };
-
+require('dynamic_view.php');//NL
 // ============================================================
 function adjacency_matrix( $manifest, $sources ) {
 // ============================================================

@@ -5,11 +5,17 @@ use List::Util qw( any none uniq );
 use JSON::XS;
 use Array::Utils qw(:all);
 use Data::Dumper;
+use File::Copy qw(copy);
+use Cwd qw(getcwd);
+use File::Basename;
+
 
 my $file         = shift; # Absolute path
 my $path         = path( $file );
+my $pdir = dirname($path);
 my @required     = qw( mention1 mention2 geneids1 geneids2 type1 type2 );
 my @optional     = qw( journal article_id pubmed_id sentence_id mention1_offset mention2_offset probability context section);
+my @add_col = null;
 my $interactions = csv( in => validate( $file ), encoding => 'utf-8');
 $interactions = csv( in => $file, encoding => 'utf-8', headers => "auto");
 
@@ -32,6 +38,18 @@ foreach my $type (qw( gene drug disease )) {
 filter_columns( $interactions );
 print "<li>Building <i>SQL import statements</i></li>\n";
 write_sql( $path, $interactions );
+$parent = basename(dirname($file));
+$parent = "ds_".$parent;
+$location = $path."/factory.js";
+
+copy("$pdir/factory.js",$location) or die "copy failed : $!";
+#add file with specific datasource in class name
+#rename the class name in the datasource
+string_replace($location,"selectColumns",$parent);
+
+$replace_string = join(",",map " \"$_\"",@add_col);
+print($replace_string);
+string_replace($location,"this.add_cols = null","this.add_cols = [". $replace_string."]");
 
 # ============================================================
 sub adjacency_matrix {
@@ -183,7 +201,7 @@ sub validate {
 		}
 	}
 	#get additional columns
-	my @add_col = array_minus(@headers, @required);
+	@add_col = array_minus(@headers, @required);#my removed NL
 	@add_col = array_minus( @add_col, @optional);
 	if (!@add_col){
 	  return $file;
@@ -263,4 +281,24 @@ sub write_sql {
 		
 	}
 	close FILE;
+}
+
+# ============================================================
+sub string_replace{
+# ============================================================
+  my($file,$pattern,$replacement) = @_;
+  #open the file to read
+  open my $fh ,"<", $file or die "Unable to read from $file $? $!";
+  my @lines = <$fh>;
+  close $fh;
+  # foreach(@lines){
+  #$_ =~ s/$pattern/$replacement/g;
+# }
+  #replace and write to file 
+  open my $fh ,">", $file or die "Unable to write to $file $? $!";
+    for(@lines){
+    $_ =~ s/$pattern/$replacement/g;
+    print {$fh} $_;
+    }
+  close $fh;
 }

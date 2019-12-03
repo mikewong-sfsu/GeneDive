@@ -1,3 +1,4 @@
+<!--?php require_once("session.php");echo "hi", $_SESSION ?-->
     <!-- JQuery -->
     <script src="static/jquery/jquery-3.2.1.min.js"></script>
     <!-- <script src="static/jquery/jquery-ui.min.js"></script> -->
@@ -34,6 +35,10 @@
     <!-- Typeahead cache -->
     <script src="static/genedive/cache.js"></script>
 
+    <!-- Import datasouce class -->
+    <!--script src="static/genedive/ds_class.js"></script-->
+    
+
     <!-- Adjacency Matrix -->
     <script src="static/genedive/adjacency_matrix.js"></script>
 
@@ -64,8 +69,16 @@
     <script src="static/genedive/filter/probabilityfilter.js?random=<?php echo $random_string; ?>"></script>
     <script src="static/genedive/filter/textfilter.js?random=<?php echo $random_string; ?>"></script>
     <script src="static/genedive/highlight/highlight.js?random=<?php echo $random_string; ?>"></script>
+
+<script src="cache.php?random=<?php echo $random_string; ?>"></script>
+
     <script src="static/genedive/grouper/grouper.js?random=<?php echo $random_string; ?>"></script>
+    <!--include dynamic data-->
+    <script type="text/javascript" src="dynamic_view.php"></script>
+    <!--?php include('dynamic_view.php'); ?-->
+
     <script src="static/genedive/view/table/resultstable.js?random=<?php echo $random_string; ?>"></script>
+    <script src="static/genedive/view/table/build_table.js?random=<?php echo $random_string; ?>"></script>
     <script src="static/genedive/view/table/tabledetail.js?random=<?php echo $random_string; ?>"></script>
     <script src="static/genedive/view/table/tablesummarygene.js?random=<?php echo $random_string; ?>"></script>
     <script src="static/genedive/view/table/tablesummaryarticle.js?random=<?php echo $random_string; ?>"></script>

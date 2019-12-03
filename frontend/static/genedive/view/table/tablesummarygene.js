@@ -1,39 +1,12 @@
-/*class BuildTable extends ResultsTable{
-	constructor(table,interactions,additional_columns){
-		super(table,interactions,additional_columns);
-		console.log("in BUildTable");
-	}
+class TableSummaryGene extends BuildTable {
 
-	drawHeaders(){
-	console.log("in drawHeader of parent");
-	//add_columns(tr);
-        let tr = $('#th-excerpt');
-	console.log("tr:",tr);
-   	for(let i = 0; i< this.additional_columns.length; i++){
-   		tr.append( $(document.createElement("th")).text( this.additional_columns[i] ).attr({ id : 'th-addendum', "toggle": "tooltip", "title": "Addtional information"}) ); 
-   }
-	
-	}
-
-	drawAdditionalColumn(){
-	let thead = $(document.createElement("thead"));
-    	let tr    = $(document.createElement("tr"));
-    	thead.append(tr);
-	
-	}
-
-}*/
-class TableSummaryGene extends ResultsTable {
-
-  constructor ( table, interactions, additional_columns ) {
-    super( table, interactions, additional_columns );
-    console.log("inside tableSUmmarygene: " ,additional_columns);
+  constructor ( table, interactions, additional_columns, ds ) {
+    super( table, interactions, additional_columns, ds );
     this.interactions_count = this.interactions.length;
     this.highlight_count = _.reduce(_.map( this.interactions, i => i.highlight ? 1 : 0 ), (acc,i) => acc + i );
-    console.log("in tablesummerygene",this.interactions);
     this.interactions = GeneDive.grouper.group( this.interactions );
-    console.log("after grouping",this.interactions);
     this.row_id = 1;
+    this.add_head = [];
 
     // Update topbar - with or without highlight count
     if ( this.highlight_count > 0 ) {
@@ -59,6 +32,7 @@ class TableSummaryGene extends ResultsTable {
   drawHeaders ( ) {
     let thead = $(document.createElement("thead"));
     let tr    = $(document.createElement("tr"));
+    //this.additional_columns = buildHeader();//added BY NL
     thead.append(tr);
     //appendHeader.bind(tr)();
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%" ) );
@@ -70,10 +44,14 @@ class TableSummaryGene extends ResultsTable {
     tr.append( $(document.createElement("th")).html( "Max Conf.<br>Score" ).css("width","80px").addClass("numeric").attr({ id : 'th-cscore-max', "toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
     tr.append( $(document.createElement("th")).html( "Sample Excerpt" ).attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "A selection from the article that the algorithm selected to imply a relationship"}) );
    console.log("add the additional columns");
-   /*for(let i = 0; i< this.additional_columns.length; i++){
-   tr.append( $(document.createElement("th")).text( this.additional_columns[i] ).attr({ id : 'th-addendum', "toggle": "tooltip", "title": "Addtional information"}) ); 
-   }*/
-    appendHeader.bind(tr,this.additional_columns)();
+  tr.append( $(document.createElement("th")).html( "Source" ).attr({ id : 'ds_id', "toggle": "tooltip", "title": "Datasource"}) );
+   console.log("add the additional columns");
+ 
+   this.add_head = this.buildHeader();
+   for(let i = 0; i< this.add_head.length; i++){
+   tr.append( $(document.createElement("th")).text( this.add_head[i] ).attr({ id : 'th-addendum', "toggle": "tooltip", "title": "Addtional information"}) ); 
+   }
+    //appendHeader.bind(tr,this.additional_columns)();
     this.table.append(thead);
   }
 
@@ -118,6 +96,15 @@ class TableSummaryGene extends ResultsTable {
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html( this.adjustExcerpt(row) ) );
+      tr.append( $(document.createElement("td")).html( row.ds_id ) );
+	
+	let element = this.buildBody(row,this.add_head);
+	    console.log("body : ", element);
+     for(let i = 0; i< this.add_head.length; i++){
+	     console.log("element : ", element.get(i));
+   tr.append( $(document.createElement("td")).html( element.get(this.add_head[i]))); 
+   }
+ 
       //tr.append( $(document.createElement("td")).html( row.addendum ) ); 
       //tbody.append(tr);
 //start of change
@@ -134,7 +121,7 @@ class TableSummaryGene extends ResultsTable {
     }
   }
 }*/
-appendBody.bind(tr,this.additional_columns,row)();
+//appendBody.bind(tr,this.additional_columns,row)();
 
 tbody.append(tr);
 

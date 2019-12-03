@@ -1,4 +1,7 @@
 /* TABLE */
+#table-wrapper{
+    overflow-x = scroll;
+}
 table{
     border-collapse:collapse;
     border-spacing:0;
@@ -10,14 +13,15 @@ table td{
     word-wrap:break-word;
 }
 
-.table-wrapper{
+/*.table-wrapper{ */
     /*width:100%;*/
     /*table-layout:fixed;*/
-    overflow-x:auto;
+    /*overflow-x:auto;*/
     /*white-space:nowrap;*/
-}
-.table-view .table-wrapper > .table {
+/*}*/
+.table-view {
     /*width: 100%;*/
+    width:1000px;
     table-layout: fixed;
     word-wrap:break-word;
     /*word-break:break-all;*/
@@ -37,6 +41,7 @@ table td{
 
 .table-view .table tr .gene {
     padding: 4px;
+    margin 10px;
 }
 
 .table-view .table th {

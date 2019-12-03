@@ -15,7 +15,7 @@ $extra_col   = [];
 
 foreach( $datasources as $source ) {
   $local = "$DATASOURCES/$source/data.sqlite";
-
+  //echo $local;
   // If the data is not local, retrieve the data via HTTP proxy
   $retrieved = file_exists( $local ) ? query_database( $local, $gids, $minProb ) : proxy_query( $source, $ids, $minProb );
    if( is_null( $retrieved )) { continue; }
@@ -24,9 +24,14 @@ foreach( $datasources as $source ) {
   if($addendum){
     $extra_col = array_unique(array_merge($extra_col,$addendum));
   }
-
+  //add datasource
+  $modified = array();
+  foreach($retrieved as $i){
+    $i["ds_id"] = $source;
+    $modified[] = $i;
+  }
   // Accumulate results
-  $results = array_merge( $results, $retrieved );
+  $results = array_merge( $results, $modified );
   
 }
 
@@ -34,7 +39,8 @@ $response = json_encode([
   "count"   => sizeof( $results ),
   "results" => $results,
   "add_cols"=> $extra_col,
-  "errors"  => $errors
+  "errors"  => $errors,
+  "ds" => (array)$datasources
 ]);
 
 header( 'Content-Length: ' . mb_strlen( $response, '8bit' ));

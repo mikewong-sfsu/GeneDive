@@ -36,6 +36,10 @@ class Controller {
     this.interactions = null;
     this.filtrate = null;
     this.additional_columns = null;//  NL
+    this.ds = null;//NL
+
+	  console.log(this.datasouces);//delete later
+
     // Saves the table view's Y scroll positions
     this.yScrollSummary = 0;
     // this.yScrollDetail = 0;
@@ -345,9 +349,11 @@ class Controller {
       let thisClass = this;
       setTimeout(function(){
         try{
+		console.log(interactions);
           thisClass.yScrollReset();
           thisClass.interactions = JSON.parse(interactions).results;
 	  thisClass.additional_columns = JSON.parse(interactions).add_cols;
+	  thisClass.ds = JSON.parse(interactions).ds;
           thisClass.cleanUpData();
           thisClass.filterInteractions();
           thisClass.colorInteractions();
@@ -692,7 +698,7 @@ class Controller {
 
     // Otherwise show the appropriate summary view
     if (this.grouper.selected() === "dgr") {
-      new TableSummaryGene(".table-view .table", this.filtrate, this.additional_columns, ".table-view .topbar .back");
+      new TableSummaryGene(".table-view .table", this.filtrate, this.additional_columns,this.ds, ".table-view .topbar .back");
     } else {
       new TableSummaryArticle(".table-view table", this.filtrate, this.additional_columns, ".table-view .topbar .back");
     }
