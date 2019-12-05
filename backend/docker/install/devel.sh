@@ -3,12 +3,12 @@
 # Update development tools
 apt-get update
 apt-get install -y \
-        apt-utils \
-		gnupg2 \            # GPG for secure communication
-        git \               # git for source code versioning
-        vim \               # vim for vasic text editing
-		iputils-ping \      # ping to test/debug network setup
-		telnet              # telnet to open network communication for testing/debugging
+	apt-utils \
+	gnupg2 \
+	git \
+	vim \
+	iputils-ping \
+	telnet
 
 # Add keys
 mkdir -p /root/.ssh
