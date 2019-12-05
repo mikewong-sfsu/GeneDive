@@ -678,12 +678,11 @@ class Controller {
     //$('.wrapper').css({overflow:'auto',overflowX:'scroll'});
     $('.table-view').append($("<table/>").addClass("table table-hover").attr("id","result-table"));
     $('#result-table').wrap($("<div />").addClass("table-wrapper"));
-	  //css({"overflow-x":"scroll", "width":"100%","table-layout":"fixed","white-space":"nowrap"}));//NL
 
     // First check for zoom condition
 
     if (this.tablestate.zoomed) {
-      let table_detail = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup);
+      let table_detail = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup, this.ds);
       // If all the entries were filtered out, render the table summary instead.
       if(table_detail.amountOfEntries > 0)
         return;
