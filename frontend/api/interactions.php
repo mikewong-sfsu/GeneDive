@@ -83,11 +83,11 @@ function proxy_query( $source, $ids, $minProb ) {
   global $manifest;
   global $errors;
 
-  $request  = $manifest[ $source ][ host ] . "/interactions.php?ids=$ids&minProb=$minProb";
+  $request  = $manifest[ $source ][ 'host' ] . "/interactions.php?ids=$ids&minProb=$minProb";
   $response = file_get_contents( $request );
 
   if( ! $proxy[ 'response' ]) { 
-     array_push( $errors, "DataSource Error: $source not available at '" . $manifest[ $source ][ host ] . "'" );
+     array_push( $errors, "DataSource Error: $source not available at '" . $manifest[ $source ][ 'host' ] . "'" );
     return null; 
   }
 

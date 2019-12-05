@@ -79,17 +79,20 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
                 if( $( item ).prop( 'checked' )) { return key; } else { return null; }
             }).toArray();
             let list = GeneDive.datasource.list.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
-            alertify.success( `Now searching on<br>${list}` ); 
-            if( [ 'plos-pmc', 'pharmgkb' ].every(( item ) => { return GeneDive.datasource.list.includes( item ); })) {
+	    alertify.success( `Now searching on<br>${list}` ); 
+	    //let default_ds_list = new Set( ['ploc-pmc','phargkb']);
+            /*if( [ 'plos-pmc', 'pharmgkb' ].every(( item ) => { return GeneDive.datasource.list.includes( item ); })) {
                 GeneDive.datasource.list = [ 'all' ];
-            }
+	    }*/
             let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
             $.ajax({
                 url: `/datasource/change.php?value=${dsl}`,
                 method: 'GET'
             })
             .done(( message ) => {
-                console.log( message, GeneDive.datasource.list );
+	    console.log( message, GeneDive.datasource.list );
+	    console.log("i am here");
+	    //set session variable
                 LookupTableCache.refresh();
                 AdjacencyMatrix.refresh();
 		GeneDive.search.initTypeaheadOnCacheLoad();
@@ -113,7 +116,7 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
         let all      = [ 'plos-pmc', 'pharmgkb' ].includes( key ) && GeneDive.datasource.list.includes( 'all' );
         let selected = GeneDive.datasource.list.includes( key );
 	if( all || selected ) { $( item ).bootstrapToggle( 'on' ); } 
-    //else { $( item ).bootstrapToggle( 'off' );} //commented to fix the toggle reset 
+	//else { $( item ).bootstrapToggle( 'off' );} //commented to fix the toggle reset 
     });
 });
 </script>
