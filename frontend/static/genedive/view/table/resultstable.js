@@ -8,11 +8,7 @@ class ResultsTable {
     this.interactions = interactions;
     this.table.html("");
     this.additional_columns = additional_columns;
-    //this.additional_columns = camelCase(additional_columns);
     $(".messaging-and-controls").show();
-    //this.table.attr("id","result-table");
-    //$("#result-table").wrap($("<div/>").css("overflow-x":"scroll"));
-    //this.buildTable = new BuildTable();
   }
   
 
@@ -39,13 +35,13 @@ class ResultsTable {
   // ============================================================
   hideBackButton () {
   // ============================================================
-    $('.table-view .messaging-and-controls .go-back').css('visibility', 'hidden');
+	  $('.table-view .messaging-and-controls .go-back').text('Summary View').css({'cursor':'default','color':'black'});
   }
 
   // ============================================================
   showBackButton () {
   // ============================================================
-    $('.table-view .messaging-and-controls .go-back').css('visibility', 'visible');
+    $('.table-view .messaging-and-controls .go-back').html('<i class="fa fa-arrow-left"></i>Back to Summary Page').css({'cursor':'pointer','color':'#d84b2b'});
   }
 
   // ============================================================

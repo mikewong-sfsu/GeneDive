@@ -1,34 +1,23 @@
 /* TABLE */
 #table-wrapper{
+    overflow:auto;
     overflow-x = scroll;
-}
-table{
-    border-collapse:collapse;
-    border-spacing:0;
-    width:100%
-  
+    width:100%;
 }
 
 table td{
     word-wrap:break-word;
+    width:70px;
 }
 
-/*.table-wrapper{ */
-    /*width:100%;*/
-    /*table-layout:fixed;*/
-    /*overflow-x:auto;*/
+.table-view .table{
+    /*width: 1000px;
+    width:100%;*/
+    /*width:auto;*/
     /*white-space:nowrap;*/
-/*}*/
-.table-view {
-    /*width: 100%;*/
-    width:1000px;
+    overflow:auto;
     table-layout: fixed;
     word-wrap:break-word;
-    /*word-break:break-all;*/
-    /*overflow: hidden;
-    overflow-x: visible !important;*/
-    /*display: block;
-    white-space: nowrap;*/
 }
 
 .table-view .table tr.grouped {
@@ -41,16 +30,23 @@ table td{
 
 .table-view .table tr .gene {
     padding: 4px;
-    margin 10px;
+    /*margin 10px;*/
 }
 
 .table-view .table th {
     font-weight: bold;
     color: rgb(60, 60, 60);
     text-align: left;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
+ /*word-wrap:break-word;*/
     padding: 6px 14px;
 
+}
+
+.table th{
+	height: 50px;
+	width:auto;
+	white-space: nowrap;
 }
 
 .topbar {
@@ -113,10 +109,7 @@ table td{
 
 .table-view .messaging-and-controls .go-back {
     float: left;
-    color: #d84b2b;
-    visibility: hidden;
     margin-left: 1em;
-    cursor: pointer;
 }
 
 .table-view .messaging-and-controls .metadata {

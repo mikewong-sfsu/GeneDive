@@ -53,6 +53,7 @@ class TableDetail extends BuildTable {
     tr.append($(document.createElement("th")).html("C. Score").addClass("numeric").css("width", "80px").attr({ id : 'th-cscore', "toggle": "tooltip", "title": "The confidence score (likelihood) for interaction accuracy"}));
     tr.append($(document.createElement("th")).text("Excerpt").attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "The article excerpt that states the interaction"}));
     this.additional_columns = this.buildHeader();
+    console.log("additional_col : ",this.additional_columns);
     for(let i = 0; i< this.additional_columns.length;i++){
       tr.append($(document.createElement("th")).text(this.additional_columns[i]).attr({ id: 'th-addendum', "toggle": "tooltip","title": "User added columns"}));
     }
@@ -97,10 +98,12 @@ class TableDetail extends BuildTable {
 	tr.append($(document.createElement("td")).html(element.get(this.additional_columns[col])));	
 	}
       //datasource mapping
-      tr.append($(document.createElement("td")).html(i.ds));
+      tr.append($(document.createElement("td")).html(i.ds_name));
  
-      if (i.pubmed_id !== "0")
+      if (i.pubmed_id !== "")
         tr.append($(document.createElement("td")).html(pubmed_link));
+      else
+	tr.append($(document.createElement("td")).text(""));
 
       tbody.append(tr);
     }

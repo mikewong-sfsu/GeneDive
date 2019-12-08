@@ -34,11 +34,11 @@ class TableSummaryGene extends ResultsTable {
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%" ) );
     tr.append( $(document.createElement("th")).html( "DGR<sub>1</sub>" ).css("width","10%").attr({ id : 'th-dgr1', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
     tr.append( $(document.createElement("th")).html( "DGR<sub>2</sub>" ).css("width","10%").attr({ id : 'th-dgr2', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
-    tr.append( $(document.createElement("th")).text( "# Mentions" ).css("width","70px").addClass("numeric rotate").attr({ id : 'th-mentions', "toggle": "tooltip", "title": "Number of interactions between other DGRs and your query"}) );
-    tr.append( $(document.createElement("th")).text( "# Articles" ).css("width","70px").addClass("numeric rotate").attr({ id : 'th-articles', "toggle": "tooltip", "title": "Number of articles that were accessed by the relationship algorithm"}) );
-    tr.append( $(document.createElement("th")).text( "Conf. Score Dist." ).css("width","140px").attr({ id : 'th-cscore-dist', "toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
-    tr.append( $(document.createElement("th")).html( "Max Conf.<br>Score" ).css("width","80px").addClass("numeric").attr({ id : 'th-cscore-max', "toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
-    tr.append( $(document.createElement("th")).html( "Sample Excerpt" ).attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "A selection from the article that the algorithm selected to imply a relationship"}) );
+    tr.append( $(document.createElement("th")).text( "# Mentions" ).css("width","12%").attr({ id : 'th-mentions', "toggle": "tooltip", "title": "Number of interactions between other DGRs and your query"}) );
+    tr.append( $(document.createElement("th")).text( "# Articles" ).css("width","12%").attr({ id : 'th-articles', "toggle": "tooltip", "title": "Number of articles that were accessed by the relationship algorithm"}) );
+    tr.append( $(document.createElement("th")).text( "Conf. Score Dist." ).css("width","18%").attr({ id : 'th-cscore-dist', "toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
+    tr.append( $(document.createElement("th")).html( "Max Conf.<br>Score" ).css("width","10%").addClass("numeric").attr({ id : 'th-cscore-max', "toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
+    tr.append( $(document.createElement("th")).html( "Sources" ).attr({ id : 'th-ds_list', "toggle": "tooltip", "title": "Data source references"}) );
     this.table.append(thead);
   }
 
@@ -78,11 +78,11 @@ class TableSummaryGene extends ResultsTable {
       tr.append( $(document.createElement("td")).html( "<i class='fa fa-plus'></i>" ).addClass("zoom") );
       tr.append( $(document.createElement("td")).html( mention1 ) );
       tr.append( $(document.createElement("td")).html( mention2 ) );
-      tr.append( $(document.createElement("td")).html( `${this.interactions[group].length}` ).addClass("numeric") );
+      tr.append( $(document.createElement("td")).html( `${this.interactions[group].length}` ).addClass("numeric" ));
       tr.append( $(document.createElement("td")).html( row.articles ).addClass( "numeric" ));
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
-      tr.append( $(document.createElement("td")).html( this.adjustExcerpt(row) ) );
+      tr.append( $(document.createElement("td")).html("[]" ) );
       tbody.append(tr);
     }
 
