@@ -1,5 +1,25 @@
-<?php require_once "session.php" ?>
+<?php 
+  require_once( "session.php" );
+  require_once( "datasource/proxy.php" );
+  $selection_file = "/usr/local/genedive/data/sources/selection.json";
+  $use_native_ds  = true; // The native datasources are selected by default
+  if( file_exists( $selection_file )) {
+    $selected      = json_decode( file_get_contents( $selection_file ), true );
+    $ds            = $selected[ 'datasources' ];
+    $use_all       = in_array( 'all', $ds );
+    $use_pharmgkb  = in_array( 'pharmgkb', $ds );
+    $use_deepdive  = in_array( 'plos-pmc', $ds );
+    $use_native_ds = $use_all || $use_pharmgkb || $use_deepdive;
+    $sans_native   = array_filter( $ds, function ( $source ) { return $source != "all" && $source != "pharmgkb" && $source != "plos-pmc"; });
+  }
 
+  // Local datasources selected; no need for login
+  if( ! $use_native_ds ) {
+    $_SESSION[ 'is_auth' ] = true;
+    $_SESSION[ 'name' ]    = 'Local User';
+    header( 'Location: search.php' );
+  }
+?>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -9,6 +29,11 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="static/genedive/index.css">
+    <link rel="stylesheet" href="static/alertify/css/alertify.min.css">
+    <link rel="stylesheet" href="static/alertify/css/alertify.bootstrap.min.css">
+    <script src="static/jquery/jquery-3.2.1.min.js"></script>
+    <script src="static/alertify/js/alertify.min.js"></script>
+    <script src="static/genedive/alertify-defaults.js"></script>
 </head>
 <body>
 
@@ -27,18 +52,62 @@
 
 
     <div class="login">
-      <form action="login.php" method="post">
+      <form>
         <div class="form-group">
           <label for="email">Email Address</label>
           <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address" required>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <a class="forgot-password" href="resetpassword/forgotpass.php">Forgot your password?</a>
           <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+          <a class="forgot-password" href="resetpassword/forgotpass.php">Forgot your password?</a>
         </div>
-        <button type="submit" name="login-submit" class="btn btn-primary">Login</button> or <a class="register" href="registration.php">Register</a>
+        <button id="login-submit" name="login-submit" class="btn btn-primary">Login</button> or <a class="register" href="registration.php">Register</a>
       </form>
+      <script>
+        $( '#login-submit' ).off( 'click' ).click(( ev ) => {
+          ev.preventDefault();
+
+          let data = { email : $( '#email' ).val(), password: $( '#password' ).val(), proxy: <?php echo $use_native_ds ? 'true' : 'false' ?>, 'login-submit' : true };
+          console.log( 'SENDING', data );
+          $.post({
+            url: <?php if( $use_native_ds ) { echo "\"$server/login.php\""; } else { echo "\"login.php\""; } ?>,
+            data: data,
+            timeout: 3000,
+            cache: false
+          })
+
+          // Receive response from server
+          .done(( response ) => {
+            response = JSON.parse( response );
+            console.log( 'RESPONSE', response );
+            if( response.error ) { alertify.error( response.error, 30 ); return; }
+            if( response.is_auth ) { 
+              response[ 'login-submit' ] = true;
+              // Propogate session token to proxy
+              $.post( 'login.php', response )
+              .done(( response ) => { console.log( response ); window.location = 'search.php'; })
+              .fail(( error ) => { console.log( error ); })
+            }
+          })
+
+          // No response from server
+          .fail(( error ) => {
+            console.log( 'ERROR', error );
+            if( error.readyState == 0 ) { // Request not sent; network error
+              alertify.error( 'Server not available<br><?php if( $use_all ): ?>PharmGKB and DeepDive/PLoS-PMC are<?php elseif( $use_pharmgkb ): ?>PharmGKB is<?php elseif( $use_deepdive ): ?>DeepDive on PLoS-PMC is<?php endif ?> not available and will be removed from selected datasources', 30 );
+              let dsl = '<?=base64_encode( json_encode( $sans_native ))?>';
+              $.get({ url:  `datasource/change.php?value=${dsl}` })
+              .done(( message ) => {
+                console.log( 'CHANGE DS', message );
+                setTimeout(() => { window.location = 'search.php'; }, 3000 );
+              })
+              .fail(( error ) => {
+              });
+            }
+          });
+        });
+      </script>
 
       <!--  Display Success Message -->
       <?php 

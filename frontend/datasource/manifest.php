@@ -44,6 +44,7 @@ function add_datasource( $manifest, $datasource ) {
 	global $DATASOURCES;
 	$path = $DATASOURCES . '/' . $datasource[ 'path' ];
 	$file = $path . '/data.csv';
+
 	if( ! file_exists( $path )) {
 		mkdir( $path );
 		chmod( $path, 0777 );

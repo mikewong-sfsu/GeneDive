@@ -47,7 +47,7 @@ try{
     header("Location: forgotpass.php");
   }
 
-  $token = hash( "sha256", $email . strval(time()) . $SALT );
+  $token  = substr( hash( "sha256", $email . strval(time()) . $SALT ), 0, 16 );
   $expiry = time() + (60 * 30);
   
   $stmt = $pdo->prepare( "UPDATE user SET reset_token = :token, reset_expiry = :expiry WHERE email = :email" );

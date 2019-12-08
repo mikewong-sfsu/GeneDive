@@ -1,3 +1,7 @@
+<?php
+  $dslist = json_decode( base64_decode( $_SESSION[ 'sources' ]));
+  if( $dslist == '' ) { $dslist = []; }
+?>
 <style>
     .ajs-dialog {
         max-width: 800px !important;
@@ -50,7 +54,7 @@
 
 <script>
 GeneDive.datasource = {};
-GeneDive.datasource.list = <?php echo base64_decode( $_SESSION[ 'sources' ]) ?>;
+GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 
 // ===== INITIALIZE DATASOURCE MANAGER
@@ -72,7 +76,7 @@ let dsm = $( '#datasource-manager' ).detach();
 $( '.datasources' ).off( 'click' ).click(( ev ) => {
     alertify.confirm( 'Data Sources', dsm.html(), 
 
-	// OK button behavior
+        // OK button behavior
         () => { 
             GeneDive.datasource.list = $( 'input.datasource-toggle' ).map(( i, item ) => { 
                 let key = $( item ).attr( 'id' ); 
@@ -92,15 +96,15 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
                 console.log( message, GeneDive.datasource.list );
                 LookupTableCache.refresh();
                 AdjacencyMatrix.refresh();
-		GeneDive.search.initTypeaheadOnCacheLoad();
-		//refresh the search set and graph
-		GeneDive.search.clearSearch();
-		GeneDive.onRemoveDGR();
+                GeneDive.search.initTypeaheadOnCacheLoad();
+                //refresh the search set and graph
+                GeneDive.search.clearSearch();
+                GeneDive.onRemoveDGR();
             })
             .fail(( error ) => { console.log( error ); });
         }, 
 
-	// Cancel button behavior
+        // Cancel button behavior
         () => { 
             let datasources = GeneDive.datasource.list.includes( 'all' ) ? [ 'plos-pmc', 'pharmgkb' ] : GeneDive.datasource.list;
             let list        = datasources.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );

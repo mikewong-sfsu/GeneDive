@@ -22,6 +22,7 @@ body {
   min-width: 350px;
   z-index: 20;
   overflow-y: scroll;
+  overflow-x: hidden;
   border-right:2px solid gray;
   box-shadow: 1px 0px 1px 0px rgba(128,128,128,0.75);
   background-color: rgb(247,247,247);
@@ -100,10 +101,32 @@ h5 {
   text-decoration: none;
 }
 
+.titlebar .account.dropdown {
+  height: 0;
+  position: relative;
+  top: -48px;
+  left: 124px;
+}
 
+.titlebar .account.dropdown hr { margin: 4px 0 4px 0; }
+.titlebar .account.dropdown .dropdown-item { padding: 4px 8px 4px 8px; }
+.titlebar .account.dropdown .dropdown-menu { top: 40px; left: 60px; }
+
+.titlebar .dropdown .btn-link { color: #666; }
+.titlebar .dropdown .btn-link:hover { color: #333; }
+
+.titlebar .menu.dropdown {
+  height: 0;
+  position: relative;
+  top: -48px;
+  left: -124px;
+}
+
+.titlebar .menu.dropdown .dropdown-item { padding: 4px 8px 4px 8px; }
+.titlebar .menu.dropdown .dropdown-menu { top: 40px; left: 124px; }
 
 .module {
-  padding: 24px 18px;
+  padding: 6px 18px;
 }
 
 .probability-module{
@@ -132,7 +155,7 @@ h5 {
 }
 
 .download-module button{
-  width: 100%;
+  width: 50%;
 }
 
 .module .title {
