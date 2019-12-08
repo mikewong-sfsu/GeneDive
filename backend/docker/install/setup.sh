@@ -24,7 +24,7 @@ cpanm install \
         JSON::XS
 
 # Delete paths
-rm -rf /usr/local/genedive /var/www/html
+#rm -rf /usr/local/genedive /var/www/html
 ln -s /genedive/backend /usr/local/genedive
 ln -s /genedive/frontend /var/www/html
 
