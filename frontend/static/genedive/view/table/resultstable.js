@@ -26,6 +26,7 @@ class ResultsTable {
 
   }
 
+ 
   // ============================================================
   updateMessage ( message ) {
   // ============================================================
@@ -36,6 +37,7 @@ class ResultsTable {
   hideBackButton () {
   // ============================================================
 	  $('.table-view .messaging-and-controls .go-back').text('Summary View').css({'cursor':'default','color':'black'});
+
   }
 
   // ============================================================
@@ -82,7 +84,58 @@ class ResultsTable {
     excerpt = this.styleExcerpt(excerpt, row.mention1, row.mention1_color);
     excerpt = this.styleExcerpt(excerpt, row.mention2, row.mention2_color);
     return excerpt;
+  }
 
+  // ============================================================
+  mapDatasourceURL(rows){
+  // ============================================================
+  let row = rows[rows.length - 1];
+  row.ds_map = rows.reduce((acc,cur) =>
+	  {
+		  let name = cur.ds_name;
+		  let url = cur.ds_url;
+		  if(!defined(name)){
+		  return acc;
+		  }
+		  acc[name] = url;
+		  return acc;
+	  },{});
+  //create an aggregate list
+  let res_list = '[';
+    let i = 1;
+    let len = Object.keys(row.ds_map).length;
+    for(let key in row.ds_map){
+     if(row.ds_map[key] == null){
+      res_list += '<a title=' + key + '>' + i + '</a>';
+     }else{
+      res_list += '<a  target= _blank href=/api/external_link.php?action=ref&url_link=' + row.ds_map[key] + ' title='+  key + ' >' + i + '</a>';
+     }
+     if(i  < len ){
+       res_list += ',';
+     }
+     i++;
+    }
+   res_list += ']';
+   return res_list;
+  }
+
+  // ============================================================
+  navigateRef(key,value){
+  // ============================================================	 
+	let res = '';
+	if(value == null){
+	  res += key;
+	}
+	else{
+	  res += '<a  href=/api/external_link.php?action=ref&url_link=' + value + ' target=_blank>'+ key + '</a>';
+	}
+	return res;
+  }
+
+  // ============================================================
+  refLink () {
+  // ============================================================
+	$(".grouped a").click(function(e){e.stopPropagation();});
 
   }
 }

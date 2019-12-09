@@ -121,7 +121,14 @@ form button.cancel {
                 <label for="dsfile" class="col-sm-2 control-label">Filename</label>
                 <div class="col-sm-10"><input type="file" class="form-control"name="dsfile" id="dsfile"/>
                 <small id="dsfile-privacy" class="form-text form-muted">Your data is kept local and private to your computer</small></div>
-              </div>
+	      </div>
+		<!--adding URL -->
+	     <div class="form-group">
+                <label for="dsurl" class="col-sm-2 control-label">Ref. URL</label>
+                <div class="col-sm-10"><input type="text" class="form-control"name="dsurl" id="dsurl"/>
+                <small id="dsurl-example" class="form-text form-muted">(for example: URL to PubMed paper.)</small></div>
+	      </div>
+ 
               <div class="form-group actions">
                 <button class="btn btn-danger cancel">Cancel</button>
                 <button type="submit" class="btn btn-primary">Import Data Source</button>

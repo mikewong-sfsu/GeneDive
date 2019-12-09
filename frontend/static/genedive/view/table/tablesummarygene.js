@@ -57,16 +57,14 @@ class TableSummaryGene extends ResultsTable {
           GeneDive.tablestate.zoomgroup = $( event.currentTarget ).data( "group" );
           GeneDive.onTableElementClick();
         });
-
         // If any of the group's interactions are a highlight match, highlight the summary row
         if ( this.interactions[group].some( i => i.highlight ) ) {
           tr.addClass( "highlight-row" );
         }
-
       let rows = this.interactions[group];
       let row  = rows[ rows.length - 1 ];
       // Compile number of unique articles
-      row.articles = Object.keys( rows.reduce(( acc, cur ) => { let article = cur.article_id; if( ! defined( article )) { return acc; } acc[ article ] = true; return acc; }, {})).length;
+      row.articles = Object.keys( rows.reduce(( acc, cur ) => { let article = cur.article_id; if(!defined(article) ) { return acc; } acc[ article ] = true; return acc; }, {})).length;
 
       // Synonym styling
       let mention1 = row.synonym1 ? this.addSynonym(row.mention1, row.synonym1) : row.mention1;
@@ -82,7 +80,7 @@ class TableSummaryGene extends ResultsTable {
       tr.append( $(document.createElement("td")).html( row.articles ).addClass( "numeric" ));
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
-      tr.append( $(document.createElement("td")).html("[]" ) );
+      tr.append( $(document.createElement("td")).html(this.mapDatasourceURL(rows) ));
       tbody.append(tr);
     }
 
@@ -92,7 +90,8 @@ class TableSummaryGene extends ResultsTable {
     for ( let group of Object.keys( this.interactions ) ) {
       this.initHistogram( group, this.interactions[group].map( i => i.probability ) );
     }
-
+    //for datasource reference links NL
+    this.refLink();
   }
 
 

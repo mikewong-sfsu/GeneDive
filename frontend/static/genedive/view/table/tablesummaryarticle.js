@@ -31,11 +31,11 @@ class TableSummaryArticle extends ResultsTable {
 
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%") );
     tr.append( $(document.createElement("th")).text( "Article" ).addClass("numeric").css("width","12%").attr({ id: 'th-article', "toggle": "tooltip", "title": "ID of the article which implied a DGR relationship"}) );
-    tr.append( $(document.createElement("th")).text( "# DGRs" ).addClass("numeric rotate").css("width","70px").attr({ id: 'th-dgrs', "toggle": "tooltip", "title": "Number of relationships between Disease, Gene, or Drug Entities (DGRs) related to your query"}) );
-    tr.append( $(document.createElement("th")).text( "# Mentions" ).addClass("numeric rotate").css("width","70px").attr({ id: 'th-mentions', "toggle": "tooltip", "title": "Number of interactions between DGRs related to your query"}) );
-    tr.append( $(document.createElement("th")).text( "Conf. Score Dist." ).css("width","140px").attr({ id: 'th-cscore-dist', "toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
+    tr.append( $(document.createElement("th")).text( "# DGRs" ).css("width","12%").attr({ id: 'th-dgrs', "toggle": "tooltip", "title": "Number of relationships between Disease, Gene, or Drug Entities (DGRs) related to your query"}) );
+    tr.append( $(document.createElement("th")).text( "# Mentions" ).css("width","12%").attr({ id: 'th-mentions', "toggle": "tooltip", "title": "Number of interactions between DGRs related to your query"}) );
+    tr.append( $(document.createElement("th")).text( "Conf. Score Dist." ).css("width","18%").attr({ id: 'th-cscore-dist', "toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
     tr.append( $(document.createElement("th")).html( "Max Conf.<br>Score" ).addClass("numeric").css("width","10%").attr({ id: 'th-cscore-max', "toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
-    tr.append( $(document.createElement("th")).text( "Sources" ).css("min-width","40%").attr({ id: 'th-ds_list', "toggle": "tooltip", "title": "Data source references"}) );
+    tr.append( $(document.createElement("th")).html( "Sources" ).attr({ id: 'th-ds_list', "toggle": "tooltip", "title": "Data source references"}) );
     this.table.append(thead);
   }
 
@@ -79,7 +79,7 @@ class TableSummaryArticle extends ResultsTable {
       tr.append( $(document.createElement("td")).text( this.interactions[group].length ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
-      tr.append( $(document.createElement("td")).html( "[]"));//this.adjustExcerpt(row) ) );
+      tr.append( $(document.createElement("td")).html( this.mapDatasourceURL(rows)));
       tbody.append(tr);
     }
 

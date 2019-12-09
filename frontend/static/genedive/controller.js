@@ -38,8 +38,6 @@ class Controller {
     this.additional_columns = null;//  NL
     this.ds = null;//NL
 
-	  console.log(this.datasouces);//delete later
-
     // Saves the table view's Y scroll positions
     this.yScrollSummary = 0;
     // this.yScrollDetail = 0;
@@ -349,7 +347,6 @@ class Controller {
       let thisClass = this;
       setTimeout(function(){
         try{
-		console.log(interactions);
           thisClass.yScrollReset();
           thisClass.interactions = JSON.parse(interactions).results;
 	  thisClass.additional_columns = JSON.parse(interactions).add_cols;
@@ -672,10 +669,7 @@ class Controller {
   drawTable() {
 
     // We want to create a new table for each iteration as the old one will have prior listener/config/bindings
-    //$('.table-view table').remove();//uncomment later NL
     $('.table-wrapper').remove();//NL
-    //$('.table-view').append($("<div/>").addClass("wrapper"));
-    //$('.wrapper').css({overflow:'auto',overflowX:'scroll'});
     $('.table-view').append($("<table/>").addClass("table table-hover").attr("id","result-table"));
     $('#result-table').wrap($("<div />").addClass("table-wrapper"));
 

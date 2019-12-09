@@ -66,7 +66,7 @@ function add_datasource( $manifest, $datasource ) {
 	$manifest[ $id ] = $datasource;
 	write_manifest( $manifest );
 
-	//echo "<script>setTimeout(() => { window.location = '/search.php'; }, 2500 );</script>";
+	echo "<script>setTimeout(() => { window.location = '/search.php'; }, 2500 );</script>";
 }
 
 // ============================================================

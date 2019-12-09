@@ -4,6 +4,7 @@ require_once "../auth.php";
 require_once "../datasource/manifest.php";
 require_once "../phpLib/environment.php";
 
+
 $ids         = $_GET[ 'ids' ];
 $gids        = explode( ',', preg_replace('/[^0-9A-Za-z:,]/', '', $ids ));
 $minProb     = $_GET[ 'minProb' ];
@@ -27,7 +28,9 @@ foreach( $datasources as $source ) {
   //add datasource
   $modified = array();
   foreach($retrieved as $i){
-    $i["ds_id"] = $source;
+	  $i["ds_name"] = $manifest[$source]['name'];
+	  $i["ds_id"] = $source;
+	  $i["ds_url"] = $manifest[$source]['url'];
     $modified[] = $i;
   }
   // Accumulate results
