@@ -86,6 +86,7 @@ function remove_datasource( $manifest, $datasource_id ) {
 	//echo {$datasource_id}  " deleted successfully";
 	echo "datasource deleted successfully";
 	write_manifest( $manifest );
+
 }
 
 ?>

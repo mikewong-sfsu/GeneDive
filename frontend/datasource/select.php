@@ -55,6 +55,7 @@
 <script>
 GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
+console.log( "dslist : " , GeneDive.datasource.list);
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 
 // ===== INITIALIZE DATASOURCE MANAGER
@@ -84,10 +85,7 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
             }).toArray();
             let list = GeneDive.datasource.list.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
 	    alertify.success( `Now searching on<br>${list}` ); 
-	    //let default_ds_list = new Set( ['ploc-pmc','phargkb']);
-            /*if( [ 'plos-pmc', 'pharmgkb' ].every(( item ) => { return GeneDive.datasource.list.includes( item ); })) {
-                GeneDive.datasource.list = [ 'all' ];
-	    }*/
+	    
             let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
             $.ajax({
                 url: `/datasource/change.php?value=${dsl}`,
@@ -95,7 +93,6 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
             })
             .done(( message ) => {
 	    console.log( message, GeneDive.datasource.list );
-	    console.log("i am here");
 	    //set session variable
                 LookupTableCache.refresh();
                 AdjacencyMatrix.refresh();

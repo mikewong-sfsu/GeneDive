@@ -1,4 +1,7 @@
-<?php include_once( '../session.php' ); ?>
+<?php include_once( '../session.php' ); 
+$dslist = (json_decode(base64_decode($_SESSION['sources'])));
+if($dslist == '' ) {$dslist = [];}
+?>
 <html>
 
 <head>
@@ -284,21 +287,31 @@ $('.btn_remove').on('click',function(){
   var ds_name = document.getElementById(ds_id).children[0].children[0].innerHTML
   var retVal = confirm("Do you confirm to delete \"" + ds_name + "\"?");
   if( retVal == true ) {
+  // update session variable
+   ds = {}
+   ds.list = <?= json_encode($dslist) ?>;
+   updated_list = ds.list.filter(e => e != ds_id);
+   let dsl = btoa(JSON.stringify(updated_list));
+   $.ajax({
+     url:`./change.php?value=${dsl}`,
+     method: 'GET'
+   })
+     //remove datasource
    $.ajax({
      url:"./remove.php",
      type:"POST",
      dataType:'html',
      data:{"ds_id" : ds_id},
      success:function(result){
-       	location.reload();
-	//alert(result);
+	     location.reload();
+	     //location = '/search.php';
      }
-   }); 
+  });
     return true;
   } else {
     return false;
   }
-})
+});
 </script>
 
 </body>
