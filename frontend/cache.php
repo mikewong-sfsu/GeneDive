@@ -1,7 +1,7 @@
 <?php
 require_once( 'session.php' );
 require_once( 'datasource/manifest.php' );
-//require('dynamic_view.php');
+require_once( 'datasource/proxy.php' ); // Defines $server
 
 /* ============================================================
  * cache.php
@@ -11,7 +11,7 @@ require_once( 'datasource/manifest.php' );
  */
 
 if( ! isset( $_GET[ 'get' ] )) { exit; }
-if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( '["all"]' ); };
+if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["all"] )); };
 
 $sources = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
 
@@ -45,8 +45,14 @@ function adjacency_matrix( $manifest, $sources ) {
 
 		// Single user-provided data source adjacency matrix requested
 		// This includes: 'all', 'pharmgkb', or 'plos-pmc' 
-    $cache = "$DATASOURCES/$source/adjacency_matrix.json.zip";
-    send_file( $cache, 'rb' );
+		// Only the server will have the default datasources installed
+		$cache = "$DATASOURCES/$source/adjacency_matrix.json.zip";
+		if(	file_exists( $cache )) {
+			send_file( $cache, 'rb' );
+
+		} else if(	in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
+			send_proxy( 'adjacency_matrix', 'rb' );
+		}
 	}
 
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
@@ -76,7 +82,11 @@ function typeahead_cache( $file, $manifest, $sources ) {
 		if(	in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
 
 			$cache = "$DATASOURCES/$source/$file.json";
-			send_file( $cache );
+			if( file_exists( $cache )) {
+				send_file( $cache );
+			} else {
+				send_proxy( $file );
+			}
 
 		// Single user-provided data source typeahead cache requested
 		} else {
@@ -99,11 +109,19 @@ function typeahead_cache( $file, $manifest, $sources ) {
 // ============================================================
 function send_file( $file, $mode = 'r' ) {
 // ============================================================
-	if( ! file_exists( $file )) { print "Missing '$file'\n"; exit( 1 ); }
-
 	$fp = fopen( $file, $mode );
 	header( "Content-type: text/plain" );
 	header( "Content-length: " . filesize( $file ));
+  header( "Access-Control-Allow-Origin: *" );
+	fpassthru( $fp );
+	exit();
+}
+
+// ============================================================
+function send_proxy( $cache, $mode = 'r' ) {
+// ============================================================
+  global $server;
+	$fp = fopen( "$server/cache.php?get=$cache", $mode );
 	fpassthru( $fp );
 	exit();
 }

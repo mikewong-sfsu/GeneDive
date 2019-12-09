@@ -4,7 +4,7 @@
 <div class="main-display">
   <div class="control-view">
 
-    <div class="titlebar"><a href="/">GeneDive</a>
+    <div class="titlebar"><div><a href="/">GeneDive</a><?php include( "menu/account.php" )?><?php include( "menu/data.php" ); ?></div>
     <span class="subtitle">Disease, Gene, Drug (DGR)<br>Interaction Explorer</span>
     </div>
 
@@ -112,12 +112,12 @@
     <div class="divider require-dgr-search"></div>
 
     <!-- Download and Upload -->
-    <div class="module download-module">
-      <button type="button" data-toggle="tooltip-initial" data-placement="top" title="Download the current graph image, the current state, state history, and a CSV of the interactions." class="btn btn-default download" disabled>Download Results</button>
-      <button type="button" class="btn btn-default upload">Upload Results</button>
-      <button type="button" class="btn btn-default datasources">Select Data Sources</button>
-      <a class="btn btn-block btn-default datasource-add" href="datasource/manage.php" target="_blank">Add or Remove Data Sources</a>
-      <div class="user-info-and-logout" style="margin-top: 20px;"><b>Hello, <?= $_SESSION[ 'name' ] ?></b><a class="btn btn-default btn-block" href="?logout"><b>Logout</b></a></div>
+    <div class="module download-module btn-group" role="group">
+      <div class="title">
+        <h5>Session Results</h5>
+      </div>
+      <button type="button" data-toggle="tooltip-initial" data-placement="top" title="Download the current graph image, the current state, state history, and a CSV of the interactions." class="btn btn-default download" disabled><span class="fas fa-download"></span> Download</button>
+      <button type="button" class="btn btn-default upload"><span class="fas fa-upload"></span> Upload</button>
     </div>
 
     <div class="module about-module">

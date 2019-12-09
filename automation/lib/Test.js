@@ -126,7 +126,8 @@ class Test {
 	// ============================================================
 		return new Promise( async ( resolve, reject ) => {
 			try {
-				await this.click( '.user-info-and-logout a' );
+				await this.click( '#account-dropdown-button' );
+				await this.click( '.logout' );
 				await this.pageToLoad();
 			
 				if( ! this.page.is.indexPage()) { reject( 'Logout not redirected to landing page' ); }

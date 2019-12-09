@@ -1,27 +1,44 @@
 <?php
   require_once "./phpLib/environment.php";
   require_once "session.php";
-  define("FORGOT_PASS_LINK", '<a href="resetpassword/forgotpass.php">Forgot your password?</a>');
+  define( 'FORGOT_PASS_LINK', '<a href="resetpassword/forgotpass.php">Forgot your password?</a>' );
+  define( 'PROXY', 'http://localhost:8080' );
 
-  // User shouldn't be here ... ?
-  if ( ! isset($_POST[ 'login-submit' ])) { return; }
+  // Not form submission; maybe bot or spider
+  if ( ! isset($_POST[ 'login-submit' ])) { 
+    $response = json_encode([ 'error' => 'malformed login' ]);
+    header( 'Access-Control-Allow-Origin: ' . PROXY );
+    echo $response;
+    exit(); 
+  }
+
+  // Proxy login
+  if( isset( $_POST[ 'token' ])) {
+    $_SESSION[ 'is_auth' ] = true;
+    $_SESSION[ 'email' ]   = $_POST[ 'email' ];
+    $_SESSION[ 'name' ]    = $_POST[ 'name' ];
+    $_SESSION[ 'token' ]   = $_POST[ 'token' ];
+    $_SESSION[ 'sources' ] = $_POST[ 'sources' ];
+    $response = json_encode([ 'is_auth' => true ]);
+    header( 'Access-Control-Allow-Origin: ' . PROXY );
+    echo $response;
+    exit();
+  }
 
   // Did we get an email and password?
   $incomplete = !( isset( $_POST[ 'email' ]) && isset( $_POST[ 'password' ] ));
   if ( $incomplete )
-    returnToLoginError("Please enter an email and password to login.");
-
-
+    login_error( 'Please enter an email and password to login.' );
   
-  $email = $_POST[ 'email' ];
+  $email    = $_POST[ 'email' ];
   $password = hash( "sha256", $_POST[ 'password' ] );
 
   // Load User
   $pdo  = new PDO( PDO_GENEDIVE_USERS );
-  $stmt = $pdo->prepare("SELECT name, email, password FROM user WHERE email = :email");
+  $stmt = $pdo->prepare( 'SELECT name, email, password FROM user WHERE email = :email' );
 
   if($stmt === false)
-    returnToLoginError("Error looking up username in users database.");
+    login_error( 'Error looking up username in users database.' );
 
   $stmt->bindValue(':email', $email, PDO::PARAM_STR);
   $stmt->execute();
@@ -31,20 +48,35 @@
   $unknown_user = $row == false;
   $bad_password = $row[ 'password' ] !== $password;
   if ( $unknown_user || $bad_password )
-    returnToLoginError("Invalid email or password. ".FORGOT_PASS_LINK);
+    login_error( 'Invalid email or password.<br>' . FORGOT_PASS_LINK );
 
-
-  // Set session and redirect
+  // Login successful. Set session and redirect
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $email;
   $_SESSION[ 'name' ]    = $row[ 'name' ];
-  if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( '["all"]' ); };
-  header("Location: search.php");
+  if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["all"] )); };
 
-  function returnToLoginError($errorMsg = "Error")
+  // If proxy, send auth token
+  if( isset( $_POST[ 'proxy' ])) {
+    $clone = $_SESSION;
+    $clone[ 'token' ] = session_id();
+    $response = json_encode( $clone );
+    header( 'Access-Control-Allow-Origin: ' . PROXY );
+    echo $response;
+    exit();
+
+  // Otherwise proceed to search page
+  } else {
+    $response = json_encode([ 'is_auth' => true ]);
+    header( 'Access-Control-Allow-Origin: ' . PROXY );
+    echo $response;
+    exit();
+  }
+
+  function login_error( $message = 'Error' )
   {
-        $_SESSION[ 'error' ] = $errorMsg;
-        header("Location: index.php");
-        exit;
+    $response = json_encode([ 'error' => $message ]);
+    echo $response;
+    exit;
   }
 ?>
