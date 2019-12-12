@@ -258,17 +258,23 @@ class GraphView {
   {
     switch (type) {
       // Gene
+      case 'gene':
       case 'Gene':
+      case 'GENE':
       case 'Haplotype' :
       case 'VariantLocation' :
       case 'Variant' :
         return 'ellipse';
       // Drug
+      case 'drug':
       case 'Drug':
+      case 'DRUG':
       case 'Chemical':
         return 'triangle';
       // Disease
+      case 'disease' :
       case 'Disease' :
+      case 'DISEASE' :
         return 'square';
       // Unknown
       default:
