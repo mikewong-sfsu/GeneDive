@@ -110,19 +110,6 @@
     </div>
 
     <div class="divider require-dgr-search"></div>
-
-    <!-- Download and Upload -->
-    <div class="module download-module btn-group" role="group">
-      <div class="title">
-        <h5>Session Results</h5>
-      </div>
-      <button type="button" data-toggle="tooltip-initial" data-placement="top" title="Download the current graph image, the current state, state history, and a CSV of the interactions." class="btn btn-default download" disabled><span class="fas fa-download"></span> Download</button>
-      <button type="button" class="btn btn-default upload"><span class="fas fa-upload"></span> Upload</button>
-    </div>
-
-    <div class="module about-module">
-      <a class="helplink"href="/help.html" target="_blank">Help</a>
-    </div>
   </div>
 
   <div class="views">

@@ -25,7 +25,7 @@ class Controller {
     this.highlighter    = new Highlight( ".highlight-input" );
     this.grouper        = new Grouper( ".grouper-module .table-grouping" );
     this.graph          = new GraphView( "graph" );
-    this.download       = new DownloadUpload( ".download-module button.download", ".download-module button.upload");
+    this.download       = new DownloadUpload( "a.download-module.download", "a.download-module.upload");
     this.datasources    = undefined; // MW
     this.controls       = new Controls( ".control-module button.undo", ".control-module button.redo", "button.redraw-graph" );
     this.history        = new History( this );

@@ -91,7 +91,7 @@ function typeahead_cache( $file, $manifest, $sources ) {
 		// Single user-provided data source typeahead cache requested
 		} else {
 			$cache = "$DATASOURCES/$source/$file.json";
-			if( ! file_exists( $cache )) { print "Missing '$file.json' for $source\n"; exit( 1 ); }
+			if( ! file_exists( $cache )) { print "[]\n"; exit( 1 ); }
 			send_file( $cache );
 		}
 	}

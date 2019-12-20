@@ -148,16 +148,6 @@ h5 {
   display:none;
 }
 
-.download-module {
-  /*visibility: hidden;*/
-  text-align: center;
-  flex-grow: 1;
-}
-
-.download-module button{
-  width: 50%;
-}
-
 .module .title {
   display: flex;
   flex-direction: row;
