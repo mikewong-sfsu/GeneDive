@@ -12,7 +12,7 @@
   <link rel="stylesheet" type="text/css" href="/static/fonts/css/fa-solid.min.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-  <title>Add or Remove a Data Source</title>
+  <title>Add a Data Source</title>
   <style>
 
 #required-fields th.field,td.field {
@@ -93,14 +93,6 @@ form button.cancel {
     provided data sources or your other data sources. You can remove your data
     sources at any time. Your data remains local to your computer and is never
     transmitted to the GeneDive server or any other server.</p>
-    <div class="btn-group">
-      <a class="btn btn-primary goto-anchor" data-anchor="add">Add a Data Source</a>
-      <a class="btn btn-primary goto-anchor" data-anchor="remove">Remove a Data Source</a>
-    </div>
-    <div class="add-anchor">
-      <a class="goto-top pull-right"><span class="fas fa-arrow-circle-up"></span></a>
-      <h2>Add Data Source</h2>
-    </div>
     <div class="row">
       <div class="col-xs-2"></div>
       <div class="col-xs-8">
@@ -202,37 +194,6 @@ form button.cancel {
       </tr>
     </table>
 
-    <div class="remove-anchor">
-      <a class="goto-top pull-right"><span class="fas fa-arrow-circle-up"></span></a>
-      <h2>Remove Data Source</h2>
-    </div>
-    <div class="row">
-      <div class="col-xs-2"></div>
-      <div class="col-xs-8">
-        <div class="panel panel-primary">
-	  <div class="panel-heading"><h3 class="panel-title">Remove a User-Provided Data Source</h3></div>
-	  <div class="panel-body">
-            <ul class="list-group" id="datasources">
-	    </ul>
-	  </div>
-        </div>
-      </div>
-      <div class="col-xs-2"></div>
-    </div>
-
-  </div>
-
-<li class="datasource-list-item list-group-item">
-   <!--form  method="post" action"/datasource/remove.php"-->
-    <div class="datasource-info">
-        <h5 class="name">Name</h5>
-        <p class="description">Description</p>
-    </div>
-    <div class="datasource-actions">
-	<!--input type="hidden" class="form-control" name="ds_id" id="datasource_id"-->
-	<!--/*onclick=remove_datasource(this)*/-->
-	<button class="btn btn-xs btn-danger btn_remove " id="datasource-remove"><span class="fas fa-trash"></span>&nbsp;Remove</button>
-
     </div>
 <!--/form-->
 </li>
@@ -255,9 +216,6 @@ $( "form button.cancel" ).off( 'click' ).click(( ev ) => {
   window.close();
 });
 
-$( ".goto-top" ).off( 'click' ).click(( ev ) => { $( 'body' ).animate({ scrollTop : 0 }, 350 )});
-$( ".goto-anchor" ).off( 'click' ).click(( ev ) => { var target = $(ev.target); var anchor = $( '.' + target.attr( 'data-anchor' ) + '-anchor' ).offset().top; $( 'body' ).animate({ scrollTop : anchor }, 350 )});
-
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 var listitem = $( '.datasource-list-item' ).detach();
 Object.entries( manifest ).forEach(([ id, datasource ]) => {
@@ -278,7 +236,7 @@ $('.btn_remove').on('click',function(){
   var retVal = confirm("Do you confirm to delete \"" + ds_name + "\"?");
   if( retVal == true ) {
    $.ajax({
-     url:"./remove.php",
+     url:"./delete.php",
      type:"POST",
      dataType:'html',
      data:{"ds_id" : ds_id},
