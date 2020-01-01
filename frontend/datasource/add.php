@@ -8,8 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" type="text/css" href="/static/bootstrap/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/fonts/css/fontawesome.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/fonts/css/fa-solid.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/fontawesome/all.min.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
   <title>Add a Data Source</title>

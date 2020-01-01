@@ -31,8 +31,7 @@
     <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap-toggle/bootstrap-toggle.min.css">
 
     <!-- FontAwesome -->
-    <link rel="stylesheet" href="static/fonts/css/fontawesome.min.css">
-    <link rel="stylesheet" href="static/fonts/css/fa-solid.min.css">
+    <link rel="stylesheet" href="static/fontawesome/css/all.min.css">
 
     <!-- TableSorter -->
     <link rel="stylesheet" href="static/tablesorter/tablesorter.css">
