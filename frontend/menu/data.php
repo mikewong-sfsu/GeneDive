@@ -10,6 +10,10 @@
     <li class="dropdown-item" style="cursor: pointer;"><a class="download-module download" data-toggle="tooltip-initial" title="Download the current graph image, the current state, state history, and a CSV of the interactions as a zip file."><span class="fas fa-download"></span> Save Session</a></li>
     <li class="dropdown-item" style="cursor: pointer;"><a class="download-module upload" data-toggle="tooltip-initial" title="Upload a previously downloaded GeneDive Session zip file to resume that session."><span class="fas fa-upload"></span> Restore Session</a></li>
     <li class="divider" role="separator"></li>
+<?php if( file_exists( '/static/genedive/docker/images/genedive-docker.gz' ): ?>
+    <li class="dropdown-header">GeneDive Docker</li>
+    <li class="dropdown-item" style="cursor: pointer;"><a class="help"  data-toggle="tooltip-initial" href="/static/genedive/docker/images/genedive-docker.gz" target="_blank" title="Download the GeneDive Docker image. The GeneDive Docker image will allow you to import your own structured DGR data for search and visualization in GeneDive."><span class="fab fa-docker"></span> Download GeneDive Docker Image</a></li>
+<?php endif; ?>
     <li class="dropdown-header">More Information</li>
     <li class="dropdown-item" style="cursor: pointer;"><a class="help"  data-toggle="tooltip-initial" href="/help.html" target="_blank" title="Quickstart guide on how to use GeneDive and interpret results."><span class="fas fa-question-circle"></span> Help</a></li>
     <li class="dropdown-item" style="cursor: pointer;"><a class="about" data-toggle="tooltip-initial" href="/about.html" target="_blank" title="Citation, architecture and design, contact, and general information about GeneDive"><span class="fas fa-info-circle"></span> About</a></li>
