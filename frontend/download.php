@@ -47,7 +47,7 @@
     <p>You will need <b>Docker Desktop</b> to run the GeneDive Docker Image.
     Click the button below to visit <code>docker.com</code>, get more information,
     and download the Docker Desktop.</p>
-    <p><a class="btn btn-primary" href="https://www.docker.com/products/docker-desktop" target="_blank"><span class="fab fa-docker"></span> Get Docker Desktop</a></p>
+    <p><a class="btn btn-primary" href="https://www.docker.com/products/docker-desktop" target="_blank"><span class="fas fa-external-link-alt"></span> Get Docker Desktop</a></p>
 
     <h2>Download the GeneDive Docker Image</h2>
 <?php if( file_exists( 'static/genedive/docker/images/genedive-docker.gz' )): ?>
