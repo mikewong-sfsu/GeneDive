@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="static/fontawesome/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="static/jquery/add-ons/fancybox/jquery.fancybox.min.css">
   <script src="static/jquery/jquery-3.2.1.min.js"></script>
   <script src="static/jquery/add-ons/fancybox/jquery.fancybox.min.js"></script>
@@ -46,7 +47,7 @@
     <p>You will need <b>Docker Desktop</b> to run the GeneDive Docker Image.
     Click the button below to visit <code>docker.com</code>, get more information,
     and download the Docker Desktop.</p>
-    <p><a class="btn btn-primary" href="https://www.docker.com/products/docker-desktop" target="_blank">Get Docker Desktop</a></p>
+    <p><a class="btn btn-primary" href="https://www.docker.com/products/docker-desktop" target="_blank"><span class="fab fa-docker"></span> Get Docker Desktop</a></p>
 
     <h2>Download the GeneDive Docker Image</h2>
 <?php if( file_exists( 'static/genedive/docker/images/genedive-docker.gz' )): ?>
