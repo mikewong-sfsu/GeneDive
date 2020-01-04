@@ -12,7 +12,7 @@
   <script src="static/jquery/jquery-3.2.1.min.js"></script>
   <script src="static/jquery/add-ons/fancybox/jquery.fancybox.min.js"></script>
 
-  <title>GeneDive Docker Image</title>
+  <title>Getting Started with the GeneDive Docker Image</title>
   <style>
 #citation {
   font-size: 10pt;
@@ -28,7 +28,7 @@
 
   <div class="container">
 
-    <h1>GeneDive Docker Image</h1>
+    <h1>Getting Started with the GeneDive Docker Image</h1>
     <p>GeneDive is a powerful but easy-to-use application that can search,
     sort, group, filter, highlight, and visualize interactions between diseases,
     genes, and drugs (DGR). Refer to <a target="_blank"

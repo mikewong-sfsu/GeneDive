@@ -12,7 +12,7 @@
     <li class="divider" role="separator"></li>
 <?php if( file_exists( 'static/genedive/docker/images/genedive-docker.gz' )): ?>
     <li class="dropdown-header">GeneDive Docker Image (GDI)</li>
-    <li class="dropdown-item" style="cursor: pointer;"><a class="docker" data-toggle="tooltip-initial" href="download.php" title="Download the GeneDive Docker image. The GeneDive Docker image will allow you to import your own structured DGR data for search and visualization in GeneDive."><span class="fab fa-docker"></span> Download GeneDive</a></li>
+    <li class="dropdown-item" style="cursor: pointer;"><a class="docker" data-toggle="tooltip-initial" href="download.php" title="Download the GeneDive Docker image. The GeneDive Docker image will allow you to import your own structured DGR data for search and visualization in GeneDive." target="_blank"><span class="fab fa-docker"></span> Download GeneDive</a></li>
 <?php endif; ?>
     <li class="divider" role="separator"></li>
     <li class="dropdown-header">More Information</li>
