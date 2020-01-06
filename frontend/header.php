@@ -44,14 +44,14 @@
     <link rel="stylesheet" href="static/alertify/css/alertify.bootstrap.min.css">
 
     <!-- GeneDive -->
-    <link rel=stylesheet type=text/css href="static/genedive/index.css?random=<?php echo $random_string; ?>">
-    <link rel=stylesheet type=text/css href="static/genedive/main.css?random=<?php echo $random_string; ?>">
-    <link rel=stylesheet type=text/css href="static/genedive/controls/controls.css?random=<?php echo $random_string; ?>">
-    <link rel=stylesheet type=text/css href="static/genedive/download_upload/download_upload.css?random=<?php echo $random_string; ?>">
-    <link rel=stylesheet type=text/css href="static/genedive/search/search.css?random=<?php echo $random_string; ?>">
-    <link rel=stylesheet type=text/css href="static/genedive/filter/filter.css?random=<?php echo $random_string; ?>">
-    <link rel=stylesheet type=text/css href="static/genedive/view/table/table.css?random=<?php echo $random_string; ?>">
-    <link rel=stylesheet type=text/css href="static/genedive/view/graph/graph.css?random=<?php echo $random_string; ?>">
+    <link rel=stylesheet type=text/css href="static/genedive/index.css">
+    <link rel=stylesheet type=text/css href="static/genedive/main.css">
+    <link rel=stylesheet type=text/css href="static/genedive/controls/controls.css">
+    <link rel=stylesheet type=text/css href="static/genedive/download_upload/download_upload.css">
+    <link rel=stylesheet type=text/css href="static/genedive/search/search.css">
+    <link rel=stylesheet type=text/css href="static/genedive/filter/filter.css">
+    <link rel=stylesheet type=text/css href="static/genedive/view/table/table.css">
+    <link rel=stylesheet type=text/css href="static/genedive/view/graph/graph.css">
 
   </head>
   <body>
