@@ -1,6 +1,5 @@
     <!-- JQuery -->
     <script src="static/jquery/jquery-3.2.1.min.js"></script>
-    <!-- <script src="static/jquery/jquery-ui.min.js"></script> -->
 
     <!-- Bootstrap and Modules -->
     <script src="static/bootstrap/bootstrap.min.js"></script>
@@ -32,10 +31,13 @@
     <script src="static/jszip/jszip-utils.min.js"></script>
 
     <!-- Typeahead cache -->
-    <script src="static/genedive/cache.js"></script>
+    <script src="cache.php?get=disease_id"></script>
+    <script src="cache.php?get=gene_id"></script>
+    <script src="cache.php?get=drug_id"></script>
+    <script src="cache.php?get=set_id"></script>
 
     <!-- Adjacency Matrix -->
-    <script src="static/genedive/adjacency_matrix.js"></script>
+    <script src="cache.php?get=adjacency_matrix"></script>
 
     <!-- FileSaver -->
     <script src="static/filesaver/filesaver.min.js"></script>

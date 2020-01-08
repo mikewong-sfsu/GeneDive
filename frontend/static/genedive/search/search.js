@@ -39,7 +39,7 @@ class Search {
       thisElement.svgMesh  = thisElement.loadFile("/static/genedive/images/linkout-mesh.svg");
     }(this));
 
-    this.initTypeaheadOnCacheLoad();
+    this.initTypeahead();
 
     alertify.set('notifier', 'position', 'top-left');
 
@@ -371,17 +371,8 @@ class Search {
     return db;
   }
 
-  initTypeaheadOnCacheLoad() {
-    $.when( 
-      GeneDiveCache[ 'gene_id' ],
-      GeneDiveCache[ 'disease_id' ],
-      GeneDiveCache[ 'drug_id' ],
-      GeneDiveCache[ 'set_id' ]
-    ).done(( ev ) => { this.initTypeahead(); });
-  }
-
   initTypeahead() {
-    GeneDive.loadLandingPage();
+    $().ready(() => { GeneDive.loadLandingPage(); }); // Wait until GeneDive is defined and then require landing page be loaded. MW Is there a better part of the startup process to put this?
     console.log( `Initializing Typeahead with ${AUTOCOMPLETE_GENE.length} genes, ${AUTOCOMPLETE_DRUG.length} drugs, ${AUTOCOMPLETE_DISEASE.length} diseases, and ${AUTOCOMPLETE_GENE_SET.length} gene sets` );
 
     var genes = new Bloodhound({

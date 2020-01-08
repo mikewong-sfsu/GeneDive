@@ -3,6 +3,8 @@ require_once( 'session.php' );
 require_once( 'datasource/manifest.php' );
 require_once( 'datasource/proxy.php' ); // Defines $server
 
+$CACHE = '/var/www/html';
+
 /* ============================================================
  * cache.php
  *
@@ -33,7 +35,8 @@ switch( $_GET[ 'get' ]) {
 // ============================================================
 function adjacency_matrix( $manifest, $sources ) {
 // ============================================================
-	global $DATASOURCES;
+	global $CACHE;
+	global $server;
 
 	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
 	// This filters by the host data source manifest
@@ -46,115 +49,123 @@ function adjacency_matrix( $manifest, $sources ) {
 		// Single user-provided data source adjacency matrix requested
 		// This includes: 'all', 'pharmgkb', or 'plos-pmc' 
 		// Only the server will have the default datasources installed
-		$cache = "$DATASOURCES/$source/adjacency_matrix.json.zip";
-		if(	file_exists( $cache )) {
-			send_file( $cache, 'rb' );
+		$url     = "cache/$source/adjacency_matrix.js";
+    $locally = "$CACHE/$url";
+		if(	file_exists( $locally )) {
+      send_redirect( $url );
 
-		} else if(	in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
-			send_proxy( 'adjacency_matrix', 'rb' );
+		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
+      send_redirect( "$server/$url" );
 		}
 	}
 
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
-	$cache = "$DATASOURCES/cache/" . $_SESSION[ 'sources' ] . "/adjacency_matrix.json.zip";
-	if( file_exists( $cache )) { send_file( $cache, 'rb' ); }
+  // Caches only exist locally on the proxy server, never on the production
+  // server
+  $source  = substr( $_SESSION[ 'sources' ], 0, 8 );
+	$url     = "cache/$source/adjacency_matrix.js";
+	$locally = "$CACHE/$url";
+	if( file_exists( $locally )) { send_redirect( $url ); }
 
 	// ===== CASE 3: COMBINATION OF SOURCES, NOT PREVIOUSLY CACHED
+  // Create the cache and then redirect the cache request to the newly created
+  // cache file
 	$matrices = merge_adjacency_matrices( $datasources );
-	write_cache( $cache, $matrices, true );
-	send_file( $cache, 'rb' );
+	write_cache( $file, $matrices );
+  send_redirect( $url );
 }
 
 // ============================================================
 function typeahead_cache( $file, $manifest, $sources ) {
 // ============================================================
-	global $DATASOURCES;
+	global $CACHE;
+	global $server;
 
 	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
 
 	// ===== CASE 1: MOST COMMON CASE
-	$source = $datasources[ 0 ];
+	$source = $file == 'set_id' ? 'shared' : $datasources[ 0 ];
 	if( count( $datasources ) == 1 ) {
 
-		// GeneDive 'all', 'pharmgkb', or 'plos-pmc' typeahead cache requested
-		if(	in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
+		// Single user-provided data source adjacency matrix requested
+		// This includes: 'all', 'pharmgkb', or 'plos-pmc' 
+		// Only the server will have the default datasources installed
+		$url     = "cache/$source/$file.js";
+    $locally = "$CACHE/$url";
+		if(	file_exists( $locally )) {
+      send_redirect( $url );
 
-			$cache = "$DATASOURCES/$source/$file.json";
-			if( file_exists( $cache )) {
-				send_file( $cache );
-			} else {
-				send_proxy( $file );
-			}
-
-		// Single user-provided data source typeahead cache requested
-		} else {
-			$cache = "$DATASOURCES/$source/$file.json";
-			if( ! file_exists( $cache )) { print "[]\n"; exit( 1 ); }
-			send_file( $cache );
+		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
+      send_redirect( "$server/$url" );
 		}
 	}
 
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
-	$cache = "$DATASOURCES/cache/" . $_SESSION[ 'sources' ] . "/$file.json";
-	if( file_exists( $cache )) { send_file( $cache ); }
+  // Caches only exist locally on the proxy server, never on the production
+  // server
+  $source  = substr( $_SESSION[ 'sources' ], 0, 8 );
+	$url     = "cache/$source/$file.js";
+	$locally = "$CACHE/$url";
+	if( file_exists( $locally )) { send_redirect( $url ); }
 
 	// ===== CASE 3: COMBINATION OF SOURCES, NOT PREVIOUSLY CACHED
-	$typeahead = merge_typeahead_tables( $datasources, $file );
-	write_cache( $cache, $typeahead );
-	send_file( $cache );
+  // Create the cache and then redirect the cache request to the newly created
+  // cache file
+	$matrices = merge_typeahead_tables( $datasources, $file );
+	write_cache( $file, $typeahead );
+  send_redirect( $url );
 }
 
 // ============================================================
-function send_file( $file, $mode = 'r' ) {
+function send_redirect( $url ) {
 // ============================================================
-	$fp = fopen( $file, $mode );
-	header( "Content-type: text/plain" );
-	header( "Content-length: " . filesize( $file ));
-  header( "Access-Control-Allow-Origin: *" );
-	fpassthru( $fp );
-	exit();
-}
-
-// ============================================================
-function send_proxy( $cache, $mode = 'r' ) {
-// ============================================================
-  global $server;
-	$fp = fopen( "$server/cache.php?get=$cache", $mode );
-	fpassthru( $fp );
-	exit();
+  header( "Location: $url" );
+  exit();
 }
 
 // ============================================================
 function read_adjacency_matrix( $file ) {
 // ============================================================
-	if( ! file_exists( $file )) { return null; }
-	$zip = new ZipArchive();
-	$zip->open( $file );
-	$matrix = json_decode( $zip->getFromName( 'adjacency_matrix.json', true ));
-	$zip->close();
+  global $CACHE;
+  global $server;
+
+  $local    = "$CACHE/$file";
+  $proxy    = "$server/$file";
+  $location = file_exists( $local ) ? $local : $proxy;
+	$contents = file_get_contents( $location ); if( ! $contents ) { return null; }
+  $contents = preg_replace( '/^var adjacency_matrix\s*=\s*/', '', $contents );
+  $contents = preg_replace( ';$/', '', $contents );
+	$matrix   = json_decode( $contents );
 	return $matrix;
 }
 
 // ============================================================
-function read_lookup_table( $file ) {
+function read_typeahead_table( $file ) {
 // ============================================================
-	if( ! file_exists( $file )) { return null; }
-	$contents = file_get_contents( $file );
-	$lookup   = json_decode( $contents, true );
-	return $lookup;
+  global $CACHE;
+  global $server;
+
+  $local    = "$CACHE/$file";
+  $proxy    = "$server/$file";
+  $location = file_exists( $local ) ? $local : $proxy;
+	$contents = file_get_contents( $location ); if( ! $contents ) { return null; }
+  $contents = preg_replace( '/^var AUTOCOMPLETE_[\w_]*\s*=\s*/', '', $contents );
+  $contents = preg_replace( ';$/', '', $contents );
+	$table    = json_decode( $contents, true );
+	return $table;
 }
 
 // ============================================================
-function write_cache( $file, $data, $compress=false ) {
+function write_cache( $file, $data ) {
 // ============================================================
-	global $DATASOURCES;
+	global $CACHE;
 
 	// Create cache path and human-readable mini-manifest 'sources.json'
 	$sources    = $_SESSION[ 'sources' ];
-	$path       = "$DATASOURCES/cache/$sources";
-	$sourcefile = "$DATASOURCES/cache/$sources/sources.json";
+	$path       = "$CACHE/cache/$sources";
+	$sourcefile = "$CACHE/cache/$sources/sources.json";
 	if( ! file_exists( $path )) { mkdir( $path ); }
 	if( ! file_exists( $sourcefile )) {
 		$fp = fopen( $sourcefile, 'w' );
@@ -163,25 +174,18 @@ function write_cache( $file, $data, $compress=false ) {
 	}
 
 	// Write the cache file
-	if( $compress ) {
-		$zip = new ZipArchive();
-		$zip->open( $file, ZipArchive::CREATE );
-		$zip->addFromString( 'adjacency_matrix.json', json_encode( $data ));
-		$zip->close();
-
-	} else {
-		$fp = fopen( $file, 'w' );
-		fwrite( $fp, json_encode( $data ));
-		fclose( $fp );
-	}
+  $fp = fopen( $file, 'w' );
+  fwrite( $fp, json_encode( $data ));
+  fclose( $fp );
 }
 
 // ============================================================
 function merge_adjacency_matrices( $datasources ) {
 // ============================================================
+  global $CACHE;
 	$matrices = array();
 	foreach( $datasources as $sourceid ) {
-		$matrix = read_adjacency_matrix( "$DATASOURCES/$sourceid/adjacency_matrix.json.zip" );
+		$matrix = read_adjacency_matrix( "cache/$sourceid/adjacency_matrix.js" );
 		if( is_null( $matrix )) { continue; } // Skip missing entries
 		foreach( $matrix as $dgr1 => $edges ) {
 			if( ! is_array( $edges )) { continue; } // Skip invalid entries
@@ -200,13 +204,13 @@ function merge_adjacency_matrices( $datasources ) {
 // ============================================================
 function merge_typeahead_tables( $datasources, $file ) {
 // ============================================================
-	global $DATASOURCES;
+	global $CACHE;
 	
 	$typeahead = array();
 	foreach( $datasources as $sourceid ) {
-		$lookup = read_lookup_table( "$DATASOURCES/$sourceid/$file.json" );
-		if( is_null( $lookup )) { continue; } // Skip missing entries
-		$typeahead = array_merge( $typeahead, $lookup );
+		$table = read_typeahead_table( "$CACHE/$sourceid/$file.js" );
+		if( is_null( $table )) { continue; } // Skip missing entries
+		$typeahead = array_merge( $typeahead, $table );
 	}
 	return $typeahead;
 }
