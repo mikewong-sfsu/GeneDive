@@ -3,8 +3,6 @@ require_once( 'session.php' );
 require_once( 'datasource/manifest.php' );
 require_once( 'datasource/proxy.php' ); // Defines $server
 
-$CACHE = '/var/www/html';
-
 /* ============================================================
  * cache.php
  *
@@ -163,13 +161,14 @@ function write_cache( $file, $data ) {
 	global $CACHE;
 
 	// Create cache path and human-readable mini-manifest 'sources.json'
-	$sources    = $_SESSION[ 'sources' ];
+	$sources    = json_decode( base64_decode( $_SESSION[ 'sources' ]));
+  $sources    = count( $sources ) == 1 ? $sources[ 0 ] : substr( $sources, 0, 8 );
 	$path       = "$CACHE/cache/$sources";
 	$sourcefile = "$CACHE/cache/$sources/sources.json";
 	if( ! file_exists( $path )) { mkdir( $path ); }
 	if( ! file_exists( $sourcefile )) {
 		$fp = fopen( $sourcefile, 'w' );
-		fwrite( $fp, base64_decode( $sources ) . "\n" );
+		fwrite( $fp, $sources . "\n" );
 		fclose( $fp );
 	}
 

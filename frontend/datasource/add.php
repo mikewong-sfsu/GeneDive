@@ -1,4 +1,8 @@
-<?php include_once( '../session.php' ); ?>
+<?php 
+  include_once( '../session.php' ); 
+  include_once( '/var/www/html/datasource/manifest.php' );
+?>
+
 <html>
 
 <head>
@@ -8,8 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" type="text/css" href="/static/bootstrap/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/fontawesome/all.min.css">
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/fontawesome/css/all.min.css">
 
   <title>Add a Data Source</title>
   <style>
@@ -102,20 +105,20 @@ form button.cancel {
             <form action="/datasource/import.php" method="post" enctype="multipart/form-data" class="form-horizontal">
               <div class="form-group row">
                 <label for="dsname" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10"><input type="text" class="form-control"name="dsname" id="dsname" placeholder="My Data Source"/></div>
+                <div class="col-sm-10"><input type="text" class="form-control" name="dsname" id="dsname" placeholder="My Data Source"/></div>
               </div>
               <div class="form-group">
                 <label for="dsdesc" class="col-sm-2 control-label">Description</label>
-                <div class="col-sm-10"><input type="text" class="form-control"name="dsdesc" id="dsdesc" placeholder="My DGR interaction data"/></div>
+                <div class="col-sm-10"><input type="text" class="form-control" name="dsdesc" id="dsdesc" placeholder="My DGR interaction data"/></div>
               </div>
               <div class="form-group">
                 <label for="dsfile" class="col-sm-2 control-label">Filename</label>
-                <div class="col-sm-10"><input type="file" class="form-control"name="dsfile" id="dsfile"/>
+                <div class="col-sm-10"><input type="file" class="form-control" name="dsfile" id="dsfile"/>
                 <small id="dsfile-privacy" class="form-text form-muted">Your data is kept local and private to your computer</small></div>
               </div>
               <div class="form-group actions">
                 <button class="btn btn-danger cancel">Cancel</button>
-                <button type="submit" class="btn btn-primary">Import Data Source</button>
+                <button type="submit" class="btn btn-primary" name="submit">Import Data Source</button>
               </div>
             </form>
           </div>
@@ -207,8 +210,7 @@ form button.cancel {
   <script src="/static/bootstrap/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 
   <!-- Alertify -->
-  <!--script src="/static/alertify/js/alertify.min.js"></script-->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/alertify.min.js"></script>
+  <script src="/static/alertify/js/alertify.min.js"></script>
 
   <script>
 $( "form button.cancel" ).off( 'click' ).click(( ev ) => {
@@ -217,40 +219,7 @@ $( "form button.cancel" ).off( 'click' ).click(( ev ) => {
 
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 var listitem = $( '.datasource-list-item' ).detach();
-Object.entries( manifest ).forEach(([ id, datasource ]) => {
-  if( id.match( /^(?:plos-pmc|pharmgkb)$/ )) { return; }
-  let entry = listitem.clone();
-  entry.find( '.name' ).html( datasource.name );
-  entry.find( '.description' ).html( datasource.description );
-  entry.find('.datasource_id').html(datasource.id);
-  entry.attr('id',datasource.id);
-  let toggle = entry.find( 'input.datasource-toggle' );
-  toggle.attr({ id: datasource.id, name: datasource.id });
-  $( '#datasources' ).append( entry );
-});
 
-$('.btn_remove').on('click',function(){
-  var ds_id = this.parentNode.parentNode.id;
-  var ds_name = document.getElementById(ds_id).children[0].children[0].innerHTML
-  var retVal = confirm("Do you confirm to delete \"" + ds_name + "\"?");
-  if( retVal == true ) {
-   $.ajax({
-     url:"./delete.php",
-     type:"POST",
-     dataType:'html',
-     data:{"ds_id" : ds_id},
-     success:function(result){
-       	location.reload();
-	//alert(result);
-     }
-   }); 
-    return true;
-  } else {
-    return false;
-  }
-})
 </script>
-
 </body>
-
 </html>

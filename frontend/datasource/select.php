@@ -93,13 +93,7 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
                 method: 'GET'
             })
             .done(( message ) => {
-                console.log( message, GeneDive.datasource.list );
-                LookupTableCache.refresh();
-                AdjacencyMatrix.refresh();
-                GeneDive.search.initTypeaheadOnCacheLoad();
-                //refresh the search set and graph
-                GeneDive.search.clearSearch();
-                GeneDive.onRemoveDGR();
+              window.location.reload();
             })
             .fail(( error ) => { console.log( error ); });
         }, 

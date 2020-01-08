@@ -1,5 +1,6 @@
 <?php
 $DATASOURCES = "/usr/local/genedive/data/sources";
+$CACHE       = "/var/www/html";
 $manifest    = read_manifest();
 
 // ============================================================
@@ -51,41 +52,50 @@ function add_datasource( $manifest, $datasource ) {
 	}
 	move_uploaded_file( $_FILES[ 'dsfile' ][ 'tmp_name' ], $file );
 
-	echo "Importing data...<br><ul>\n";
+	echo "<h1>Importing data...</h1>\n";
 	echo `/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1`;
-	echo "</ul>\n";
 
-	echo "Loading data into database...<br>";
+	echo "<h2>Loading data into database...</h2>\n";
 	$sqlite = `/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql`;
 	if( $sqlite ) {
 		var_dump( $import );
 		exit( 1 );
 	}
 
-	echo "Updating manifest...<br>";
+	echo "<h2>Updating manifest</h2>\n";
 	$id = $datasource[ 'id' ];
 	$manifest[ $id ] = $datasource;
 	write_manifest( $manifest );
 
-	echo "<script>setTimeout(() => { window.location = '/search.php'; }, 2500 );</script>";
+	echo "<h2>Data import complete!</h2>\n";
+	echo "<script>setTimeout(() => { window.close(); }, 2500 );</script>";
 }
 
 // ============================================================
 function remove_datasource( $manifest, $datasource_id ) {
 // ============================================================
 	global $DATASOURCES;
+	global $CACHE;
+
 	if( ! array_key_exists( $datasource_id, $manifest )) {
-		echo "not in array";
+		echo "Requested datasource does not exist in the manifest";
 		return;
 	}
 	$datasource = $manifest[ $datasource_id ];
 
+	// Delete datasource database in the backend
 	$path = $DATASOURCES . '/' . $datasource[ 'path' ];
 	system( "rm -rf $path" );
+
+	// Delete datasource cache in the frontend
+	$path = $CACHE . '/cache/' . $datasource[ 'path' ];
+	system( "rm -rf $path" );
+
+	// Update the manifest
 	unset( $manifest[ $datasource_id ]);
-	//echo {$datasource_id}  " deleted successfully";
-	echo "datasource deleted successfully";
 	write_manifest( $manifest );
+
+	echo "Datasource deleted successfully";
 }
 
 ?>
