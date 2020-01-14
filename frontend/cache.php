@@ -48,29 +48,29 @@ function adjacency_matrix( $manifest, $sources ) {
 		// This includes: 'all', 'pharmgkb', or 'plos-pmc' 
 		// Only the server will have the default datasources installed
 		$url     = "cache/$source/adjacency_matrix.js";
-    $locally = "$CACHE/$url";
-		if(	file_exists( $locally )) {
-      send_redirect( $url );
+		$locally = "$CACHE/$url";
+		if( file_exists( $locally )) {
+			send_redirect( $url );
 
 		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
-      send_redirect( "$server/$url" );
+			send_redirect( "$server/$url" );
 		}
 	}
 
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
-  // Caches only exist locally on the proxy server, never on the production
-  // server
-  $source  = substr( $_SESSION[ 'sources' ], 0, 8 );
+	// Caches only exist locally on the proxy server, never on the production
+	// server
+	$source  = substr( $_SESSION[ 'sources' ], 0, 8 );
 	$url     = "cache/$source/adjacency_matrix.js";
 	$locally = "$CACHE/$url";
 	if( file_exists( $locally )) { send_redirect( $url ); }
 
 	// ===== CASE 3: COMBINATION OF SOURCES, NOT PREVIOUSLY CACHED
-  // Create the cache and then redirect the cache request to the newly created
-  // cache file
+	// Create the cache and then redirect the cache request to the newly created
+	// cache file
 	$matrices = merge_adjacency_matrices( $datasources );
 	write_cache( $file, $matrices );
-  send_redirect( $url );
+	send_redirect( $url );
 }
 
 // ============================================================
@@ -91,9 +91,9 @@ function typeahead_cache( $file, $manifest, $sources ) {
 		// This includes: 'all', 'pharmgkb', or 'plos-pmc' 
 		// Only the server will have the default datasources installed
 		$url     = "cache/$source/$file.js";
-    $locally = "$CACHE/$url";
+		$locally = "$CACHE/$url";
 		if(	file_exists( $locally )) {
-      send_redirect( $url );
+			send_redirect( $url );
 
 		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
       send_redirect( "$server/$url" );
@@ -101,40 +101,40 @@ function typeahead_cache( $file, $manifest, $sources ) {
 	}
 
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
-  // Caches only exist locally on the proxy server, never on the production
-  // server
-  $source  = substr( $_SESSION[ 'sources' ], 0, 8 );
+	// Caches only exist locally on the proxy server, never on the production
+	// server
+	$source  = substr( $_SESSION[ 'sources' ], 0, 8 );
 	$url     = "cache/$source/$file.js";
 	$locally = "$CACHE/$url";
 	if( file_exists( $locally )) { send_redirect( $url ); }
 
 	// ===== CASE 3: COMBINATION OF SOURCES, NOT PREVIOUSLY CACHED
-  // Create the cache and then redirect the cache request to the newly created
-  // cache file
+	// Create the cache and then redirect the cache request to the newly created
+	// cache file
 	$matrices = merge_typeahead_tables( $datasources, $file );
 	write_cache( $file, $typeahead );
-  send_redirect( $url );
+	send_redirect( $url );
 }
 
 // ============================================================
 function send_redirect( $url ) {
 // ============================================================
-  header( "Location: $url" );
-  exit();
+	header( "Location: $url" );
+	exit();
 }
 
 // ============================================================
 function read_adjacency_matrix( $file ) {
 // ============================================================
-  global $CACHE;
-  global $server;
+	global $CACHE;
+	global $server;
 
-  $local    = "$CACHE/$file";
-  $proxy    = "$server/$file";
-  $location = file_exists( $local ) ? $local : $proxy;
+	$local    = "$CACHE/$file";
+	$proxy    = "$server/$file";
+	$location = file_exists( $local ) ? $local : $proxy;
 	$contents = file_get_contents( $location ); if( ! $contents ) { return null; }
-  $contents = preg_replace( '/^var adjacency_matrix\s*=\s*/', '', $contents );
-  $contents = preg_replace( ';$/', '', $contents );
+	$contents = preg_replace( '/^var adjacency_matrix\s*=\s*/', '', $contents );
+	$contents = preg_replace( '/;$/', '', $contents );
 	$matrix   = json_decode( $contents );
 	return $matrix;
 }
@@ -142,15 +142,16 @@ function read_adjacency_matrix( $file ) {
 // ============================================================
 function read_typeahead_table( $file ) {
 // ============================================================
-  global $CACHE;
-  global $server;
+	global $CACHE;
+	global $server;
 
-  $local    = "$CACHE/$file";
-  $proxy    = "$server/$file";
-  $location = file_exists( $local ) ? $local : $proxy;
+
+	$local    = "$CACHE/$file";
+	$proxy    = "$server/$file";
+	$location = file_exists( $local ) ? $local : $proxy;
 	$contents = file_get_contents( $location ); if( ! $contents ) { return null; }
-  $contents = preg_replace( '/^var AUTOCOMPLETE_[\w_]*\s*=\s*/', '', $contents );
-  $contents = preg_replace( ';$/', '', $contents );
+	$contents = preg_replace( '/^var AUTOCOMPLETE_[\w_]*\s*=\s*/', '', $contents );
+	$contents = preg_replace( '/;$/', '', $contents );
 	$table    = json_decode( $contents, true );
 	return $table;
 }
@@ -162,7 +163,7 @@ function write_cache( $file, $data ) {
 
 	// Create cache path and human-readable mini-manifest 'sources.json'
 	$sources    = json_decode( base64_decode( $_SESSION[ 'sources' ]));
-  $sources    = count( $sources ) == 1 ? $sources[ 0 ] : substr( $sources, 0, 8 );
+	$sources    = count( $sources ) == 1 ? $sources[ 0 ] : substr( $sources, 0, 8 );
 	$path       = "$CACHE/cache/$sources";
 	$sourcefile = "$CACHE/cache/$sources/sources.json";
 	if( ! file_exists( $path )) { mkdir( $path ); }
@@ -181,7 +182,7 @@ function write_cache( $file, $data ) {
 // ============================================================
 function merge_adjacency_matrices( $datasources ) {
 // ============================================================
-  global $CACHE;
+	global $CACHE;
 	$matrices = array();
 	foreach( $datasources as $sourceid ) {
 		$matrix = read_adjacency_matrix( "cache/$sourceid/adjacency_matrix.js" );
@@ -207,7 +208,7 @@ function merge_typeahead_tables( $datasources, $file ) {
 	
 	$typeahead = array();
 	foreach( $datasources as $sourceid ) {
-		$table = read_typeahead_table( "$CACHE/$sourceid/$file.js" );
+		$table = read_typeahead_table( "cache/$sourceid/$file.js" );
 		if( is_null( $table )) { continue; } // Skip missing entries
 		$typeahead = array_merge( $typeahead, $table );
 	}
