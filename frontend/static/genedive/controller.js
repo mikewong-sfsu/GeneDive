@@ -470,16 +470,15 @@ class Controller {
    @callergraph
    */
   loadSpinners() {
-    if (!this.spinneractive) {
-      this.hideHelp();
-      this.graph.hideGraphLegend();
-      this.graph.hideGraphAbsent();
-      this.hideTable();
-      this.graph.hideGraphView();
-      this.hideElementsRequiringDGRs();
-      this.showSpinners();
-      this.spinneractive = true;
-    }
+    if ( this.spinneractive) { return; }
+    this.hideHelp();
+    this.graph.hideGraphLegend();
+    this.graph.hideGraphAbsent();
+    this.hideTable();
+    this.graph.hideGraphView();
+    this.hideElementsRequiringDGRs();
+    this.showSpinners();
+    this.spinneractive = true;
   }
 
   /**
@@ -495,8 +494,6 @@ class Controller {
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
-
-
   }
 
   /**

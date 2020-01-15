@@ -372,7 +372,7 @@ class Search {
   }
 
   initTypeahead() {
-    $().ready(() => { GeneDive.loadLandingPage(); }); // Wait until GeneDive is defined and then require landing page be loaded. MW Is there a better part of the startup process to put this?
+    $().ready(() => { GeneDive.loadLandingPage(); }); // Wait until GeneDive is defined and then require landing page be loaded. 
     console.log( `Initializing Typeahead with ${AUTOCOMPLETE_GENE.length} genes, ${AUTOCOMPLETE_DRUG.length} drugs, ${AUTOCOMPLETE_DISEASE.length} diseases, and ${AUTOCOMPLETE_GENE_SET.length} gene sets` );
 
     var genes = new Bloodhound({
