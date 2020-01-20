@@ -148,16 +148,6 @@ h5 {
   display:none;
 }
 
-.download-module {
-  /*visibility: hidden;*/
-  text-align: center;
-  flex-grow: 1;
-}
-
-.download-module button{
-  width: 50%;
-}
-
 .module .title {
   display: flex;
   flex-direction: row;
@@ -194,7 +184,7 @@ h5 {
 /* Rendering */
 
 .spinner {
-  display: none;
+  display: flex;
   width: 100%;
   height:100%;
   font-size: 4em;

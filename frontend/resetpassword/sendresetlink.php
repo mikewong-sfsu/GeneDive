@@ -62,7 +62,7 @@ try{
 
   $mail             = new PHPMailer();
   $mail->IsSMTP();                            
-  $mail->Host       = "www.genedive.net"; 
+  $mail->Host       = $BASE_URL;
 
   $mail->SMTPAuth   = true;                  
   $mail->SMTPSecure = "tls";                 
@@ -73,9 +73,9 @@ try{
 
   $mail->SetFrom('genedive@gmail.com', 'GeneDive');
   $mail->Subject    = "GeneDive: Reset Password";
-  $mail->MsgHTML($message);
+  $mail->MsgHTML( $message );
 
-  $mail->AddAddress($email);
+  $mail->AddAddress( $email );
 
   $mail->Send();
 

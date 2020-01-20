@@ -11,6 +11,7 @@ use File::Basename;
 
 
 my $file         = shift; # Absolute path
+my $cache        = cache( $file );
 my $path         = path( $file );
 my $pdir = dirname($path);
 my @required     = qw( mention1 mention2 geneids1 geneids2 type1 type2 );
@@ -23,20 +24,19 @@ $interactions = csv( in => $file, encoding => 'utf-8', headers => "auto");
 cleanup( $interactions );
 
 # ===== GENERATE ADJACENCY MATRIX
-print "<li>Building <i>adjacency matrix</i></li>\n";
-adjacency_matrix( $path, $interactions );
+print "<ul><li>Building <i>adjacency matrix</i></li>\n";
+adjacency_matrix( $path, $interactions );#changed $cache to $path NL
 
 # ===== GENERATE TYPEAHEAD LOOKUP CACHES
 foreach my $type (qw( gene drug disease )) {
 	my $hash = {};
 	extract_ids( $type, $hash, $_ ) foreach @$interactions;
-	hash_to_cache( $type, $path, $hash );
-	print "<li>Building <i>$type typeahead lookup cache</i></li>\n";
+	hash_to_cache( $type, $path, $hash );#changed $cache to $path NL
+  	print "<li>Building <i>$type typeahead lookup cache</li>\n";
 }
-`ln -s $path/../all/set_id.json $path/set_id.json` unless -e "$path/set_id.json"; # Symbolically link Set ID file
 
 filter_columns( $interactions );
-print "<li>Building <i>SQL import statements</i></li>\n";
+print "</ul>Preparing to load data into the database<br>\n";
 write_sql( $path, $interactions );
 $parent = basename(dirname($file));
 $parent = "ds_".$parent;
@@ -54,7 +54,7 @@ string_replace($location,"this.add_cols = null","this.add_cols = [". $replace_st
 # ============================================================
 sub adjacency_matrix {
 # ============================================================
-	my $path         = shift;
+	my $cache        = shift;
 	my $interactions = shift;
 
 	my $matrix = {};
@@ -66,14 +66,26 @@ sub adjacency_matrix {
 
 		$matrix->{ $a }{ $b } = [] if not exists $matrix->{ $a }{ $b };
 		$matrix->{ $a }{ $b } = [ sort { $a <=> $b } (($p*1000), @{ $matrix->{ $a }{ $b }})];
-    $matrix->{ $b }{ $a } = $matrix->{ $a }{ $b }; # Enforce bidirectionality
+		$matrix->{ $b }{ $a } = $matrix->{ $a }{ $b }; # Enforce bidirectionality
 	}
 
 	my $json = new JSON::XS();
-	open FILE, ">$path/adjacency_matrix.json" or die $!;
+  	unless( -d $cache ) { mkdir $cache; chmod 0777, $cache; }
+	open FILE, ">$cache/adjacency_matrix.js" or die "Can't write to '$cache/adjacency_matrix.js' $!";
+	print FILE "var adjacency_matrix = ";
 	print FILE $json->canonical->encode( $matrix );
+	print FILE ";";
 	close FILE;
-	`cd $path && /usr/bin/zip -mr adjacency_matrix.json.zip adjacency_matrix.json`;
+}
+
+# ============================================================
+sub cache {
+# ============================================================
+	my $file  = shift;
+	my @paths = split /\//, $file; pop @paths;
+	my $cache = '/var/www/html/cache/' . pop @paths;
+
+	return $cache;
 }
 
 # ============================================================
@@ -125,18 +137,21 @@ sub extract_ids {
 # ============================================================
 sub hash_to_cache {
 # ============================================================
-	my $type = shift;
-	my $path = shift;
-	my $hash = shift;
-	my $json = new JSON::XS();
+	my $type  = shift;
+	my $cache = shift;
+	my $hash  = shift;
+	my $json  = new JSON::XS();
 
-	my $cache = [];
+	my $data = [];
 	foreach my $key (sort { $a cmp $b } keys %$hash) {
-		push @$cache, { symbol => $key, values => [ uniq @{$hash->{ $key }} ]};
+		push @$data, { symbol => $key, values => [ uniq @{$hash->{ $key }} ]};
 	}
 
-	open FILE, ">$path/$type" . '_id.json' or die $!;
-	print FILE $json->canonical->encode( $cache );
+  	unless( -d $cache ) { mkdir $cache; chmod 0777, $cache; }
+	open FILE, ">$cache/$type" . '_id.js' or die $!;
+	printf FILE "var AUTOCOMPLETE_%s = ", uc( $type );
+	print FILE $json->canonical->encode( $data );
+	print FILE ";";
 	close FILE;
 }
 

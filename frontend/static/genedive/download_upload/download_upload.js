@@ -431,20 +431,20 @@ If you feel that we are not abiding by this privacy policy, you should contact u
   }
 
   disableDownload() {
-    $(".download-module button.download")[0].disabled = true;
+    $(".download-module.download")[0].disabled = true;
   }
 
   enableDownload() {
-    $(".download-module button.download")[0].disabled = false;
+    $(".download-module.download")[0].disabled = false;
   }
 
   enableUpload() {
 
-    $(".download-module button.upload")[0].disabled = true;
+    $(".download-module.upload")[0].disabled = true;
   }
 
   disableUpload() {
-    $(".download-module button.upload")[0].disabled = false;
+    $(".download-module.upload")[0].disabled = false;
   }
 
   clearUploadField(field) {
