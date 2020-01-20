@@ -42,6 +42,7 @@ function adjacency_matrix( $manifest, $sources ) {
 
 	// ===== CASE 1: MOST COMMON CASE
 	$source = $datasources[ 0 ];
+	
 	if( count( $datasources ) == 1 ) {
 
 		// Single user-provided data source adjacency matrix requested
@@ -56,7 +57,6 @@ function adjacency_matrix( $manifest, $sources ) {
 			send_redirect( "$server/$url" );
 		}
 	}
-
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
 	// Caches only exist locally on the proxy server, never on the production
 	// server
@@ -84,7 +84,7 @@ function typeahead_cache( $file, $manifest, $sources ) {
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
 
 	// ===== CASE 1: MOST COMMON CASE
-	$source = $file == 'set_id' ? 'shared' : $datasources[ 0 ];
+	$source = ($file == 'set_id') ? 'shared' : $datasources[ 0 ];
 	if( count( $datasources ) == 1 ) {
 
 		// Single user-provided data source adjacency matrix requested
@@ -95,11 +95,11 @@ function typeahead_cache( $file, $manifest, $sources ) {
 		if(	file_exists( $locally )) {
 			send_redirect( $url );
 
-		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
+		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc', 'shared' ])) {
       send_redirect( "$server/$url" );
 		}
 	}
-
+	else{
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
 	// Caches only exist locally on the proxy server, never on the production
 	// server
@@ -114,6 +114,7 @@ function typeahead_cache( $file, $manifest, $sources ) {
 	$matrices = merge_typeahead_tables( $datasources, $file );
 	write_cache( $file, $typeahead );
 	send_redirect( $url );
+	}
 }
 
 // ============================================================

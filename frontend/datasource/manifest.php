@@ -68,7 +68,8 @@ function add_datasource( $manifest, $datasource ) {
 	write_manifest( $manifest );
 
 	echo "<h2>Data import complete!</h2>\n";
-	echo "<script>setTimeout(() => { window.close(); }, 2500 );</script>";
+	echo "<script>setTimeout(() => { window.close(); }, 2500 );</script>";//commented NL
+	//echo "<script>setTimeout(() => { window.opener.reload(); }, 2500 );</script>";	
 }
 
 // ============================================================
