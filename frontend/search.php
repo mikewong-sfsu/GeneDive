@@ -117,7 +117,8 @@
     <!-- Table View -->
     <div class="table-view ui-widget-content panel-top">
       <div class="messaging-and-controls require-dgr-search">
-        <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
+	<span class="go-back"></span>
+	<span class="view-header"></span>
         <span class="metadata"></span>
       </div>
       <div class="spinner table-rendering-spinner">

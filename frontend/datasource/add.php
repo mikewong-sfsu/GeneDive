@@ -1,3 +1,4 @@
+<<<<<<< HEAD:frontend/datasource/add.php
 <?php 
   include_once( '../session.php' ); 
   include_once( '/var/www/html/datasource/manifest.php' );
@@ -115,7 +116,14 @@ form button.cancel {
                 <label for="dsfile" class="col-sm-2 control-label">Filename</label>
                 <div class="col-sm-10"><input type="file" class="form-control" name="dsfile" id="dsfile"/>
                 <small id="dsfile-privacy" class="form-text form-muted">Your data is kept local and private to your computer</small></div>
-              </div>
+	      </div>
+		<!--adding URL -->
+	     <div class="form-group">
+                <label for="dsurl" class="col-sm-2 control-label">Ref. URL</label>
+                <div class="col-sm-10"><input type="text" class="form-control"name="dsurl" id="dsurl"/>
+                <small id="dsurl-example" class="form-text form-muted">(for example: URL to PubMed paper.)</small></div>
+	      </div>
+ 
               <div class="form-group actions">
                 <button class="btn btn-danger cancel">Cancel</button>
                 <button type="submit" class="btn btn-primary" name="submit">Import Data Source</button>
@@ -220,6 +228,39 @@ $( "form button.cancel" ).off( 'click' ).click(( ev ) => {
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 var listitem = $( '.datasource-list-item' ).detach();
 
+<<<<<<< HEAD:frontend/datasource/add.php
+=======
+$('.btn_remove').on('click',function(){
+  var ds_id = this.parentNode.parentNode.id;
+  var ds_name = document.getElementById(ds_id).children[0].children[0].innerHTML
+  var retVal = confirm("Do you confirm to delete \"" + ds_name + "\"?");
+  if( retVal == true ) {
+  // update session variable
+   ds = {}
+   ds.list = <?= json_encode($dslist) ?>;
+   updated_list = ds.list.filter(e => e != ds_id);
+   let dsl = btoa(JSON.stringify(updated_list));
+   $.ajax({
+     url:`./change.php?value=${dsl}`,
+     method: 'GET'
+   })
+     //remove datasource
+   $.ajax({
+     url:"./remove.php",
+     type:"POST",
+     dataType:'html',
+     data:{"ds_id" : ds_id},
+     success:function(result){
+	     location.reload();
+	     //location = '/search.php';
+     }
+  });
+    return true;
+  } else {
+    return false;
+  }
+});
+>>>>>>> data_import:frontend/datasource/manage.php
 </script>
 </body>
 </html>

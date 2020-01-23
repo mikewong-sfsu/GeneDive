@@ -1,9 +1,9 @@
-class TableDetail extends ResultsTable {
+class TableDetail extends BuildTable {
 
-  constructor(table, interactions, additional_columns, group) {
-    super(table, interactions,additional_columns);
-    console.log("inside the TableDetailsPage:" , additional_columns);
+  constructor(table, interactions, additional_columns, group, ds) {
+    super(table, interactions,additional_columns, ds);
     this.interactions = GeneDive.grouper.group(interactions);
+    this.additional_columns = [];
     if(!(group in this.interactions))
     {
       this.amountOfEntries = 0;
@@ -48,15 +48,20 @@ class TableDetail extends ResultsTable {
 
     tr.append($(document.createElement("th")).html("DGR<sub>1</sub>").css("width", "8%").attr({ id : 'th-dgr1', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}));
     tr.append($(document.createElement("th")).html("DGR<sub>2</sub>").css("width", "8%").attr({ id : 'th-dgr2', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}));
-    tr.append($(document.createElement("th")).text("Journal").css("width", "8%").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher for the citation supporting the interaction"}));
-    tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "120px").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher article accession number"}));
-    tr.append($(document.createElement("th")).html("C. Score").addClass("numeric").css("width", "120px").attr({ id : 'th-cscore', "toggle": "tooltip", "title": "The confidence score (likelihood) for interaction accuracy"}));
-    tr.append($(document.createElement("th")).text("Excerpt").css("width", "calc( 76% - 326px )").attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "The article excerpt that states the interaction"}));
-    /*for(let i = 0; i< this.additional_columns.length;i++){
+    tr.append($(document.createElement("th")).text("Journal").css("width", "70px").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher for the citation supporting the interaction"}));
+    tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "100px").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher article accession number"}));
+    tr.append($(document.createElement("th")).html("C. Score").addClass("numeric").css("width", "80px").attr({ id : 'th-cscore', "toggle": "tooltip", "title": "The confidence score (likelihood) for interaction accuracy"}));
+    tr.append($(document.createElement("th")).text("Excerpt").attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "The article excerpt that states the interaction"}));
+    this.additional_columns = this.buildHeader();
+    console.log("additional_col : ",this.additional_columns);
+    for(let i = 0; i< this.additional_columns.length;i++){
       tr.append($(document.createElement("th")).text(this.additional_columns[i]).attr({ id: 'th-addendum', "toggle": "tooltip","title": "User added columns"}));
-    }*/
-    appendHeader.bind(tr,this.additional_columns)();
-    tr.append($(document.createElement("th")).text("Pubmed").css({width:"86px"}).attr({ id : 'th-pubmed', "toggle": "tooltip", "title": "A PubMed link to the article (if available)"}));
+    }
+    //datasource
+   tr.append($(document.createElement("th")).text("Source").attr({ id: 'datasource', "toggle": "tooltip","title": "Datasource reference"}));
+    
+ 
+    tr.append($(document.createElement("th")).text("Pubmed").css({width:"70px"}).attr({ id : 'th-pubmed', "toggle": "tooltip", "title": "A PubMed link to the article (if available)"}));
     this.table.append(thead);
   }
 
@@ -87,23 +92,18 @@ class TableDetail extends ResultsTable {
       tr.append($(document.createElement("td")).text(displayedID).addClass("numeric"));
       tr.append($(document.createElement("td")).text(Number(i.probability).toFixed(3)).addClass("numeric"));
       tr.append($(document.createElement("td")).html(this.adjustExcerpt(i)));
-      
-      /*if(i.addendum){
-	let addendum = JSON.parse(i.addendum);
-	for( let i in this.additional_columns){
-          let key = this.additional_columns[i];
-	  if(key in addendum){
-	    tr.append($(document.createElement("td")).html(addendum[key]));
-	  }
-	  else{
-	    tr.append($(document.createElement("td")).html(""));
-	  }
+      //add additional_columns values
+      let element = this.buildBody(i,this.additional_columns);
+      for(let col = 0 ; col < this.additional_columns.length;col++){
+	tr.append($(document.createElement("td")).html(element.get(this.additional_columns[col])));	
 	}
-      }*/
-      appendBody.bind(tr, this.additional_columns,i)();
-
-      if (i.pubmed_id !== "0")
+      //datasource mapping
+      tr.append($(document.createElement("td")).html(this.navigateRef(i.ds_name,i.ds_url)));
+ 
+      if (i.pubmed_id !== "")
         tr.append($(document.createElement("td")).html(pubmed_link));
+      else
+	tr.append($(document.createElement("td")).text(""));
 
       tbody.append(tr);
     }

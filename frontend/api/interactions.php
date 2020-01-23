@@ -58,7 +58,10 @@ foreach( $datasources as $source ) {
   //add datasource
   $modified = array();
   foreach($retrieved as $i){
-    $i["ds_id"] = $source;
+	  $i["ds_name"] = $manifest[$source]['name'];
+	  $i["ds_id"] = $source;
+	  $i["ds_url"] = $manifest[$source]['url'];
+	  $i["short_id"] = $manifest[$source]['short_id'];
     $modified[] = $i;
   }
   // Accumulate results
@@ -116,6 +119,13 @@ function proxy_query( $source, $ids, $minProb ) {
   global $server;
   if( $source == 'all' ) { $manifest[ 'all' ][ 'host' ] = $server; }
 
+  /*merge conflict start
+   * $request  = $manifest[ $source ][ 'host' ] . "/interactions.php?ids=$ids&minProb=$minProb";
+  $response = file_get_contents( $request );
+
+  if( ! $proxy[ 'response' ]) { 
+	  array_push( $errors, "DataSource Error: $source not available at '" . $manifest[ $source ][ 'host' ] . "'" );
+   merge conflict end*/
   $request  = $manifest[ $source ][ 'host' ] . "/api/interactions.php?ids=" . urlencode( $ids ) . "&minProb=$minProb&sources=" . base64_encode( json_encode([ $source ]));
   $response = json_decode( file_get_contents( $request ), true );;
 

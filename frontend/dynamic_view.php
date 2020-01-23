@@ -1,11 +1,10 @@
 <?php
 require_once('session.php');
 
-$data_path = "/genedive/backend/data/sources";//"/usr/local/genedive/data/sources";
+$data_path = "/genedive/backend/data/sources";
 $local_path = "/genedive/frontend/dynamic_data";
 
 $ds = json_decode( base64_decode( $_SESSION[ 'sources' ]));
-//$sources = array_map(function($value){return 'ds_'.$value;},$sources);
 
 //remove_files();
 add_files($ds);
@@ -20,18 +19,23 @@ function add_files($datasources){
 		mkdir($local_path,0777);
 
 	//add defaultclass
-	copy($data_path."/defaultBuild.js",$local_path."/defaultBuild.js");
+	copy($data_path."/defaultBuild.js",$local_path."defaultBuild.js");
 	}
-	//chmod($local_path,0777);
+	@chmod($local_path,0777);
 	//add defaultclass
 	//copy($data_path."/defaultBuild.js",$local_path."/defaultBuild.js");
 
 	//dynamically add the datasources based on session
-	foreach($datasources as $ds){
+	if(is_array($datasources) || is_object($datasources)){
+		foreach($datasources as $ds){
+			//echo $ds;
+	//$path =  $data_path.$ds."factory.js";
 	$path =  $data_path."/".$ds."/factory.js";
+	
 	if(file_exists($path) )//&& !(file_exists($local_path."factory_".$ds.".js")))
 		copy($path,$local_path."/factory_".$ds.".js");
 	
+	}
 	}
 
 }

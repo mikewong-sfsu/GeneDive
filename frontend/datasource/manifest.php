@@ -67,9 +67,11 @@ function add_datasource( $manifest, $datasource ) {
 	$manifest[ $id ] = $datasource;
 	write_manifest( $manifest );
 
+
 	echo "<h2>Data import complete!</h2>\n";
 	echo "<script>setTimeout(() => { window.close(); }, 2500 );</script>";//commented NL
 	//echo "<script>setTimeout(() => { window.location = '/search.php'; }, 2500 );</script>";	
+
 }
 
 // ============================================================
@@ -98,5 +100,28 @@ function remove_datasource( $manifest, $datasource_id ) {
 
 	echo "Datasource deleted successfully";
 }
+// ============================================================
+function sort_manifest( $manifest ) {
+// ============================================================
+	//get all names in the list
+	/*$name_list = [];
+	$std_ds = array("plos-pmc","pharmgkb");
+	foreach($manifest as $key => $value){
+		if(!in_array($manifest[key]['id'],$std_ds)){
+			array_push($name_list,$manifest[key]['name']);
+		}
+	}
+	//sort the list in ascending order
+	sort($name_list);
+	//open file to write
+	$fp = fopen( "$DATASOURCES/manifest.json", 'w' );
+	//map the short_id
+	foreach($name_list as $key => $value){
+		if(!in_array($manifest[key]['id'],$std_ds)){
+			$manifest[key]['short_id'] = 
+		}	
+	}*/
+	
 
+}
 ?>

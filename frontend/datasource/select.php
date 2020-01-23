@@ -55,18 +55,45 @@
 <script>
 GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
+var std_ds = new Set(["pharmgkb","plos-pmc","all"]);
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 console.log("manifest: " + manifest);
 // ===== INITIALIZE DATASOURCE MANAGER
 var listitem = $( '.datasource-list-item' ).detach();
 GeneDive.datasource.refreshUI = () => {
-	console.log("inside refreshUI");
-    Object.entries( manifest ).forEach(([ key, datasource ]) => {
-        let entry = listitem.clone().css({ display: 'block' });
-        entry.find( '.name' ).html( datasource.name );
+var std_flag = 0;//to display the standard data source header
+var local_flag = 0;//to display the local data source header
+var datasource_name;
+var short_id_map = new Map();
+//add the default standard datasources
+short_id_map.set("ploc-pmc","G1");
+short_id_map.set("pharmgkb","G2");
+short_id_map.set("all","G1 & G2");
+var i = 1;
+Object.entries( manifest ).forEach(([ key, datasource ]) => {
+	let entry = listitem.clone().css({ display: 'block' });
+	datasource_name = datasource.name;
+	//concatinate name with identifier
+	if(short_id_map.has(datasource.id)){
+		datasource_name += " [" + short_id_map.get(datasource.id) + "]";
+	}
+	else{
+		datasource_name += " [ L" + i  + "]";
+		short_id_map.set(datasource.id,i++);
+	}
+	//i++;
+	entry.find( '.name' ).html( datasource_name );
         entry.find( '.description' ).html( datasource.description );
         let toggle = entry.find( 'input.datasource-toggle' );
-        toggle.attr({ id: datasource.id, name: datasource.id });
+	toggle.attr({ id: datasource.id, name: datasource.id });
+	if(std_flag == 0 && std_ds.has(datasource.id)){
+	$( '#datasource-manager .list-group' ).append("<p><i>GeneDive Datasources</i></p>");
+	std_flag = 1;
+	}
+	else if(local_flag == 0 && !std_ds.has(datasource.id)){
+	$( '#datasource-manager .list-group' ).append("<br><p><i>Local Datasources</i></p>");
+	local_flag = 1;
+	}	
         $( '#datasource-manager .list-group' ).append( entry );
     });
 };
@@ -84,18 +111,34 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
                 if( $( item ).prop( 'checked' )) { return key; } else { return null; }
             }).toArray();
             let list = GeneDive.datasource.list.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
-            alertify.success( `Now searching on<br>${list}` ); 
+/*<<<<<<< HEAD
+           /* alertify.success( `Now searching on<br>${list}` ); 
             if( [ 'plos-pmc', 'pharmgkb' ].every(( item ) => { return GeneDive.datasource.list.includes( item ); })) {
                 GeneDive.datasource.list = [ 'all' ];
             }
 	    let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
-	    console.log(dsl);
+	    console.log(dsl);*/
+
+	    alertify.success( `Now searching on<br>${list}` ); 
+	    
+            let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
+
             $.ajax({
                 url: `/datasource/change.php?value=${dsl}`,
                 method: 'GET'
             })
             .done(( message ) => {
+
               window.location.reload();
+	   /* console.log( message, GeneDive.datasource.list );
+	    //set session variable
+                LookupTableCache.refresh();
+                AdjacencyMatrix.refresh();
+                GeneDive.search.initTypeaheadOnCacheLoad();
+                //refresh the search set and graph
+                GeneDive.search.clearSearch();
+		GeneDive.onRemoveDGR();*/
+
             })
             .fail(( error ) => { console.log( error ); });
         }, 
@@ -113,7 +156,7 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
         let all      = [ 'plos-pmc', 'pharmgkb' ].includes( key ) && GeneDive.datasource.list.includes( 'all' );
         let selected = GeneDive.datasource.list.includes( key );
 	if( all || selected ) { $( item ).bootstrapToggle( 'on' ); } 
-    //else { $( item ).bootstrapToggle( 'off' );} //commented to fix the toggle reset 
+	//else { $( item ).bootstrapToggle( 'off' );} //commented to fix the toggle reset 
     });
 });
 </script>

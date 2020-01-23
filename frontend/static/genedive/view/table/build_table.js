@@ -1,10 +1,10 @@
 class BuildTable extends ResultsTable{
 	constructor(table,interactions,additional_columns,ds){
 		super(table,interactions,additional_columns);
+		this.default_ds = new Set(["all","pharmgkb","plos-pmc"]);
 		this.objectMap = new Map();
-		console.log("ds = ",ds);
 		for(let i = 0 ; i < ds.length;i++){
-			if(ds[i] == 'all' || ds[i] == 'plos-pmc' || ds[i] == 'pharmgkb')
+			if(this.default_ds.has(ds[i]) )
 				//continue;
 				this.objectMap.set(ds[i],eval("new DefaultClass()"));
 
@@ -25,7 +25,6 @@ class BuildTable extends ResultsTable{
 			let head = v.getHeader();
 			res = v.set_union(res,head);
 		}
-		console.log("buildHeader = ",res);
 		return Array.from(res);
 
 	}

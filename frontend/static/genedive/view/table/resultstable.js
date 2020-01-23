@@ -8,11 +8,7 @@ class ResultsTable {
     this.interactions = interactions;
     this.table.html("");
     this.additional_columns = additional_columns;
-    //this.additional_columns = camelCase(additional_columns);
     $(".messaging-and-controls").show();
-    //this.table.attr("id","result-table");
-    //$("#result-table").wrap($("<div/>").css("overflow-x":"scroll"));
-    //this.buildTable = new BuildTable();
   }
   
 
@@ -30,6 +26,7 @@ class ResultsTable {
 
   }
 
+ 
   // ============================================================
   updateMessage ( message ) {
   // ============================================================
@@ -39,13 +36,16 @@ class ResultsTable {
   // ============================================================
   hideBackButton () {
   // ============================================================
-    $('.table-view .messaging-and-controls .go-back').css('visibility', 'hidden');
+	  $('.table-view .messaging-and-controls .go-back').text('Summary View').css({'cursor':'default','color':'black', 'visibility':'hidden'});
+	  $('.table-view .messaging-and-controls .view-header').text('Summary View').css({'vertical-align':'middle','margin-left':'250px'}); 
+
   }
 
   // ============================================================
   showBackButton () {
   // ============================================================
-    $('.table-view .messaging-and-controls .go-back').css('visibility', 'visible');
+    $('.table-view .messaging-and-controls .go-back').html('<i class="fa fa-arrow-left"></i>Back to Summary Page').css({'cursor':'pointer','color':'#d84b2b','visibility':'visible'});
+ $('.table-view .messaging-and-controls .view-header').text('Detail View');
   }
 
   // ============================================================
@@ -86,7 +86,61 @@ class ResultsTable {
     excerpt = this.styleExcerpt(excerpt, row.mention1, row.mention1_color);
     excerpt = this.styleExcerpt(excerpt, row.mention2, row.mention2_color);
     return excerpt;
+  }
 
+  // ============================================================
+  mapDatasourceURL(rows){
+  // ============================================================
+  let row = rows[rows.length - 1];
+  row.ds_map = rows.reduce((acc,cur) =>
+	  {
+		  let name = cur.ds_name;
+		  console.log("Name: ",name);
+		  let url = cur.ds_url;
+		  let short_id = cur.short_id;
+		  if(!defined(name)){
+		  return acc;
+		  }
+		  acc[name] = [url,short_id];
+		  return acc;
+	  },{});
+  //create an aggregate list
+  let res_list = '[';
+    let i = 1;
+    let len = Object.keys(row.ds_map).length;
+    for(let key in row.ds_map){
+     if(row.ds_map[key] == null){
+      res_list += '<a title=' + key + '>' + i + '</a>';
+     }else{
+	console.log("display key:",key);
+      res_list += "<a  target= _blank href=/api/external_link.php?action=ref&url_link=" + row.ds_map[key][0] + " title="+  key.replace(/ /g,'\xa0') +  " >" + row.ds_map[key][1] + "</a>";
+     }
+     if(i  < len ){
+       res_list += ',';
+     }
+     i++;
+    }
+   res_list += ']';
+   return res_list;
+  }
+
+  // ============================================================
+  navigateRef(key,value){
+  // ============================================================	 
+	let res = '';
+	if(value == null){
+	  res += key;
+	}
+	else{
+	  res += '<a  href=/api/external_link.php?action=ref&url_link=' + value + ' target=_blank>'+ key + '</a>';
+	}
+	return res;
+  }
+
+  // ============================================================
+  refLink () {
+  // ============================================================
+	$(".grouped a").click(function(e){e.stopPropagation();});
 
   }
 }

@@ -64,6 +64,10 @@ if($action === "pharmgkb_combination"){
 
   $pubmedID = $_GET['pubmedID'];
   $FINAL_URL = "https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/";
+}else if($action === "ref")
+{
+  $url_link = $_GET['url_link'];
+  $FINAL_URL = "https://${url_link}";
 }
 
 
