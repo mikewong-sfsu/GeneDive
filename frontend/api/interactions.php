@@ -44,6 +44,7 @@ foreach( $datasources as $source ) {
 	  $i["ds_name"] = $manifest[$source]['name'];
 	  $i["ds_id"] = $source;
 	  $i["ds_url"] = $manifest[$source]['url'];
+	  $i["short_id"] = $manifest[$source]['short_id'];
     $modified[] = $i;
   }
   // Accumulate results

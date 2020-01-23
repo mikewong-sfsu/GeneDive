@@ -36,14 +36,16 @@ class ResultsTable {
   // ============================================================
   hideBackButton () {
   // ============================================================
-	  $('.table-view .messaging-and-controls .go-back').text('Summary View').css({'cursor':'default','color':'black'});
+	  $('.table-view .messaging-and-controls .go-back').text('Summary View').css({'cursor':'default','color':'black', 'visibility':'hidden'});
+	  $('.table-view .messaging-and-controls .view-header').text('Summary View').css({'vertical-align':'middle','margin-left':'250px'}); 
 
   }
 
   // ============================================================
   showBackButton () {
   // ============================================================
-    $('.table-view .messaging-and-controls .go-back').html('<i class="fa fa-arrow-left"></i>Back to Summary Page').css({'cursor':'pointer','color':'#d84b2b'});
+    $('.table-view .messaging-and-controls .go-back').html('<i class="fa fa-arrow-left"></i>Back to Summary Page').css({'cursor':'pointer','color':'#d84b2b','visibility':'visible'});
+ $('.table-view .messaging-and-controls .view-header').text('Detail View');
   }
 
   // ============================================================
@@ -93,11 +95,13 @@ class ResultsTable {
   row.ds_map = rows.reduce((acc,cur) =>
 	  {
 		  let name = cur.ds_name;
+		  console.log("Name: ",name);
 		  let url = cur.ds_url;
+		  let short_id = cur.short_id;
 		  if(!defined(name)){
 		  return acc;
 		  }
-		  acc[name] = url;
+		  acc[name] = [url,short_id];
 		  return acc;
 	  },{});
   //create an aggregate list
@@ -108,7 +112,8 @@ class ResultsTable {
      if(row.ds_map[key] == null){
       res_list += '<a title=' + key + '>' + i + '</a>';
      }else{
-      res_list += '<a  target= _blank href=/api/external_link.php?action=ref&url_link=' + row.ds_map[key] + ' title='+  key + ' >' + i + '</a>';
+	console.log("display key:",key);
+      res_list += "<a  target= _blank href=/api/external_link.php?action=ref&url_link=" + row.ds_map[key][0] + " title="+  key.replace(/ /g,'\xa0') +  " >" + row.ds_map[key][1] + "</a>";
      }
      if(i  < len ){
        res_list += ',';

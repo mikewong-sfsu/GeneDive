@@ -9,7 +9,7 @@
     $use_all       = in_array( 'all', $ds );
     $use_pharmgkb  = in_array( 'pharmgkb', $ds );
     $use_deepdive  = in_array( 'plos-pmc', $ds );
-    $use_native_ds = $use_all || $use_pharmgkb || $use_deepdive;
+    //$use_native_ds = $use_all || $use_pharmgkb || $use_deepdive;
     $sans_native   = array_filter( $ds, function ( $source ) { return $source != "all" && $source != "pharmgkb" && $source != "plos-pmc"; });
   }
 
@@ -95,7 +95,7 @@
           .fail(( error ) => {
             console.log( 'ERROR', error );
             if( error.readyState == 0 ) { // Request not sent; network error
-              alertify.error( 'Server not available<br><?php if( $use_all ): ?>PharmGKB and DeepDive/PLoS-PMC are<?php elseif( $use_pharmgkb ): ?>PharmGKB is<?php elseif( $use_deepdive ): ?>DeepDive on PLoS-PMC is<?php endif ?> not available and will be removed from selected datasources', 30 );
+              //alertify.error( 'Server not available<br><?php if( $use_all ): ?>PharmGKB and DeepDive/PLoS-PMC are<?php elseif( $use_pharmgkb ): ?>PharmGKB is<?php elseif( $use_deepdive ): ?>DeepDive on PLoS-PMC is<?php endif ?> not available and will be removed from selected datasources', 30 );
               let dsl = '<?=base64_encode( json_encode( $sans_native ))?>';
               $.get({ url:  `datasource/change.php?value=${dsl}` })
               .done(( message ) => {

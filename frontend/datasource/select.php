@@ -55,18 +55,39 @@
 <script>
 GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
-console.log( "dslist : " , GeneDive.datasource.list);
+var std_ds = new Set(["pharmgkb","plos-pmc"]);
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 
 // ===== INITIALIZE DATASOURCE MANAGER
 var listitem = $( '.datasource-list-item' ).detach();
 GeneDive.datasource.refreshUI = () => {
-    Object.entries( manifest ).forEach(([ key, datasource ]) => {
-        let entry = listitem.clone().css({ display: 'block' });
-        entry.find( '.name' ).html( datasource.name );
+var std_flag = 0;//to display the standard data source header
+var local_flag = 0;//to display the local data source header
+var datasource_name;
+var i = 1;
+Object.entries( manifest ).forEach(([ key, datasource ]) => {
+	let entry = listitem.clone().css({ display: 'block' });
+	datasource_name = datasource.name;
+	//concatinate name with identifier
+	if(std_ds.has(datasource.id)){
+		datasource_name += " [" + datasource.short_id + "]";
+	}
+	else{
+		datasource_name += " [" + datasource.short_id + "]";
+	}
+	i++;
+	entry.find( '.name' ).html( datasource_name );
         entry.find( '.description' ).html( datasource.description );
         let toggle = entry.find( 'input.datasource-toggle' );
-        toggle.attr({ id: datasource.id, name: datasource.id });
+	toggle.attr({ id: datasource.id, name: datasource.id });
+	if(std_flag == 0 && std_ds.has(datasource.id)){
+	$( '#datasource-manager .list-group' ).append("<p><i>GeneDive Datasources</i></p>");
+	std_flag = 1;
+	}
+	else if(local_flag == 0 && !std_ds.has(datasource.id)){
+	$( '#datasource-manager .list-group' ).append("<br><p><i>Local Datasources</i></p>");
+	local_flag = 1;
+	}	
         $( '#datasource-manager .list-group' ).append( entry );
     });
 };

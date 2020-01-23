@@ -2,11 +2,11 @@
 require_once('session.php');
 
 $data_path = "/genedive/backend/data/sources";
-$local_path = "/genedive/frontend/dynamic_data/";
+$local_path = "/genedive/frontend/dynamic_data";
 
 $ds = json_decode( base64_decode( $_SESSION[ 'sources' ]));
 
-remove_files();
+//remove_files();
 add_files($ds);
 add_scripts();
 // ===================================================================
@@ -27,10 +27,13 @@ function add_files($datasources){
 
 	//dynamically add the datasources based on session
 	if(is_array($datasources) || is_object($datasources)){
-	foreach($datasources as $ds){
-	$path =  $data_path."/".$ds."factory.js";
+		foreach($datasources as $ds){
+			//echo $ds;
+	//$path =  $data_path.$ds."factory.js";
+	$path =  $data_path."/".$ds."/factory.js";
+	
 	if(file_exists($path) )//&& !(file_exists($local_path."factory_".$ds.".js")))
-		copy($path,$local_path."factory_".$ds.".js");
+		copy($path,$local_path."/factory_".$ds.".js");
 	
 	}
 	}

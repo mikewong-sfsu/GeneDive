@@ -88,5 +88,28 @@ function remove_datasource( $manifest, $datasource_id ) {
 	write_manifest( $manifest );
 
 }
+// ============================================================
+function sort_manifest( $manifest ) {
+// ============================================================
+	//get all names in the list
+	/*$name_list = [];
+	$std_ds = array("plos-pmc","pharmgkb");
+	foreach($manifest as $key => $value){
+		if(!in_array($manifest[key]['id'],$std_ds)){
+			array_push($name_list,$manifest[key]['name']);
+		}
+	}
+	//sort the list in ascending order
+	sort($name_list);
+	//open file to write
+	$fp = fopen( "$DATASOURCES/manifest.json", 'w' );
+	//map the short_id
+	foreach($name_list as $key => $value){
+		if(!in_array($manifest[key]['id'],$std_ds)){
+			$manifest[key]['short_id'] = 
+		}	
+	}*/
+	
 
+}
 ?>
