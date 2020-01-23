@@ -28,16 +28,33 @@ $errors      = [];
 $extra_col   = [];
 
 foreach( $datasources as $source ) {
-  $local = "$DATASOURCES/$source/data.sqlite";
+	$local = "$DATASOURCES/$source/data.sqlite";
+	//$retrieved = [];
   //echo $local;
   // If the data is not local, retrieve the data via HTTP proxy
   $retrieved = file_exists( $local ) ? query_database( $local, $gids, $minProb ) : proxy_query( $source, $ids, $minProb );
-   if( is_null( $retrieved )) { continue; }
-  // Extract additional columns in addendum
-  $addendum = extract_addendum($local);
-  if($addendum){
-    $extra_col = array_unique(array_merge($extra_col,$addendum));
+  /*if(file_exists($local)){
+	$retrived = query_database($local,$gids,$minProb);
+	$addendum = extract_addendum($local);
+	if($addendum){
+	 $extra_col = array_unique(array_merge($extra_col,$addendum));
+	
+	}
+	 
   }
+  else{
+	  $retrived = proxy_query($source, $ids, $minProb );
+  }*/
+   if( is_null( $retrieved )) { continue; }
+	// Extract additional columns in addendum
+  if(file_exists($local)){
+  $addendum = extract_addendum($local);
+  //if($addendum){
+    //$extra_col = array_unique(array_merge($extra_col,$addendum));
+  //}
+  }
+  $extra_col = ($addendum)?array_unique(array_merge($extra_col,$addendum)): [];
+ 
   //add datasource
   $modified = array();
   foreach($retrieved as $i){
@@ -106,7 +123,6 @@ function proxy_query( $source, $ids, $minProb ) {
      array_push( $errors, "DataSource Error: Source '$source' not available at '$request'" );
     return null; 
   }
-
 
   return $response[ 'results' ];
 }

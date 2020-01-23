@@ -56,7 +56,7 @@
 GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
-console.log(manifest);
+console.log("manifest: " + manifest);
 // ===== INITIALIZE DATASOURCE MANAGER
 var listitem = $( '.datasource-list-item' ).detach();
 GeneDive.datasource.refreshUI = () => {
@@ -88,7 +88,8 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
             if( [ 'plos-pmc', 'pharmgkb' ].every(( item ) => { return GeneDive.datasource.list.includes( item ); })) {
                 GeneDive.datasource.list = [ 'all' ];
             }
-            let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
+	    let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
+	    console.log(dsl);
             $.ajax({
                 url: `/datasource/change.php?value=${dsl}`,
                 method: 'GET'

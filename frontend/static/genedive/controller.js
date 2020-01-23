@@ -38,8 +38,6 @@ class Controller {
     this.additional_columns = null;//  NL
     this.ds = null;//NL
 
-	  console.log(this.datasouces);//delete later
-
     // Saves the table view's Y scroll positions
     this.yScrollSummary = 0;
     // this.yScrollDetail = 0;
@@ -349,7 +347,6 @@ class Controller {
       let thisClass = this;
       setTimeout(function(){
         try{
-		console.log(interactions);
           thisClass.yScrollReset();
           thisClass.interactions = JSON.parse(interactions).results;
 	  thisClass.additional_columns = JSON.parse(interactions).add_cols;

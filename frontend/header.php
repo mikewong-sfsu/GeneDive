@@ -32,6 +32,10 @@
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="static/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="static/fonts/css/fontawesome.min.css">
+
+    <!-- to display tablesorter arrows -->
+    <link rel="stylesheet" href="static/fonts/css/fa-solid.min.css">
 
     <!-- TableSorter -->
     <link rel="stylesheet" href="static/tablesorter/tablesorter.css">

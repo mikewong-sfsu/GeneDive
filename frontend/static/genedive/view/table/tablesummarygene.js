@@ -46,7 +46,7 @@ class TableSummaryGene extends BuildTable {
    console.log("add the additional columns");
   tr.append( $(document.createElement("th")).html( "Source" ).attr({ id : 'ds_id', "toggle": "tooltip", "title": "Datasource"}) );
    console.log("add the additional columns");
- 
+   console.log("hi");
    this.add_head = this.buildHeader();
    for(let i = 0; i< this.add_head.length; i++){
    tr.append( $(document.createElement("th")).text( this.add_head[i] ).attr({ id : 'th-addendum', "toggle": "tooltip", "title": "Addtional information"}) ); 

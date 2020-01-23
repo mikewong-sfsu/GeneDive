@@ -20,9 +20,10 @@ table td{
     /*white-space:nowrap;*/
 /*}*/
 .table-view {
-    /*width: 100%;*/
-    width:1000px;
-    table-layout: fixed;
+    /*display:block;*/
+    width: 1000px;
+    /*width:100%;*/
+    /*table-layout: fixed;*/
     word-wrap:break-word;
     /*word-break:break-all;*/
     /*overflow: hidden;

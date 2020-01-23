@@ -6,6 +6,7 @@
   if( file_exists( $selection_file )) {
     $selected      = json_decode( file_get_contents( $selection_file ), true );
     $ds            = $selected[ 'datasources' ];
+    var_dump($ds);
     $use_all       = in_array( 'all', $ds );
     $use_pharmgkb  = in_array( 'pharmgkb', $ds );
     $use_deepdive  = in_array( 'plos-pmc', $ds );

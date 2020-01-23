@@ -1,7 +1,6 @@
 <?php
 require_once( 'session.php' );
 require_once( 'datasource/manifest.php' );
-//require('dynamic_view.php');
 require_once( 'datasource/proxy.php' ); // Defines $server
 
 /* ============================================================
@@ -13,13 +12,12 @@ require_once( 'datasource/proxy.php' ); // Defines $server
 
 if( ! isset( $_GET[ 'get' ] )) { exit; }
 if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["all"] )); };
-
 $sources = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
 
 // ===== DISPATCH TABLE
 switch( $_GET[ 'get' ]) {
 	case "adjacency_matrix":
-		adjacency_matrix( $manifest, $sources );
+		adjacency_matrix( $_GET[ 'get' ], $manifest, $sources );
 		break;
 	case "gene_id":
 	case "disease_id":
@@ -30,10 +28,10 @@ switch( $_GET[ 'get' ]) {
 	default:
 		break;
 };
-require('dynamic_view.php');//NL
 // ============================================================
-function adjacency_matrix( $manifest, $sources ) {
+function adjacency_matrix( $file, $manifest, $sources ) {
 // ============================================================
+// caching is done based on session id
 	global $CACHE;
 	global $server;
 
@@ -41,39 +39,38 @@ function adjacency_matrix( $manifest, $sources ) {
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
 
-	// ===== CASE 1: MOST COMMON CASE
-	$source = $datasources[ 0 ];
+	//initialize variables
+	$source = $datasources[0];//default value
 	
-	if( count( $datasources ) == 1 ) {
-
-		// Single user-provided data source adjacency matrix requested
-		// This includes: 'all', 'pharmgkb', or 'plos-pmc' 
-		// Only the server will have the default datasources installed
-		$url     = "cache/$source/adjacency_matrix.js";
+	//single datasource
+	if( count($datasources) == 1){
+		$url = "cache/$source/adjacency_matrix.js";
 		$locally = "$CACHE/$url";
-		if( file_exists( $locally )) {
-			send_redirect( $url );
 
-		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
+		//check if datasource present on server
+		if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
 			send_redirect( "$server/$url" );
 		}
+		//check if datasource presnt locally
+		else if( file_exists($locally)){
+			send_redirect("$url");
+		}
 	}
-	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
-	// Caches only exist locally on the proxy server, never on the production
-	// server
+	//datasource previously cached
 	$source  = substr( $_SESSION[ 'sources' ], 0, 8 );
-	$url     = "cache/$source/adjacency_matrix.js";
+	$url = "cache/$source/adjacency_matrix.js";
 	$locally = "$CACHE/$url";
-	if( file_exists( $locally )) { send_redirect( $url ); }
 
-	// ===== CASE 3: COMBINATION OF SOURCES, NOT PREVIOUSLY CACHED
-	// Create the cache and then redirect the cache request to the newly created
-	// cache file
+	if( file_exists($locally)){
+		send_redirect("$url");
+	}
+	//datasource not previously cached
 	$matrices = merge_adjacency_matrices( $datasources );
-	write_cache( $file, $matrices );
+	write_cache( $source,$file , $matrices );
 	send_redirect( $url );
 }
 
+	
 // ============================================================
 function typeahead_cache( $file, $manifest, $sources ) {
 // ============================================================
@@ -84,38 +81,41 @@ function typeahead_cache( $file, $manifest, $sources ) {
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
 
-	// ===== CASE 1: MOST COMMON CASE
+	//initialize variables
 	$source = ($file == 'set_id') ? 'shared' : $datasources[ 0 ];
-	if( count( $datasources ) == 1 ) {
 
-		// Single user-provided data source adjacency matrix requested
-		// This includes: 'all', 'pharmgkb', or 'plos-pmc' 
-		// Only the server will have the default datasources installed
-		$url     = "cache/$source/$file.js";
-		$locally = "$CACHE/$url";
-		if(	file_exists( $locally )) {
-			send_redirect( $url );
+	//set_id allways remains static file
+	if($source == "shared"){
+		send_redirect("$server/cache/$source/$file.js");
+	}
 
-		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc', 'shared' ])) {
-      send_redirect( "$server/$url" );
+	//single datasource
+	if( count($datasources) == 1){
+		$url = "cache/$source/$file.js";
+		$locally = "$DATASOURCES/$url";
+
+		//check if datasource present on server
+		if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc','shared' ])) {
+			send_redirect( "$server/$url" );
+		}
+		//check if datasource presnt locally
+		else if( file_exists($locally)){
+			send_redirect("$url");
 		}
 	}
-	else{
-	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
-	// Caches only exist locally on the proxy server, never on the production
-	// server
+	
+	//datasource previously cached
 	$source  = substr( $_SESSION[ 'sources' ], 0, 8 );
-	$url     = "cache/$source/$file.js";
+	$url = "cache/$source/$file.js";
 	$locally = "$CACHE/$url";
-	if( file_exists( $locally )) { send_redirect( $url ); }
 
-	// ===== CASE 3: COMBINATION OF SOURCES, NOT PREVIOUSLY CACHED
-	// Create the cache and then redirect the cache request to the newly created
-	// cache file
-	$matrices = merge_typeahead_tables( $datasources, $file );
-	write_cache( $file, $typeahead );
-	send_redirect( $url );
+	if( file_exists($locally)){
+		send_redirect("$url");
 	}
+	//datasource not previously cached
+	$typeahead = merge_typeahead_tables( $datasources, $file );
+	write_cache( $source, $file, $typeahead );
+	send_redirect( $url );
 }
 
 // ============================================================
@@ -128,28 +128,28 @@ function send_redirect( $url ) {
 // ============================================================
 function read_adjacency_matrix( $file ) {
 // ============================================================
-	global $CACHE;
+	global $DATASOURCES;
 	global $server;
 
-	$local    = "$CACHE/$file";
-	$proxy    = "$server/$file";
+	$local    = "$DATASOURCES/$file";
+	$proxy    = "$server/cache/$file";
 	$location = file_exists( $local ) ? $local : $proxy;
 	$contents = file_get_contents( $location ); if( ! $contents ) { return null; }
 	$contents = preg_replace( '/^var adjacency_matrix\s*=\s*/', '', $contents );
 	$contents = preg_replace( '/;$/', '', $contents );
-	$matrix   = json_decode( $contents );
+	$matrix   = json_decode($contents,true);
 	return $matrix;
 }
 
 // ============================================================
 function read_typeahead_table( $file ) {
 // ============================================================
-	global $CACHE;
 	global $server;
+	global $DATASOURCES;
 
+	$local    = "/$DATASOURCES/$file";
+	$proxy    = "$server/cache/$file";
 
-	$local    = "$CACHE/$file";
-	$proxy    = "$server/$file";
 	$location = file_exists( $local ) ? $local : $proxy;
 	$contents = file_get_contents( $location ); if( ! $contents ) { return null; }
 	$contents = preg_replace( '/^var AUTOCOMPLETE_[\w_]*\s*=\s*/', '', $contents );
@@ -159,26 +159,37 @@ function read_typeahead_table( $file ) {
 }
 
 // ============================================================
-function write_cache( $file, $data ) {
+function write_cache( $source, $file, $data ) {
 // ============================================================
 	global $CACHE;
+	global $DATASOURCES;
 
-	// Create cache path and human-readable mini-manifest 'sources.json'
-	$sources    = json_decode( base64_decode( $_SESSION[ 'sources' ]));
-	$sources    = count( $sources ) == 1 ? $sources[ 0 ] : substr( $sources, 0, 8 );
-	$path       = "$CACHE/cache/$sources";
-	$sourcefile = "$CACHE/cache/$sources/sources.json";
-	if( ! file_exists( $path )) { mkdir( $path ); }
-	if( ! file_exists( $sourcefile )) {
-		$fp = fopen( $sourcefile, 'w' );
+	$path       = "$CACHE/cache/$source";
+       	//create cache file at specified path	
+	if( ! file_exists( $path )) { mkdir( $path, 0777 ); }
+
+	if( ! file_exists( "$path/$file.js" )) {
+		$fp = fopen( "$path/$file.js", 'w' ) or die("Cant create a file");
 		fwrite( $fp, $sources . "\n" );
 		fclose( $fp );
 	}
 
 	// Write the cache file
-  $fp = fopen( $file, 'w' );
-  fwrite( $fp, json_encode( $data ));
-  fclose( $fp );
+	$fp = fopen( "$path/$file.js", 'w' );
+
+	if($file == "adjacency_matrix"){
+		fwrite( $fp, 'var adjacency_matrix = ');
+	}
+	else{
+		$file = str_replace("_id","",$file);
+		echo "file:".$file;
+		$var_name = "var AUTOCOMPLETE_".strtoupper($file)."=";
+		fwrite( $fp, $var_name);
+	}
+
+	fwrite( $fp, json_encode( $data ));
+	fwrite( $fp, ';');
+  	fclose( $fp );
 }
 
 // ============================================================
@@ -187,15 +198,16 @@ function merge_adjacency_matrices( $datasources ) {
 	global $CACHE;
 	$matrices = array();
 	foreach( $datasources as $sourceid ) {
-		$matrix = read_adjacency_matrix( "cache/$sourceid/adjacency_matrix.js" );
+		$matrix = read_adjacency_matrix( "$sourceid/adjacency_matrix.js" );
 		if( is_null( $matrix )) { continue; } // Skip missing entries
 		foreach( $matrix as $dgr1 => $edges ) {
 			if( ! is_array( $edges )) { continue; } // Skip invalid entries
 			foreach( $edges as $dgr2 => $scores ) {
 				if( array_key_exists( $dgr2, $matrix[ $dgr1 ])) {
-					$matrices[ $dgr1 ][ $dgr2 ] = array_merge( $matrices[ $dgr1 ][ $dgr2 ], $matrix[ $dgr1 ][ $dgr2 ]);
-				} else {
-					$matrices[ $dgr1 ][ $dgr2 ] = $matrix[ $dgr1 ][ $dgr2 ];
+					if(isset($matrices[ $dgr1 ][ $dgr2 ]))
+						$matrices[ $dgr1 ][ $dgr2 ] = array_merge( $matrices[ $dgr1 ][ $dgr2 ], $matrix[ $dgr1 ][ $dgr2 ]);
+				 	else 
+						$matrices[ $dgr1 ][ $dgr2 ] = $matrix[ $dgr1 ][ $dgr2 ];
 				}
 			}
 		}
@@ -207,10 +219,10 @@ function merge_adjacency_matrices( $datasources ) {
 function merge_typeahead_tables( $datasources, $file ) {
 // ============================================================
 	global $CACHE;
-	
+	global $DATASOURCES;
 	$typeahead = array();
 	foreach( $datasources as $sourceid ) {
-		$table = read_typeahead_table( "cache/$sourceid/$file.js" );
+		$table = read_typeahead_table("$sourceid/$file.js");
 		if( is_null( $table )) { continue; } // Skip missing entries
 		$typeahead = array_merge( $typeahead, $table );
 	}

@@ -4,7 +4,7 @@ class BuildTable extends ResultsTable{
 		this.objectMap = new Map();
 		console.log("ds = ",ds);
 		for(let i = 0 ; i < ds.length;i++){
-			if(ds[i] == 'all')
+			if(ds[i] == 'all' || ds[i] == 'plos-pmc' || ds[i] == 'pharmgkb')
 				//continue;
 				this.objectMap.set(ds[i],eval("new DefaultClass()"));
 
@@ -18,7 +18,10 @@ class BuildTable extends ResultsTable{
 	}
 	buildHeader(){
 		let res = new Set();
+		console.log("inside buildHeader");
+		console.log(this.objectMap.values());
 		for(let v of this.objectMap.values()){
+			console.log("v: ",v);
 			let head = v.getHeader();
 			res = v.set_union(res,head);
 		}
