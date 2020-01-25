@@ -1,4 +1,3 @@
-<<<<<<< HEAD:frontend/datasource/add.php
 <?php 
   include_once( '../session.php' ); 
   include_once( '/var/www/html/datasource/manifest.php' );
@@ -228,8 +227,6 @@ $( "form button.cancel" ).off( 'click' ).click(( ev ) => {
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 var listitem = $( '.datasource-list-item' ).detach();
 
-<<<<<<< HEAD:frontend/datasource/add.php
-=======
 $('.btn_remove').on('click',function(){
   var ds_id = this.parentNode.parentNode.id;
   var ds_name = document.getElementById(ds_id).children[0].children[0].innerHTML
@@ -260,7 +257,6 @@ $('.btn_remove').on('click',function(){
     return false;
   }
 });
->>>>>>> data_import:frontend/datasource/manage.php
 </script>
 </body>
 </html>

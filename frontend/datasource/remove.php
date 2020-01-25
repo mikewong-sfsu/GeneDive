@@ -164,8 +164,8 @@ $('.btn_remove').on('click',function(){
      dataType:'html',
      data:{"ds_id" : ds_id},
      success:function(result){
-       	location.reload();
-	//alert(result);
+	     location.reload();
+	     self.opener.location.reload();
      }
    }); 
     return true;

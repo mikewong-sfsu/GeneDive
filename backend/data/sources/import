@@ -25,13 +25,13 @@ cleanup( $interactions );
 
 # ===== GENERATE ADJACENCY MATRIX
 print "<ul><li>Building <i>adjacency matrix</i></li>\n";
-adjacency_matrix( $path, $interactions );#changed $cache to $path NL
+adjacency_matrix( $cache, $interactions );#changed $cache to $path NL
 
 # ===== GENERATE TYPEAHEAD LOOKUP CACHES
 foreach my $type (qw( gene drug disease )) {
 	my $hash = {};
 	extract_ids( $type, $hash, $_ ) foreach @$interactions;
-	hash_to_cache( $type, $path, $hash );#changed $cache to $path NL
+	hash_to_cache( $type, $cache, $hash );#changed $cache to $path NL
   	print "<li>Building <i>$type typeahead lookup cache</li>\n";
 }
 

@@ -3,6 +3,7 @@
 require_once "../datasource/manifest.php";
 require_once "../datasource/proxy.php"; // defines $server
 require_once "../phpLib/environment.php";
+require_once "../session.php";
 
 if( false ) {
   $response = json_encode([
@@ -22,47 +23,32 @@ $gids        = explode( ',', preg_replace('/[^0-9A-Za-z:,]/', '', $ids ));
 $minProb     = $_GET[ 'minProb' ];
 $sources     = $_GET[ 'sources' ] ? $_GET[ 'sources' ] : $_SESSION[ 'sources' ];
 $datasources = json_decode( base64_decode( $sources ));
+$dsid_map    = json_decode( base64_decode( $_SESSION[ 'ds_map' ]),true);//for the shortid mapping
 $query       = NULL;
 $results     = [];
 $errors      = [];
 $extra_col   = [];
-
 foreach( $datasources as $source ) {
-	$local = "$DATASOURCES/$source/data.sqlite";
-	//$retrieved = [];
-  //echo $local;
+  $local = "$DATASOURCES/$source/data.sqlite";
+      
   // If the data is not local, retrieve the data via HTTP proxy
   $retrieved = file_exists( $local ) ? query_database( $local, $gids, $minProb ) : proxy_query( $source, $ids, $minProb );
-  /*if(file_exists($local)){
-	$retrived = query_database($local,$gids,$minProb);
-	$addendum = extract_addendum($local);
-	if($addendum){
-	 $extra_col = array_unique(array_merge($extra_col,$addendum));
-	
-	}
-	 
-  }
-  else{
-	  $retrived = proxy_query($source, $ids, $minProb );
-  }*/
-   if( is_null( $retrieved )) { continue; }
-	// Extract additional columns in addendum
+  if( is_null( $retrieved )) { continue; }
+  
+  // Extract additional columns in addendum
   if(file_exists($local)){
   $addendum = extract_addendum($local);
-  //if($addendum){
-    //$extra_col = array_unique(array_merge($extra_col,$addendum));
-  //}
   }
   $extra_col = ($addendum)?array_unique(array_merge($extra_col,$addendum)): [];
- 
+
   //add datasource
   $modified = array();
   foreach($retrieved as $i){
 	  $i["ds_name"] = $manifest[$source]['name'];
 	  $i["ds_id"] = $source;
 	  $i["ds_url"] = $manifest[$source]['url'];
-	  $i["short_id"] = $manifest[$source]['short_id'];
-    $modified[] = $i;
+	  $i["short_id"] = $dsid_map[$source];
+    	  $modified[] = $i;
   }
   // Accumulate results
   $results = array_merge( $results, $modified );
@@ -118,14 +104,6 @@ function proxy_query( $source, $ids, $minProb ) {
   global $errors;
   global $server;
   if( $source == 'all' ) { $manifest[ 'all' ][ 'host' ] = $server; }
-
-  /*merge conflict start
-   * $request  = $manifest[ $source ][ 'host' ] . "/interactions.php?ids=$ids&minProb=$minProb";
-  $response = file_get_contents( $request );
-
-  if( ! $proxy[ 'response' ]) { 
-	  array_push( $errors, "DataSource Error: $source not available at '" . $manifest[ $source ][ 'host' ] . "'" );
-   merge conflict end*/
   $request  = $manifest[ $source ][ 'host' ] . "/api/interactions.php?ids=" . urlencode( $ids ) . "&minProb=$minProb&sources=" . base64_encode( json_encode([ $source ]));
   $response = json_decode( file_get_contents( $request ), true );;
 

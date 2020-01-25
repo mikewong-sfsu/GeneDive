@@ -57,31 +57,33 @@ GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
 var std_ds = new Set(["pharmgkb","plos-pmc","all"]);
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
-console.log("manifest: " + manifest);
 // ===== INITIALIZE DATASOURCE MANAGER
 var listitem = $( '.datasource-list-item' ).detach();
+var short_id_map = new Map();
+
 GeneDive.datasource.refreshUI = () => {
 var std_flag = 0;//to display the standard data source header
 var local_flag = 0;//to display the local data source header
 var datasource_name;
-var short_id_map = new Map();
 //add the default standard datasources
-short_id_map.set("ploc-pmc","G1");
+short_id_map.set("plos-pmc","G1");
 short_id_map.set("pharmgkb","G2");
-short_id_map.set("all","G1 & G2");
+short_id_map.set("all","G1,G2");
 var i = 1;
 Object.entries( manifest ).forEach(([ key, datasource ]) => {
-	let entry = listitem.clone().css({ display: 'block' });
+let entry = listitem.clone().css({ display: 'block' });
+        //if all included, add them as separate entries
 	datasource_name = datasource.name;
 	//concatinate name with identifier
 	if(short_id_map.has(datasource.id)){
 		datasource_name += " [" + short_id_map.get(datasource.id) + "]";
 	}
 	else{
-		datasource_name += " [ L" + i  + "]";
-		short_id_map.set(datasource.id,i++);
+		short_id = "L" + i;
+		datasource_name += "[" + short_id + "]";
+		short_id_map.set(datasource.id,short_id);
 	}
-	//i++;
+	i++;
 	entry.find( '.name' ).html( datasource_name );
         entry.find( '.description' ).html( datasource.description );
         let toggle = entry.find( 'input.datasource-toggle' );
@@ -95,10 +97,17 @@ Object.entries( manifest ).forEach(([ key, datasource ]) => {
 	local_flag = 1;
 	}	
         $( '#datasource-manager .list-group' ).append( entry );
-    });
+});
+//update the shortid list
+let dsid_map = btoa (JSON.stringify( Object.fromEntries(short_id_map.entries())));
+$.ajax({
+	url: `/datasource/managelist.php?id_map=${dsid_map}`,
+        method: 'GET'
+})
+.done((message) => { console.log("short id list created ");})
+.fail(( error ) => { console.log( error ); });
 };
 GeneDive.datasource.refreshUI();
-
 // ===== DATASOURCE MANAGER DIALOG
 let dsm = $( '#datasource-manager' ).detach();
 $( '.datasources' ).off( 'click' ).click(( ev ) => {
@@ -111,34 +120,23 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
                 if( $( item ).prop( 'checked' )) { return key; } else { return null; }
             }).toArray();
             let list = GeneDive.datasource.list.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
-/*<<<<<<< HEAD
-           /* alertify.success( `Now searching on<br>${list}` ); 
-            if( [ 'plos-pmc', 'pharmgkb' ].every(( item ) => { return GeneDive.datasource.list.includes( item ); })) {
-                GeneDive.datasource.list = [ 'all' ];
-            }
-	    let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
-	    console.log(dsl);*/
-
 	    alertify.success( `Now searching on<br>${list}` ); 
-	    
-            let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
+	    //if(
+	    let std_ds = [ 'plos-pmc' , 'pharmgkb' ];
+	    /*if(std_ds.every(( item ) => { return GeneDive.datasource.list.includes( item );})){
 
+		    GeneDive.datasource.list = GeneDive.datasource.list.filter(item => !std_ds.includes(item));
+		    GeneDive.datasource.list.push('all');
+	    }*/
+	    let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
+	    let dsid_map = btoa (JSON.stringify( Object.fromEntries(short_id_map.entries())));
+	   
             $.ajax({
-                url: `/datasource/change.php?value=${dsl}`,
+                url: `/datasource/change.php?value=${dsl}&shortid_map=${dsid_map}`,
                 method: 'GET'
             })
             .done(( message ) => {
-
-              window.location.reload();
-	   /* console.log( message, GeneDive.datasource.list );
-	    //set session variable
-                LookupTableCache.refresh();
-                AdjacencyMatrix.refresh();
-                GeneDive.search.initTypeaheadOnCacheLoad();
-                //refresh the search set and graph
-                GeneDive.search.clearSearch();
-		GeneDive.onRemoveDGR();*/
-
+	    	window.location.reload();
             })
             .fail(( error ) => { console.log( error ); });
         }, 

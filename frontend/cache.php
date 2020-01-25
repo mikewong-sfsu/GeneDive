@@ -1,4 +1,5 @@
 <?php
+ini_set("memory_limit", "1024M");
 require_once( 'session.php' );
 require_once( 'datasource/manifest.php' );
 require_once( 'datasource/proxy.php' ); // Defines $server
@@ -9,11 +10,9 @@ require_once( 'datasource/proxy.php' ); // Defines $server
  * Part of the Data Source Management system. 
  * ============================================================
  */
-
 if( ! isset( $_GET[ 'get' ] )) { exit; }
 if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["all"] )); };
 $sources = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
-
 // ===== DISPATCH TABLE
 switch( $_GET[ 'get' ]) {
 	case "adjacency_matrix":
@@ -38,10 +37,8 @@ function adjacency_matrix( $file, $manifest, $sources ) {
 	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
-
 	//initialize variables
 	$source = $datasources[0];//default value
-	
 	//single datasource
 	if( count($datasources) == 1){
 		$url = "cache/$source/adjacency_matrix.js";
@@ -129,10 +126,10 @@ function send_redirect( $url ) {
 function read_adjacency_matrix( $file ) {
 // ============================================================
 	global $DATASOURCES;
+	global $CACHE;
 	global $server;
-
-	$local    = "$DATASOURCES/$file";
-	$proxy    = "$server/cache/$file";
+	$local    = "$CACHE/$file";//"$DATASOURCES/$file";
+	$proxy    = "$server/$file";
 	$location = file_exists( $local ) ? $local : $proxy;
 	$contents = file_get_contents( $location ); if( ! $contents ) { return null; }
 	$contents = preg_replace( '/^var adjacency_matrix\s*=\s*/', '', $contents );
@@ -146,9 +143,10 @@ function read_typeahead_table( $file ) {
 // ============================================================
 	global $server;
 	global $DATASOURCES;
+	global $CACHE;
 
-	$local    = "/$DATASOURCES/$file";
-	$proxy    = "$server/cache/$file";
+	$local    = "$CACHE/$file";//"/$DATASOURCES/$file";
+	$proxy    = "$server/$file";
 
 	$location = file_exists( $local ) ? $local : $proxy;
 	$contents = file_get_contents( $location ); if( ! $contents ) { return null; }
@@ -182,7 +180,6 @@ function write_cache( $source, $file, $data ) {
 	}
 	else{
 		$file = str_replace("_id","",$file);
-		echo "file:".$file;
 		$var_name = "var AUTOCOMPLETE_".strtoupper($file)."=";
 		fwrite( $fp, $var_name);
 	}
@@ -198,7 +195,7 @@ function merge_adjacency_matrices( $datasources ) {
 	global $CACHE;
 	$matrices = array();
 	foreach( $datasources as $sourceid ) {
-		$matrix = read_adjacency_matrix( "$sourceid/adjacency_matrix.js" );
+		$matrix = read_adjacency_matrix( "cache/$sourceid/adjacency_matrix.js" );
 		if( is_null( $matrix )) { continue; } // Skip missing entries
 		foreach( $matrix as $dgr1 => $edges ) {
 			if( ! is_array( $edges )) { continue; } // Skip invalid entries
@@ -222,7 +219,7 @@ function merge_typeahead_tables( $datasources, $file ) {
 	global $DATASOURCES;
 	$typeahead = array();
 	foreach( $datasources as $sourceid ) {
-		$table = read_typeahead_table("$sourceid/$file.js");
+		$table = read_typeahead_table("cache/$sourceid/$file.js");
 		if( is_null( $table )) { continue; } // Skip missing entries
 		$typeahead = array_merge( $typeahead, $table );
 	}

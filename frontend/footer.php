@@ -86,7 +86,9 @@
     <!-- Core Controller -->
     <script src="static/genedive/controller.js"></script>
 
-    <?php include( 'datasource/select.php' ) ?>
+    <?php include( 'datasource/select.php' ) 
+          //include( 'datasource/managelist.php')
+    ?>
 
   </body>
 </html>

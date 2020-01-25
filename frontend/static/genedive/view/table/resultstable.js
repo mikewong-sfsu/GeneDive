@@ -94,11 +94,11 @@ class ResultsTable {
   let row = rows[rows.length - 1];
   row.ds_map = rows.reduce((acc,cur) =>
 	  {
-		  let name = cur.ds_name;
+		  let id = cur.ds_id;
 		  console.log("Name: ",name);
 		  let url = cur.ds_url;
 		  let short_id = cur.short_id;
-		  if(!defined(name)){
+		  if(!defined(id)){
 		  return acc;
 		  }
 		  acc[name] = [url,short_id];

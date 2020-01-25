@@ -87,7 +87,7 @@
               response[ 'login-submit' ] = true;
               // Propogate session token to proxy
               $.post( 'login.php', response )
-              .done(( response ) => { console.log( response ); window.location = 'search.php'; })
+              .done(( response ) => { console.log( response ); window.location = 'search.php';})
               .fail(( error ) => { console.log( error ); })
             }
           })
@@ -101,7 +101,7 @@
               $.get({ url:  `datasource/change.php?value=${dsl}` })
               .done(( message ) => {
                 console.log( 'CHANGE DS', message );
-                setTimeout(() => { window.location = 'search.php'; }, 3000 );
+                setTimeout(() => { window.location = 'search.php';}, 3000 );
               })
               .fail(( error ) => {
               });

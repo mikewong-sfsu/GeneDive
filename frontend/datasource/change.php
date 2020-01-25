@@ -1,6 +1,7 @@
 <?php
 include_once( '../session.php' );
 	$_SESSION[ 'sources' ] = $_GET[ 'value' ];
+	$_SESSION[ 'ds_map' ] = $_GET[ 'shortid_map' ];
 
 	$value = base64_decode($_SESSION['sources']);
 
