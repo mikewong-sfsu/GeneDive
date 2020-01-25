@@ -98,7 +98,7 @@ class ResultsTable {
 		  console.log("Name: ",name);
 		  let url = cur.ds_url;
 		  let short_id = cur.short_id;
-		  if(!defined(id)){
+		  if(!defined(id) || !defined(url)){
 		  return acc;
 		  }
 		  acc[name] = [url,short_id];

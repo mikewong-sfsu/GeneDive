@@ -129,6 +129,8 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
 		    GeneDive.datasource.list.push('all');
 	    }*/
 	    let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
+	    console.log("dsl:"+dsl);
+	    console.log("Genedive list:"+GeneDive.datasource.list);
 	    let dsid_map = btoa (JSON.stringify( Object.fromEntries(short_id_map.entries())));
 	   
             $.ajax({

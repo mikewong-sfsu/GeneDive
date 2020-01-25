@@ -67,7 +67,7 @@ if($action === "pharmgkb_combination"){
 }else if($action === "ref")
 {
   $url_link = $_GET['url_link'];
-  $FINAL_URL = "https://${url_link}";
+  $FINAL_URL = "${url_link}";
 }
 
 

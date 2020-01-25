@@ -29,8 +29,7 @@ $results     = [];
 $errors      = [];
 $extra_col   = [];
 foreach( $datasources as $source ) {
-  $local = "$DATASOURCES/$source/data.sqlite";
-      
+  $local = "$DATASOURCES/$source/data.sqlite";//"$DATASOURCES/$source/data.sqlite";
   // If the data is not local, retrieve the data via HTTP proxy
   $retrieved = file_exists( $local ) ? query_database( $local, $gids, $minProb ) : proxy_query( $source, $ids, $minProb );
   if( is_null( $retrieved )) { continue; }
@@ -106,7 +105,6 @@ function proxy_query( $source, $ids, $minProb ) {
   if( $source == 'all' ) { $manifest[ 'all' ][ 'host' ] = $server; }
   $request  = $manifest[ $source ][ 'host' ] . "/api/interactions.php?ids=" . urlencode( $ids ) . "&minProb=$minProb&sources=" . base64_encode( json_encode([ $source ]));
   $response = json_decode( file_get_contents( $request ), true );;
-
   if( ! $response ) { 
      array_push( $errors, "DataSource Error: Source '$source' not available at '$request'" );
     return null; 
