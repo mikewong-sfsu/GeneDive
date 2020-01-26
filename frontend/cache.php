@@ -60,7 +60,7 @@ function adjacency_matrix( $manifest, $sources ) {
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
 	// Caches only exist locally on the proxy server, never on the production
 	// server
-	$source  = substr( $_SESSION[ 'sources' ], 0, 8 );
+	$source  = substr( sha1( $_SESSION[ 'sources' ], 0, 8 ));
 	$url     = "cache/$source/adjacency_matrix.js";
 	$locally = "$CACHE/$url";
 	if( file_exists( $locally )) { send_redirect( $url ); }
@@ -103,7 +103,7 @@ function typeahead_cache( $file, $manifest, $sources ) {
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
 	// Caches only exist locally on the proxy server, never on the production
 	// server
-	$source  = substr( $_SESSION[ 'sources' ], 0, 8 );
+	$source  = substr( sha1( $_SESSION[ 'sources' ], 0, 8 ));
 	$url     = "cache/$source/$file.js";
 	$locally = "$CACHE/$url";
 	if( file_exists( $locally )) { send_redirect( $url ); }
@@ -164,7 +164,7 @@ function write_cache( $file, $data ) {
 
 	// Create cache path and human-readable mini-manifest 'sources.json'
 	$sources    = json_decode( base64_decode( $_SESSION[ 'sources' ]));
-	$sources    = count( $sources ) == 1 ? $sources[ 0 ] : substr( $sources, 0, 8 );
+	$sources    = count( $sources ) == 1 ? $sources[ 0 ] : substr( sha1( $_SESSION[ 'sources' ]), 0, 8 );
 	$path       = "$CACHE/cache/$sources";
 	$sourcefile = "$CACHE/cache/$sources/sources.json";
 	if( ! file_exists( $path )) { mkdir( $path ); }
