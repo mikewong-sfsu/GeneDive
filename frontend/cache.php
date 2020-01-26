@@ -60,7 +60,7 @@ function adjacency_matrix( $manifest, $sources ) {
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
 	// Caches only exist locally on the proxy server, never on the production
 	// server
-	$source  = substr( sha1( $_SESSION[ 'sources' ], 0, 8 ));
+	$source  = substr( sha1( $_SESSION[ 'sources' ] ), 0, 8 );
 	$url     = "cache/$source/adjacency_matrix.js";
 	$locally = "$CACHE/$url";
 	if( file_exists( $locally )) { send_redirect( $url ); }
@@ -103,7 +103,7 @@ function typeahead_cache( $file, $manifest, $sources ) {
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
 	// Caches only exist locally on the proxy server, never on the production
 	// server
-	$source  = substr( sha1( $_SESSION[ 'sources' ], 0, 8 ));
+	$source  = substr( sha1( $_SESSION[ 'sources' ]), 0, 8 );
 	$url     = "cache/$source/$file.js";
 	$locally = "$CACHE/$url";
 	if( file_exists( $locally )) { send_redirect( $url ); }
