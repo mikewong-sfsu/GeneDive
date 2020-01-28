@@ -67,11 +67,11 @@
     <script src="static/genedive/filter/probabilityfilter.js"></script>
     <script src="static/genedive/filter/textfilter.js"></script>
     <script src="static/genedive/highlight/highlight.js"></script>
-    <!--script src="cache.php?"></script-->
     <script src="static/genedive/grouper/grouper.js"></script>
-    <script type="text/javascript" src="dynamic_view.php"></script> 
+    <!-- Plugin Classes -->
+    <script type="text/javascript" src="importsource.php"></script> 
     <script src="static/genedive/view/table/resultstable.js"></script>
-    <script src="static/genedive/view/table/build_table.js"></script>
+    <script src="static/genedive/view/table/buildtable.js"></script> 
     <script src="static/genedive/view/table/tabledetail.js"></script>
     <script src="static/genedive/view/table/tablesummarygene.js"></script>
     <script src="static/genedive/view/table/tablesummaryarticle.js"></script>

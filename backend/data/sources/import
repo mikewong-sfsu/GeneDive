@@ -40,12 +40,12 @@ print "</ul>Preparing to load data into the database<br>\n";
 write_sql( $path, $interactions );
 $parent = basename(dirname($file));
 $parent = "ds_".$parent;
-$location = $path."/factory.js";
+$location = $path."/template.js";
 
-copy("$pdir/factory.js",$location) or die "copy failed : $!";
+copy("$pdir/template.js",$location) or die "copy failed : $!";
 #add file with specific datasource in class name
 #rename the class name in the datasource
-string_replace($location,"selectColumns",$parent);
+string_replace($location,"LocalTable",$parent);
 
 $replace_string = join(",",map " \"$_\"",@add_col);
 print($replace_string);

@@ -1,9 +1,9 @@
-class ds_65d312e3 extends DefaultClass{
+class LocalTable extends DefaultTable{
 	//this.required = ["mention1","mention2","geneids1","geneids2","type1","type2","probability"]);//do not modify
 	//this.optional = ["journal","article_id","pubmed_id","sentence_id","mention1_offset","mention2_offset","context","section"]);
 	constructor(){
 	super();
-	this.add_cols = [ "Test Extra", "Test Extra 2"];
+	this.add_cols = null;
 	//this.header = set_union(this.required,this.optional);
 	}
 

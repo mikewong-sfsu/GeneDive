@@ -1,9 +1,9 @@
-class ds_0cc5f529 extends DefaultClass{
+class ds_a30fb880 extends DefaultTable{
 	//this.required = ["mention1","mention2","geneids1","geneids2","type1","type2","probability"]);//do not modify
 	//this.optional = ["journal","article_id","pubmed_id","sentence_id","mention1_offset","mention2_offset","context","section"]);
 	constructor(){
 	super();
-	this.add_cols = [ "Path", "Theme"];
+	this.add_cols = [ "Theme", "Dependency path"];
 	//this.header = set_union(this.required,this.optional);
 	}
 

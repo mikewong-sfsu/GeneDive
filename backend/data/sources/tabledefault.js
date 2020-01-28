@@ -1,4 +1,4 @@
-class DefaultClass{
+class DefaultTable{
 	constructor(){
 	this.required = new Set(["mention1","mention2","geneids1","genedis2","type1","type2","probability"]);
 	this.optional = new Set(["journal","article_id","pubmed_id","sentence_id","mention1_offset","mention2_offset","context","section"]);
@@ -7,20 +7,15 @@ class DefaultClass{
 	}
 	
 	getHeader(){
-		return([]);//(this.header);
+		return(this.header);
 	}
 	getElement(interaction,arr){
 		var res = new Map();
 		for(let i = 0 ;i < arr.length;i++){
-			if(interaction.addendum && interaction.addendum.length){
-			let addendum = JSON.parse(interaction.addendum);
-			console.log("interaction type:",typeof(addendum));
-			console.log("interactions = ", addendum);
-			if(arr[i] in addendum)
-				res.set(arr[i],addendum[arr[i]]);
+			if(interaction.has(arr[i]))
+				res.set(arr[i],interaction.arr[i]);
 			else
 				res.set(arr[i],"");
-			}
 		}
 		return(res);
 		
