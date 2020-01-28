@@ -37,6 +37,9 @@ function adjacency_matrix( $file, $manifest, $sources ) {
 	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
+	$datasources = array_filter($datasources, function( $item ) { return $item != "all";});
+	array_push($datasources, "plos-pmc", "pharmgkb");
+
 	//initialize variables
 	$source = $datasources[0];//default value
 	//single datasource
@@ -77,7 +80,8 @@ function typeahead_cache( $file, $manifest, $sources ) {
 	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
-
+	$datasources = array_filter($datasources, function( $item ) { return $item != "all";});
+	array_push($datasources, "plos-pmc", "pharmgkb");
 	//initialize variables
 	$source = ($file == 'set_id') ? 'shared' : $datasources[ 0 ];
 
