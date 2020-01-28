@@ -1,4 +1,7 @@
-<?php include_once( '../session.php' ); ?>
+<?php include_once( '../session.php' ); 
+  $dslist = json_decode( base64_decode( $_SESSION[ 'sources' ]));
+  if( $dslist == '' ) { $dslist = []; }
+?>
 <html>
 
 <head>
@@ -136,10 +139,12 @@ form button.cancel {
 
   <script>
 $( "button.cancel" ).off( 'click' ).click(( ev ) => {
+  self.opener.location.reload(); 
   window.close();
 });
 
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
+var session_ds= <?= json_encode( $dslist ) ?>;
 var listitem = $( '.datasource-list-item' ).detach();
 Object.entries( manifest ).forEach(([ id, datasource ]) => {
   if( id.match( /^(?:plos-pmc|pharmgkb)$/ )) { return; }
@@ -152,11 +157,12 @@ Object.entries( manifest ).forEach(([ id, datasource ]) => {
   toggle.attr({ id: datasource.id, name: datasource.id });
   $( '#datasources' ).append( entry );
 });
+console.log("manifest:" + session_ds);
 
 $('.btn_remove').on('click',function(){
   var ds_id = this.parentNode.parentNode.id;
   var ds_name = document.getElementById(ds_id).children[0].children[0].innerHTML
-  var retVal = confirm("Do you confirm to delete \"" + ds_name + "\"?");
+  var retVal = confirm("Do you confirm to delete datasource: \"" + ds_name + "\" permanently?");
   if( retVal == true ) {
    $.ajax({
      url:"./delete.php",
@@ -165,14 +171,25 @@ $('.btn_remove').on('click',function(){
      data:{"ds_id" : ds_id},
      success:function(result){
 	     location.reload();
-	     self.opener.location.reload();
+	     //self.opener.location.reload();
      }
-   }); 
-    return true;
+  }); 
+   //update session variable with changes
+   session_ds = session_ds.filter((item) => { return item != ds_id;});
+   let dsl = btoa( JSON.stringify( session_ds ));
+    $.ajax({
+                url: `/datasource/change.php?value=${dsl}`,
+                method: 'GET'
+            })
+            .done(( message ) => {
+	    	window.location.reload();
+            })
+            .fail(( error ) => { console.log( error ); });
+     return true;
   } else {
     return false;
   }
-})
+});
 </script>
 
 </body>
