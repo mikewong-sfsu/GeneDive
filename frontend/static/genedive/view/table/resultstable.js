@@ -95,7 +95,6 @@ class ResultsTable {
   row.ds_map = rows.reduce((acc,cur) =>
 	  {
 		  let id = cur.ds_id;
-		  console.log("Name: ",name);
 		  let url = cur.ds_url;
 		  let short_id = cur.short_id;
 		  if(!defined(id) || !defined(url)){
@@ -112,7 +111,6 @@ class ResultsTable {
      if(row.ds_map[key] == null){
       res_list += '<a title=' + key + '>' + i + '</a>';
      }else{
-	console.log("display key:",key);
       res_list += "<a  target= _blank href=/api/external_link.php?action=ref&url_link=" + row.ds_map[key][0] + " title="+  key.replace(/ /g,'\xa0') +  " >" + row.ds_map[key][1] + "</a>";
      }
      if(i  < len ){

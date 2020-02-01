@@ -77,7 +77,6 @@ class TableSummaryGene extends ResultsTable {
         }
       let rows = this.interactions[group];
       let row  = rows[ rows.length - 1 ];
-console.log("roe in table summary:"+row.short_id);
       // Compile number of unique articles
       row.articles = Object.keys( rows.reduce(( acc, cur ) => { let article = cur.article_id; if(!defined(article) ) { return acc; } acc[ article ] = true; return acc; }, {})).length;
 
