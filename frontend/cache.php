@@ -11,8 +11,17 @@ require_once( 'datasource/proxy.php' ); // Defines $server
  * ============================================================
  */
 if( ! isset( $_GET[ 'get' ] )) { exit; }
-if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["all"] )); };
+if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["plos-pmc", "pharmgkb"] )); };
 $sources = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
+//temp fix for getting rid of 'all' datasources - NL
+if(in_array("all", $sources)){
+	$sources = array_filter($sources, function($item) { return $item != "all";});
+	//replace 'all' by genedive native datasources
+	array_push($sources, "plos-pmc" , "pharmgkb");
+	//reset the value in session variable
+	$_SESSION['sources'] = base64_encode( json_encode( $sources ));
+}
+
 // ===== DISPATCH TABLE
 switch( $_GET[ 'get' ]) {
 	case "adjacency_matrix":
@@ -33,13 +42,9 @@ function adjacency_matrix( $file, $manifest, $sources ) {
 // caching is done based on session id
 	global $CACHE;
 	global $server;
-
 	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
-	$datasources = array_filter($datasources, function( $item ) { return $item != "all";});
-	array_push($datasources, "plos-pmc", "pharmgkb");
-
 	//initialize variables
 	$source = $datasources[0];//default value
 	//single datasource
@@ -48,7 +53,7 @@ function adjacency_matrix( $file, $manifest, $sources ) {
 		$locally = "$CACHE/$url";
 
 		//check if datasource present on server
-		if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
+		if(in_array( $source, [ 'pharmgkb', 'plos-pmc' ])) {
 			send_redirect( "$server/$url" );
 		}
 		//check if datasource presnt locally
@@ -80,8 +85,6 @@ function typeahead_cache( $file, $manifest, $sources ) {
 	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
-	$datasources = array_filter($datasources, function( $item ) { return $item != "all";});
-	array_push($datasources, "plos-pmc", "pharmgkb");
 	//initialize variables
 	$source = ($file == 'set_id') ? 'shared' : $datasources[ 0 ];
 

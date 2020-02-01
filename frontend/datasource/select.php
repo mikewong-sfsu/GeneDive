@@ -104,7 +104,7 @@ $.ajax({
 	url: `/datasource/managelist.php?id_map=${dsid_map}`,
         method: 'GET'
 })
-.done((message) => { console.log("short id list created ");})
+//.done((message) => { console.log("datasource with shortid:"  + short_id_map);})
 .fail(( error ) => { console.log( error ); });
 };
 GeneDive.datasource.refreshUI();
@@ -129,8 +129,6 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
 		    GeneDive.datasource.list.push('all');
 	    }*/
 	    let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
-	    console.log("dsl:"+dsl);
-	    console.log("Genedive list:"+GeneDive.datasource.list);
 	    let dsid_map = btoa (JSON.stringify( Object.fromEntries(short_id_map.entries())));
 	   
             $.ajax({

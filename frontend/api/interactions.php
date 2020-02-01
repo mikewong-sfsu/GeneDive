@@ -28,6 +28,10 @@ $query       = NULL;
 $results     = [];
 $errors      = [];
 $extra_col   = [];
+if(in_array("all", $datasources)){
+	$datasources = array_filter($datasources, function($item) {return $item != "all";});
+	array_push($datasources, "plos-pmc" , "pharmgkb");
+}
 foreach( $datasources as $source ) {
   $local = "$DATASOURCES/$source/data.sqlite";//"$DATASOURCES/$source/data.sqlite";
   // If the data is not local, retrieve the data via HTTP proxy
