@@ -10,7 +10,13 @@ table td{
     width:70px;
 }
 
-.table-view .table{
+.table-view{
+    overflow-x:scroll;
+    width:1100px;
+}
+
+/*.table-view .table{
+    table-layout:auto;
     /*width: 1000px;
     width:100%;*/
     /*width:auto;*/
@@ -22,10 +28,10 @@ table td{
     /*width:100%;*/
     /*table-layout: fixed;*/
 
-    overflow:auto;
-    table-layout: fixed;
+    /*overflow:auto;
+    /*table-layout: fixed;
     word-wrap:break-word;
-}
+}*/
 
 .table-view .table tr.grouped {
     cursor: pointer;
@@ -64,6 +70,9 @@ table td{
     color: rgb(40, 40, 40);
     text-align: left;
     padding: 6px 14px;
+    max-width:150px;
+    width:auto;
+    min-width:50px;
 }
 
 .table-view .table .numeric {
@@ -113,6 +122,11 @@ table td{
     justify-content: space-between;
     font-weight: bold;
 }
+.messaging-and-controls{
+    position: fixed;
+    width:1100px;
+
+}
 
 .table-view .messaging-and-controls .go-back {
     float: left;
@@ -138,7 +152,8 @@ td.embiggen {
 }
 
 .pubmedLink {
-    text-decoration: none !important;
+    /*text-decoration: none !important;*/
+    color: rgb(77, 173, 247) !important;
 }
 
 a.pubmedLink:hover i {

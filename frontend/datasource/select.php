@@ -80,10 +80,10 @@ let entry = listitem.clone().css({ display: 'block' });
 	}
 	else{
 		short_id = "L" + i;
-		datasource_name += "[" + short_id + "]";
+		datasource_name += " [" + short_id + "]";
 		short_id_map.set(datasource.id,short_id);
+		i++;
 	}
-	i++;
 	entry.find( '.name' ).html( datasource_name );
         entry.find( '.description' ).html( datasource.description );
         let toggle = entry.find( 'input.datasource-toggle' );

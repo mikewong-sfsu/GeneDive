@@ -14,7 +14,7 @@
     'name'        => $name,
     'url'	  => $url,
     'path'        => $path,
-    'description' => $desc,
+    'description' => $desc . "from <a target=\"_blank\" href=\"{$url}\"><span class=\"fa fa-external-link-alt\">&nbsp;</span></a>",
     'user'        => $_SESSION[ 'email' ], 
   ];
 

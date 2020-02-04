@@ -4,7 +4,7 @@
 <div class="main-display">
   <div class="control-view">
 
-    <div class="titlebar"><div><a href="/">GeneDive</a><?php include( "menu/account.php" )?><?php include( "menu/data.php" ); ?></div>
+    <div class="titlebar"><div><a href="/">GeneDive <span style="font-size: 15px;">3.0</span></a><?php include( "menu/account.php" )?><?php include( "menu/data.php" ); ?></div>
     <span class="subtitle">Disease, Gene, Drug (DGR)<br>Interaction Explorer</span>
     </div>
 
