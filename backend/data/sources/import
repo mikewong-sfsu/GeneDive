@@ -51,6 +51,11 @@ $replace_string = join(",",map " \"$_\"",@add_col);
 #print($replace_string);
 string_replace($location,"this.add_cols = null","this.add_cols = [". $replace_string."]");
 
+# ==== PLUGIN ARCHITECTURE
+print($parent);
+copy($location,"/genedive/frontend/datasource/view/table/plugin/sources/".$parent.".js") or die "copy failed : $!";
+
+
 # ============================================================
 sub adjacency_matrix {
 # ============================================================

@@ -2,6 +2,7 @@
     <!-- JQuery -->
     <script src="static/jquery/jquery-3.2.1.min.js"></script>
 
+
     <!-- Bootstrap and Modules -->
     <script src="static/bootstrap/bootstrap.min.js"></script>
     <script src="static/bootstrap/bootstrap-slider/bootstrap-slider.min.js"></script>
@@ -37,9 +38,9 @@
     <script src="cache.php?get=drug_id"></script>
     <script src="cache.php?get=set_id"></script>
 
-    <!-- Import datasouce class -->
-    <!--script src="static/genedive/ds_class.js"></script-->
-    
+    <!-- Import datasouce plugin class -->
+    <?php require_once("addselectsource.php");?>
+ 
 
     <!-- Adjacency Matrix -->
     <script src="cache.php?get=adjacency_matrix"></script>
@@ -68,8 +69,6 @@
     <script src="static/genedive/filter/textfilter.js"></script>
     <script src="static/genedive/highlight/highlight.js"></script>
     <script src="static/genedive/grouper/grouper.js"></script>
-    <!-- Plugin Classes -->
-    <script type="text/javascript" src="importsource.php"></script> 
     <script src="static/genedive/view/table/resultstable.js"></script>
     <script src="static/genedive/view/table/buildtable.js"></script> 
     <script src="static/genedive/view/table/tabledetail.js"></script>

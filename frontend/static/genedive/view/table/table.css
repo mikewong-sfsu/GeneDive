@@ -12,7 +12,7 @@ table td{
 
 .table-view{
     overflow-x:scroll;
-    width:1100px;
+    width:1000px;
 }
 
 /*.table-view .table{
@@ -124,7 +124,7 @@ table td{
 }
 .messaging-and-controls{
     position: fixed;
-    width:1100px;
+    width:1000px;
 
 }
 

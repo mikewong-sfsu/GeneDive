@@ -93,6 +93,13 @@ function remove_datasource( $manifest, $datasource_id ) {
 	$path = $CACHE . '/cache/' . $datasource[ 'path' ];
 	system( "rm -rf $path" );
 
+	//Delete datasource class in plugin
+	///datasource/view/table/plugin/sources
+	$path =   $CACHE .'/datasource/view/table/plugin/sources/ds_' . $datasource[ 'path' ].'.js';
+	echo $path;
+	system( "rm -rf $path" );
+
+
 	// Update the manifest
 	unset( $manifest[ $datasource_id ]);
 	write_manifest( $manifest );
