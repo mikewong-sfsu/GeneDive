@@ -30,7 +30,7 @@ if( $dslist == '' ) { $dslist = []; }
     </div>
   </li>
   <div class="container">
-  <div class="page-header"><h1>Edit Data Source</h1></div>
+  <div class="page-header"><h1>Edit Data Source<button class="btn btn-primary cancel pull-right">Return to Search</button></h1></div>
   <p>You can edit table columns displayed or map new columns into GeneDive to query, visualize, and compare with
     provided data sources or your other data sources.</p>
   <div class="row">
@@ -126,6 +126,13 @@ $('.btn_edit').on('click',function(){
     return false;
   }
 })
+
+//close button
+$( "button.cancel" ).off( 'click' ).click(( ev ) => {
+  self.opener.location.reload(); 
+  window.close();
+});
+
 });
 
 </script>

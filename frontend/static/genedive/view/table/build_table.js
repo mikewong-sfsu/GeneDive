@@ -18,10 +18,8 @@ class BuildTable extends ResultsTable{
 	}
 	buildHeader(){
 		let res = new Set();
-		console.log("inside buildHeader");
 		console.log(this.objectMap.values());
 		for(let v of this.objectMap.values()){
-			console.log("v: ",v);
 			let head = v.getHeader();
 			res = v.set_union(res,head);
 		}

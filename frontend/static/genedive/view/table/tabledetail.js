@@ -3,7 +3,7 @@ class TableDetail extends BuildTable {
   constructor(table, interactions, additional_columns, group, ds) {
     super(table, interactions,additional_columns, ds);
     this.interactions = GeneDive.grouper.group(interactions);
-    this.additional_columns = [];
+    this.add_columns;
     if(!(group in this.interactions))
     {
       this.amountOfEntries = 0;
@@ -26,7 +26,7 @@ class TableDetail extends BuildTable {
     this.drawBody();
 
     this.table.tablesorter({
-        headers: {6: {sorter: false}, 7: {sorter: false}},
+        //headers: {6: {sorter: false}, 7: {sorter: false}},
       sortList: [[4, 1],], // Sort by Max Confidence
         // [index, asc/desc]
       });
@@ -52,10 +52,10 @@ class TableDetail extends BuildTable {
     tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "100px").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher article accession number"}));
     tr.append($(document.createElement("th")).html("C. Score").addClass("numeric").css("width", "80px").attr({ id : 'th-cscore', "toggle": "tooltip", "title": "The confidence score (likelihood) for interaction accuracy"}));
     tr.append($(document.createElement("th")).text("Excerpt").attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "The article excerpt that states the interaction"}));
-    this.additional_columns = this.buildHeader();
-    console.log("additional_col : ",this.additional_columns);
-    for(let i = 0; i< this.additional_columns.length;i++){
-      tr.append($(document.createElement("th")).text(this.additional_columns[i]).attr({ id: 'th-addendum', "toggle": "tooltip","title": "User added columns"}));
+    this.add_columns = this.buildHeader();
+    console.log("additional_col : ",this.add_columns);
+    for(let i = 0; i< this.add_columns.length;i++){
+      tr.append($(document.createElement("th")).text(this.add_columns[i]).attr({ id: 'th-addendum_'+this.add_columns[i], "toggle": "tooltip","title": "User added columns"}));
     }
     //datasource
    tr.append($(document.createElement("th")).text("Source").attr({ id: 'datasource', "toggle": "tooltip","title": "Datasource reference"}));
@@ -93,9 +93,9 @@ class TableDetail extends BuildTable {
       tr.append($(document.createElement("td")).text(Number(i.probability).toFixed(3)).addClass("numeric"));
       tr.append($(document.createElement("td")).html(this.adjustExcerpt(i)));
       //add additional_columns values
-      let element = this.buildBody(i,this.additional_columns);
+      let element = this.buildBody(i,this.add_columns);
       for(let col = 0 ; col < this.additional_columns.length;col++){
-	tr.append($(document.createElement("td")).html(element.get(this.additional_columns[col])));	
+	tr.append($(document.createElement("td")).html(element.get(this.add_columns[col])));	
 	}
       //datasource mapping
       tr.append($(document.createElement("td")).html(this.navigateRef(i.ds_name,i.ds_url)));
