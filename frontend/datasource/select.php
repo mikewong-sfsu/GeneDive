@@ -120,14 +120,7 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
                 if( $( item ).prop( 'checked' )) { return key; } else { return null; }
             }).toArray();
             let list = GeneDive.datasource.list.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
-	    alertify.success( `Now searching on<br>${list}` ); 
-	    //if(
-	    let std_ds = [ 'plos-pmc' , 'pharmgkb' ];
-	    /*if(std_ds.every(( item ) => { return GeneDive.datasource.list.includes( item );})){
-
-		    GeneDive.datasource.list = GeneDive.datasource.list.filter(item => !std_ds.includes(item));
-		    GeneDive.datasource.list.push('all');
-	    }*/
+	    alertify.success( `Now searching on<br>${list}`); 
 	    let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
 	    let dsid_map = btoa (JSON.stringify( Object.fromEntries(short_id_map.entries())));
 	   

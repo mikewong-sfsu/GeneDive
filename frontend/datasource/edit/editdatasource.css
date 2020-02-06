@@ -1,0 +1,35 @@
+<style>
+    .ajs-dialog {
+        max-width: 800px !important;
+    }
+    .datasource-list-item {
+	display: none;
+        height: 96px;
+    }
+    .datasource-list-item .datasource-info {
+	display:inline;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 80%;/*calc( 100% - 150px );*/
+        height: 96px;
+        padding: 5px 15px 5px 15px;
+    }
+    .datasource-list-item .datasource-actions {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 120px;
+        height: 96px;
+    }
+    .datasource-list-item .datasource-actions .datasource-select {
+        position: absolute;
+        top: 40px;
+        left: 10px;
+	transform: scale(2);
+    }
+
+    #editor {
+    border: 1px solid #DDD;
+    } 
+</style>
