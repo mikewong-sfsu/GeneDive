@@ -60,6 +60,7 @@ if( $dslist == '' ) { $dslist = []; }
    <button class="btn  btn-primary btn_edit" id="datasource-edit" style="float: right;"><span class="fas fa-play"></span>&nbsp;Update</button> 
     <div id="editor"></div>
   </div>
+  <div><br><br></div>
 </body>
 <script>
 //Map the datasources on UI

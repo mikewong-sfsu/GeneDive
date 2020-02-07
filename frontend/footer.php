@@ -39,7 +39,7 @@
     <script src="cache.php?get=set_id"></script>
 
     <!-- Import datasouce plugin class -->
-    <?php require_once("addselectsource.php");?>
+    <?php include("addselectsource.php");?>
  
 
     <!-- Adjacency Matrix -->
@@ -85,9 +85,7 @@
     <!-- Core Controller -->
     <script src="static/genedive/controller.js"></script>
 
-    <?php include( 'datasource/select.php' ) 
-          //include( 'datasource/managelist.php')
-    ?>
+    <?php include( 'datasource/select.php' ) ?>
 
   </body>
 </html>

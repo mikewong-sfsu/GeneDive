@@ -14,18 +14,18 @@ function add_datasource_class($datasources){
 	global $local_path;
 	$native_ds = ['pharmgkb','plos-pmc'];
 	$isDefaultAdded = false;
+	//add default datasource
+	$path =  $local_path."/default_table.js";	
+	echo "<script src=\"$path\"></script>";
+	
 	//add the datasources based on session
 	if(is_array($datasources) || is_object($datasources)){
 		foreach($datasources as $ds){
-			if(in_array($ds, $native_ds) and !($isDefaultAdded)){
-				$path =  $local_path."/default_table.js";
-				$isDefaultAdded = true;
-			}
-			else	
+			if(!in_array($ds, $native_ds)){
 				$path =  $local_path."/ds_".$ds.".js";
 			if(file_exists($path))
 				echo "<script src=\"$path\"></script>";
-		
+			}
 	
 		}
 	}
