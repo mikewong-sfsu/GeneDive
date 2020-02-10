@@ -15,11 +15,17 @@ if( $dslist == '' ) { $dslist = []; }
   <link rel="stylesheet" type="text/css" href="/static/fontawesome/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="editdatasource.css">
   <link rel="stylesheet" type="text/css" href="codemirror/lib/codemirror.css">
+  <link rel="stylesheet" type="text/css" href="https://codemirror.net/addon/lint/lint.css">
   <title>Edit a Data Source</title>
 </head>
 <body>
   <script type="text/javascript" src="/static/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="codemirror/lib/codemirror.js"></script>
+  <script type="text/javascript" src="https://codemirror.net/mode/javascript/javascript.js"></script>
+  <script type="text/javascript" src="https://codemirror.net/addon/lint/lint.js"></script> 
+  <script type="text/javascript" src="https://codemirror.net/addon/lint/javascript-lint.js"></script> 
+  <!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.26.0/addon/lint/javascript-lint.min.js" ></script--> 
+  <!--script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script--> 
   <li class="datasource-list-item list-group-item">
     <div class="datasource-info">
       <h5 class="name">Name</h5>
@@ -55,7 +61,7 @@ if( $dslist == '' ) { $dslist = []; }
   <!--code editor-->
   <div class="container">
     <h2>
-      Edit here
+      Table Plugin for datasource <span id="ds_name"></span>
     </h2>
    <button class="btn  btn-primary btn_edit" id="datasource-edit" style="float: right;"><span class="fas fa-play"></span>&nbsp;Update</button> 
     <div id="editor"></div>
@@ -70,15 +76,18 @@ var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' )
 // ===== INITIALIZE DATASOURCE MANAGER
 var listitem = $( '.datasource-list-item' ).detach();
 datasource.refreshUI = () => {
-console.log("inside refreshUI");
 Object.entries( manifest ).forEach(([ key, datasource ]) => {
 let entry = listitem.clone().css({ display: 'block' });
+if(!(datasource.id == 'plos-pmc' || datasource.id == 'pharmgkb')){
+
 entry.find( '.name' ).html( datasource.name );
 entry.find( '.description' ).html( datasource.description );
 let toggle = entry.find( 'input.datasource-select' );
 toggle.attr({ id: datasource.id ,value:datasource.id});
 $( '#datasource-manager .list-group' ).append( entry );
+}
 });
+
 };
 datasource.refreshUI();
 
@@ -89,11 +98,15 @@ var editor = CodeMirror(document.getElementById("editor"), {
     value: "Select datasource to populate editor",
     mode: "javascript",
     indentUnit: 4,
-    lineNumbers: true
+    lineNumbers: true,
+    gutters: ["CodeMirror-lint-markers"],
+    lint: true
 });
+editor.setOption("lint",true);
 //on selecting radio button
 $('input[type=radio]').on('change', function(){
   ds_id = $('input[name="selectDatasource"]:checked').val();
+  //$( "#ds_name" ).html();
   $.ajax({
     method: "POST",
     url: "import.php",

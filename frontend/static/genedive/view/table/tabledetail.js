@@ -53,7 +53,6 @@ class TableDetail extends BuildTable {
     tr.append($(document.createElement("th")).html("C. Score").addClass("numeric").css("width", "80px").attr({ id : 'th-cscore', "toggle": "tooltip", "title": "The confidence score (likelihood) for interaction accuracy"}));
     tr.append($(document.createElement("th")).text("Excerpt").attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "The article excerpt that states the interaction"}));
     this.add_columns = this.buildHeader();
-    console.log("additional_col : ",this.add_columns);
     for(let i = 0; i< this.add_columns.length;i++){
       tr.append($(document.createElement("th")).text(this.add_columns[i]).attr({ id: 'th-addendum_'+this.add_columns[i], "toggle": "tooltip","title": "User added columns"}));
     }
@@ -94,7 +93,7 @@ class TableDetail extends BuildTable {
       tr.append($(document.createElement("td")).html(this.adjustExcerpt(i)));
       //add additional_columns values
       let element = this.buildBody(i,this.add_columns);
-      for(let col = 0 ; col < this.additional_columns.length;col++){
+      for(let col = 0 ; col < this.add_columns.length;col++){
 	tr.append($(document.createElement("td")).html(element.get(this.add_columns[col])));	
 	}
       //datasource mapping

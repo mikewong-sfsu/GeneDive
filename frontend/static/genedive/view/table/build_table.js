@@ -11,6 +11,7 @@ class BuildTable extends ResultsTable{
 			else{
 				let className = 'ds_' + ds[i];
 				this.objectMap.set(ds[i],eval("new "+className + "()"));
+				console.log("class created:" className);
 			}
 				
 		}
@@ -28,6 +29,7 @@ class BuildTable extends ResultsTable{
 	}
 
 	buildBody(row,arr){
+		console.log("in buildTable");
 		//let res = [];
   	//for(let i = 0; i < interactions.length;i++){
 			let ds_class = row.ds_id;

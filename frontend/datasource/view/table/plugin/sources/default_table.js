@@ -14,8 +14,6 @@ class DefaultTable{
 		for(let i = 0 ;i < arr.length;i++){
 			if(interaction.addendum && interaction.addendum.length){
 			let addendum = JSON.parse(interaction.addendum);
-			console.log("interaction type:",typeof(addendum));
-			console.log("interactions = ", addendum);
 			if(arr[i] in addendum)
 				res.set(arr[i],addendum[arr[i]]);
 			else

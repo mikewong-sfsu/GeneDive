@@ -10,7 +10,8 @@ class BuildTable extends ResultsTable{
 
 			else{
 				let className = 'ds_' + ds[i];
-				this.objectMap.set(ds[i],eval("new "+className + "()"));
+				let Obj = eval("new "+className+"()");
+				this.objectMap.set(ds[i],Obj);
 			}
 				
 		}

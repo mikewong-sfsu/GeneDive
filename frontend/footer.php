@@ -38,7 +38,8 @@
     <script src="cache.php?get=drug_id"></script>
     <script src="cache.php?get=set_id"></script>
 
-    <!-- Import datasouce plugin class -->
+    <!-- Import plugin class -->
+    <script src="datasource/view/table/plugin/jsonpath.js"></script>
     <?php include("addselectsource.php");?>
  
 
