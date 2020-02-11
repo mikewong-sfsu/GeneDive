@@ -57,7 +57,9 @@ class ResultsTable {
   // ============================================================
   styleExcerpt ( excerpt, symbol, color ) {
   // ============================================================
-    return excerpt.replace( new RegExp( `#(${symbol})#`, 'i' ), `<span style="color:${color};">$1</span>` );
+    if(excerpt != null)
+	  return excerpt.replace( new RegExp( `#(${symbol})#`, 'i' ), `<span style="color:${color};">$1</span>` );
+    return '';
   }
 
   // ============================================================
@@ -80,12 +82,15 @@ class ResultsTable {
   adjustExcerpt(row){
   // ============================================================
     let excerpt = row.context;
+    if(excerpt != null){
      if(row.context.trim().toLocaleLowerCase() === "source: pharmgkb"){
        excerpt = `Source: <a href="/api/external_link.php?action=pharmgkb_combination&dgr1=${row.geneids1}&dgr2=${row.geneids2}" target="_blank" onclick="event.stopPropagation()" class="pharmgkb-excerpt-link">PharmGKB #${row.mention1}# #${row.mention2}# Combination <i class="fas fa-external-link-alt"></i></a>`
      }
     excerpt = this.styleExcerpt(excerpt, row.mention1, row.mention1_color);
     excerpt = this.styleExcerpt(excerpt, row.mention2, row.mention2_color);
     return excerpt;
+    }
+    return '';
   }
 
   // ============================================================

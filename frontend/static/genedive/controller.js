@@ -609,6 +609,7 @@ class Controller {
       this.interactionsjqXHR = null;
       this.interactions_countXHR = null;
       this.onInteractionsLoaded(interactions);
+	    console.log(interactions);
     });
 
     this.tryToLoadInteractionsCount(token);
@@ -778,19 +779,18 @@ class Controller {
       let interaction = this.interactions[i];
 
       // If article id is blank, copy the value from pubmed id. If both are blank, replace with "N/A"
-      let article_blank = VALUES_TO_REPLACE.has(interaction.article_id.trim().toLowerCase());
-      let pubmed_blank = VALUES_TO_REPLACE.has(interaction.pubmed_id.trim().toLowerCase());
+      let article_blank = VALUES_TO_REPLACE.has(interaction.article_id);//.trim().toLowerCase());
+      let pubmed_blank = VALUES_TO_REPLACE.has(interaction.pubmed_id);//.trim().toLowerCase());
       if(article_blank && pubmed_blank)
         interaction.article_id = interaction.pubmed_id = BLANK_STRING;
       else if(article_blank)
         interaction.article_id = interaction.pubmed_id;
 
-      if (VALUES_TO_REPLACE.has(interaction.journal.trim().toLowerCase()))
+      if (VALUES_TO_REPLACE.has(interaction.journal))//.trim().toLowerCase()))
         interaction.journal = BLANK_STRING;
 
-      if (VALUES_TO_REPLACE.has(interaction.section.trim().toLowerCase()))
+      if (VALUES_TO_REPLACE.has(interaction.section))//.trim().toLowerCase()))
         interaction.section = BLANK_STRING;
-
       // Sort the symbols alphabetically
       if(interaction.mention1 > interaction.mention2)
       {

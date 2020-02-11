@@ -32,6 +32,7 @@ if(in_array("all", $datasources)){
 	$datasources = array_filter($datasources, function($item) {return $item != "all";});
 	array_push($datasources, "plos-pmc" , "pharmgkb");
 }
+$dsid_map = (array_intersect_key($dsid_map, array_flip($datasources)));
 foreach( $datasources as $source ) {
   $local = "$DATASOURCES/$source/data.sqlite";//"$DATASOURCES/$source/data.sqlite";
   // If the data is not local, retrieve the data via HTTP proxy
@@ -63,7 +64,7 @@ $response = json_encode([
   "results" => $results,
   "add_cols"=> $extra_col,
   "errors"  => $errors,
-  "ds" => (array)$datasources
+  "ds" => $dsid_map //(array)$datasources
 ]);
 
 header( 'Content-Length: ' . mb_strlen( $response, '8bit' ));

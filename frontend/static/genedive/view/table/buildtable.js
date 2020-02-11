@@ -3,15 +3,16 @@ class BuildTable extends ResultsTable{
 		super(table,interactions,additional_columns);
 		this.default_ds = new Set(["all","pharmgkb","plos-pmc"]);
 		this.objectMap = new Map();
-		for(let i = 0 ; i < ds.length;i++){
-			if(this.default_ds.has(ds[i]) )
+		//for(let i = 0 ; i < ds.length;i++){
+		for( var key of Object.keys(ds)){
+			if(this.default_ds.has(key) )
 				//continue;
-				this.objectMap.set(ds[i],eval("new DefaultTable()"));
+				this.objectMap.set(key,eval("new DefaultTable()"));
 
 			else{
-				let className = 'ds_' + ds[i];
-				let Obj = eval("new "+className+"()");
-				this.objectMap.set(ds[i],Obj);
+				let className = 'ds_' + key;
+				let Obj = eval("new "+className+"(\"" + ds[key]+ "\")");
+				this.objectMap.set(key,Obj);
 			}
 				
 		}
