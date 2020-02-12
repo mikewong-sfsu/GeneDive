@@ -14,7 +14,7 @@ class LocalDB {
   constructor(controller) {
 
     this.db = openDatabase('genedive', '1.0', 'Genedive Interactions Local DB', 2 * 1024 * 1024);
-    this.db.transaction((tx) => {
+   this.db.transaction((tx) => {
       tx.executeSql(`CREATE TABLE IF NOT EXISTS interactions (
         id INTEGER NOT NULL,
         journal VARCHAR(64),
@@ -39,10 +39,7 @@ class LocalDB {
     });
     this.controller = controller;
     this.requiredHeaders = new Set();
-    this.requiredHeaders.add("journal");
-    this.requiredHeaders.add("article_id");
     this.requiredHeaders.add("pubmed_id");
-    this.requiredHeaders.add("sentence_id");
     this.requiredHeaders.add("mention1_offset");
     this.requiredHeaders.add("mention2_offset");
     this.requiredHeaders.add("mention1");
@@ -50,9 +47,6 @@ class LocalDB {
     this.requiredHeaders.add("geneids1");
     this.requiredHeaders.add("geneids2");
     this.requiredHeaders.add("probability");
-    this.requiredHeaders.add("context");
-    this.requiredHeaders.add("section");
-    this.requiredHeaders.add("reactome");
     this.requiredHeaders.add("type1");
     this.requiredHeaders.add("type2");
     this.requiredHeaders.add("addendum");
@@ -125,10 +119,7 @@ class LocalDB {
    */
   addLine(line){
     let interaction = [
-      line.journal,
-      line.article_id,
       line.pubmed_id,
-      line.sentence_id,
       line.mention2_offset,
       line.mention1_offset,
       line.mention1,
@@ -136,16 +127,15 @@ class LocalDB {
       line.geneids1,
       line.geneids2,
       line.probability,
-      line.context,
-      line.section,
-      line.reactome,
       line.type1,
       line.type2,
       line.addendum];
-    this.db.transaction( (tx) => {
-      tx.executeSql(`insert into interactions ( journal, article_id, pubmed_id, sentence_id, mention1_offset, mention2_offset, mention1, mention2, geneids1, geneids2, probability, context, section, reactome , type1, type2, addendum) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?,?);`,
+	this.db.transaction( (tx) => {
+      tx.executeSql(`insert into interactions (  pubmed_id, mention1_offset, mention2_offset, mention1, mention2, geneids1, geneids2, probability , type1, type2, addendum) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
         interaction)
     });
+
+
   }
 
   /**

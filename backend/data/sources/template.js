@@ -1,6 +1,5 @@
 class LocalTable extends DefaultTable{
-	//this.required = ["mention1","mention2","geneids1","geneids2","type1","type2","probability"]);//do not modify
-	//this.optional = ["journal","article_id","pubmed_id","sentence_id","mention1_offset","mention2_offset","context","section"]);
+	//this.required = ["mention1","mention2","geneids1","geneids2","type1","type2","probability", "pubmed_id"]);//do not modify
 	constructor(short_id){
 	super();
 	//ADDITIONAL COLUMNS

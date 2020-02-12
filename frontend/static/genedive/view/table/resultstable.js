@@ -37,6 +37,7 @@ class ResultsTable {
   hideBackButton () {
   // ============================================================
 	  $('.table-view .messaging-and-controls .go-back').text('Summary View').css({'cursor':'default','color':'black', 'visibility':'hidden'});
+	  //$('.table-view .messaging-and-controls .edit-table').css({'visibility':'hidden'});
 	  $('.table-view .messaging-and-controls .view-header').text('Summary View').css({'vertical-align':'middle','margin-left':'250px'}); 
 
   }
@@ -44,8 +45,13 @@ class ResultsTable {
   // ============================================================
   showBackButton () {
   // ============================================================
-    $('.table-view .messaging-and-controls .go-back').html('<i class="fa fa-arrow-left"></i>Back to Summary Page').css({'cursor':'pointer','color':'#d84b2b','visibility':'visible'});
- $('.table-view .messaging-and-controls .view-header').text('Detail View');
+     $('.table-view .messaging-and-controls .go-back').html('<i class="fa fa-arrow-left"></i>Back to Summary Page').css({'cursor':'pointer','color':'#d84b2b','visibility':'visible'});
+    // $('.table-view .messaging-and-controls .edit-table').html('<input type="button" value="Edit Button"/>').css({'visibility':'visible','display':'inline-block'});
+     $('.table-view .messaging-and-controls .view-header').text('Detail View');
+   // var $input = $('<input type="button" value="Edit Table" id="edit_table"/>');
+     //   $input.appendTo($(".table-view .messaging-and-controls"));
+    
+    this.editTable();
   }
 
   // ============================================================
@@ -144,6 +150,19 @@ class ResultsTable {
   refLink () {
   // ============================================================
 	$(".grouped a").click(function(e){e.stopPropagation();});
+
+  }
+
+///edit table
+  // ============================================================
+  editTable () {
+  // ============================================================
+	$(".edit-table").click(function(e){
+	//var $dialog_box = $('<div id="dialog-confirm">Are you sure you want to do whatever?</div>');
+	//$dialog_box.append(".edit-table");
+	//alertify.prompt('Input (text):').set('type', 'text'); 
+	alertify.confirm('Edit Table', function(){ alertify.success('Ok') }, function(){ alertify.error('Cancel')});
+	});
 
   }
 }

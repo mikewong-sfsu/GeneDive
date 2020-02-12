@@ -70,6 +70,7 @@
     <script src="static/genedive/filter/textfilter.js"></script>
     <script src="static/genedive/highlight/highlight.js"></script>
     <script src="static/genedive/grouper/grouper.js"></script>
+<!--script src="static/genedive/view/table/editdetailtable.js"></script-->
     <script src="static/genedive/view/table/resultstable.js"></script>
     <script src="static/genedive/view/table/buildtable.js"></script> 
     <script src="static/genedive/view/table/tabledetail.js"></script>

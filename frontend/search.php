@@ -61,8 +61,6 @@
             <option>Article</option>
             <option selected="selected">Excerpt</option>
             <option>DGR</option>
-            <option>Journal</option>
-            <!--<option>Section</option>-->
           </select>
           <div class="filter-is-not">
             <span><input type="radio" name="isnot" value="is" class="is" checked > is </span>
@@ -118,6 +116,7 @@
     <div class="table-view ui-widget-content panel-top">
       <div class="messaging-and-controls require-dgr-search">
 	<span class="go-back"></span>
+	<span class="edit-table"></span>
 	<span class="view-header"></span>
         <span class="metadata"></span>
       </div>

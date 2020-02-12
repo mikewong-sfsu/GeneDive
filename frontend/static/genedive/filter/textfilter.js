@@ -29,7 +29,7 @@ class TextFilter {
 
 
   createFilterValueLists(interactions) {
-    let sets = {"Article": new Set(), "DGR": {}, "Journal":  new Set(), "Section": new Set()};
+    let sets = {"Article": new Set(), "DGR": {}, "Section": new Set()};
     let values = {};
 
     interactions.forEach(i => {
@@ -38,12 +38,12 @@ class TextFilter {
       let dgr2 = {symbol: i.mention2, id: i.geneids2, type: i.type2};
       sets["DGR"][JSON.stringify(dgr1)] = dgr1;
       sets["DGR"][JSON.stringify(dgr2)] = dgr2;
-      sets["Journal"].add(i.journal);
+      //sets["Journal"].add(i.journal);
       // values["Section"].add(i.section); // Disabled for now
     });
-
+    //sets["Journal"].add("N/A");
     values["Article"] = this.chooseDynamicCase(sets["Article"]);
-    values["Journal"] = this.chooseDynamicCase(sets["Journal"]);
+    //values["Journal"] = this.chooseDynamicCase(sets["Journal"]);
     values["DGR"] = this.chooseDGRCase(sets["DGR"]);
 
     this.filterValues = values;
@@ -149,14 +149,14 @@ class TextFilter {
 
     for (let filter of this.sets) {
       switch (filter.attribute) {
-        case "Journal":
+       /* case "Journal":
           if (filter.is) {
             interactions = interactions.filter((i) => new RegExp(filter.value, "i").test(i.journal));
           } else {
             interactions = interactions.filter((i) => !new RegExp(filter.value, "i").test(i.journal));
           }
           break;
-
+*/
         case "Section":
           if (filter.is) {
             interactions = interactions.filter((i) => new RegExp(filter.value, "i").test(i.section));

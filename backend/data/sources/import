@@ -14,8 +14,8 @@ my $file         = shift; # Absolute path
 my $cache        = cache( $file );
 my $path         = path( $file );
 my $pdir = dirname($path);
-my @required     = qw( mention1 mention2 geneids1 geneids2 type1 type2 probability );
-my @optional     = ();#qw( journal article_id pubmed_id sentence_id mention1_offset mention2_offset probability context section);
+my @required     = qw( mention1 mention2 geneids1 geneids2 type1 type2 probability  pubmed_id);
+my @optional     = ();
 my @add_col = null;
 my $interactions = csv( in => validate( $file ), encoding => 'utf-8');
 $interactions = csv( in => $file, encoding => 'utf-8', headers => "auto");
@@ -163,6 +163,7 @@ sub hash_to_cache {
 # ============================================================
 sub insert_table {
 # ============================================================
+=for comment
 return <<EOF;
 CREATE TABLE IF NOT EXISTS interactions (
 	id INTEGER NOT NULL, 
@@ -187,6 +188,28 @@ CREATE TABLE IF NOT EXISTS interactions (
 CREATE INDEX IF NOT EXISTS gid1 on interactions(geneids1);
 CREATE INDEX IF NOT EXISTS gid2 on interactions(geneids2);
 EOF
+=cut comment
+return <<EOF;
+CREATE TABLE IF NOT EXISTS interactions (
+	id INTEGER NOT NULL, 
+	pubmed_id TEXT, 
+	mention1_offset INTEGER, 
+	mention2_offset INTEGER, 
+	mention1 TEXT collate nocase, 
+	mention2 TEXT collate nocase, 
+	geneids1 TEXT, 
+	geneids2 TEXT, 
+	probability FLOAT, 
+	type1 CHARACTER(1), 
+	type2 CHARACTER(1),
+	addendum TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX IF NOT EXISTS gid1 on interactions(geneids1);
+CREATE INDEX IF NOT EXISTS gid2 on interactions(geneids2);
+EOF
+
+
 }
 
 # ============================================================
