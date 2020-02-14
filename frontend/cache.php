@@ -94,7 +94,7 @@ function read_adjacency_matrix( $file ) {
 	$contents = file_get_contents( $location ); if( ! $contents ) { return null; }
 	$contents = preg_replace( '/^var adjacency_matrix\s*=\s*/', '', $contents );
 	$contents = preg_replace( '/;$/', '', $contents );
-	$matrix   = json_decode( $contents, JSON_OBJECT_AS_ARRAY );
+	$matrix   = json_decode( $contents, true );
 	return $matrix;
 }
 
@@ -119,16 +119,18 @@ function write_cache( $file, $data ) {
 // ============================================================
 	global $CACHE;
 
-	// Create cache path and human-readable mini-manifest 'sources.json'
-	$sources    = json_decode( base64_decode( $_SESSION[ 'sources' ]));
-	$sources    = count( $sources ) == 1 ? $sources[ 0 ] : substr( sha1( $_SESSION[ 'sources' ]), 0, 8 );
-	$path       = "$CACHE/cache/$sources";
-	$sourcefile = "$CACHE/cache/$sources/sources.json";
+	$sources    = json_decode( base64_decode( $_SESSION[ 'sources' ]), true );
+	$path       = "$CACHE/cache/" . substr( sha1( $_SESSION[ 'sources' ]), 0, 8 );
 	if( ! file_exists( $path )) { mkdir( $path ); chmod( $path, 0777 ); }
-	if( ! file_exists( $sourcefile )) {
-		$fp = fopen( $sourcefile, 'w' );
-		fwrite( $fp, $sources . "\n" );
-		fclose( $fp );
+
+	// Create cache path and human-readable mini-manifest 'sources.json'
+	if( count( $sources ) > 1 ) {
+		$sourcefile = "$path/sources.json";
+		if( ! file_exists( $sourcefile )) {
+			$fp = fopen( $sourcefile, 'w' );
+			fwrite( $fp, json_encode( $sources ) . "\n" );
+			fclose( $fp );
+		}
 	}
 
 	$var = $file;

@@ -1,5 +1,7 @@
 #! /usr/bin/perl
 
+BEGIN { $| = 1; } # Forces output buffer to flush
+
 use Text::CSV qw( csv );
 use List::Util qw( any none uniq );
 use JSON::XS;
@@ -23,7 +25,7 @@ foreach my $type (qw( gene drug disease )) {
 	my $hash = {};
 	extract_ids( $type, $hash, $_ ) foreach @$interactions;
 	hash_to_cache( $type, $cache, $hash );
-  	print "<li>Building <i>$type typeahead lookup cache</li>\n";
+  	print "<li>Building <i>$type typeahead lookup cache</i></li>\n";
 }
 
 filter_columns( $interactions );

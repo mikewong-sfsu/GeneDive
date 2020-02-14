@@ -74,7 +74,15 @@ GeneDive.datasource.refreshUI();
 // ===== DATASOURCE MANAGER DIALOG
 let dsm = $( '#datasource-manager' ).detach();
 $( '.datasources' ).off( 'click' ).click(( ev ) => {
-    alertify.confirm( 'Data Sources', dsm.html(), 
+    let response = $.getJSON( '/datasource/manifest.php?get=manifest' );
+    console.log( 'RESPONSE', response );
+    if( response.statusText == 'OK' ) {
+        manifest = response.responseJSON;
+        console.log( 'MANIFEST', manifest );
+    }
+    alertify.confirm( 
+        'Data Sources', 
+        dsm.html(), 
 
         // OK button behavior
         () => { 
@@ -101,8 +109,8 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
         // Cancel button behavior
         () => { 
             let datasources = GeneDive.datasource.list.includes( 'all' ) ? [ 'plos-pmc', 'pharmgkb' ] : GeneDive.datasource.list;
-            let list        = datasources.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
-            alertify.message( `Data sources remain unchanged<br>(${list})` ); 
+            let list        = datasources.map( sourceid  => sourceid in manifest ? manifest[ sourceid ].name : null ).filter( x => x ).sort().join( ', ' );
+            alertify.message( 'Data sources remain unchanged' + ( list ? `<br>(${list})` : '' )); 
         }
     );
     $( 'input.datasource-toggle' ).bootstrapToggle( 'destroy' ).bootstrapToggle();

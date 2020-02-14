@@ -149,7 +149,7 @@ alertify.defaults.theme.input  = "form-control";
 
   <script>
 $( "button.cancel" ).off( 'click' ).click(( ev ) => {
-  window.close();
+  window.location = "/search.php";
 });
 
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
@@ -167,8 +167,10 @@ $( '.btn-remove' ).off( 'click' ).click(( e ) => {
   var entry      = $( e.target ).parents( '.datasource-list-item' );
   var datasource = { id : entry.attr( 'data-id' ), name : entry.attr( 'data-name' ) };
 
-  alertify.confirm( `Delete ${datasource.name}?`, `Click [OK] to permanently remove ${datasource.name}, [Cancel] to leave ${datasource.name} alone. If you still have the original CSV for ${datasource.name}, you can always re-import ${datasource.name} later, using the <code>Add a Datasource</code> feature.`, 
-    () => { $.ajax({ url: "./delete.php", type: "POST", data: { "id" : datasource.id }, success: () => { location.reload(); } }); },
+  alertify.confirm( 
+    `Delete ${datasource.name}?`, 
+    `Click [OK] to permanently remove ${datasource.name}, [Cancel] to leave ${datasource.name} alone. If you still have the original CSV for ${datasource.name}, you can always re-import ${datasource.name} later, using the <code>Add a Datasource</code> feature.`, 
+    () => { $.post({ url: "./delete.php", data: { "id" : datasource.id }, success: ( e ) => { console.log( 'SUCCESS', e ); window.location.reload(); }}); },
     () => {}
   );
 })

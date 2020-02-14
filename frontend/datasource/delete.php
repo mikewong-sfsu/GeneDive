@@ -1,9 +1,9 @@
 <?php
   include_once( '../session.php' );
-  include_once( '/datasource/manifest.php' );
+  include_once( 'manifest.php' );
 
-  if( isset( $_POST[ 'datasource-remove' ]))
   $id = $_POST[ 'id' ];
-  remove_datasource( $manifest, $id );
-
+  if( isset( $id ) && preg_match( '/^[0-9a-f]{8}$/i', $id )) {
+    remove_datasource( $manifest, $id );
+  }
 ?>

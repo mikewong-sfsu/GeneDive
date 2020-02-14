@@ -214,7 +214,8 @@ form button.cancel {
 
   <script>
 $( "form button.cancel" ).off( 'click' ).click(( ev ) => {
-  window.close();
+  ev.preventDefault();
+  window.location = "/search.php";
 });
 
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
