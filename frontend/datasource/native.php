@@ -9,11 +9,13 @@
 
   $native = [ 'pharmgkb' => "/usr/local/genedive/data/sources/pharmgkb", 'deepdive' => "/usr/local/genedive/data/sources/plos-pmc" ];
 	function is_genedive_server() {
+    global $native;
 		return file_exists( $native[ 'pharmgkb' ] ) || file_exists( $native[ 'deepdive' ] );
 	}
 
 	function is_local_client() {
-		return ! file_exists( $native[ 'pharmgkb' ] ) && ! file_exists( $native[ 'deepdive' ] );
+    global $native;
+		return ((! file_exists( $native[ 'pharmgkb' ])) && (! file_exists( $native[ 'deepdive' ])));
 	}
 
 ?>
