@@ -79,6 +79,7 @@
     <script src="static/genedive/controller.js"></script>
 
     <?php include( 'datasource/select.php' ) ?>
+    <?php include( 'datasource/remove.php' ) ?>
 
   </body>
 </html>

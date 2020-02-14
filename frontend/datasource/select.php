@@ -44,9 +44,9 @@
     </div>
 </li>
 
-<div id="datasource-manager">
+<div id="datasource-selector">
     <p>Enable or disable the data sources below for search. Enabled data sources will be searched for disease, gene, or drug/Rx (DGR) interactions. </p>
-    <div class="row">
+    <div class="row" style="overflow-y: auto;">
         <ul class="list-group">
         </ul>
     </div>
@@ -56,33 +56,29 @@
 GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
-console.log( 'MANIFEST', manifest );
+
 // ===== INITIALIZE DATASOURCE MANAGER
 var listitem = $( '.datasource-list-item' ).detach();
-GeneDive.datasource.refreshUI = () => {
+GeneDive.datasource.refreshSelectionUI = () => {
     Object.entries( manifest ).forEach(([ key, datasource ]) => {
         let entry = listitem.clone().css({ display: 'block' });
         entry.find( '.name' ).html( datasource.name );
         entry.find( '.description' ).html( datasource.description );
         let toggle = entry.find( 'input.datasource-toggle' );
         toggle.attr({ id: datasource.id, name: datasource.id });
-        $( '#datasource-manager .list-group' ).append( entry );
+        $( '#datasource-selector .list-group' ).append( entry );
     });
 };
-GeneDive.datasource.refreshUI();
+GeneDive.datasource.refreshSelectionUI();
 
 // ===== DATASOURCE MANAGER DIALOG
-let dsm = $( '#datasource-manager' ).detach();
-$( '.datasources' ).off( 'click' ).click(( ev ) => {
+let dss = $( '#datasource-selector' ).detach();
+let dss_show = () => {
     let response = $.getJSON( '/datasource/manifest.php?get=manifest' );
-    console.log( 'RESPONSE', response );
-    if( response.statusText == 'OK' ) {
-        manifest = response.responseJSON;
-        console.log( 'MANIFEST', manifest );
-    }
+    if( response.statusText == 'OK' ) { manifest = response.responseJSON; }
     alertify.confirm( 
-        'Data Sources', 
-        dsm.html(), 
+        'Select Datasources', 
+        dss.html(), 
 
         // OK button behavior
         () => { 
@@ -112,14 +108,41 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
             let list        = datasources.map( sourceid  => sourceid in manifest ? manifest[ sourceid ].name : null ).filter( x => x ).sort().join( ', ' );
             alertify.message( 'Data sources remain unchanged' + ( list ? `<br>(${list})` : '' )); 
         }
-    );
+    ).set( 'closable', false );
+    $( '.ajs-header' ).css({ 'background-color' : '#337ab7', 'border-color' : '#2e6da4', 'color' : 'white', 'font-weight' : 'bold' });
     $( 'input.datasource-toggle' ).bootstrapToggle( 'destroy' ).bootstrapToggle();
     $( 'input.datasource-toggle' ).each(( i, item ) => { 
         let key      = $( item ).attr( 'id' );
-        let all      = [ 'plos-pmc', 'pharmgkb' ].includes( key ) && GeneDive.datasource.list.includes( 'all' );
         let selected = GeneDive.datasource.list.includes( key );
-	if( all || selected ) { $( item ).bootstrapToggle( 'on' ); } 
-    //else { $( item ).bootstrapToggle( 'off' );} //commented to fix the toggle reset 
+        if( selected ) { $( item ).bootstrapToggle( 'on' ); } 
+        else           { $( item ).bootstrapToggle( 'off' );}
     });
+};
+
+$( '.datasource-select' ).off( 'click' ).click(( ev ) => {
+  if( GeneDive.history.stateHistory.length > 0 ) {
+   alertify.confirm(
+      'You have an Unsaved Session',
+      'Selecting a Datasource will restart your work session. Click [Cancel] to return to search (and save your session) or click [OK] to Select a Datasource (and lose your session)',
+      () => { setTimeout(() => { dss_show(); }, 500 ); },
+      () => {}
+    );
+  } else {
+    dss_show();
+  }
 });
+$( '.datasource-add' ).off( 'click' ).click(( ev ) => {
+  if( GeneDive.history.stateHistory.length > 0 ) {
+   alertify.confirm(
+      'You have an Unsaved Session',
+      'Adding a Datasource will restart your work session. Click [Cancel] to return to search (and save your session) or click [OK] to Add a Datasource (and lose your session)',
+      () => { window.location = "/datasource/add.php" },
+      () => {}
+    );
+  } else {
+    window.location = "/datasource/add.php";
+  }
+});
+
+
 </script>

@@ -1,3 +1,4 @@
+<?php require_once( "version.php" ); ?>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -13,7 +14,7 @@
   <script src="static/jquery/jquery-3.2.1.min.js"></script>
   <script src="static/jquery/add-ons/fancybox/jquery.fancybox.min.js"></script>
 
-  <title>GeneDive: About</title>
+  <title>GeneDive <?= genedive_version() ?>: About</title>
   <style>
 #citation {
   font-size: 10pt;
@@ -30,7 +31,8 @@
   <div class="container">
 
     <div class="row">
-      <h1>About GeneDive</h1>
+      <h1>About GeneDive <?= genedive_patch_level() ?></h1>
+      <p>Released: <?= genedive_release_date() ?>
       <p>GeneDive is a powerful but easy-to-use application that can search,
       sort, group, filter, highlight, and visualize interactions between drugs,
       genes, and diseases (DGR).  GeneDive also facilitates topology discovery
