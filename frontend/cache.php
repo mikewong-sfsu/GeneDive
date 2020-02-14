@@ -18,20 +18,20 @@ $sources = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
 // ===== DISPATCH TABLE
 switch( $_GET[ 'get' ]) {
 	case "adjacency_matrix":
-		adjacency_matrix( $manifest, $sources );
-		break;
 	case "gene_id":
 	case "disease_id":
 	case "drug_id":
+		send_cache( $_GET[ 'get' ], $manifest, $sources );
+		break;
 	case "set_id":
-		typeahead_cache( $_GET[ 'get' ], $manifest, $sources );
+		send_redirect( "/cache/shared/set_id.js" );
 		break;
 	default:
 		break;
 };
 
 // ============================================================
-function adjacency_matrix( $manifest, $sources ) {
+function send_cache( $file, $manifest, $sources ) {
 // ============================================================
 	global $CACHE;
 	global $server;
@@ -42,49 +42,6 @@ function adjacency_matrix( $manifest, $sources ) {
 
 	// ===== CASE 1: MOST COMMON CASE
 	$source = $datasources[ 0 ];
-	
-	if( count( $datasources ) == 1 ) {
-
-		// Single user-provided data source adjacency matrix requested
-		// This includes: 'all', 'pharmgkb', or 'plos-pmc' 
-		// Only the server will have the default datasources installed
-		$url     = "cache/$source/adjacency_matrix.js";
-		$locally = "$CACHE/$url";
-		if( file_exists( $locally )) {
-			send_redirect( $url );
-
-		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc' ])) {
-			send_redirect( "$server/$url" );
-		}
-	}
-	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
-	// Caches only exist locally on the proxy server, never on the production
-	// server
-	$source  = substr( sha1( $_SESSION[ 'sources' ] ), 0, 8 );
-	$url     = "cache/$source/adjacency_matrix.js";
-	$locally = "$CACHE/$url";
-	if( file_exists( $locally )) { send_redirect( $url ); }
-
-	// ===== CASE 3: COMBINATION OF SOURCES, NOT PREVIOUSLY CACHED
-	// Create the cache and then redirect the cache request to the newly created
-	// cache file
-	$matrices = merge_adjacency_matrices( $datasources );
-	write_cache( $file, $matrices );
-	send_redirect( $url );
-}
-
-// ============================================================
-function typeahead_cache( $file, $manifest, $sources ) {
-// ============================================================
-	global $CACHE;
-	global $server;
-
-	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
-	// This filters by the host data source manifest
-	$datasources = array_filter( $sources, "filter_by_host_manifest" );
-
-	// ===== CASE 1: MOST COMMON CASE
-	$source = ($file == 'set_id') ? 'shared' : $datasources[ 0 ];
 	if( count( $datasources ) == 1 ) {
 
 		// Single user-provided data source adjacency matrix requested
@@ -96,10 +53,9 @@ function typeahead_cache( $file, $manifest, $sources ) {
 			send_redirect( $url );
 
 		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc', 'shared' ])) {
-      send_redirect( "$server/$url" );
+			send_redirect( "$server/$url" );
 		}
 	}
-	else{
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
 	// Caches only exist locally on the proxy server, never on the production
 	// server
@@ -111,10 +67,12 @@ function typeahead_cache( $file, $manifest, $sources ) {
 	// ===== CASE 3: COMBINATION OF SOURCES, NOT PREVIOUSLY CACHED
 	// Create the cache and then redirect the cache request to the newly created
 	// cache file
-	$matrices = merge_typeahead_tables( $datasources, $file );
-	write_cache( $file, $typeahead );
+	$cachefile = '';
+	$am        = $file == 'adjacency_matrix';
+	if( $am ) { $cachefile = merge_adjacency_matrices( $datasources, $file ); } 
+	else      { $cachefile = merge_typeahead_tables( $datasources, $file ); }
+	write_cache( $file, $cachefile );
 	send_redirect( $url );
-	}
 }
 
 // ============================================================
@@ -136,7 +94,7 @@ function read_adjacency_matrix( $file ) {
 	$contents = file_get_contents( $location ); if( ! $contents ) { return null; }
 	$contents = preg_replace( '/^var adjacency_matrix\s*=\s*/', '', $contents );
 	$contents = preg_replace( '/;$/', '', $contents );
-	$matrix   = json_decode( $contents );
+	$matrix   = json_decode( $contents, JSON_OBJECT_AS_ARRAY );
 	return $matrix;
 }
 
@@ -145,7 +103,6 @@ function read_typeahead_table( $file ) {
 // ============================================================
 	global $CACHE;
 	global $server;
-
 
 	$local    = "$CACHE/$file";
 	$proxy    = "$server/$file";
@@ -167,17 +124,25 @@ function write_cache( $file, $data ) {
 	$sources    = count( $sources ) == 1 ? $sources[ 0 ] : substr( sha1( $_SESSION[ 'sources' ]), 0, 8 );
 	$path       = "$CACHE/cache/$sources";
 	$sourcefile = "$CACHE/cache/$sources/sources.json";
-	if( ! file_exists( $path )) { mkdir( $path ); }
+	if( ! file_exists( $path )) { mkdir( $path ); chmod( $path, 0777 ); }
 	if( ! file_exists( $sourcefile )) {
 		$fp = fopen( $sourcefile, 'w' );
 		fwrite( $fp, $sources . "\n" );
 		fclose( $fp );
 	}
 
+	$var = $file;
+	if( $var != 'adjacency_matrix' ) {
+		$var = preg_replace( '/_id$/', '', $var );
+		$var = strtoupper( "AUTOCOMPLETE_$var" );
+	}
+
 	// Write the cache file
-  $fp = fopen( $file, 'w' );
-  fwrite( $fp, json_encode( $data ));
-  fclose( $fp );
+	$fp = fopen( "$path/$file.js", 'w' );
+	fwrite( $fp, "var $var = " );
+	fwrite( $fp, json_encode( $data ));
+	fwrite( $fp, ";" );
+	fclose( $fp );
 }
 
 // ============================================================
@@ -190,8 +155,9 @@ function merge_adjacency_matrices( $datasources ) {
 		if( is_null( $matrix )) { continue; } // Skip missing entries
 		foreach( $matrix as $dgr1 => $edges ) {
 			if( ! is_array( $edges )) { continue; } // Skip invalid entries
+			if( ! array_key_exists( $dgr1, $matrices )) { $matrices[ $dgr1 ] = array(); }
 			foreach( $edges as $dgr2 => $scores ) {
-				if( array_key_exists( $dgr2, $matrix[ $dgr1 ])) {
+				if( array_key_exists( $dgr2, $matrices[ $dgr1 ])) {
 					$matrices[ $dgr1 ][ $dgr2 ] = array_merge( $matrices[ $dgr1 ][ $dgr2 ], $matrix[ $dgr1 ][ $dgr2 ]);
 				} else {
 					$matrices[ $dgr1 ][ $dgr2 ] = $matrix[ $dgr1 ][ $dgr2 ];

@@ -56,11 +56,10 @@
 GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
-console.log(manifest);
+console.log( 'MANIFEST', manifest );
 // ===== INITIALIZE DATASOURCE MANAGER
 var listitem = $( '.datasource-list-item' ).detach();
 GeneDive.datasource.refreshUI = () => {
-	console.log("inside refreshUI");
     Object.entries( manifest ).forEach(([ key, datasource ]) => {
         let entry = listitem.clone().css({ display: 'block' });
         entry.find( '.name' ).html( datasource.name );
