@@ -63,7 +63,7 @@
 <pre>
     gunzip genedive-docker.gz 
     docker load genedive-docker
-    docker run -d -p 8456:80 --name genedive-docker-local genedive-docker
+    docker run -d -p 8456:80 --name genedive-v2.5-local genedive-v2.5
 </pre>
 
     <p>You can substitute port <code>8456</code> with another available port if
