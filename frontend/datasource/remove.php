@@ -132,6 +132,20 @@ form button.cancel {
 
   <!-- Alertify -->
   <script src="/static/alertify/js/alertify.min.js"></script>
+<style>
+.ajs-header {
+  color: white !important;
+  font-weight: bold;
+  background-color: #d9534f !important;
+  border-color: #d43f3a !important;
+}
+.ajs-commands .ajs-close { display: none !important; }
+</style>
+<script>
+alertify.defaults.theme.ok     = "btn btn-danger";
+alertify.defaults.theme.cancel = "btn btn-primary";
+alertify.defaults.theme.input  = "form-control";
+</script>
 
   <script>
 $( "button.cancel" ).off( 'click' ).click(( ev ) => {
