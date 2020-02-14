@@ -91,11 +91,28 @@ function remove_datasource( $manifest, $datasource_id ) {
 	$path = $CACHE . '/cache/' . $datasource[ 'path' ];
 	system( "rm -rf $path" );
 
+	// Delete combined datasource caches in the frontend that are derived from
+	// the datasource to be removed
+	$caches = glob( $CACHE . '/cache/*', GLOB_ONLYDIR );
+	foreach ($caches as $cache) {
+		$sources = "$cache/sources.json";
+
+		// Continue if not a combined cache
+		if( ! file_exists( $sources )) { continue; }
+
+		$contents = file_get_contents( $sources );
+		$sources  = json_decode( $contents, JSON_OBJECT_AS_ARRAY );
+
+		// Continue if combined cache does not contain datasource to be removed
+		if( ! in_array( $datasource_id, $sources )) { continue; }
+		system( "rm -rf $cache" );
+	}
+
 	// Update the manifest
 	unset( $manifest[ $datasource_id ]);
 	write_manifest( $manifest );
 
-	echo "Datasource deleted successfully";
+	echo "Datasource " . $datasource[ 'name' ] . " successfully deleted.";
 }
 
 ?>

@@ -9,7 +9,8 @@
 
   <link rel="stylesheet" type="text/css" href="/static/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/static/fontawesome/css/all.min.css">
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/alertify/css/alertify.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/alertify/css/alertify.bootstrap.min.css">
 
   <title>Remove a Data Source</title>
   <style>
@@ -87,7 +88,7 @@ form button.cancel {
 
 <body>
   <div class="container">
-    <div class="page-header"><h1>Remove Data Source</h1></div>
+    <div class="page-header"><h1>Remove a Data Source</h1></div>
     <p>You can remove data you have previously added to GeneDive. Once removed,
     your data will be deleted from GeneDive; if you keep a backup copy of the
     original CSV file, you can always add your data into GeneDive again later.</p>
@@ -96,7 +97,7 @@ form button.cancel {
       <div class="col-xs-2"></div>
       <div class="col-xs-8">
         <div class="panel panel-primary">
-	  <div class="panel-heading"><h3 class="panel-title">Remove a User-Provided Data Source</h3></div>
+	  <div class="panel-heading"><h3 class="panel-title">Remove a Data Source</h3></div>
 	  <div class="panel-body">
             <ul class="list-group" id="datasources">
 	    </ul>
@@ -117,13 +118,12 @@ form button.cancel {
         <p class="description">Description</p>
     </div>
     <div class="datasource-actions">
-      <button class="btn btn-xs btn-danger btn_remove " id="datasource-remove"><span class="fas fa-trash"></span>&nbsp;Remove</button>
+      <button class="btn btn-xs btn-danger btn-remove "><span class="fas fa-trash"></span>&nbsp;Remove</button>
     </div>
 </li>
 
   <!-- JQuery -->
   <script src="/static/jquery/jquery-3.2.1.min.js"></script>
-  <!-- <script src="static/jquery/jquery-ui.min.js"></script> -->
 
   <!-- Bootstrap and Modules -->
   <script src="/static/bootstrap/bootstrap.min.js"></script>
@@ -131,8 +131,7 @@ form button.cancel {
   <script src="/static/bootstrap/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 
   <!-- Alertify -->
-  <!--script src="/static/alertify/js/alertify.min.js"></script-->
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.4/build/alertify.min.js"></script>
+  <script src="/static/alertify/js/alertify.min.js"></script>
 
   <script>
 $( "button.cancel" ).off( 'click' ).click(( ev ) => {
@@ -146,32 +145,18 @@ Object.entries( manifest ).forEach(([ id, datasource ]) => {
   let entry = listitem.clone();
   entry.find( '.name' ).html( datasource.name );
   entry.find( '.description' ).html( datasource.description );
-  entry.find('.datasource_id').html(datasource.id);
-  entry.attr('id',datasource.id);
-  let toggle = entry.find( 'input.datasource-toggle' );
-  toggle.attr({ id: datasource.id, name: datasource.id });
+  entry.attr({ 'data-id': datasource.id, 'data-name': datasource.name });
   $( '#datasources' ).append( entry );
 });
 
-$('.btn_remove').on('click',function(){
-  var ds_id = this.parentNode.parentNode.id;
-  var ds_name = document.getElementById(ds_id).children[0].children[0].innerHTML
-  var retVal = confirm("Do you confirm to delete \"" + ds_name + "\"?");
-  if( retVal == true ) {
-   $.ajax({
-     url:"./delete.php",
-     type:"POST",
-     dataType:'html',
-     data:{"ds_id" : ds_id},
-     success:function(result){
-       	location.reload();
-	//alert(result);
-     }
-   }); 
-    return true;
-  } else {
-    return false;
-  }
+$( '.btn-remove' ).off( 'click' ).click(( e ) => {
+  var entry      = $( e.target ).parents( '.datasource-list-item' );
+  var datasource = { id : entry.attr( 'data-id' ), name : entry.attr( 'data-name' ) };
+
+  alertify.confirm( `Delete ${datasource.name}?`, `Click [OK] to permanently remove ${datasource.name}, [Cancel] to leave ${datasource.name} alone. If you still have the original CSV for ${datasource.name}, you can always re-import ${datasource.name} later, using the <code>Add a Datasource</code> feature.`, 
+    () => { $.ajax({ url: "./delete.php", type: "POST", data: { "id" : datasource.id }, success: () => { location.reload(); } }); },
+    () => {}
+  );
 })
 </script>
 

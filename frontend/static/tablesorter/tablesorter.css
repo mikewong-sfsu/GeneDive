@@ -4,18 +4,21 @@
 
 .table-view th.header::after {
   padding-left:8px;
-  content: "\f0dc";
-  font-family: FontAwesome;
+  content: '\f0dc';
+  font-weight: 900;
+  font-family: "FontAwesome 5 Free Solid", "Font Awesome 5 Free";
 }
 
 .table-view th.headerSortDown::after { 
   padding-left:8px;
-  content: "\f0de";
-  font-family: FontAwesome;
+  content: '\f0de';
+  font-weight: 900;
+  font-family: "Font Awesome 5 Free Solid", "Font Awesome 5 Free";
 } 
 
 .table-view th.headerSortUp::after { 
   padding-left:8px;
-  content: "\f0dd";
-  font-family: FontAwesome;
+  content: '\f0dd';
+  font-weight: 900;
+  font-family: "Font Awesome 5 Free Solid", "Font Awesome 5 Free";
 } 
