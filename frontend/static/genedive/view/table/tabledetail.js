@@ -21,10 +21,8 @@ class TableDetail extends BuildTable {
     } else {
       this.updateMessage(`Viewing <span class="figure">${this.amountOfEntries}</span> Interactions`);
     }
-
     this.drawHeaders();
     this.drawBody();
-
     this.table.tablesorter({
         //headers: {6: {sorter: false}, 7: {sorter: false}},
       sortList: [[4, 1],], // Sort by Max Confidence
@@ -36,7 +34,6 @@ class TableDetail extends BuildTable {
       GeneDive.tablestate.zoomed = false;
       GeneDive.onBackClick();
     });
-
 
   }
 
@@ -52,7 +49,7 @@ class TableDetail extends BuildTable {
     tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "100px").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher article accession number"}));
     tr.append($(document.createElement("th")).html("C. Score").addClass("numeric").css("width", "80px").attr({ id : 'th-cscore', "toggle": "tooltip", "title": "The confidence score (likelihood) for interaction accuracy"}));
     tr.append($(document.createElement("th")).text("Excerpt").attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "The article excerpt that states the interaction"}));
-    this.add_columns = this.buildHeader();
+    this.add_columns = this.buildHeader(this.interaction);
     for(let i = 0; i< this.add_columns.length;i++){
       tr.append($(document.createElement("th")).text(this.add_columns[i]).attr({ id: 'th-addendum_'+this.add_columns[i], "toggle": "tooltip","title": "User added columns"}));
     }
@@ -117,6 +114,7 @@ class TableDetail extends BuildTable {
   get amountOfEntries(){
     return this._amountOfEntries;
   }
+
 
 }
 

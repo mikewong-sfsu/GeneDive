@@ -39,7 +39,6 @@
     <script src="cache.php?get=set_id"></script>
 
     <!-- Import plugin class -->
-    <script src="datasource/view/table/plugin/jsonpath.js"></script>
     <?php include("addselectsource.php");?>
  
 
@@ -70,7 +69,6 @@
     <script src="static/genedive/filter/textfilter.js"></script>
     <script src="static/genedive/highlight/highlight.js"></script>
     <script src="static/genedive/grouper/grouper.js"></script>
-<!--script src="static/genedive/view/table/editdetailtable.js"></script-->
     <script src="static/genedive/view/table/resultstable.js"></script>
     <script src="static/genedive/view/table/buildtable.js"></script> 
     <script src="static/genedive/view/table/tabledetail.js"></script>
@@ -87,7 +85,8 @@
     <!-- Core Controller -->
     <script src="static/genedive/controller.js"></script>
 
-    <?php include( 'datasource/select.php' ) ?>
+    <?php include( 'datasource/select.php' ) ;?>
+     
 
   </body>
 </html>

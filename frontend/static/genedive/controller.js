@@ -609,7 +609,6 @@ class Controller {
       this.interactionsjqXHR = null;
       this.interactions_countXHR = null;
       this.onInteractionsLoaded(interactions);
-	    console.log(interactions);
     });
 
     this.tryToLoadInteractionsCount(token);
@@ -674,6 +673,7 @@ class Controller {
     // First check for zoom condition
 
     if (this.tablestate.zoomed) {
+      //make changes in the state for updating selected columns NL
       let table_detail = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup, this.ds);
       // If all the entries were filtered out, render the table summary instead.
       if(table_detail.amountOfEntries > 0)

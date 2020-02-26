@@ -6,6 +6,7 @@ class ResultsTable {
     //super();
     this.table = $(table);
     this.interactions = interactions;
+    var inter = interactions;
     this.table.html("");
     this.additional_columns = additional_columns;
     $(".messaging-and-controls").show();
@@ -37,21 +38,19 @@ class ResultsTable {
   hideBackButton () {
   // ============================================================
 	  $('.table-view .messaging-and-controls .go-back').text('Summary View').css({'cursor':'default','color':'black', 'visibility':'hidden'});
-	  //$('.table-view .messaging-and-controls .edit-table').css({'visibility':'hidden'});
+	  $('.table-view .messaging-and-controls .edit-table').css({'visibility':'hidden'});
 	  $('.table-view .messaging-and-controls .view-header').text('Summary View').css({'vertical-align':'middle','margin-left':'250px'}); 
 
   }
 
+
   // ============================================================
   showBackButton () {
   // ============================================================
-     $('.table-view .messaging-and-controls .go-back').html('<i class="fa fa-arrow-left"></i>Back to Summary Page').css({'cursor':'pointer','color':'#d84b2b','visibility':'visible'});
-    // $('.table-view .messaging-and-controls .edit-table').html('<input type="button" value="Edit Button"/>').css({'visibility':'visible','display':'inline-block'});
-     $('.table-view .messaging-and-controls .view-header').text('Detail View');
-   // var $input = $('<input type="button" value="Edit Table" id="edit_table"/>');
-     //   $input.appendTo($(".table-view .messaging-and-controls"));
-    
-    this.editTable();
+    $('.table-view .messaging-and-controls .go-back').html('<i class="fa fa-arrow-left"></i>Back to Summary Page').css({'cursor':'pointer','color':'#d84b2b','visibility':'visible'});
+    $('.table-view .messaging-and-controls .edit-table').html('<a id="edittable" class="edittable centered" title=" Edit columns in Table">Edit Table</a>').css({'cursor':'pointer','visibility':'visible'});
+    $('.table-view .messaging-and-controls .view-header').text('Detail View');
+    this.onEditTable();
   }
 
   // ============================================================
@@ -153,16 +152,62 @@ class ResultsTable {
 
   }
 
-///edit table
   // ============================================================
-  editTable () {
+onEditTable(){
   // ============================================================
-	$(".edit-table").click(function(e){
-	//var $dialog_box = $('<div id="dialog-confirm">Are you sure you want to do whatever?</div>');
-	//$dialog_box.append(".edit-table");
-	//alertify.prompt('Input (text):').set('type', 'text'); 
-	alertify.confirm('Edit Table', function(){ alertify.success('Ok') }, function(){ alertify.error('Cancel')});
-	});
+	$('#edittable').click(function (e) {
 
-  }
+	let columnheader = $('<div id="columnheaders" ></div>');
+	var detailTable = $('#result-table');
+	let headers = [];
+	//get headers
+	for( let col = 0,cell;cell = detailTable[0].rows[0].cells[col] ;col++){
+		let text = cell.innerHTML;
+		text = text.replace(/ /g,'\xa0') 	
+		if(text.includes("DGR")){
+			text = "DGR"+text.charAt(text.indexOf("<sub>") + 5);
+		}
+		headers.push(text);
+	}
+	
+	let row = $('<div class="row" ></div>');
+	let lst = row.clone();
+	//sort the headers
+	headers.sort();
+	//add headers as checkbox
+  	$.each(headers,function(key,value){
+  	lst.append($("<span class='checkbox-button'><input id="+ value +" type='checkbox' name='columnheader' value = " + value + " checked/><label for=" +value+">"+value+"</label></span>"));
+	//return console.log("key:"+ key + "value:"+value);	
+  	});
+  	columnheader.append(lst);
+
+	alertify.confirm('Edit Table', columnheader.html(),
+	//OK function
+	function(){ 
+		var hideHeader = new Set();
+		var indexes = {};
+            	$("input:checkbox:not(:checked)").each(function() {
+   		hideHeader.add(this.value);
+		});
+	 	var detailTable = $('#result-table');
+		//update the columns in table
+		for( let col = 0,cell;cell = detailTable[0].rows[0].cells[col] ;col++){
+			let text = cell.innerHTML;
+			text = text.replace(/ /g,'\xa0') 
+			if(text.includes("DGR")){
+				text = "DGR"+text.charAt(text.indexOf("<sub>") + 5);
+			}
+			//toggle
+			if(hideHeader.has(text)){
+				$('table tr').find('td:eq(' + col + '),th:eq('+ col + ')').hide();
+			}else{
+				$('table tr').find('td:eq(' + col + '),th:eq('+ col + ')').show();
+			}
+    		}
+	},
+	//CANCEL function
+	function(){ }) ;	
+});
+}
+
 }

@@ -54,6 +54,7 @@
     <link rel=stylesheet type=text/css href="static/genedive/download_upload/download_upload.css">
     <link rel=stylesheet type=text/css href="static/genedive/search/search.css">
     <link rel=stylesheet type=text/css href="static/genedive/filter/filter.css">
+    <link rel=stylesheet type=text/css href="static/genedive/view/table/editdialog.css"> 
     <link rel=stylesheet type=text/css href="static/genedive/view/table/table.css">
     <link rel=stylesheet type=text/css href="static/genedive/view/graph/graph.css">
 
