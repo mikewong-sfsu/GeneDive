@@ -3,6 +3,15 @@ $DATASOURCES = "/usr/local/genedive/data/sources";
 $CACHE       = "/var/www/html";
 $manifest    = read_manifest();
 
+if( isset( $_GET[ 'get' ])) {
+  if( $_GET[ 'get' ] == 'manifest' )  { echo json_encode( $manifest ); exit(); }
+  if( $_GET[ 'get' ] == 'selection' ) { 
+    $selection = "$DATASOURCES/selection.json"; 
+    if( file_exists( $selection )) { $fp = fopen( $selection, 'r' ); fpassthru( $fp ); } 
+    exit(); 
+  }
+}
+
 // ============================================================
 function filter_by_host_manifest( $element ) {
 // ============================================================
@@ -53,23 +62,24 @@ function add_datasource( $manifest, $datasource ) {
 	move_uploaded_file( $_FILES[ 'dsfile' ][ 'tmp_name' ], $file );
 
 	echo "<h1>Importing data...</h1>\n";
-	echo `/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1`;
+  flush();
+	system( "/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1" );
 
 	echo "<h2>Loading data into database...</h2>\n";
-	$sqlite = `/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql`;
-	if( $sqlite ) {
-		var_dump( $import );
-		exit( 1 );
-	}
+  flush();
+	system( "/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql" );
 
 	echo "<h2>Updating manifest</h2>\n";
+  flush();
 	$id = $datasource[ 'id' ];
 	$manifest[ $id ] = $datasource;
 	write_manifest( $manifest );
 
 
 	echo "<h2>Data import complete!</h2>\n";
-	echo "<script>setTimeout(() => { self.opener.location.reload(); window.close(); }, 2500 );</script>";	
+
+	//echo "<script>setTimeout(() => { self.opener.location.reload(); window.close(); }, 2500 );</script>";	
+	echo "<script>setTimeout(() => { window.location = \"/search.php\"; }, 2500 );</script>";	
 
 }
 
@@ -95,16 +105,47 @@ function remove_datasource( $manifest, $datasource_id ) {
 
 	//Delete datasource class in plugin
 	///datasource/view/table/plugin/sources
-	$path =   $CACHE .'/datasource/view/table/plugin/sources/ds_' . $datasource[ 'path' ].'.js';
+	/*$path =   $CACHE .'/datasource/view/table/plugin/sources/ds_' . $datasource[ 'path' ].'.js';
 	echo $path;
-	system( "rm -rf $path" );
+	system( "rm -rf $path" );*/
 
+	// Delete combined datasource caches in the frontend that are derived from
+	// the datasource to be removed
+	$caches = glob( $CACHE . '/cache/*', GLOB_ONLYDIR );
+	foreach ($caches as $cache) {
+		$sources = "$cache/sources.json";
+
+		// Continue if not a combined cache
+		if( ! file_exists( $sources )) { continue; }
+
+		$contents = file_get_contents( $sources );
+		$sources  = json_decode( $contents, true );
+
+		// Continue if combined cache does not contain datasource to be removed
+		if( ! is_array( $sources ) || ! in_array( $datasource_id, $sources )) { continue; }
+		system( "rm -rf $cache" );
+	}
 
 	// Update the manifest
 	unset( $manifest[ $datasource_id ]);
 	write_manifest( $manifest );
 
-	echo "Datasource deleted successfully";
+  // Update the datasource selection
+  $selection = "$DATASOURCES/selection.json";
+  if( file_exists( $selection )) {
+    $selected = json_decode( file_get_contents( $selection ), true );
+    if( is_array( $selected[ 'datasources' ]) && in_array( $datasource_id, $selected[ 'datasources' ])) {
+      $selected[ 'datasources' ] = preg_grep( "/^$datasource_id\$/", $selected[ 'datasources' ], PREG_GREP_INVERT );
+      if( count( $selected[ 'datasources' ]) == 0 ) {
+        $selected[ 'datasources' ] = [ 'plos-pmc', 'pharmgkb' ];
+      }
+	    $fp = fopen( "$DATASOURCES/selection.json", 'w' );
+      fwrite( $fp, json_encode( $selected ));
+      fclose( $fp );
+    }
+  }
+
+	echo "Datasource " . $datasource[ 'name' ] . " successfully deleted. ";
 }
 // ============================================================
 function sort_manifest( $manifest ) {

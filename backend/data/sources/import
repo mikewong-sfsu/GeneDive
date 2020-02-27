@@ -1,5 +1,7 @@
 #! /usr/bin/perl
 
+BEGIN { $| = 1; } # Forces output buffer to flush
+
 use Text::CSV qw( csv );
 use List::Util qw( any none uniq );
 use JSON::XS;
@@ -25,14 +27,14 @@ cleanup( $interactions );
 
 # ===== GENERATE ADJACENCY MATRIX
 print "<ul><li>Building <i>adjacency matrix</i></li>\n";
-adjacency_matrix( $cache, $interactions );#changed $cache to $path NL
+adjacency_matrix( $cache, $interactions );
 
 # ===== GENERATE TYPEAHEAD LOOKUP CACHES
 foreach my $type (qw( gene drug disease )) {
 	my $hash = {};
 	extract_ids( $type, $hash, $_ ) foreach @$interactions;
-	hash_to_cache( $type, $cache, $hash );#changed $cache to $path NL
-  	print "<li>Building <i>$type typeahead lookup cache</li>\n";
+	hash_to_cache( $type, $cache, $hash );
+  	print "<li>Building <i>$type typeahead lookup cache</i></li>\n";
 }
 
 filter_columns( $interactions );
@@ -75,7 +77,7 @@ sub adjacency_matrix {
 	}
 
 	my $json = new JSON::XS();
-  	unless( -d $cache ) { mkdir $cache; chmod 0777, $cache; }
+	unless( -d $cache ) { mkdir $cache; chmod 0777, $cache; }
 	open FILE, ">$cache/adjacency_matrix.js" or die "Can't write to '$cache/adjacency_matrix.js' $!";
 	print FILE "var adjacency_matrix = ";
 	print FILE $json->canonical->encode( $matrix );
@@ -88,9 +90,10 @@ sub cache {
 # ============================================================
 	my $file  = shift;
 	my @paths = split /\//, $file; pop @paths;
-	my $cache = '/var/www/html/cache/' . pop @paths;
+  my $cache = '/var/www/html/cache/';
+	my $path  = $cache . pop @paths;
 
-	return $cache;
+	return $path;
 }
 
 # ============================================================
@@ -152,7 +155,7 @@ sub hash_to_cache {
 		push @$data, { symbol => $key, values => [ uniq @{$hash->{ $key }} ]};
 	}
 
-  	unless( -d $cache ) { mkdir $cache; chmod 0777, $cache; }
+	unless( -d $cache ) { mkdir $cache; chmod 0777, $cache; }
 	open FILE, ">$cache/$type" . '_id.js' or die $!;
 	printf FILE "var AUTOCOMPLETE_%s = ", uc( $type );
 	print FILE $json->canonical->encode( $data );

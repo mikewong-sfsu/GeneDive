@@ -91,6 +91,11 @@ h5 {
   color:rgb(128,128,128);
 }
 
+.titlebar span.version{
+  font-size: 18pt;
+  color: #999;
+}
+
 .titlebar span.subtitle{
   font-size: 14pt;
   color: #666;

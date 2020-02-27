@@ -90,7 +90,7 @@ form button.cancel {
 
 <body>
   <div class="container">
-    <div class="page-header"><h1>Add or Remove Data Source</h1></div>
+    <div class="page-header"><h1>Add a Data Source</h1></div>
     <p>You can import your data into GeneDive to query, visualize, and compare with
     provided data sources or your other data sources. You can remove your data
     sources at any time. Your data remains local to your computer and is never
@@ -221,7 +221,8 @@ form button.cancel {
 
   <script>
 $( "form button.cancel" ).off( 'click' ).click(( ev ) => {
-  window.close();
+  ev.preventDefault();
+  window.location = "/search.php";
 });
 
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;

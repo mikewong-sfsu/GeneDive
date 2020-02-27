@@ -44,9 +44,9 @@
     </div>
 </li>
 
-<div id="datasource-manager">
+<div id="datasource-selector">
     <p>Enable or disable the data sources below for search. Enabled data sources will be searched for disease, gene, or drug/Rx (DGR) interactions. </p>
-    <div class="row">
+    <div class="row" style="overflow-y: auto;">
         <ul class="list-group">
         </ul>
     </div>
@@ -57,11 +57,12 @@ GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
 var std_ds = new Set(["pharmgkb","plos-pmc","all"]);
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
+
 // ===== INITIALIZE DATASOURCE MANAGER
-var listitem = $( '.datasource-list-item' ).detach();
+//var listitem = $( '.datasource-list-item' ).detach();
 var short_id_map = new Map();
 
-GeneDive.datasource.refreshUI = () => {
+/*GeneDive.datasource.refreshUI = () => {
 var std_flag = 0;//to display the standard data source header
 var local_flag = 0;//to display the local data source header
 var datasource_name;
@@ -108,10 +109,30 @@ $.ajax({
 .fail(( error ) => { console.log( error ); });
 };
 GeneDive.datasource.refreshUI();
+*/
+
+// ===== INITIALIZE DATASOURCE MANAGER
+var listitem = $( '.datasource-list-item' ).detach();
+GeneDive.datasource.refreshSelectionUI = () => {
+    Object.entries( manifest ).forEach(([ key, datasource ]) => {
+        let entry = listitem.clone().css({ display: 'block' });
+        entry.find( '.name' ).html( datasource.name );
+        entry.find( '.description' ).html( datasource.description );
+        let toggle = entry.find( 'input.datasource-toggle' );
+        toggle.attr({ id: datasource.id, name: datasource.id });
+	$( '#datasource-selector .list-group' ).append( entry );
+    });
+};
+GeneDive.datasource.refreshSelectionUI();
+
 // ===== DATASOURCE MANAGER DIALOG
-let dsm = $( '#datasource-manager' ).detach();
-$( '.datasources' ).off( 'click' ).click(( ev ) => {
-    alertify.confirm( 'Data Sources', dsm.html(), 
+let dss = $( '#datasource-selector' ).detach();
+let dss_show = () => {
+    let response = $.getJSON( '/datasource/manifest.php?get=manifest' );
+    if( response.statusText == 'OK' ) { manifest = response.responseJSON; }
+    alertify.confirm( 
+        'Select Datasources', 
+        dss.html(), 
 
         // OK button behavior
         () => { 
@@ -137,17 +158,49 @@ $( '.datasources' ).off( 'click' ).click(( ev ) => {
         // Cancel button behavior
         () => { 
             let datasources = GeneDive.datasource.list.includes( 'all' ) ? [ 'plos-pmc', 'pharmgkb' ] : GeneDive.datasource.list;
-            let list        = datasources.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
-            alertify.message( `Data sources remain unchanged<br>(${list})` ); 
+            let list        = datasources.map( sourceid  => sourceid in manifest ? manifest[ sourceid ].name : null ).filter( x => x ).sort().join( ', ' );
+            alertify.message( 'Data sources remain unchanged' + ( list ? `<br>(${list})` : '' )); 
         }
-    );
+    ).set( 'closable', false );
+    $( '.ajs-header' ).css({ 'background-color' : '#337ab7', 'border-color' : '#2e6da4', 'color' : 'white', 'font-weight' : 'bold' });
     $( 'input.datasource-toggle' ).bootstrapToggle( 'destroy' ).bootstrapToggle();
     $( 'input.datasource-toggle' ).each(( i, item ) => { 
         let key      = $( item ).attr( 'id' );
-        let all      = [ 'plos-pmc', 'pharmgkb' ].includes( key ) && GeneDive.datasource.list.includes( 'all' );
         let selected = GeneDive.datasource.list.includes( key );
+/*<<<<<<< HEAD
 	if( all || selected ) { $( item ).bootstrapToggle( 'on' ); } 
 	//else { $( item ).bootstrapToggle( 'off' );} //commented to fix the toggle reset 
+    =======*/
+        if( selected ) { $( item ).bootstrapToggle( 'on' ); } 
+        else           { $( item ).bootstrapToggle( 'off' );}
+//>>>>>>> master
     });
+};
+
+$( '.datasource-select' ).off( 'click' ).click(( ev ) => {
+  if( GeneDive.history.stateHistory.length > 0 ) {
+   alertify.confirm(
+      'You have an Unsaved Session',
+      'Selecting a Datasource will restart your work session. Click [Cancel] to return to search (and save your session) or click [OK] to Select a Datasource (and lose your session)',
+      () => { setTimeout(() => { dss_show(); }, 500 ); },
+      () => {}
+    );
+  } else {
+    dss_show();
+  }
 });
+$( '.datasource-add' ).off( 'click' ).click(( ev ) => {
+  if( GeneDive.history.stateHistory.length > 0 ) {
+   alertify.confirm(
+      'You have an Unsaved Session',
+      'Adding a Datasource will restart your work session. Click [Cancel] to return to search (and save your session) or click [OK] to Add a Datasource (and lose your session)',
+      () => { window.location = "/datasource/add.php" },
+      () => {}
+    );
+  } else {
+    window.location = "/datasource/add.php";
+  }
+});
+
+
 </script>
