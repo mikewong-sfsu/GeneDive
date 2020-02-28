@@ -1,4 +1,3 @@
-<!--?php require_once("session.php");echo "hi", $_SESSION ?-->
     <!-- JQuery -->
     <script src="static/jquery/jquery-3.2.1.min.js"></script>
 

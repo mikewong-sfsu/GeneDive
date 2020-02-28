@@ -160,6 +160,7 @@
       <div class="no-results">
         <h3>No Results Found</h3>
       </div>
+     <div class="collapse" id="columnheaders"></div> 
     </div>
 
     <div class="splitter-horizontal"></div>

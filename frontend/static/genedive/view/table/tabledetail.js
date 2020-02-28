@@ -23,8 +23,9 @@ class TableDetail extends BuildTable {
     }
     this.drawHeaders();
     this.drawBody();
+    this.onEditTable();
     this.table.tablesorter({
-        //headers: {6: {sorter: false}, 7: {sorter: false}},
+	    //headers: {1:{sorter:false}},//{6: {sorter: false}, 7: {sorter: false}},
       sortList: [[4, 1],], // Sort by Max Confidence
         // [index, asc/desc]
       });
@@ -42,13 +43,12 @@ class TableDetail extends BuildTable {
     let thead = $(document.createElement("thead"));
     let tr = $(document.createElement("tr"));
     thead.append(tr);
-
     tr.append($(document.createElement("th")).html("DGR<sub>1</sub>").css("width", "8%").attr({ id : 'th-dgr1', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}));
     tr.append($(document.createElement("th")).html("DGR<sub>2</sub>").css("width", "8%").attr({ id : 'th-dgr2', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}));
-    //tr.append($(document.createElement("th")).text("Journal").css("width", "70px").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher for the citation supporting the interaction"}));
     tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "100px").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher article accession number"}));
     tr.append($(document.createElement("th")).html("C. Score").addClass("numeric").css("width", "80px").attr({ id : 'th-cscore', "toggle": "tooltip", "title": "The confidence score (likelihood) for interaction accuracy"}));
     tr.append($(document.createElement("th")).text("Excerpt").attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "The article excerpt that states the interaction"}));
+    
     this.add_columns = this.buildHeader(this.interaction);
     for(let i = 0; i< this.add_columns.length;i++){
       tr.append($(document.createElement("th")).text(this.add_columns[i]).attr({ id: 'th-addendum_'+this.add_columns[i], "toggle": "tooltip","title": "User added columns"}));
@@ -81,7 +81,7 @@ class TableDetail extends BuildTable {
       // Synonym styling
       let mention1 = i.synonym1 ? this.addSynonym(i.mention1, i.synonym1) : i.mention1;
       let mention2 = i.synonym2 ? this.addSynonym(i.mention2, i.synonym2) : i.mention2;
-
+      //tr.append($(document.createElement("td")).html(""));
       tr.append($(document.createElement("td")).html(mention1));
       tr.append($(document.createElement("td")).html(mention2));
       //tr.append($(document.createElement("td")).html(i.journal));

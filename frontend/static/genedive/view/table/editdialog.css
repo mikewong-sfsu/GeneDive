@@ -1,14 +1,14 @@
 <style>
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-.row{
+.editcolumn{
 
   display: flex;
   flex-wrap: wrap;
 
 }
 
-.row > div {
+ .editcolumn > div {
   background-color: #f1f1f1;
   width: 100px;
   margin: 10px;

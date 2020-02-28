@@ -59,21 +59,23 @@ var std_ds = new Set(["pharmgkb","plos-pmc","all"]);
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 
 // ===== INITIALIZE DATASOURCE MANAGER
-//var listitem = $( '.datasource-list-item' ).detach();
 var short_id_map = new Map();
 
-/*GeneDive.datasource.refreshUI = () => {
-var std_flag = 0;//to display the standard data source header
-var local_flag = 0;//to display the local data source header
-var datasource_name;
-//add the default standard datasources
-short_id_map.set("plos-pmc","G1");
-short_id_map.set("pharmgkb","G2");
-short_id_map.set("all","G1,G2");
-var i = 1;
-Object.entries( manifest ).forEach(([ key, datasource ]) => {
-let entry = listitem.clone().css({ display: 'block' });
-        //if all included, add them as separate entries
+// ===== INITIALIZE DATASOURCE MANAGER
+var listitem = $( '.datasource-list-item' ).detach();
+GeneDive.datasource.refreshSelectionUI = () => {
+    var std_flag = 0;//to display the standard data source header
+    var local_flag = 0;//to display the local data source header
+    var datasource_name;
+    //add the default standard datasources
+    short_id_map.set("plos-pmc","G1");
+    short_id_map.set("pharmgkb","G2");
+    short_id_map.set("all","G1,G2");
+    var i = 1;
+
+    Object.entries( manifest ).forEach(([ key, datasource ]) => {
+    	let entry = listitem.clone().css({ display: 'block' });
+	//if all included, add them as separate entries
 	datasource_name = datasource.name;
 	//concatinate name with identifier
 	if(short_id_map.has(datasource.id)){
@@ -85,7 +87,8 @@ let entry = listitem.clone().css({ display: 'block' });
 		short_id_map.set(datasource.id,short_id);
 		i++;
 	}
-	entry.find( '.name' ).html( datasource_name );
+	
+	entry.find( '.name' ).html( datasource.name );
         entry.find( '.description' ).html( datasource.description );
         let toggle = entry.find( 'input.datasource-toggle' );
 	toggle.attr({ id: datasource.id, name: datasource.id });
@@ -97,31 +100,16 @@ let entry = listitem.clone().css({ display: 'block' });
 	$( '#datasource-manager .list-group' ).append("<br><p><i>Local Datasources</i></p>");
 	local_flag = 1;
 	}	
-        $( '#datasource-manager .list-group' ).append( entry );
-});
-//update the shortid list
-let dsid_map = btoa (JSON.stringify( Object.fromEntries(short_id_map.entries())));
-$.ajax({
-	url: `/datasource/managelist.php?id_map=${dsid_map}`,
-        method: 'GET'
-})
-//.done((message) => { console.log("datasource with shortid:"  + short_id_map);})
-.fail(( error ) => { console.log( error ); });
-};
-GeneDive.datasource.refreshUI();
-*/
-
-// ===== INITIALIZE DATASOURCE MANAGER
-var listitem = $( '.datasource-list-item' ).detach();
-GeneDive.datasource.refreshSelectionUI = () => {
-    Object.entries( manifest ).forEach(([ key, datasource ]) => {
-        let entry = listitem.clone().css({ display: 'block' });
-        entry.find( '.name' ).html( datasource.name );
-        entry.find( '.description' ).html( datasource.description );
-        let toggle = entry.find( 'input.datasource-toggle' );
-        toggle.attr({ id: datasource.id, name: datasource.id });
 	$( '#datasource-selector .list-group' ).append( entry );
     });
+    //update the shortid list
+    let dsid_map = btoa (JSON.stringify( Object.fromEntries(short_id_map.entries())));
+    $.ajax({
+	url: `/datasource/managelist.php?id_map=${dsid_map}`,
+        method: 'GET'
+    })
+    .fail(( error ) => { console.log( error ); });
+
 };
 GeneDive.datasource.refreshSelectionUI();
 
