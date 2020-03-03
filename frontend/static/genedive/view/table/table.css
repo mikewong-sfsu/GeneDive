@@ -107,10 +107,13 @@ table td{
     overflow: visible;
 }
 
-.tick text {
+.histogram .tick text {
     display: none;
 }
 
+.distribution .tick text, .bar text {
+font-size: 10px;
+}
 /* Table Messaging and Controls */
 
 .table-view .messaging-and-controls {

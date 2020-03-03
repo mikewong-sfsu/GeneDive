@@ -5,6 +5,7 @@ if( $dslist == '' ) { $dslist = []; }
 
 
 ?>
+<?php include_once( '../../session.php' ); ?>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -12,6 +13,8 @@ if( $dslist == '' ) { $dslist = []; }
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" type="text/css" href="/static/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/alertify/css/alertify.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/alertify/css/alertify.bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/static/fontawesome/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="editdatasource.css">
   <link rel="stylesheet" type="text/css" href="codemirror/lib/codemirror.css">
@@ -20,78 +23,73 @@ if( $dslist == '' ) { $dslist = []; }
 </head>
 <body>
   <script type="text/javascript" src="/static/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/static/alertify/js/alertify.min.js"></script>
+  <script type="text/javascript" src="/static/genedive/alertify-defaults.js"></script>
   <script type="text/javascript" src="codemirror/lib/codemirror.js"></script>
   <script type="text/javascript" src="https://codemirror.net/mode/javascript/javascript.js"></script>
   <script type="text/javascript" src="https://codemirror.net/addon/lint/lint.js"></script> 
   <script type="text/javascript" src="https://codemirror.net/addon/lint/javascript-lint.js"></script> 
   <!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.26.0/addon/lint/javascript-lint.min.js" ></script--> 
   <!--script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script--> 
-  <li class="datasource-list-item list-group-item">
-    <div class="datasource-info">
-      <h5 class="name">Name</h5>
-      <p class="description">Description</p>
-    </div>
-    <div class="datasource-actions">
-      <input class="datasource-select" type="radio" name="selectDatasource"></input>
-    </div>
-  </li>
-  <div class="container">
-  <div class="page-header"><h1>Edit Data Source<button class="btn btn-primary cancel pull-right">Return to Search</button></h1></div>
-  <p>You can edit table columns displayed or map new columns into GeneDive to query, visualize, and compare with
-    provided data sources or your other data sources.</p>
-  <div class="row">
-  <div class="col-xs-2"></div>
-    <div class="col-xs-8">
-      <div class="panel panel-primary">
-	<div class="panel-heading"><h3 class="panel-title">Edit a Data Source</h3></div>
-	<div class="panel-body">
-	Select the datasource to edit
-	  <form id="edit_ds" method="post" enctype="multipart/form-data" class="form-horizontal">	
-	    <div id="datasource-manager">
-	      <ul class="list-group">
-	      </ul>
-	    </div> 
-	  </form>
-	</div>
-      </div>
-    </div>
-    <div class="col-xs-2"></div>
+<!-- -->
+<div class="container">
+<div class="page-header">
+	<h1>Edit Data Source</h1>
+	<p>You can edit table columns displayed or map new columns into GeneDive 
+	to query, visualize, and compare with provided data sources or your other data sources.Columns 
+	removed will not be displayed in the hide columns option on the Details view</p>
+	<button id="edit-button" class="btn btn-primary">Select DataSource</button>
+	<button class="btn btn-primary cancel">Return to Search</button>		
+</div>
+<form id="datasource-edit" method="post" enctype="multipart/form-data" class="form-horizontal">	
+	<div id="datasource-manager">
+		<ul class="list-group" id="datasources-available-for-edit">
+		</ul>
+	</div> 
+</form>
+
+<li class="datasource-edit-item list-group-item row">
+  <div class="datasource-info col-xs-10">
+    <h5 class="name">Name</h5>
+    <p class="description">Description</p>
   </div>
+  <div class="datasource-actions col-xs-2" style="margin-top: 18px;">
+   <input class="datasource-select" type="radio" name="selectDatasource"></input> 
   </div>
+</li>
+
+</div>
+<!-- -->
   <!--code editor-->
   <div class="container">
     <h2>
-      Table Plugin for datasource <span id="ds_name"></span>
+      Table Plugin for datasource <span id="ds_name"> </span>
     </h2>
-   <button class="btn  btn-primary btn_edit" id="datasource-edit" style="float: right;"><span class="fas fa-play"></span>&nbsp;Update</button> 
-    <div id="editor"></div>
+    <div id="editor" style="position :relative;">
+	 <button  class=" btn btn-primary btn_edit" id="datasource-edit" style="z-index: 10; right:110px; position: fixed;">Update Datasource</button>
+    </div>
   </div>
   <div><br><br></div>
 </body>
 <script>
-//Map the datasources on UI
 datasource = {};
 datasource.list = <?= json_encode( $dslist ) ?>;
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
-// ===== INITIALIZE DATASOURCE MANAGER
-var listitem = $( '.datasource-list-item' ).detach();
-datasource.refreshUI = () => {
-Object.entries( manifest ).forEach(([ key, datasource ]) => {
-let entry = listitem.clone().css({ display: 'block' });
-if(!(datasource.id == 'plos-pmc' || datasource.id == 'pharmgkb')){
-
-entry.find( '.name' ).html( datasource.name );
-entry.find( '.description' ).html( datasource.description );
-let toggle = entry.find( 'input.datasource-select' );
-toggle.attr({ id: datasource.id ,value:datasource.id});
-$( '#datasource-manager .list-group' ).append( entry );
-}
-});
-
+var edit = $( '.datasource-edit-item' ).detach();
+refreshEditUI = () => {
+  $( '#datasources-available-for-edit' ).empty();
+  Object.entries( manifest ).forEach(([ id, datasource ]) => {
+    if( id.match( /^(?:plos-pmc|pharmgkb)$/ )) { return; }
+    let entry = edit.clone();
+    entry.find( '.name' ).html( datasource.name );
+    entry.find( '.description' ).html( datasource.description );
+    entry.attr({ 'data-id': datasource.id, 'data-name': datasource.name });
+    let toggle = entry.find( 'input.datasource-select' );
+    toggle.attr({ id: datasource.id ,value:datasource.id});
+   $( '#datasources-available-for-edit' ).append( entry );
+  });
 };
-datasource.refreshUI();
-
-$(document).ready(function() {
+refreshEditUI();
 
 //initialize the code editor
 var editor = CodeMirror(document.getElementById("editor"), {
@@ -100,25 +98,26 @@ var editor = CodeMirror(document.getElementById("editor"), {
     indentUnit: 4,
     lineNumbers: true,
     gutters: ["CodeMirror-lint-markers"],
-    lint: true
+    lint: true,
+    height:"auto"
 });
 editor.setOption("lint",true);
+editor.setSize("100%", "100%");
+
 //on selecting radio button
-$('input[type=radio]').on('change', function(){
+var dse_selected = () => {
   ds_id = $('input[name="selectDatasource"]:checked').val();
-  //$( "#ds_name" ).html();
   $.ajax({
     method: "POST",
     url: "import.php",
     data: { ds_id: ds_id },
-    //sucess: function(data){ return data;}
   })
   .done(function( msg ) {
     ds = msg.toString();
     //set the code of corresponding class in editor
     editor.setValue(ds);
   });
-});
+}
 //update the file with new changes
 $('.btn_edit').on('click',function(){
   var retVal = confirm("Do you confirm to save the changes ?");
@@ -128,25 +127,32 @@ $('.btn_edit').on('click',function(){
      type:"POST",
      dataType:'html',
      data:{data : editor.getValue() }
-     //success:function(result){
-       //	location.reload();
-	//alert(result);
    }) 
    .done(function(msg){
-     location.reload();
    });
-   return true;
-  } else {
-    return false;
-  }
+  } 
 })
 
 //close button
 $( "button.cancel" ).off( 'click' ).click(( ev ) => {
   self.opener.location.reload(); 
   window.close();
-});
+  });
 
-});
+var dse = $( '#datasource-edit' ).detach();
 
+let dse_show = () => {
+    alertify.confirm( 
+      'Select datasource to edit', 
+      dse.html(),
+      () =>  { 
+      	dse_selected();
+	},
+      () => {}
+    );
+}
+
+$( "#edit-button" ).click(function()  {
+  dse_show();
+});
 </script>

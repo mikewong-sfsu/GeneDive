@@ -7,7 +7,7 @@ class DefaultTable{
 	this.add_cols = null;//additional column
 	this.custom_cols;//custom columns can be added from edit datasource
 	this.columnMap = this.addColumns();
-	this.addendum = null;
+	this.interaction = null;
 	
 	}
 	//=================================
@@ -30,12 +30,13 @@ class DefaultTable{
 	//map the table values for optional columns
 	getElement(interaction,arr){
 	//=================================
-		//this.interaction = interaction;
+		this.interaction = interaction;
 		var res = new Map();
 		var addendum = {};
-		
+		this.addRequiredColumns(interaction);
 		if(interaction.addendum && interaction.addendum.length){
-			this.addendum = addendum = JSON.parse(interaction.addendum);
+			addendum = JSON.parse(interaction.addendum);
+			this.interaction = Object.assign({},this.interaction,addendum);
 	
 		}
 	
@@ -48,6 +49,7 @@ class DefaultTable{
 		}
 		//get all the custom mapping from user//edit datasource
 		this.columnMap = this.addColumns(interaction);
+		//this.addRequiredColumns(interaction);
 
 		//for local datasource columns
 		if(Array.isArray(this.custom_cols) && this.custom_cols.length > 0){
@@ -58,7 +60,7 @@ class DefaultTable{
 
 				//get the mapping from the columnMap
 				if(res.has(this.custom_cols[i]))
-					res.set(this.custom_cols[i], this.getColumn(addendum, key));
+					res.set(this.custom_cols[i], this.getColumn(this.interaction, key));
 			}
 
 		}
@@ -68,7 +70,7 @@ class DefaultTable{
 	//=================================
 	getInteraction(){
 	//=================================
-		return this.addendum;
+		return this.interaction;
 	}
 
 
@@ -88,11 +90,27 @@ class DefaultTable{
 		return '{}';
 		
 	}
+	addRequiredColumns(interaction){
+		this.columnMap['DGR1'] = interaction.mention1;
+		this.columnMap['DGR2'] = interaction.mention2;
+		this.columnMap['Article ID'] = interaction.pubmed_id;
+		this.columnMap['C. Score'] = interaction.probability;
+		//this.columnMap['Excerpt'] = interaction.context;
+	}
 	//==================================
 	//method to add custom columns
 	addColumns(interaction = null){
 	//==================================
 		return new Map();
+	}
+
+	//==================================
+	//method to rename custom columns
+	replace(old_name,new_name){
+	//==================================
+		//
+		///this.columnMap[new_name] = this.columnMap[old_name];
+
 	}
 
 
