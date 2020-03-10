@@ -1,87 +1,56 @@
 /* Originally from: https://bl.ocks.org/mbostock/1933560
     Modified by Brook Thomas to fit table embed requirements
 */
+/*updated function compatible with d3 version 5)*/
+function histogramChart(){
 
-function histogramChart() {
-  var margin = {top: 0, right: 0, bottom: 0, left: 0},
-      width = 125,
-      height = 30;
+	var margin = {top: 0, right: 0, bottom: 0, left: 0},
+    	    width  = 125 - margin.left - margin.right,
+    	    height = 30 - margin.top - margin.bottom;
 
-  var histogram = d3.layout.histogram(),
-      x = d3.scale.ordinal(),
-      y = d3.scale.linear(),
-      xAxis = d3.svg.axis().scale(x).orient("bottom").tickSize(6, 0);
+	var x = d3.scaleLinear()
+          .domain([0,1])
+          .range([0, width]);
 
-  function chart(selection) {
-    selection.each(function(data) {
+	var y = d3.scaleLinear()
+          .range([height, 0]);
+	
+	// set the parameters for the histogram
+	var histogram = d3.histogram()
+    	.value(function(d) { return d; })
+    		.domain(x.domain())
+    		.thresholds(10);//10 bins
 
-      // Compute the histogram.
-      data = histogram(data);
+	function chart(selection){
+		selection.each(function(data){
 
-      // Update the x-scale.
-      x   .domain(data.map(function(d) { return d.x; }))
-          .rangeRoundBands([0, width - margin.left - margin.right], .1);
+		var bins = histogram(data);
+  		y.domain([0, d3.max(bins, function(d) { return d.length; })]);
 
-      // Update the y-scale.
-      y   .domain([0, d3.max(data, function(d) { return d.y; })])
-          .range([height - margin.top - margin.bottom, 0]);
+		var svg = d3.select(this).append("svg")
+    		.attr("width", width - margin.left - margin.right)
+    		.attr("height", height - margin.top - margin.bottom)
+  		.append("g")
+    		.attr("transform",  "translate(" + margin.left + "," + margin.top + ")");
 
-      // Select the svg element, if it exists.
-      var svg = d3.select(this).selectAll("svg").data([data]);
+		// append the bar rectangles to the svg element
+  		svg.selectAll("rect")
+      		.data(bins)
+    		.enter().append("rect")
+      		.attr("class", "bar")
+      		.attr("x", 1)
+      		.attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+      		.attr("width", function(d) { return x(d.x1) - x(d.x0) ; })
+      		.attr("height", function(d) { return height - y(d.length); })
+		.attr("fill", "grey");
 
-      // Otherwise, create the skeletal chart.
-      var gEnter = svg.enter().append("svg").append("g");
-      gEnter.append("g").attr("class", "bars");
-      gEnter.append("g").attr("class", "x axis");
-
-      // Update the outer dimensions.
-      svg .attr("width", width)
-          .attr("height", height);
-
-      // Update the inner dimensions.
-      var g = svg.select("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-      // Update the bars.
-      var bar = svg.select(".bars").selectAll(".bar").data(data);
-      bar.enter().append("rect");
-      bar.exit().remove();
-      bar .attr("width", x.rangeBand())
-          .attr("x", function(d) { return x(d.x); })
-          .attr("y", function(d) { return y(d.y); })
-          .attr("height", function(d) { return y.range()[0] - y(d.y); })
-          .order();
-
-      // Update the x-axis.
-      g.select(".x.axis")
-          .attr("transform", "translate(0," + y.range()[0] + ")")
-          .call(xAxis);
-    });
-  }
-
-  chart.margin = function(_) {
-    if (!arguments.length) return margin;
-    margin = _;
-    return chart;
-  };
-
-  chart.width = function(_) {
-    if (!arguments.length) return width;
-    width = _;
-    return chart;
-  };
-
-  chart.height = function(_) {
-    if (!arguments.length) return height;
-    height = _;
-    return chart;
-  };
-
-  // Expose the histogram's value, range and bins method.
-  d3.rebind(chart, histogram, "value", "range", "bins");
-
-  // Expose the x-axis' tickFormat method.
-  d3.rebind(chart, xAxis, "tickFormat");
-
-  return chart;
+  		// add the x Axis
+  		svg.append("g")
+		.attr("class", "x axis")
+      		.attr("transform", "translate(0," + height + ")")
+      		.call(d3.axisBottom(x).ticks(10))
+		});
+	}
+	return chart;
 }
+

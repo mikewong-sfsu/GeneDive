@@ -14,7 +14,7 @@
     <script src="static/sha256/sha256.js"></script>
 
     <!-- D3.js -->
-    <script src="static/d3/d3.min.js"></script>
+    <script src="static/d3/d3.v5.min.js"></script>
     <script src="static/d3hist/d3_hist.js"></script>
 
     <!-- Alertify -->

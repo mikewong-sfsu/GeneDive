@@ -71,15 +71,11 @@ class ResultsTable {
   initHistogram ( group, probabilities ) {
   // ============================================================
     // Init histogram
+    var prob = this.interactions[group].map( i => Number(i.probability) ) ;
     d3.select(`#d3-${group}`)
       .datum( this.interactions[group].map( i => i.probability ) )
       .call(
         histogramChart()
-        .bins(
-          d3.scale
-            .linear()
-            .ticks(10)
-          )
       );
   }
 
