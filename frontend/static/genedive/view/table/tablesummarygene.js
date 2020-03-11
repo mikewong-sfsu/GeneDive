@@ -7,6 +7,7 @@ class TableSummaryGene extends ResultsTable {
     this.interactions = GeneDive.grouper.group( this.interactions );
     this.row_id = 1;
     this.add_head = [];
+    this.SummaryPlugin = new SummaryTable(this.interactions);
 
     // Update topbar - with or without highlight count
     if ( this.highlight_count > 0 ) {
@@ -15,6 +16,7 @@ class TableSummaryGene extends ResultsTable {
       this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` ); 
     }
     
+    this.customColumns = this.SummaryPlugin.addSummaryColumns(this.interactions);
     this.hideBackButton();
     this.drawHeaders();
     this.drawBody();
@@ -34,25 +36,16 @@ class TableSummaryGene extends ResultsTable {
     tr.append( $(document.createElement("th")).text( "" ).css("width","4%" ) );
     tr.append( $(document.createElement("th")).html( "DGR<sub>1</sub>" ).css("width","10%").attr({ id : 'th-dgr1', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
     tr.append( $(document.createElement("th")).html( "DGR<sub>2</sub>" ).css("width","10%").attr({ id : 'th-dgr2', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}) );
-    /*tr.append( $(document.createElement("th")).text( "# Mentions" ).css("width","60px").addClass("numeric rotate").attr({ id : 'th-mentions', "toggle": "tooltip", "title": "Number of interactions between other DGRs and your query"}) );
-    tr.append( $(document.createElement("th")).text( "# Articles" ).css("width","60px").addClass("numeric rotate").attr({ id : 'th-articles', "toggle": "tooltip", "title": "Number of articles that were accessed by the relationship algorithm"}) );
-    tr.append( $(document.createElement("th")).text( "Conf. Score Dist." ).css("width","140px").attr({ id : 'th-cscore-dist', "toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
-    tr.append( $(document.createElement("th")).html( "Max Conf.<br>Score" ).css("width","80px").addClass("numeric").attr({ id : 'th-cscore-max', "toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
-    tr.append( $(document.createElement("th")).html( "Sample Excerpt" ).attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "A selection from the article that the algorithm selected to imply a relationship"}) );
-   console.log("add the additional columns");
-  tr.append( $(document.createElement("th")).html( "Source" ).attr({ id : 'ds_id', "toggle": "tooltip", "title": "Datasource"}) );
-   console.log("add the additional columns");
-   console.log("hi");
-   this.add_head = this.buildHeader();
-   for(let i = 0; i< this.add_head.length; i++){
-   tr.append( $(document.createElement("th")).text( this.add_head[i] ).attr({ id : 'th-addendum', "toggle": "tooltip", "title": "Addtional information"}) ); 
-   }*/
     //appendHeader.bind(tr,this.additional_columns)();
 
     tr.append( $(document.createElement("th")).text( "# Mentions" ).css("width","12%").attr({ id : 'th-mentions', "toggle": "tooltip", "title": "Number of interactions between other DGRs and your query"}) );
     tr.append( $(document.createElement("th")).text( "# Articles" ).css("width","12%").attr({ id : 'th-articles', "toggle": "tooltip", "title": "Number of articles that were accessed by the relationship algorithm"}) );
     tr.append( $(document.createElement("th")).text( "Conf. Score Dist." ).css("width","18%").attr({ id : 'th-cscore-dist', "toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
     tr.append( $(document.createElement("th")).html( "Max Conf.<br>Score" ).css("width","10%").addClass("numeric").attr({ id : 'th-cscore-max', "toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
+
+    for(var key of Object.keys(this.customColumns)){
+	tr.append( $(document.createElement("th")).html( key ).attr({ id : 'th-custom-col-'+ key, "toggle": "tooltip", "title": "User added custom column"}) );
+    }
     tr.append( $(document.createElement("th")).html( "Sources" ).attr({ id : 'th-ds_list', "toggle": "tooltip", "title": "Data source references"}) );
     this.table.append(thead);
   }
@@ -94,6 +87,9 @@ class TableSummaryGene extends ResultsTable {
       tr.append( $(document.createElement("td")).html( row.articles ).addClass( "numeric" ));
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
+      for(var key of Object.keys(this.customColumns)){
+	tr.append( $(document.createElement("td")).html(this.customColumns[key][group] ).css("width" ,"500px"));
+      }
       tr.append( $(document.createElement("td")).html(this.mapDatasourceURL(rows) ));
       tbody.append(tr);
     }

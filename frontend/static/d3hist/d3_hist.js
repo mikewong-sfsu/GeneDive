@@ -4,9 +4,9 @@
 /*updated function compatible with d3 version 5)*/
 function histogramChart(){
 
-	var margin = {top: 0, right: 0, bottom: 0, left: 0},
+	var margin = {top: 0, right: 15, bottom: 15, left: 15},
     	    width  = 125 - margin.left - margin.right,
-    	    height = 30 - margin.top - margin.bottom;
+    	    height = 50 - margin.top - margin.bottom;
 
 	var x = d3.scaleLinear()
           .domain([0,1])

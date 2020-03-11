@@ -34,11 +34,12 @@ if( $dslist == '' ) { $dslist = []; }
 <!-- -->
 <div class="container">
 <div class="page-header">
-	<h1>Edit Data Source</h1>
+	<h1>Edit Tables</h1>
 	<p>You can edit table columns displayed or map new columns into GeneDive 
 	to query, visualize, and compare with provided data sources or your other data sources.Columns 
 	removed will not be displayed in the hide columns option on the Details view</p>
-	<button id="edit-button" class="btn btn-primary">Select DataSource</button>
+	<button id="edit-summary" class="btn btn-primary">Edit Summary View</button>
+	<button id="edit-detail" class="btn btn-primary">Edit Detail View</button>
 	<button class="btn btn-primary cancel">Return to Search</button>		
 </div>
 <form id="datasource-edit" method="post" enctype="multipart/form-data" class="form-horizontal">	
@@ -128,7 +129,7 @@ $('.btn_edit').on('click',function(){
      dataType:'html',
      data:{data : editor.getValue() }
    }) 
-   .done(function(msg){
+	   .done(function(msg){
    });
   } 
 })
@@ -152,7 +153,21 @@ let dse_show = () => {
     );
 }
 
-$( "#edit-button" ).click(function()  {
+$( "#edit-detail" ).click(function()  {
   dse_show();
+});
+
+$( "#edit-summary").click(function() {
+  var ds_id = "summarytable";
+  $.ajax({
+    method: "POST",
+    url: "import.php",
+    data: { ds_id: ds_id },
+  })
+  .done(function( msg ) {
+    ds = msg.toString();
+    //set the code of corresponding class in editor
+    editor.setValue(ds);
+  }); 
 });
 </script>

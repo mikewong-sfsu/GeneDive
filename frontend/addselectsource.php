@@ -4,6 +4,9 @@ require_once('session.php');
 $ds = json_decode( base64_decode( $_SESSION[ 'sources' ]));
 
 $local_path = "datasource/view/table/plugin/sources";
+//summary plugin
+$path =  $local_path."/summarytable.js";	
+echo "<script src=\"$path\"></script>";
 
 add_datasource_class($ds);
 

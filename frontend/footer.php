@@ -15,6 +15,7 @@
 
     <!-- D3.js -->
     <script src="static/d3/d3.v5.min.js"></script>
+    <script src="static/d3/d3-tip.js"></script>
     <script src="static/d3hist/d3_hist.js"></script>
 
     <!-- Alertify -->
@@ -39,7 +40,7 @@
 
     <!-- Import plugin class -->
     <?php include("addselectsource.php");?>
- 
+    <script src="datasource/view/table/plugin/defaultsummary.js"></script>
 
     <!-- Adjacency Matrix -->
     <script src="cache.php?get=adjacency_matrix"></script>
