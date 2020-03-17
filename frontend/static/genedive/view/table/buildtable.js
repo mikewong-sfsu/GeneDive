@@ -1,6 +1,6 @@
 class BuildTable extends ResultsTable{
 	//===========================
-	constructor(table,interactions,additional_columns,ds){
+	constructor(table,interactions,additional_columns,visible_columns, ds){
 	//===========================
 		super(table,interactions,additional_columns);
 		this.default_ds = new Set(["all","pharmgkb","plos-pmc"]);
@@ -22,11 +22,11 @@ class BuildTable extends ResultsTable{
 	}
 	//===========================
 	//combine all datasource header
-	buildHeader(){
+	buildDetailHeader(){
 	//===========================
 		let res = new Set();
 		for(let v of this.objectMap.values()){
-			let head = v.getHeader();
+			let head = v.getDetailHeader();
 			res = v.set_union(res,head);
 		}
 		return Array.from(res);
@@ -34,11 +34,48 @@ class BuildTable extends ResultsTable{
 	}
 	//=============================
 	//map the values in merged table
-	buildBody(row,arr){
+	buildDetailBody(row,arr){
 	//=============================
 		let ds_class = row.ds_id;
 		if(this.objectMap.has(ds_class)){
 			return this.objectMap.get(ds_class).getElement(row,arr);
 		}
 	}
+	//===========================
+	//combine all datasource header
+	buildSummaryHeader(){
+	//===========================
+		let res = new Set();
+		for(let v of this.objectMap.values()){
+			let head = v.getSummaryHeader();
+			res = v.set_union(res,head);
+		}
+		return Array.from(res);
+
+	}
+	//=============================
+	//map the values in merged table
+	buildSummaryBody(rows,group_id){
+	//=============================
+//	var ds = new Set();
+	for(var row of rows){
+		var ds_class = row.ds_id;
+		var summaryEle = this.objectMap.get(ds_class).getSummaryElement(rows, group_id );
+		return summaryEle;
+	}
+		/*let ds_class = row.ds_id;
+		if(this.objectMap.has(ds_class)){
+			return this.objectMap.get(ds_class).getElement(row,arr);
+		}*/
+	}
+
+
+
+updateVisibleHeaders(){
+	var headers = this.buildDetailHeader();
+	if(GeneDive.tablestate.visible_columns.size == 0){
+		console.log("headers combined : " , headers);
+	}
+	return new Set();
+}
 }

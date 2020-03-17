@@ -1,13 +1,13 @@
-class TableSummaryGene extends ResultsTable {
+class TableSummaryGene extends BuildTable {
 
-  constructor ( table, interactions, additional_columns, ds ) {
-    super( table, interactions, additional_columns, ds );
+  constructor ( table, interactions, additional_columns, visible_columns, ds ) {
+    super( table, interactions, additional_columns, visible_columns, ds );
     this.interactions_count = this.interactions.length;
     this.highlight_count = _.reduce(_.map( this.interactions, i => i.highlight ? 1 : 0 ), (acc,i) => acc + i );
     this.interactions = GeneDive.grouper.group( this.interactions );
     this.row_id = 1;
     this.add_head = [];
-    this.SummaryPlugin = new SummaryTable(this.interactions);
+    //this.SummaryPlugin = new SummaryTable(this.interactions);
 
     // Update topbar - with or without highlight count
     if ( this.highlight_count > 0 ) {
@@ -15,8 +15,7 @@ class TableSummaryGene extends ResultsTable {
     } else {
       this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` ); 
     }
-    
-    this.customColumns = this.SummaryPlugin.addSummaryColumns(this.interactions);
+    this.customCols;
     this.hideBackButton();
     this.drawHeaders();
     this.drawBody();
@@ -43,8 +42,12 @@ class TableSummaryGene extends ResultsTable {
     tr.append( $(document.createElement("th")).text( "Conf. Score Dist." ).css("width","18%").attr({ id : 'th-cscore-dist', "toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
     tr.append( $(document.createElement("th")).html( "Max Conf.<br>Score" ).css("width","10%").addClass("numeric").attr({ id : 'th-cscore-max', "toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
 
-    for(var key of Object.keys(this.customColumns)){
+    /*for(var key of Object.keys(this.customColumns)){
 	tr.append( $(document.createElement("th")).html( key ).attr({ id : 'th-custom-col-'+ key, "toggle": "tooltip", "title": "User added custom column"}) );
+    }*/
+    this.customCols = this.buildSummaryHeader();//this.interaction);
+    for(let i = 0; i< this.customCols.length;i++){
+      tr.append($(document.createElement("th")).text(this.customCols[i]).attr({ id: 'th-'+this.customCols[i], "toggle": "tooltip","title": "User added columns"}));
     }
     tr.append( $(document.createElement("th")).html( "Sources" ).attr({ id : 'th-ds_list', "toggle": "tooltip", "title": "Data source references"}) );
     this.table.append(thead);
@@ -62,6 +65,11 @@ class TableSummaryGene extends ResultsTable {
         .on("click", ( event ) => { 
           GeneDive.tablestate.zoomed = true;
           GeneDive.tablestate.zoomgroup = $( event.currentTarget ).data( "group" );
+//<<<<<<< Updated upstream
+	  GeneDive.tablestate.visiblecolumns = this.getVisibleColumns();
+//=======
+	  //GeneDive.tablestate.visible_columns = this.updateVisibleHeaders();
+//>>>>>>> Stashed changes
           GeneDive.onTableElementClick();
         });
         // If any of the group's interactions are a highlight match, highlight the summary row
@@ -87,9 +95,13 @@ class TableSummaryGene extends ResultsTable {
       tr.append( $(document.createElement("td")).html( row.articles ).addClass( "numeric" ));
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
-      for(var key of Object.keys(this.customColumns)){
+      /*for(var key of Object.keys(this.customColumns)){
 	tr.append( $(document.createElement("td")).html(this.customColumns[key][group] ).css("width" ,"500px"));
-      }
+      }*/
+      let element = this.buildSummaryBody(rows, group);
+      for(let col = 0 ; col < this.customCols.length;col++){
+	tr.append($(document.createElement("td")).html(element[this.customCols[col]]));	
+	}
       tr.append( $(document.createElement("td")).html(this.mapDatasourceURL(rows) ));
       tbody.append(tr);
     }

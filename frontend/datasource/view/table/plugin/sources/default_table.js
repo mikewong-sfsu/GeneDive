@@ -5,23 +5,46 @@ class DefaultTable{
 	this.header = this.set_union(this.required,this.optional);
 	this.short_id = short_id;//short id for the datasource
 	this.add_cols = null;//additional column
-	this.custom_cols;//custom columns can be added from edit datasource
+	this.detail_cols;//custom columns can be added from edit datasource
 	this.columnMap = this.addColumns();
+	this.summaryColumns = this.addSummaryColumns();
 	this.interaction = null;
 	
 	}
 	//=================================
 	//return all the optional columns
-	getHeader(){
+	getSummaryHeader(){
+	//=================================
+	//get contents
+	var add_header = Object.keys(this.summaryColumns);
+	//append the datasource id
+	add_header = add_header.map(element => element + " [" + this.short_id + "]")
+	return add_header;
+	}
+
+	//=================================
+	//map the table values for optional columns
+	getSummaryElement(interaction,group_id){
+	//=================================
+	var columns = this.addSummaryColumns(interaction,group_id);
+	for(var key of Object.keys(columns)){
+		this.summaryColumns[key + " [" + this.short_id + "]"] = columns[key];
+	}
+	return this.summaryColumns;
+	}
+
+	//=================================
+	//return all the optional columns
+	getDetailHeader(){
 	//=================================
 	
 	var add_header = new Set();
-	this.custom_cols = Object.keys(this.columnMap);
-	this.custom_cols = Array.from(this.set_union(new Set(this.custom_cols), new Set(this.add_cols)));
-	if(this.custom_cols != null){
+	this.detail_cols = Object.keys(this.columnMap);
+	this.detail_cols = Array.from(this.set_union(new Set(this.detail_cols), new Set(this.add_cols)));
+	if(this.detail_cols != null){
 		//append short id to datasource column headers
-		this.custom_cols = this.custom_cols.map(element => element + " [" + this.short_id + "]")
-		add_header = this.custom_cols;
+		this.detail_cols = this.detail_cols.map(element => element + " [" + this.short_id + "]")
+		add_header = this.detail_cols;
 	}
 	return add_header;
 	}
@@ -52,15 +75,15 @@ class DefaultTable{
 		//this.addRequiredColumns(interaction);
 
 		//for local datasource columns
-		if(Array.isArray(this.custom_cols) && this.custom_cols.length > 0){
+		if(Array.isArray(this.detail_cols) && this.detail_cols.length > 0){
 			let key;
-			for(let i = 0; i < this.custom_cols.length;i++){
+			for(let i = 0; i < this.detail_cols.length;i++){
 				//remove the short_id from name
-				key = this.custom_cols[i].substring(0,this.custom_cols[i].indexOf(this.short_id) - 2);
+				key = this.detail_cols[i].substring(0,this.detail_cols[i].indexOf(this.short_id) - 2);
 
 				//get the mapping from the columnMap
-				if(res.has(this.custom_cols[i]))
-					res.set(this.custom_cols[i], this.getColumn(this.interaction, key));
+				if(res.has(this.detail_cols[i]))
+					res.set(this.detail_cols[i], this.getColumn(this.interaction, key));
 			}
 
 		}
@@ -103,7 +126,12 @@ class DefaultTable{
 	//==================================
 		return new Map();
 	}
-
+	//==================================
+	//method to add custom columns
+	addSummaryColumns(interaction = null){
+	//==================================
+		return new Map();
+	}
 	//==================================
 	//method to rename custom columns
 	replace(old_name,new_name){

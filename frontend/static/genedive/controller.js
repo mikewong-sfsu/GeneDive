@@ -31,8 +31,8 @@ class Controller {
     this.history        = new History( this );
     this.loading        = new Loading(".loading-container", ".loading-info", ".loading-container .progress-bar");
     this.localdb        = new LocalDB(this);
-
-    this.tablestate = {zoomed: false, zoomgroup: null};
+    this.buildtable 	= null;//NL
+    this.tablestate = {zoomed: false, zoomgroup: null, visible_columns: new Map()};
     this.interactions = null;
     this.filtrate = null;
     this.additional_columns = null;//  NL
@@ -316,6 +316,26 @@ class Controller {
       this.handleException(e);
     }
   }
+
+  /**
+   @fn       Controller.onDetailColumnSelect //NL
+   @brief    Called when the column subset selected in the details page
+   @details
+   @callergraph
+   */
+  onDetailColumnSelect() {
+    try {
+      //this.loadTableAndGraphPage(true, false);
+    //this.yScrollRestoreSummary();
+    console.log("before update: ",this.history.stateHistory);
+this.history.saveCurrentStateToHistory();
+      console.log("after update historystate:",this.history.stateHistory);
+      //this.history.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
+  }
+
 
   /**
    @fn       Controller.onTableElementClick
@@ -674,7 +694,8 @@ class Controller {
 
     if (this.tablestate.zoomed) {
       //make changes in the state for updating selected columns NL
-      let table_detail = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup, this.ds);
+	    //console.log("visible_columns : " , this.tablestate.visible_columns);
+      let table_detail = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup, this.tablestate.visible_columns, this.ds);
       // If all the entries were filtered out, render the table summary instead.
       if(table_detail.amountOfEntries > 0)
         return;
@@ -689,9 +710,9 @@ class Controller {
 
     // Otherwise show the appropriate summary view
     if (this.grouper.selected() === "dgr") {
-      new TableSummaryGene(".table-view .table", this.filtrate, this.additional_columns,this.ds, ".table-view .topbar .back");
+      new TableSummaryGene(".table-view .table", this.filtrate, this.additional_columns, this.tablestate.visible_columns, this.ds, ".table-view .topbar .back");
     } else {
-      new TableSummaryArticle(".table-view table", this.filtrate, this.additional_columns, ".table-view .topbar .back");
+      new TableSummaryArticle(".table-view table", this.filtrate, this.additional_columns, this.tablestate.visible_columns,  ".table-view .topbar .back");
     }
 
   }

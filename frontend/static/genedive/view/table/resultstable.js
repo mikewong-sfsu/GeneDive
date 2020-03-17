@@ -149,7 +149,7 @@ class ResultsTable {
   }
 
   // ============================================================
-onEditTable(){
+onEditTable( visible_columns){
   // ============================================================
 	let columnheader = "" ;
 	
@@ -170,16 +170,37 @@ onEditTable(){
 	let lst = row.clone();
 	//add headers as checkbox
   	$.each(headers,function(key,value){
-  	lst.append($('<span class="checkbox-button"><input id='+ value+' type="checkbox" name="columnheader" value = ' + key + ' checked/><label for=' +value+'>'+value+'</label></span>'));
+  	lst.append($('<span class="checkbox-button"><input id='+ value+' type="checkbox" name="columnheader" value = ' + key + ' /><label for=' +value+'>'+value+'</label></span>'));
   	});
+
 	columnheader += lst.html();
 	$("#columnheaders").html(columnheader);
+	//console.log("ouside if: " +  GeneDive.tablestate.visible_columns.size);
+	if (GeneDive.tablestate.visible_columns.size == 0 ){
+		for(var key of Object.keys(headers)){
+			GeneDive.tablestate.visible_columns.set(key,key);	
+		}
 
+		GeneDive.onDetailColumnSelect();
+
+	}
+	//GeneDive.history.saveCurrentStateToHistory();
+	//console.log("values after saving:" , GeneDive.tablestate.visible_columns);	
+	$('input[type="checkbox"]').each(function(){
+
+		if(GeneDive.tablestate.visible_columns.size > 0 && GeneDive.tablestate.visible_columns.get($(this).val()))
+			$(this).prop("checked", true);
+	})
+	
 	$('input[type="checkbox"]').change(function() {
-		console.log(this.value);
+		//console.log(this.value);
 		$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').toggle();
-
-
+		if(GeneDive.tablestate.visible_columns.get($(this).val())){
+			//GeneDive.tablestate.visible_columns.delete($(this).val());
+			GeneDive.onDetailColumnSelect();
+		}
+		//console.log("visible_columns after update:"  , GeneDive.tablestate.visible_columns);
+		
 
 	});
 

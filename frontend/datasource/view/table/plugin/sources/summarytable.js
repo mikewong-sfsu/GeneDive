@@ -5,11 +5,16 @@ constructor(interactions){
 
 addSummaryColumns(interactions){
     var themesDist = {};
+    var found = false;
     for(var group of Object.keys(interactions)){
         var rowThemeDist = {};
         if(group.length > 1){
         interactions[group].forEach((interaction)=>{
             //parse theme values
+            var addendum = JSON.parse(interaction.addendum);
+            console.log("interactions : " + addendum.new_column);
+            if(addendum.hasOwnProperty("new_column")){
+                found = true;
             var new_col = JSON.parse(interaction.addendum).new_column;
             var themes = JSON.parse(new_col).theme;
             //create group of themes
@@ -18,11 +23,12 @@ addSummaryColumns(interactions){
                     rowThemeDist[theme.code] = [];
                 rowThemeDist[theme.code].push(Number(theme.score));
             }
+            }
         });
         //create a html element
-        var svg_id = (interactions == null) ? "default_svg" : ("boxplot_" + group) ;
+        var svg_id = (found) ? "default_svg" : ("boxplot_" + group) ;
         var $value;
-        if(interactions != null){
+        if(found){
              $value = $('<div class="distribution" id='+svg_id+'></div>');
             //create boxplot
             d3.select("#result-table")
@@ -30,11 +36,18 @@ addSummaryColumns(interactions){
               .call(this.boxPlot(svg_id));
             
         }
-        if(svg_id != "default_svg"){ 
+        if(found){//svg_id != "default_svg"){ 
         var $boxPlot = $("#svg_"+svg_id).detach();//detach later
+            console.log("found : " + found);
+            console.log("boxplot:" + JSON.stringify($boxPlot));
+            console.log("value : " + $value);
         $value = $value.append($boxPlot);
         //save boxplot in a dictionary
-        themesDist[group] = $value;
+        	themesDist[group] = $value;
+        }
+        else{
+            console.log("found : " + found);
+           themesDist[group] = " " ;
         }
         }
     }
@@ -222,4 +235,4 @@ function sortTheme(a, b){
   }
   return 0;*/
     
-}1
+}1111111111

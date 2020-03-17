@@ -18,6 +18,7 @@ if( $dslist == '' ) { $dslist = []; }
   <link rel="stylesheet" type="text/css" href="/static/fontawesome/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="editdatasource.css">
   <link rel="stylesheet" type="text/css" href="codemirror/lib/codemirror.css">
+  <link rel="stylesheet" type="text/css" href="codemirror/addon/fold/foldgutter.css">
   <link rel="stylesheet" type="text/css" href="https://codemirror.net/addon/lint/lint.css">
   <title>Edit a Data Source</title>
 </head>
@@ -26,11 +27,20 @@ if( $dslist == '' ) { $dslist = []; }
   <script type="text/javascript" src="/static/alertify/js/alertify.min.js"></script>
   <script type="text/javascript" src="/static/genedive/alertify-defaults.js"></script>
   <script type="text/javascript" src="codemirror/lib/codemirror.js"></script>
-  <script type="text/javascript" src="https://codemirror.net/mode/javascript/javascript.js"></script>
-  <script type="text/javascript" src="https://codemirror.net/addon/lint/lint.js"></script> 
-  <script type="text/javascript" src="https://codemirror.net/addon/lint/javascript-lint.js"></script> 
-  <!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.26.0/addon/lint/javascript-lint.min.js" ></script--> 
-  <!--script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script--> 
+  <script type="text/javascript" src="codemirror/addon/fold/foldcode.js"></script>
+  <script type="text/javascript" src="codemirror/addon/fold/foldgutter.js"></script>
+  <script type="text/javascript" src="codemirror/addon/fold/brace-fold.js"></script>
+  <script type="text/javascript" src="codemirror/addon/fold/indent-fold.js"></script>
+  <script type="text/javascript" src="codemirror/addon/fold/comment-fold.js"></script>
+  <script src="codemirror/addon/edit/closebrackets.js"></script>
+  <script type="text/javascript" src="codemirror/mode/javascript/javascript.js"></script>
+  <script src="https://unpkg.com/jshint@2.9.6/dist/jshint.js"></script>
+  <script src="https://unpkg.com/jsonlint@1.6.3/web/jsonlint.js"></script>
+  <script src="https://unpkg.com/csslint@1.0.5/dist/csslint.js"></script>
+  <script src="codemirror/addon/lint/lint.js"></script>
+  <script src="codemirror/addon/lint/javascript-lint.js"></script>
+  <script src="codemirror/addon/lint/json-lint.js"></script>
+  <script src="codemirror/addon/lint/css-lint.js"></script>
 <!-- -->
 <div class="container">
 <div class="page-header">
@@ -38,7 +48,7 @@ if( $dslist == '' ) { $dslist = []; }
 	<p>You can edit table columns displayed or map new columns into GeneDive 
 	to query, visualize, and compare with provided data sources or your other data sources.Columns 
 	removed will not be displayed in the hide columns option on the Details view</p>
-	<button id="edit-summary" class="btn btn-primary">Edit Summary View</button>
+	<!--button id="edit-summary" class="btn btn-primary">Edit Summary View</button-->
 	<button id="edit-detail" class="btn btn-primary">Edit Detail View</button>
 	<button class="btn btn-primary cancel">Return to Search</button>		
 </div>
@@ -98,13 +108,18 @@ var editor = CodeMirror(document.getElementById("editor"), {
     mode: "javascript",
     indentUnit: 4,
     lineNumbers: true,
-    gutters: ["CodeMirror-lint-markers"],
+    lineWrapping: true,
+    extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor());
+    }},
+    foldGutter: true,
+    gutters: ["CodeMirror-lint-markers","CodeMirror-linenumbers", "CodeMirror-foldgutter"],
     lint: true,
-    height:"auto"
+    height:"auto",
+    autoCloseBrackets: true
 });
-editor.setOption("lint",true);
+//editor.setOption("lint",true);
 editor.setSize("100%", "100%");
-
+editor.foldCode(CodeMirror.Pos(0, 0));
 //on selecting radio button
 var dse_selected = () => {
   ds_id = $('input[name="selectDatasource"]:checked').val();
