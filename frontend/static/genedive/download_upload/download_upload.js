@@ -75,20 +75,21 @@ If you feel that we are not abiding by this privacy policy, you should contact u
   buildInteractionsData() {
 
     let fields = ["id",
-      "journal",
-      "article_id",
+      //"journal",
+      //"article_id",
       "pubmed_id",
-      "sentence_id",
+      //"sentence_id",
       "geneids1",
       "mention1",
       "type1",
       "geneids2",
       "mention2",
       "type2",
-      "sentence_id",
+      //"sentence_id",
       "highlight",
       "probability",
-      "context",
+      "addendum",
+     // "context",
     ];
 
     let csv_header = fields.join(",")+"\r\n";
@@ -99,10 +100,14 @@ If you feel that we are not abiding by this privacy policy, you should contact u
           if(!(f in i))
             console.error(f, "not found in", i);
           let ret = i[f];
-          if(typeof ret === "string")
-            ret = ret.replace("\"", "\"\"");
-
-          return `"${ret}"`;
+          if(typeof ret === "string"){
+            ret =  ret.replace(/"/g, `""`);//ret.replace("\"", "\\\"");
+	    console.log("inside string:");
+	    ret = /[",\n]/.test(ret) ? `"${ret}"` : ret;
+	    console.log("after commas:", ret);
+	  }
+	  console.log("ret:" + `"${ret}"`);
+          return ret;//`"${ret}"`;
         }
         catch (e){console.debug(e, f, i);return "";}
       }).join(",");
@@ -180,7 +185,7 @@ If you feel that we are not abiding by this privacy policy, you should contact u
 
       /* State File */
       let state = this.buildStateFile();
-      zip.file(this.genediveStateFileName, JSON.stringify(state));
+      zip.file(this.genediveStateFileName,JSON.stringify(state));
 
       /* T&C File */
       zip.file("terms_and_conditions.txt", this.termsAndConditions);

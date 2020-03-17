@@ -6,13 +6,17 @@ class BuildTable extends ResultsTable{
 		this.default_ds = new Set(["all","pharmgkb","plos-pmc"]);
 		this.objectMap = new Map();
 		//create instances of the merging datasources
+		//console.log("datasource:" , GeneDive.datasource.list);
 		for( var key of Object.keys(ds)){
+			console.log("keys:",key);
 			if(this.default_ds.has(key) )
 				//continue;
 				this.objectMap.set(key,eval("new DefaultTable()"));
 
 			else{
 				let className = 'ds_' + key;
+				console.log("ds[key]",className);
+				
 				let Obj = eval("new "+className+"( \"" + ds[key]+ "\")");
 				this.objectMap.set(key,Obj);
 			}
@@ -59,6 +63,7 @@ class BuildTable extends ResultsTable{
 	//=============================
 //	var ds = new Set();
 	for(var row of rows){
+		console.log("row:",row);
 		var ds_class = row.ds_id;
 		var summaryEle = this.objectMap.get(ds_class).getSummaryElement(rows, group_id );
 		return summaryEle;

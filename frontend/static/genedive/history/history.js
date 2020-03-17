@@ -82,6 +82,9 @@ class History{
 
     // Datasource state
     state.datasource = { list: this.controller.datasource.list };
+    //add ds dictionary
+    state.ds = this.controller.ds;
+	  console.log("state.datasource" , state.datasource);
     // Does a deep copy of the state
     return _.cloneDeep(state);
   }
@@ -129,11 +132,12 @@ class History{
 
     // Interactions
     this.controller.interactions = state.interactions;
-
+    
+    //ds dictionary
+    this.controller.ds = state.ds;
     // Table state
     console.log("state:" , state.table.tablestate);
     this.controller.tablestate = state.table.tablestate;
-	  console.log("controller tablestate:",this.controller.tablestate);
     this.controller.filtrate = state.table.filtrate;
 
     // Search, Probability, and Filter state
@@ -149,7 +153,7 @@ class History{
     this.controller.graph.importGraphState(state.graph, this.controller.search.sets);
 
     // MW TODO Set state for datasources to have it work well together
-
+    this.controller.datasource = state.datasource.list;
     if (this.controller.search.amountOfDGRsSearched() === 0)
       this.controller.loadLandingPage();
     else

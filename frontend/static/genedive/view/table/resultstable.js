@@ -175,11 +175,11 @@ initEditTable(){
 
 	columnheader += lst.html();
 	$("#columnheaders").html(columnheader);
-
+	console.log("GeneDive,visible_columns", GeneDive.tablestate.visible_columns);
 	//set tablestate.visible_columns
-	if (GeneDive.tablestate.visible_columns.size == 0 ){
+	if (GeneDive.tablestate.visible_columns.length == 0){//size == 0 ){
 		$('input[type="checkbox"]').each(function(){
-		GeneDive.tablestate.visible_columns.set($(this).val(), $(this).attr("id"));
+		GeneDive.tablestate.visible_columns.push($(this).val());//set($(this).val(), $(this).attr("id"));
 		//set to true by default
 		$(this).prop("checked", true);
 		$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').show();
@@ -187,9 +187,9 @@ initEditTable(){
 	});
 	}
 	else{
-		console.log("GeneDive.tablestate.visible_columns",Object.keys(GeneDive.tablestate.visible_columns));
+		//console.log("GeneDive.tablestate.visible_columns",Object.keys(GeneDive.tablestate.visible_columns));
 		$('input[type="checkbox"]').each(function(){
-			if(GeneDive.tablestate.visible_columns.has($(this).val())){
+			if(GeneDive.tablestate.visible_columns.includes($(this).val())){//has
 				$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').show();
 				$(this).prop("checked",true);
 			}
@@ -208,12 +208,16 @@ onEditTable(){
 	$('input[type="checkbox"]').change(function() {
 		$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').toggle();
 		console.log("this:", $(this).prop("checked"));
+		//if(GeneDive.tablestate.visible_column.includes($(this).val()) && {
+
+		//}
 		if($(this).prop("checked")){
-			GeneDive.tablestate.visible_columns.set($(this).val(), $(this).attr("id"));
+			GeneDive.tablestate.visible_columns.push($(this).val());//, $(this).attr("id"));
 		}
 		else{
-			GeneDive.tablestate.visible_columns.delete($(this).val());
+			delete GeneDive.tablestate.visible_columns[(GeneDive.tablestate.visible_columns.indexOf($(this).val()))] ;//$(this).val());
 		}
+		
 		GeneDive.onDetailColumnSelect();
 	});
 }
