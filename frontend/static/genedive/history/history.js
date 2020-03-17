@@ -68,14 +68,12 @@ class History{
     state.probfilter = this.controller.probfilter.getMinimumProbability();
     state.textfilter = this.controller.textfilter.exportFilterState();
 
-    console.log("value in visited_coluns : " , this.controller.tablestate.visible_columns);
+    var tablestate = Object.assign({}, this.controller.tablestate);
     // Table
     state.table = {
-      "tablestate": JSON.parse(JSON.stringify(this.controller.tablestate)),
+      "tablestate": this.controller.tablestate,
       "filtrate": this.controller.filtrate,
-      "visible_columns": this.controller.tablestate.visible_columns
     };
-	  console.log("histiory table : " ,state.table.tablestate);
 
     //Highlighter
     state.highlighter = this.controller.highlighter.exportHighlightState();
@@ -85,7 +83,6 @@ class History{
 
     // Datasource state
     state.datasource = { list: this.controller.datasource.list };
-	console.log("stringify: ",JSON.parse(JSON.stringify(state)));
     // Does a deep copy of the state
     return JSON.parse(JSON.stringify(state));
   }
@@ -104,7 +101,6 @@ class History{
     // There could be a timeout waiting to save a state. We need to cancel that to prevent unpredictable behavior
     if (window.onSaveStateTimeout !== undefined)
       window.clearTimeout(window.onSaveStateTimeout);
-    console.log("in history:",this.controller.tablestate.visible_columns);
     this.stateHistory = this.stateHistory.slice(0, this.currentStateIndex + 1);
     this.stateHistory.push(this.saveCurrentState());
     this.currentStateIndex += 1;
@@ -175,12 +171,10 @@ class History{
    @callergraph
    */
   setStateFromHistory(stateIndex) {
-	console.log("hi in setStateFromHistory :",this.stateHistory[stateIndex]);
     if (stateIndex < 0 || stateIndex >= this.stateHistory.length)
       throw `OutOfBoundsError: Could not set the state from index value ${stateIndex} because it would be outside the bounds of stateHistory[${this.stateHistory.length}]`;
     this.currentStateIndex = stateIndex;
     this.setState(this.stateHistory[stateIndex]);
-	  console.log("on undo : " ,stateIndex, this.stateHistory[stateIndex].table.tablestate.visible_columns);
     console.debug(`Set state to ${stateIndex}/${this.stateHistory.length - 1}`)
   }
 
@@ -191,7 +185,6 @@ class History{
    @callergraph
    */
   goBackInStateHistory() {
-	console.log("currentStateIndex:" ,this.currentStateIndex);
     this.setStateFromHistory(this.currentStateIndex - 1);
   }
 

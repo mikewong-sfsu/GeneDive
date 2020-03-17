@@ -1,7 +1,6 @@
 class TableDetail extends BuildTable {
 
   constructor(table, interactions, additional_columns, group,visible_columns, ds) {
-	  //console.log("visible_columns: in tabledetal page:" , visible_columns);
     super(table, interactions,additional_columns, visible_columns,  ds);
     this.interactions = GeneDive.grouper.group(interactions);
     this.add_columns;
@@ -24,11 +23,10 @@ class TableDetail extends BuildTable {
     }
     this.drawHeaders();
     this.drawBody();
-    this.onEditTable( visible_columns);
+    this.initEditTable();
+    this.onEditTable();
     this.table.tablesorter({
-	    //headers: {1:{sorter:false}},//{6: {sorter: false}, 7: {sorter: false}},
       sortList: [[4, 1],], // Sort by Max Confidence
-        // [index, asc/desc]
       });
 
     // Bind zoom out behavior
@@ -82,10 +80,8 @@ class TableDetail extends BuildTable {
       // Synonym styling
       let mention1 = i.synonym1 ? this.addSynonym(i.mention1, i.synonym1) : i.mention1;
       let mention2 = i.synonym2 ? this.addSynonym(i.mention2, i.synonym2) : i.mention2;
-      //tr.append($(document.createElement("td")).html(""));
       tr.append($(document.createElement("td")).html(mention1));
       tr.append($(document.createElement("td")).html(mention2));
-      //tr.append($(document.createElement("td")).html(i.journal));
       tr.append($(document.createElement("td")).text(displayedID).addClass("numeric"));
       tr.append($(document.createElement("td")).text(Number(i.probability).toFixed(3)).addClass("numeric"));
       tr.append($(document.createElement("td")).html(this.adjustExcerpt(i)));

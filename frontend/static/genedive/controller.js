@@ -32,9 +32,9 @@ class Controller {
     this.loading        = new Loading(".loading-container", ".loading-info", ".loading-container .progress-bar");
     this.localdb        = new LocalDB(this);
     this.buildtable 	= null;//NL
-    this.tablestate = {zoomed: false, zoomgroup: null, visible_columns: new Map()};
-    this.interactions = null;
-    this.filtrate = null;
+    this.tablestate 	= {zoomed: false, zoomgroup: null, visible_columns: []};
+    this.interactions 	= null;
+    this.filtrate       = null;
     this.additional_columns = null;//  NL
     this.ds = null;//NL
 
@@ -325,12 +325,8 @@ class Controller {
    */
   onDetailColumnSelect() {
     try {
-      //this.loadTableAndGraphPage(true, false);
-    //this.yScrollRestoreSummary();
-    console.log("before update: ",this.history.stateHistory);
-this.history.saveCurrentStateToHistory();
-      console.log("after update historystate:",this.history.stateHistory);
-      //this.history.saveCurrentStateToHistory();
+	//save changes to history
+	this.history.saveCurrentStateToHistory();
     } catch (e) {
       this.handleException(e);
     }
@@ -693,8 +689,6 @@ this.history.saveCurrentStateToHistory();
     // First check for zoom condition
 
     if (this.tablestate.zoomed) {
-      //make changes in the state for updating selected columns NL
-	    //console.log("visible_columns : " , this.tablestate.visible_columns);
       let table_detail = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup, this.tablestate.visible_columns, this.ds);
       // If all the entries were filtered out, render the table summary instead.
       if(table_detail.amountOfEntries > 0)

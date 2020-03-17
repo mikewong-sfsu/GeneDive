@@ -149,7 +149,7 @@ class ResultsTable {
   }
 
   // ============================================================
-onEditTable( visible_columns){
+initEditTable(){
   // ============================================================
 	let columnheader = "" ;
 	
@@ -175,35 +175,40 @@ onEditTable( visible_columns){
 
 	columnheader += lst.html();
 	$("#columnheaders").html(columnheader);
-	//console.log("ouside if: " +  GeneDive.tablestate.visible_columns.size);
-	if (GeneDive.tablestate.visible_columns.size == 0 ){
-		for(var key of Object.keys(headers)){
-			GeneDive.tablestate.visible_columns.set(key,key);	
-		}
 
-		GeneDive.onDetailColumnSelect();
-
-	}
-	//GeneDive.history.saveCurrentStateToHistory();
-	//console.log("values after saving:" , GeneDive.tablestate.visible_columns);	
-	$('input[type="checkbox"]').each(function(){
-
-		if(GeneDive.tablestate.visible_columns.size > 0 && GeneDive.tablestate.visible_columns.get($(this).val()))
-			$(this).prop("checked", true);
-	})
+	//set tablestate.visible_columns
+	if (GeneDive.tablestate.visible_columns.length == 0 ){
+		$('input[type="checkbox"]').each(function(){
+		GeneDive.tablestate.visible_columns.push($(this).val());
+		//set to true by default
+		$(this).prop("checked", true);
+		$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').show();
 	
-	$('input[type="checkbox"]').change(function() {
-		//console.log(this.value);
-		$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').toggle();
-		if(GeneDive.tablestate.visible_columns.get($(this).val())){
-			//GeneDive.tablestate.visible_columns.delete($(this).val());
-			GeneDive.onDetailColumnSelect();
-		}
-		//console.log("visible_columns after update:"  , GeneDive.tablestate.visible_columns);
-		
-
 	});
+	}
+	else{
+		$('input[type="checkbox"]').each(function(){
+			if(GeneDive.tablestate.visible_columns.includes($(this).val())){
+				$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').show();
+				$(this).prop("checked",true);
+			}
+			else{
+				$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').hide();
+	
+			}
+		})
+	
+	}
 
+}
+  // ============================================================
+onEditTable(){
+  // ============================================================
+	$('input[type="checkbox"]').change(function() {
+		$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').toggle();
+		GeneDive.tablestate.visible_columns = GeneDive.tablestate.visible_columns.filter( element => element != $(this).val());
+		GeneDive.onDetailColumnSelect();
+	});
 }
 
 }

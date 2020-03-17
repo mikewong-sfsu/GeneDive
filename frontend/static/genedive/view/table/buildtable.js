@@ -63,19 +63,6 @@ class BuildTable extends ResultsTable{
 		var summaryEle = this.objectMap.get(ds_class).getSummaryElement(rows, group_id );
 		return summaryEle;
 	}
-		/*let ds_class = row.ds_id;
-		if(this.objectMap.has(ds_class)){
-			return this.objectMap.get(ds_class).getElement(row,arr);
-		}*/
 	}
 
-
-
-updateVisibleHeaders(){
-	var headers = this.buildDetailHeader();
-	if(GeneDive.tablestate.visible_columns.size == 0){
-		console.log("headers combined : " , headers);
-	}
-	return new Set();
-}
 }

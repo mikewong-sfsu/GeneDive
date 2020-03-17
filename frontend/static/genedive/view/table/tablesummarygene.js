@@ -7,7 +7,6 @@ class TableSummaryGene extends BuildTable {
     this.interactions = GeneDive.grouper.group( this.interactions );
     this.row_id = 1;
     this.add_head = [];
-    //this.SummaryPlugin = new SummaryTable(this.interactions);
 
     // Update topbar - with or without highlight count
     if ( this.highlight_count > 0 ) {
@@ -41,10 +40,6 @@ class TableSummaryGene extends BuildTable {
     tr.append( $(document.createElement("th")).text( "# Articles" ).css("width","12%").attr({ id : 'th-articles', "toggle": "tooltip", "title": "Number of articles that were accessed by the relationship algorithm"}) );
     tr.append( $(document.createElement("th")).text( "Conf. Score Dist." ).css("width","18%").attr({ id : 'th-cscore-dist', "toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
     tr.append( $(document.createElement("th")).html( "Max Conf.<br>Score" ).css("width","10%").addClass("numeric").attr({ id : 'th-cscore-max', "toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
-
-    /*for(var key of Object.keys(this.customColumns)){
-	tr.append( $(document.createElement("th")).html( key ).attr({ id : 'th-custom-col-'+ key, "toggle": "tooltip", "title": "User added custom column"}) );
-    }*/
     this.customCols = this.buildSummaryHeader();//this.interaction);
     for(let i = 0; i< this.customCols.length;i++){
       tr.append($(document.createElement("th")).text(this.customCols[i]).attr({ id: 'th-'+this.customCols[i], "toggle": "tooltip","title": "User added columns"}));
@@ -65,11 +60,6 @@ class TableSummaryGene extends BuildTable {
         .on("click", ( event ) => { 
           GeneDive.tablestate.zoomed = true;
           GeneDive.tablestate.zoomgroup = $( event.currentTarget ).data( "group" );
-//<<<<<<< Updated upstream
-	  GeneDive.tablestate.visiblecolumns = this.getVisibleColumns();
-//=======
-	  //GeneDive.tablestate.visible_columns = this.updateVisibleHeaders();
-//>>>>>>> Stashed changes
           GeneDive.onTableElementClick();
         });
         // If any of the group's interactions are a highlight match, highlight the summary row
@@ -95,9 +85,6 @@ class TableSummaryGene extends BuildTable {
       tr.append( $(document.createElement("td")).html( row.articles ).addClass( "numeric" ));
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
-      /*for(var key of Object.keys(this.customColumns)){
-	tr.append( $(document.createElement("td")).html(this.customColumns[key][group] ).css("width" ,"500px"));
-      }*/
       let element = this.buildSummaryBody(rows, group);
       for(let col = 0 ; col < this.customCols.length;col++){
 	tr.append($(document.createElement("td")).html(element[this.customCols[col]]));	
