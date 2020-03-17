@@ -68,7 +68,6 @@ class History{
     state.probfilter = this.controller.probfilter.getMinimumProbability();
     state.textfilter = this.controller.textfilter.exportFilterState();
 
-    var tablestate = Object.assign({}, this.controller.tablestate);
     // Table
     state.table = {
       "tablestate": this.controller.tablestate,
@@ -84,7 +83,7 @@ class History{
     // Datasource state
     state.datasource = { list: this.controller.datasource.list };
     // Does a deep copy of the state
-    return JSON.parse(JSON.stringify(state));
+    return _.cloneDeep(state);
   }
 
   /**
@@ -103,6 +102,7 @@ class History{
       window.clearTimeout(window.onSaveStateTimeout);
     this.stateHistory = this.stateHistory.slice(0, this.currentStateIndex + 1);
     this.stateHistory.push(this.saveCurrentState());
+    console.log("state: after pushing to histroy" ,this.stateHistory[this.currentStateIndex + 1]);
     this.currentStateIndex += 1;
     console.debug(`Saved state ${this.currentStateIndex}`);
     this.controller.controls.checkButtonStates();
@@ -120,7 +120,7 @@ class History{
     this.controller.loadSpinners();
 
     // Does a deep copy of the state
-    state = JSON.parse(JSON.stringify(state));
+    state = _.cloneDeep(state);//JSON.parse(JSON.stringify(state));
 
     this.stateIsBeingUpdated = true; // Prevents any callbacks that update state from being triggered.
 
@@ -131,7 +131,9 @@ class History{
     this.controller.interactions = state.interactions;
 
     // Table state
+    console.log("state:" , state.table.tablestate);
     this.controller.tablestate = state.table.tablestate;
+	  console.log("controller tablestate:",this.controller.tablestate);
     this.controller.filtrate = state.table.filtrate;
 
     // Search, Probability, and Filter state

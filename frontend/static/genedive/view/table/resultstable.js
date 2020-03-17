@@ -177,9 +177,9 @@ initEditTable(){
 	$("#columnheaders").html(columnheader);
 
 	//set tablestate.visible_columns
-	if (GeneDive.tablestate.visible_columns.length == 0 ){
+	if (GeneDive.tablestate.visible_columns.size == 0 ){
 		$('input[type="checkbox"]').each(function(){
-		GeneDive.tablestate.visible_columns.push($(this).val());
+		GeneDive.tablestate.visible_columns.set($(this).val(), $(this).attr("id"));
 		//set to true by default
 		$(this).prop("checked", true);
 		$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').show();
@@ -187,8 +187,9 @@ initEditTable(){
 	});
 	}
 	else{
+		console.log("GeneDive.tablestate.visible_columns",Object.keys(GeneDive.tablestate.visible_columns));
 		$('input[type="checkbox"]').each(function(){
-			if(GeneDive.tablestate.visible_columns.includes($(this).val())){
+			if(GeneDive.tablestate.visible_columns.has($(this).val())){
 				$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').show();
 				$(this).prop("checked",true);
 			}
@@ -206,7 +207,13 @@ onEditTable(){
   // ============================================================
 	$('input[type="checkbox"]').change(function() {
 		$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').toggle();
-		GeneDive.tablestate.visible_columns = GeneDive.tablestate.visible_columns.filter( element => element != $(this).val());
+		console.log("this:", $(this).prop("checked"));
+		if($(this).prop("checked")){
+			GeneDive.tablestate.visible_columns.set($(this).val(), $(this).attr("id"));
+		}
+		else{
+			GeneDive.tablestate.visible_columns.delete($(this).val());
+		}
 		GeneDive.onDetailColumnSelect();
 	});
 }
