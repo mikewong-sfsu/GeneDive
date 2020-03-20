@@ -37,7 +37,7 @@
 </head>
 <body>
 
-<?php if( preg_match( '/\bchrome\b/i', $_SERVER[ 'HTTP_USER_AGENT' ] )): ?>
+<?php if( ! preg_match( '/\bchrome\b/i', $_SERVER[ 'HTTP_USER_AGENT' ] )): ?>
 <script>
   alertify.error( 'GeneDive is developed and tested on <b>Google Chrome</b> and might not work with your browser. <a class="btn btn-primary" href="https://google.com/chrome/" style="margin-top: 12px" target="_blank">Get Google Chrome</a>', 90 );
 </script>
