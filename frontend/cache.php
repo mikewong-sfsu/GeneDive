@@ -11,7 +11,7 @@ require_once( 'datasource/proxy.php' ); // Defines $server
  */
 
 if( ! isset( $_GET[ 'get' ] )) { exit; }
-if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["all"] )); };
+if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["native"] )); };
 
 $sources = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
 
@@ -45,14 +45,14 @@ function send_cache( $file, $manifest, $sources ) {
 	if( count( $datasources ) == 1 ) {
 
 		// Single user-provided data source adjacency matrix requested
-		// This includes: 'all', 'pharmgkb', or 'plos-pmc' 
+		// This includes: 'native', 'pharmgkb', or 'plos-pmc' 
 		// Only the server will have the default datasources installed
 		$url     = "cache/$source/$file.js";
 		$locally = "$CACHE/$url";
 		if(	file_exists( $locally )) {
 			send_redirect( $url );
 
-		} else if(in_array( $source, [ 'all', 'pharmgkb', 'plos-pmc', 'shared' ])) {
+		} else if(in_array( $source, [ 'native', 'pharmgkb', 'plos-pmc', 'shared' ])) {
 			send_redirect( "$server/$url" );
 		}
 	}

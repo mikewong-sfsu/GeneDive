@@ -15,12 +15,15 @@ if( isset( $_GET[ 'get' ])) {
 // ============================================================
 function filter_by_host_manifest( $element ) {
 // ============================================================
-// 'all' is the hugely dominant use case of PharmGBK + PLoS/PMC; 
-// the front-end should prevent 'all' in combination with 
+// Pass-through filter which allows datasource selection based
+// on datasources are available on the current host
+//
+// 'native' is the hugely dominant use case of PharmGBK & PLoS/PMC; 
+// the front-end should prevent 'native' in combination with 
 // anything else.
 // ------------------------------------------------------------
 	global $manifest;
-	if( $element == 'all' ) { return true; } 
+	if( $element == 'native' ) { return true; } 
 	return array_key_exists( $element, $manifest );
 }
 
@@ -127,7 +130,7 @@ function remove_datasource( $manifest, $datasource_id ) {
     if( is_array( $selected[ 'datasources' ]) && in_array( $datasource_id, $selected[ 'datasources' ])) {
       $selected[ 'datasources' ] = preg_grep( "/^$datasource_id\$/", $selected[ 'datasources' ], PREG_GREP_INVERT );
       if( count( $selected[ 'datasources' ]) == 0 ) {
-        $selected[ 'datasources' ] = [ 'plos-pmc', 'pharmgkb' ];
+        $selected[ 'datasources' ] = [ 'native' ];
       }
 	    $fp = fopen( "$DATASOURCES/selection.json", 'w' );
       fwrite( $fp, json_encode( $selected ));
