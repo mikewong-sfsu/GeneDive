@@ -151,8 +151,9 @@ $('.btn_edit').on('click',function(){
 
 //close button
 $( "button.cancel" ).off( 'click' ).click(( ev ) => {
-  self.opener.location.reload(); 
-  window.close();
+//self.opener.location.reload(); 
+//window.close();
+window.location = "/search.php";
   });
 
 var dse = $( '#datasource-edit' ).detach();

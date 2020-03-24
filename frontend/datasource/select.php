@@ -191,4 +191,17 @@ $( '.datasource-add' ).off( 'click' ).click(( ev ) => {
 });
 
 
+$( '.datasource-edit' ).off( 'click' ).click(( ev ) => {
+  if( GeneDive.history.stateHistory.length > 0 ) {
+   alertify.confirm(
+      'You have an Unsaved Session',
+      'Adding a Datasource will restart your work session. Click [Cancel] to return to search (and save your session) or click [OK] to Add a Datasource (and lose your session)',
+      () => { window.location = "/datasource/edit/edit_table.php" },
+      () => {}
+    );
+  } else {
+    window.location = "/datasource/edit/edit_table.php";
+  }
+});
+
 </script>
