@@ -75,21 +75,16 @@ If you feel that we are not abiding by this privacy policy, you should contact u
   buildInteractionsData() {
 
     let fields = ["id",
-      //"journal",
-      //"article_id",
       "pubmed_id",
-      //"sentence_id",
       "geneids1",
       "mention1",
       "type1",
       "geneids2",
       "mention2",
       "type2",
-      //"sentence_id",
       "highlight",
       "probability",
       "addendum",
-     // "context",
     ];
 
     let csv_header = fields.join(",")+"\r\n";
@@ -102,11 +97,8 @@ If you feel that we are not abiding by this privacy policy, you should contact u
           let ret = i[f];
           if(typeof ret === "string"){
             ret =  ret.replace(/"/g, `""`);//ret.replace("\"", "\\\"");
-	    console.log("inside string:");
 	    ret = /[",\n]/.test(ret) ? `"${ret}"` : ret;
-	    console.log("after commas:", ret);
 	  }
-	  console.log("ret:" + `"${ret}"`);
           return ret;//`"${ret}"`;
         }
         catch (e){console.debug(e, f, i);return "";}
@@ -237,7 +229,6 @@ If you feel that we are not abiding by this privacy policy, you should contact u
 
     this.intializeUploadFields($("#upload_file_state"), alert);
 
-
   }
 
   /**
@@ -284,8 +275,6 @@ If you feel that we are not abiding by this privacy policy, you should contact u
       }
 
     });
-
-
   }
 
   /**

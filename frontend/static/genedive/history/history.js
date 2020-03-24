@@ -84,7 +84,6 @@ class History{
     state.datasource = { list: this.controller.datasource.list };
     //add ds dictionary
     state.ds = this.controller.ds;
-	  console.log("state.datasource" , state.datasource);
     // Does a deep copy of the state
     return _.cloneDeep(state);
   }
@@ -105,7 +104,6 @@ class History{
       window.clearTimeout(window.onSaveStateTimeout);
     this.stateHistory = this.stateHistory.slice(0, this.currentStateIndex + 1);
     this.stateHistory.push(this.saveCurrentState());
-    console.log("state: after pushing to histroy" ,this.stateHistory[this.currentStateIndex + 1]);
     this.currentStateIndex += 1;
     console.debug(`Saved state ${this.currentStateIndex}`);
     this.controller.controls.checkButtonStates();
@@ -136,7 +134,6 @@ class History{
     //ds dictionary
     this.controller.ds = state.ds;
     // Table state
-    console.log("state:" , state.table.tablestate);
     this.controller.tablestate = state.table.tablestate;
     this.controller.filtrate = state.table.filtrate;
 
@@ -153,12 +150,7 @@ class History{
     this.controller.graph.importGraphState(state.graph, this.controller.search.sets);
 
     // MW TODO Set state for datasources to have it work well together
-    this.controller.datasource = state.datasource.list;
-    if (this.controller.search.amountOfDGRsSearched() === 0)
-      this.controller.loadLandingPage();
-    else
-      this.controller.loadTableAndGraphPage(true, true);
-
+    this.controller.datasource.list = state.datasource.list;
     this.stateIsBeingUpdated = false; // Resumes callbacks
 
     // Set the state controls
@@ -169,6 +161,28 @@ class History{
     this.controller.yScrollView.scrollTop = state.yScrollCurrent;
   }
 
+  sessionUpdate(callback, importFlag = false){
+	if(importFlag){
+	var list = btoa(JSON.stringify(this.controller.datasource.list));
+	var ds_map = btoa( JSON.stringify(this.controller.ds));
+	$.ajax({
+                url: `/datasource/change.php?value=${list}&shortid_map=${ds_map}`,
+                method: 'GET',
+		async: false,
+        })
+	
+	}
+	callback;
+  }
+
+  loadPage(){
+	 if (GeneDive.search.amountOfDGRsSearched() === 0)
+      		GeneDive.loadLandingPage();
+    	else
+      		GeneDive.loadTableAndGraphPage(true, true);
+ 
+  }
+
   /**
    @fn       History.setStateFromHistory
    @brief    Adds the current state to History
@@ -176,13 +190,17 @@ class History{
    @param    stateIndex The index in the Controller.stateHistory array to set the state to
    @callergraph
    */
-  setStateFromHistory(stateIndex) {
+  setStateFromHistory(stateIndex, importFlag = false) {
     if (stateIndex < 0 || stateIndex >= this.stateHistory.length)
       throw `OutOfBoundsError: Could not set the state from index value ${stateIndex} because it would be outside the bounds of stateHistory[${this.stateHistory.length}]`;
     this.currentStateIndex = stateIndex;
     this.setState(this.stateHistory[stateIndex]);
+    var flag = importFlag;
+    this.sessionUpdate(this.loadPage(), flag);
     console.debug(`Set state to ${stateIndex}/${this.stateHistory.length - 1}`)
   }
+
+
 
   /**
    @fn       History.goBackInStateHistory
@@ -223,10 +241,9 @@ class History{
    @details  This loads the state by loading the state from history with an index of Controller.currentStateIndex + 1
    @callergraph
    */
-  importEntireProgramStates(importData) {
+  importEntireProgramStates(importData) { 
     this.stateHistory = importData.stateHistory;
-    this.setStateFromHistory(importData.currentStateIndex)
-
+    this.setStateFromHistory(importData.currentStateIndex,true);
   }
 
   /**

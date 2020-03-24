@@ -1,10 +1,10 @@
-class TableSummaryArticle extends ResultsTable {
+class TableSummaryArticle extends BuildTable {
 
-  constructor ( table, interactions, additional_columns) {
-    super( table, interactions, additional_columns );  
+  constructor ( table, interactions, additional_columns, ds) {
+    super( table, interactions, additional_columns, ds);  
     this.interactions_count = this.interactions.length; 
     this.highlight_count = _.reduce(_.map( this.interactions, i => i.highlight ? 1 : 0 ), (acc,i) => acc + i );
-    this.interactions = GeneDive.grouper.group( interactions );
+    this.interactions = GeneDive.grouper.group( this.interactions );
 
     // Update topbar - with or without highlight count
     if ( this.highlight_count > 0 ) {
@@ -13,6 +13,7 @@ class TableSummaryArticle extends ResultsTable {
      this.updateMessage( `Viewing <span class="figure">${this.interactions_count}</span> Interactions in <span class="figure">${Object.keys(this.interactions).length}</span> Groups` ); 
     }
 
+    this.customCols;
     this.hideBackButton();
     this.drawHeaders();
     this.drawBody();
@@ -35,6 +36,10 @@ class TableSummaryArticle extends ResultsTable {
     tr.append( $(document.createElement("th")).text( "# Mentions" ).css("width","12%").attr({ id: 'th-mentions', "toggle": "tooltip", "title": "Number of interactions between DGRs related to your query"}) );
     tr.append( $(document.createElement("th")).text( "Conf. Score Dist." ).css("width","18%").attr({ id: 'th-cscore-dist', "toggle": "tooltip", "title": "Shows the confidence distribution between articles and suggested relationship confidence"}) );
     tr.append( $(document.createElement("th")).html( "Max Conf.<br>Score" ).addClass("numeric").css("width","10%").attr({ id: 'th-cscore-max', "toggle": "tooltip", "title": "The closer this score is to one, the more likely it is for the corresponding relationship(s) to be accurate"}) );
+    this.customCols = this.buildSummaryHeader();//this.interaction);
+    for(let i = 0; i< this.customCols.length;i++){
+      tr.append($(document.createElement("th")).text(this.customCols[i]).attr({ id: 'th-'+this.customCols[i], "toggle": "tooltip","title": "User added columns"}));
+    }
     tr.append( $(document.createElement("th")).html( "Sources" ).attr({ id: 'th-ds_list', "toggle": "tooltip", "title": "Data source references"}) );
     this.table.append(thead);
   }
@@ -79,6 +84,10 @@ class TableSummaryArticle extends ResultsTable {
       tr.append( $(document.createElement("td")).text( this.interactions[group].length ).addClass("numeric") );
       tr.append( $(document.createElement("td")).html(  this.interactions[group].length > 1 ? `<div class='histogram' id="d3-${group}"></div>` : "" ) );
       tr.append( $(document.createElement("td")).text( Number(row.probability).toFixed(3) ).addClass("numeric") );
+      let element = this.buildSummaryBody(rows, group);
+      for(let col = 0 ; col < this.customCols.length;col++){
+	tr.append($(document.createElement("td")).html(element[this.customCols[col]]));	
+	}
       tr.append( $(document.createElement("td")).html( this.mapDatasourceURL(rows)));
       tbody.append(tr);
     }

@@ -1,7 +1,7 @@
 class TableSummaryGene extends BuildTable {
 
-  constructor ( table, interactions, additional_columns, visible_columns, ds ) {
-    super( table, interactions, additional_columns, visible_columns, ds );
+  constructor ( table, interactions, additional_columns, ds ) {
+    super( table, interactions, additional_columns, ds );
     this.interactions_count = this.interactions.length;
     this.highlight_count = _.reduce(_.map( this.interactions, i => i.highlight ? 1 : 0 ), (acc,i) => acc + i );
     this.interactions = GeneDive.grouper.group( this.interactions );

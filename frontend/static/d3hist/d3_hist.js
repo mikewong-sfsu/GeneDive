@@ -3,17 +3,17 @@
 */
 /*updated function compatible with d3 version 5)*/
 function histogramChart(){
-
-	var margin = {top: 0, right: 15, bottom: 15, left: 15},
-    	    width  = 125 - margin.left - margin.right,
+	
+	var margin = {top: 10, right: 15, bottom: 0, left: 0},
+    	    width  = 200 - margin.left - margin.right,
     	    height = 50 - margin.top - margin.bottom;
-
+	console.log("width:",width);
 	var x = d3.scaleLinear()
           .domain([0,1])
           .range([0, width]);
 
 	var y = d3.scaleLinear()
-          .range([height, 0]);
+          .range([height , 0]);
 	
 	// set the parameters for the histogram
 	var histogram = d3.histogram()
@@ -29,9 +29,9 @@ function histogramChart(){
 
 		var svg = d3.select(this).append("svg")
     		.attr("width", width - margin.left - margin.right)
-    		.attr("height", height - margin.top - margin.bottom)
+    		.attr("height", height)// - margin.top )//- margin.bottom)
   		.append("g")
-    		.attr("transform",  "translate(" + margin.left + "," + margin.top + ")");
+    		.attr("transform",  "translate(" + margin.left + "," + margin.bottom + ")");
 
 		// append the bar rectangles to the svg element
   		svg.selectAll("rect")

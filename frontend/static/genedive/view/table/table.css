@@ -17,24 +17,6 @@ table td{
     width:1000px;
 }
 
-/*.table-view .table{
-    table-layout:auto;
-    /*width: 1000px;
-    width:100%;*/
-    /*width:auto;*/
-    /*white-space:nowrap;*/
-/*}
-.table-view {
-    /*display:block;
-    width: 1000px;
-    /*width:100%;*/
-    /*table-layout: fixed;*/
-
-    /*overflow:auto;
-    /*table-layout: fixed;
-    word-wrap:break-word;
-}*/
-
 .table-view .table tr.grouped {
     cursor: pointer;
 }
@@ -45,15 +27,12 @@ table td{
 
 .table-view .table tr .gene {
     padding: 4px;
-    /*margin 10px;*/
 }
 
 .table-view .table th {
     font-weight: bold;
     color: rgb(60, 60, 60);
     text-align: left;
-    /*white-space: nowrap;*/
- /*word-wrap:break-word;*/
     padding: 6px 14px;
 
 }
@@ -73,7 +52,6 @@ table td{
     color: rgb(40, 40, 40);
     text-align: left;
     padding: 6px 14px;
-    /*max-width:150px;*/
     width:auto;
     min-width:50px;
 }
