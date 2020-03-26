@@ -3,6 +3,7 @@
 require_once "../datasource/manifest.php";
 require_once "../datasource/proxy.php"; // defines $server
 require_once "../phpLib/environment.php";
+ini_set( 'memory_limit', '1024M' );
 
 if( false ) {
   $response = json_encode([
