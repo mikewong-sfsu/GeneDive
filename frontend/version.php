@@ -3,8 +3,8 @@
 $release = [ 
   "major" => 2,
   "minor" => 5,
-  "patch" => 0,
-  "date"  => "2020-02-14"
+  "patch" => 1,
+  "date"  => "2020-03-26"
 ];
 
 function genedive_version() {

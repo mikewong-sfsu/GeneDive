@@ -6,7 +6,7 @@
 <div class="main-display">
   <div class="control-view">
 
-    <div class="titlebar"><div><a href="/">GeneDive</a> <span class="version"><?= genedive_version() ?></span><?php include( "menu/account.php" )?><?php include( "menu/data.php" ); ?></div>
+    <div class="titlebar"><div><a href="/">GeneDive</a> <span class="version">v<?= genedive_patch_level() ?></span><?php include( "menu/account.php" )?><?php include( "menu/data.php" ); ?></div>
     <span class="subtitle">Disease, Gene, Drug (DGR)<br>Interaction Explorer</span>
     </div>
 
