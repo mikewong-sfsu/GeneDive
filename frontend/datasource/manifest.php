@@ -66,11 +66,21 @@ function add_datasource( $manifest, $datasource ) {
 
 	echo "<h1>Importing data...</h1>\n";
 	flush();
-	system( "/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1" );
+	system( "/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1", $error );
+	if( $error ) {
+		echo "<h2>Data import failed</h2><p>Please see error messages above, review the format requirements, edit the CSV file, and try again.</p>\n";
+		echo '<div class="pull-right"><a class="btn btn-primary" href="/search.php">OK</a></div>';	
+		return;
+	}
 
 	echo "<h2>Loading data into database...</h2>\n";
 	flush();
-	system( "/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql" );
+	system( "/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql", $error );
+	if( $error ) {
+		echo "<h2>Data import failed</h2><p>Please see error messages above, review the format requirements, edit the CSV file, and try again.</p>\n";
+		echo '<div class="pull-right"><a class="btn btn-primary" href="/search.php">OK</a></div>';	
+		return;
+	}
 
 	echo "<h2>Updating manifest</h2>\n";
 	flush();
@@ -79,7 +89,7 @@ function add_datasource( $manifest, $datasource ) {
 	write_manifest( $manifest );
 
 	echo "<h2>Data import complete!</h2>\n";
-	echo "<script>setTimeout(() => { window.location = \"/search.php\"; }, 2500 );</script>";	
+	echo '<div class="pull-right"><a class="btn btn-success" href="/search.php">OK</a></div>';	
 }
 
 // ============================================================

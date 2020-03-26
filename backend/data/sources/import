@@ -194,7 +194,7 @@ sub validate {
 			my $field = $_;
 			$field eq $required || any { $field eq $_ } @{$aliases}
 		} @headers ) {
-			printf( "{\"result\":\"error\",\"line\":1,\"description\":\"Missing required field '%s'\"}\n", $required );
+			printf( "<h2>Error</h2><p>Missing required field <code>%s</code></p>\n", $required );
 			exit( 1 );
 		}
 	}
