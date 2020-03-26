@@ -24,12 +24,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="static/jquery/add-ons/fancybox/jquery.fancybox.min.css">
-  <script src="static/jquery/jquery-3.2.1.min.js"></script>
-  <script src="static/jquery/add-ons/fancybox/jquery.fancybox.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../static/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/jquery/add-ons/fancybox/jquery.fancybox.min.css">
+  <script src="../static/jquery/jquery-3.2.1.min.js"></script>
+  <script src="../static/jquery/add-ons/fancybox/jquery.fancybox.min.js"></script>
 
-  <title>GeneDive <?= genedive_version() ?>: Import Datasource</title>
+  <title>Import Datasource</title>
 </head>
 <body>
   <div class="container">

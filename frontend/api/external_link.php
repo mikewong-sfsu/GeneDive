@@ -5,7 +5,7 @@ require_once( '../phpLib/environment.php' );
 $db = "/usr/local/genedive/data/sources/native/data.sqlite";
 
 if( file_exists( $db )) {
-  $pdo = new PDO( "$sqlite:$db" );
+  $pdo = new PDO( "sqlite:$db" );
 
   $action   = $_GET['action'];
   $redirect = "";

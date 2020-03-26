@@ -64,32 +64,32 @@ function add_datasource( $manifest, $datasource ) {
 	}
 	move_uploaded_file( $_FILES[ 'dsfile' ][ 'tmp_name' ], $file );
 
-	echo "<h1>Importing data...</h1>\n";
+	echo "<h1>Importing Data</h1><p>Please wait while the data from $datasource[name] is being processed. All user-provided data is kept local to your computer.</p><h3>Building Cache Files</h3>\n";
 	flush();
 	system( "/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1", $error );
 	if( $error ) {
-		echo "<h2>Data import failed</h2><p>Please see error messages above, review the format requirements, edit the CSV file, and try again.</p>\n";
-		echo '<div class="pull-right"><a class="btn btn-primary" href="/search.php">OK</a></div>';	
+		echo "<h2>Data import Failed While Building Cache Files</h2><p>Please see error messages above, review the format requirements, edit the CSV file, and try again.</p>\n";
+		echo '<div class="pull-right"><a class="btn btn-error" href="/search.php" style="width: 80px;">OK</a></div>';	
 		return;
 	}
 
-	echo "<h2>Loading data into database...</h2>\n";
+	echo "<h3>Loading Data into Database</h3>\n";
 	flush();
 	system( "/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql", $error );
 	if( $error ) {
-		echo "<h2>Data import failed</h2><p>Please see error messages above, review the format requirements, edit the CSV file, and try again.</p>\n";
-		echo '<div class="pull-right"><a class="btn btn-primary" href="/search.php">OK</a></div>';	
+		echo "<h2>Data Import Failed While Loading the Database</h2><p>Please see error messages above, review the format requirements, edit the CSV file, and try again.</p>\n";
+		echo '<div class="pull-right"><a class="btn btn-error" href="/search.php" style="width: 80px;">OK</a></div>';	
 		return;
 	}
 
-	echo "<h2>Updating manifest</h2>\n";
+	echo "<p><i>$datasource[name]</i> has been loaded into the local GeneDive database.</p><h3>Updating Manifest</h3><p>Adding <i>$datasource[name]</i> to the local datasource manifest</p>\n";
 	flush();
 	$id = $datasource[ 'id' ];
 	$manifest[ $id ] = $datasource;
 	write_manifest( $manifest );
 
-	echo "<h2>Data import complete!</h2>\n";
-	echo '<div class="pull-right"><a class="btn btn-success" href="/search.php">OK</a></div>';	
+	echo "<h1>Data Import Complete!</h1>\n";
+	echo '<div class="pull-right"><a class="btn btn-success" href="/search.php" style="width: 80px;">OK</a></div>';	
 }
 
 // ============================================================

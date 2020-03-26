@@ -17,7 +17,7 @@ my $interactions = csv( in => validate( $file ), encoding => 'utf-8', headers =>
 cleanup( $interactions );
 
 # ===== GENERATE ADJACENCY MATRIX
-print "<ul><li>Building <i>adjacency matrix</i></li>\n";
+print "<ul><li><i>Adjacency matrix</i></li>\n";
 adjacency_matrix( $cache, $interactions );
 
 # ===== GENERATE TYPEAHEAD LOOKUP CACHES
@@ -25,7 +25,7 @@ foreach my $type (qw( gene drug disease )) {
 	my $hash = {};
 	extract_ids( $type, $hash, $_ ) foreach @$interactions;
 	hash_to_cache( $type, $cache, $hash );
-	print "<li>Building <i>$type typeahead lookup cache</i></li>\n";
+	printf "<li><i>%s typeahead lookup cache</i></li>\n", ucfirst( $type );
 }
 
 filter_columns( $interactions );
