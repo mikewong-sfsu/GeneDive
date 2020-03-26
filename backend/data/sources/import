@@ -25,7 +25,7 @@ foreach my $type (qw( gene drug disease )) {
 	my $hash = {};
 	extract_ids( $type, $hash, $_ ) foreach @$interactions;
 	hash_to_cache( $type, $cache, $hash );
-  	print "<li>Building <i>$type typeahead lookup cache</i></li>\n";
+	print "<li>Building <i>$type typeahead lookup cache</i></li>\n";
 }
 
 filter_columns( $interactions );
@@ -64,7 +64,7 @@ sub cache {
 # ============================================================
 	my $file  = shift;
 	my @paths = split /\//, $file; pop @paths;
-  my $cache = '/var/www/html/cache/';
+	my $cache = '/var/www/html/cache/';
 	my $path  = $cache . pop @paths;
 
 	return $path;
@@ -75,8 +75,8 @@ sub cleanup {
 # ============================================================
 	my $interactions = shift;
 	foreach my $i (@$interactions) {
-    $i->{ type1 } = lc $i->{ type1 };
-    $i->{ type2 } = lc $i->{ type2 };
+		$i->{ type1 } = lc $i->{ type1 };
+		$i->{ type2 } = lc $i->{ type2 };
 		if( exists $i->{ id1 }) { $i->{ geneids1 } = $i->{ id1 }; delete $i->{ id1 }; }
 		if( exists $i->{ id2 }) { $i->{ geneids2 } = $i->{ id2 }; delete $i->{ id2 }; }
 		if( ! exists $i->{ probability }) { $i->{ probability } = 0.7; }
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS interactions (
 	geneids2 TEXT, 
 	probability FLOAT, 
 	context TEXT, 
-    	section TEXT, 
+	section TEXT, 
 	type1 CHARACTER(1), 
 	type2 CHARACTER(1),
 	PRIMARY KEY (id)
