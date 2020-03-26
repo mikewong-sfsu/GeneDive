@@ -69,7 +69,7 @@ function add_datasource( $manifest, $datasource ) {
 	system( "/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1", $error );
 	if( $error ) {
 		echo "<h2>Data import Failed While Building Cache Files</h2><p>Please see error messages above, review the format requirements, edit the CSV file, and try again.</p>\n";
-		echo '<div class="pull-right"><a class="btn btn-error" href="/search.php" style="width: 80px;">OK</a></div>';	
+		echo '<div class="pull-right"><a class="btn btn-danger" href="/search.php" style="width: 80px;">OK</a></div>';	
 		return;
 	}
 
@@ -78,7 +78,7 @@ function add_datasource( $manifest, $datasource ) {
 	system( "/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql", $error );
 	if( $error ) {
 		echo "<h2>Data Import Failed While Loading the Database</h2><p>Please see error messages above, review the format requirements, edit the CSV file, and try again.</p>\n";
-		echo '<div class="pull-right"><a class="btn btn-error" href="/search.php" style="width: 80px;">OK</a></div>';	
+		echo '<div class="pull-right"><a class="btn btn-danger" href="/search.php" style="width: 80px;">OK</a></div>';	
 		return;
 	}
 

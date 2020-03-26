@@ -3,7 +3,7 @@
 BEGIN { $| = 1; } # Forces output buffer to flush
 
 use Text::CSV qw( csv );
-use List::Util qw( any none uniq );
+use List::Util qw( any first none uniq );
 use JSON::XS;
 
 my $file         = shift; # Absolute path
@@ -188,15 +188,19 @@ sub validate {
 	my $alias = { geneids1 => 'id1', geneids2 => 'id2' };
 
 	# ===== ENFORCE REQUIRED FIELDS
+	my @missing = ();
 	foreach my $required (@required) {
 		my $aliases = exists $alias->{ $required } ? [ $alias->{ $required } ] : [];
 		unless( grep { 
 			my $field = $_;
 			$field eq $required || any { $field eq $_ } @{$aliases}
 		} @headers ) {
-			printf( "<h2>Error</h2><p>Missing required field <code>%s</code></p>\n", $required );
-			exit( 1 );
+			push @missing, $required;
 		}
+	}
+	if( @missing ) {
+		printf( "<h2>Import Error</h2><p>Missing required field%s %s</p>\n", @missing > 1 ? 's' : '', join( ', ', map { "<code>$_</code>" } @missing ));
+		exit( 1 );
 	}
 
 	return $file;
