@@ -65,15 +65,15 @@ function add_datasource( $manifest, $datasource ) {
 	move_uploaded_file( $_FILES[ 'dsfile' ][ 'tmp_name' ], $file );
 
 	echo "<h1>Importing data...</h1>\n";
-  flush();
+	flush();
 	system( "/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1" );
 
 	echo "<h2>Loading data into database...</h2>\n";
-  flush();
+	flush();
 	system( "/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql" );
 
 	echo "<h2>Updating manifest</h2>\n";
-  flush();
+	flush();
 	$id = $datasource[ 'id' ];
 	$manifest[ $id ] = $datasource;
 	write_manifest( $manifest );
