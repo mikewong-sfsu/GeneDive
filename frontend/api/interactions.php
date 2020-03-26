@@ -3,7 +3,8 @@
 require_once "../datasource/manifest.php";
 require_once "../datasource/proxy.php"; // defines $server
 require_once "../phpLib/environment.php";
-ini_set( 'memory_limit', '1024M' );
+ini_set( 'memory_limit', '1024M' ); // Allows for large query results to load into memory
+ini_set( 'default_socket_timeout', 600 ); // Allows for large query results to send over network
 
 if( false ) {
   $response = json_encode([
