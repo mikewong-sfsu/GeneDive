@@ -7,7 +7,6 @@ function histogramChart(){
 	var margin = {top: 10, right: 15, bottom: 0, left: 0},
     	    width  = 200 - margin.left - margin.right,
     	    height = 50 - margin.top - margin.bottom;
-	console.log("width:",width);
 	var x = d3.scaleLinear()
           .domain([0,1])
           .range([0, width]);

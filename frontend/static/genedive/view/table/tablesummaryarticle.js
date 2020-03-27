@@ -1,4 +1,4 @@
-class TableSummaryArticle extends BuildTable {
+class TableSummaryArticle extends BuildSummaryTable {
 
   constructor ( table, interactions, additional_columns, ds) {
     super( table, interactions, additional_columns, ds);  

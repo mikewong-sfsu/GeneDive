@@ -104,10 +104,13 @@ function remove_datasource( $manifest, $datasource_id ) {
 	system( "rm -rf $path" );
 
 	//Delete datasource class in plugin
-	///datasource/view/table/plugin/sources
-	/*$path =   $CACHE .'/datasource/view/table/plugin/sources/ds_' . $datasource[ 'path' ].'.js';
-	echo $path;
-	system( "rm -rf $path" );*/
+	//delete the summary page
+	$path =   $CACHE .'/static/genedive/view/table/plugin/sources/ds_' . $datasource[ 'path' ].'_sum.js';
+	system( "rm -rf $path" );
+	//delete the detail page
+	$path =   $CACHE .'/static/genedive/view/table/plugin/sources/ds_' . $datasource[ 'path' ].'_det.js';
+	system( "rm -rf $path" );
+	
 
 	// Delete combined datasource caches in the frontend that are derived from
 	// the datasource to be removed
@@ -146,29 +149,5 @@ function remove_datasource( $manifest, $datasource_id ) {
   }
 
 	echo "Datasource " . $datasource[ 'name' ] . " successfully deleted. ";
-}
-// ============================================================
-function sort_manifest( $manifest ) {
-// ============================================================
-	//get all names in the list
-	/*$name_list = [];
-	$std_ds = array("plos-pmc","pharmgkb");
-	foreach($manifest as $key => $value){
-		if(!in_array($manifest[key]['id'],$std_ds)){
-			array_push($name_list,$manifest[key]['name']);
-		}
-	}
-	//sort the list in ascending order
-	sort($name_list);
-	//open file to write
-	$fp = fopen( "$DATASOURCES/manifest.json", 'w' );
-	//map the short_id
-	foreach($name_list as $key => $value){
-		if(!in_array($manifest[key]['id'],$std_ds)){
-			$manifest[key]['short_id'] = 
-		}	
-	}*/
-	
-
 }
 ?>

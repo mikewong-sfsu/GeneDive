@@ -11,7 +11,6 @@ class BuildSummaryTable extends ResultsTable{
 				this.objectMap.set(key,eval("new DefaultSummaryTable()"));
 
 			else{
-				console.log("key:",key);
 				let className = 'ds_' + key + "_sum";				
 				let Obj = eval("new "+className+"( \"" + ds[key]+ "\")");
 				this.objectMap.set(key,Obj);

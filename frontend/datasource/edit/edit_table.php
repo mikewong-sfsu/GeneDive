@@ -47,8 +47,8 @@ if( $dslist == '' ) { $dslist = []; }
 <div class="page-header">
 	<h1>Edit Tables</h1>
 	<p>You can edit table columns displayed or map new columns into GeneDive 
-	to query, visualize, and compare with provided data sources or your other data sources.Columns 
-	removed will not be displayed in the hide columns option on the Details view</p>
+	to query, visualize, and compare with provided data sources or other data sources.Columns 
+	removed will not be displayed in the hide columns option on the Details view.</p>
 	<button id="edit-detail" class="btn btn-primary">Edit Detail View</button>
 	<button class="btn btn-primary cancel">Return to Search</button>		
 </div>
@@ -84,7 +84,7 @@ if( $dslist == '' ) { $dslist = []; }
   <!--code editor-->
   <div class="container">
     <h2>
-      Table Plugin for datasource <span id="ds_name"> </span>
+      Table Plugin for Datasource <span id="ds_name"> </span>
     </h2>
     <div id="editor" style="position :relative;">
 	 <button  class=" btn btn-primary btn_edit" id="datasource-edit" style="z-index: 10; right:110px; position: fixed;">Update Datasource</button>
