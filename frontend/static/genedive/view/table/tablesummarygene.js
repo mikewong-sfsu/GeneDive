@@ -1,4 +1,4 @@
-class TableSummaryGene extends BuildTable {
+class TableSummaryGene extends BuildSummaryTable {
 
   constructor ( table, interactions, additional_columns, ds ) {
     super( table, interactions, additional_columns, ds );

@@ -7,7 +7,13 @@ $local_path = "datasource/view/table/plugin/sources";
 //summary plugin
 $path =  $local_path."/summarytable.js";	
 echo "<script src=\"$path\"></script>";
-
+$pluginPath = "static/genedive/view/table/plugin/";
+$files = scandir($pluginPath);
+foreach($files as $file){
+	if($file != '.' && $file != '..'){
+		echo "<script src=\"$pluginPath$file\"></script>";
+	}
+}
 add_datasource_class($ds);
 
 // ===================================================================

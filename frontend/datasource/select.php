@@ -88,16 +88,16 @@ GeneDive.datasource.refreshSelectionUI = () => {
 		i++;
 	}
 	
-	entry.find( '.name' ).html( datasource.name );
+	entry.find( '.name' ).html( datasource_name );
         entry.find( '.description' ).html( datasource.description );
         let toggle = entry.find( 'input.datasource-toggle' );
 	toggle.attr({ id: datasource.id, name: datasource.id });
 	if(std_flag == 0 && std_ds.has(datasource.id)){
-	$( '#datasource-manager .list-group' ).append("<p><i>GeneDive Datasources</i></p>");
+	$( '#datasource-selector .list-group' ).append("<p><i>GeneDive Datasources</i></p>");
 	std_flag = 1;
 	}
 	else if(local_flag == 0 && !std_ds.has(datasource.id)){
-	$( '#datasource-manager .list-group' ).append("<br><p><i>Local Datasources</i></p>");
+	$( '#datasource-selector .list-group' ).append("<br><p><i>Local Datasources</i></p>");
 	local_flag = 1;
 	}	
 	$( '#datasource-selector .list-group' ).append( entry );

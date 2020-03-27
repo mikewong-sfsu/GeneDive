@@ -24,6 +24,8 @@ if( $dslist == '' ) { $dslist = []; }
 </head>
 <body>
   <script type="text/javascript" src="/static/jquery/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"</script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"</script> 
   <script type="text/javascript" src="/static/alertify/js/alertify.min.js"></script>
   <script type="text/javascript" src="/static/genedive/alertify-defaults.js"></script>
   <script type="text/javascript" src="codemirror/lib/codemirror.js"></script>
@@ -41,14 +43,12 @@ if( $dslist == '' ) { $dslist = []; }
   <script src="codemirror/addon/lint/javascript-lint.js"></script>
   <script src="codemirror/addon/lint/json-lint.js"></script>
   <script src="codemirror/addon/lint/css-lint.js"></script>
-<!-- -->
 <div class="container">
 <div class="page-header">
 	<h1>Edit Tables</h1>
 	<p>You can edit table columns displayed or map new columns into GeneDive 
 	to query, visualize, and compare with provided data sources or your other data sources.Columns 
 	removed will not be displayed in the hide columns option on the Details view</p>
-	<!--button id="edit-summary" class="btn btn-primary">Edit Summary View</button-->
 	<button id="edit-detail" class="btn btn-primary">Edit Detail View</button>
 	<button class="btn btn-primary cancel">Return to Search</button>		
 </div>
@@ -65,11 +65,21 @@ if( $dslist == '' ) { $dslist = []; }
     <p class="description">Description</p>
   </div>
   <div class="datasource-actions col-xs-2" style="margin-top: 18px;">
-   <input class="datasource-select" type="radio" name="selectDatasource"></input> 
-  </div>
+   <input type="button" class="btn btn-primary datasource-select " value="Select" onclick="selectDatasource(this)">  </div>
 </li>
-
 </div>
+
+<!--div class="btn-group btn-group-toggle" id="edit-options" data-toggle="buttons"-->
+<div class="edit-options" style="text-align:center">
+<div style="text-align:center">
+<div class="btn-group" role="group" aria-label="..."> 
+  <button type="button" class="btn btn-primary"  value="_sum" title="Add Custom Columns to Summary Table from user-defined Data" onclick="loadScript(this)">Add Column<br> Summary View</button>
+  <button type="button" class="btn btn-primary" value="_det" title="Add Custom Columns to Detail Table from user-defined Data" onclick="loadScript(this)">Add Column <br> Detail View</button>
+  <button type="button" class="btn btn-primary" value="_filter" title="Add Custom Filters from user-defined Data" onclick="loadScript(this)">Add <br> Custom Filter</button>
+</div>
+</div>
+</div>
+
 <!-- -->
   <!--code editor-->
   <div class="container">
@@ -96,11 +106,30 @@ refreshEditUI = () => {
     entry.find( '.description' ).html( datasource.description );
     entry.attr({ 'data-id': datasource.id, 'data-name': datasource.name });
     let toggle = entry.find( 'input.datasource-select' );
-    toggle.attr({ id: datasource.id ,value:datasource.id});
+    toggle.each(function(){
+	    $(this).attr({id: (datasource.id + $(this).val())});
+    });
+    toggle.attr({ id: datasource.id});
    $( '#datasources-available-for-edit' ).append( entry );
   });
 };
 refreshEditUI();
+
+function loadScript(e){
+console.log("e:",e);
+var ds_id = e.getAttribute('id');
+alertify.closeAll();
+$.ajax({
+    method: "POST",
+    url: "import.php",
+    data: { ds_id: "ds_" + ds_id },
+  })
+  .done(function( msg ) {
+    ds = msg.toString();
+    //set the code of corresponding class in editor
+    editor.setValue(ds);
+  });
+}
 
 //initialize the code editor
 var editor = CodeMirror(document.getElementById("editor"), {
@@ -120,20 +149,7 @@ var editor = CodeMirror(document.getElementById("editor"), {
 //editor.setOption("lint",true);
 editor.setSize("100%", "100%");
 editor.foldCode(CodeMirror.Pos(0, 0));
-//on selecting radio button
-var dse_selected = () => {
-  ds_id = $('input[name="selectDatasource"]:checked').val();
-  $.ajax({
-    method: "POST",
-    url: "import.php",
-    data: { ds_id: ds_id },
-  })
-  .done(function( msg ) {
-    ds = msg.toString();
-    //set the code of corresponding class in editor
-    editor.setValue(ds);
-  });
-}
+
 //update the file with new changes
 $('.btn_edit').on('click',function(){
   var retVal = confirm("Do you confirm to save the changes ?");
@@ -151,39 +167,39 @@ $('.btn_edit').on('click',function(){
 
 //close button
 $( "button.cancel" ).off( 'click' ).click(( ev ) => {
-//self.opener.location.reload(); 
-//window.close();
 window.location = "/search.php";
   });
 
 var dse = $( '#datasource-edit' ).detach();
 
 let dse_show = () => {
-    alertify.confirm( 
-      'Select datasource to edit', 
+    alertify.alert( 
+      'Edit Datasources', 
       dse.html(),
       () =>  { 
-      	dse_selected();
-	},
-      () => {}
-    );
+}
+    ).set({ 'label' : 'Close', 'closable': false });
 }
 
 $( "#edit-detail" ).click(function()  {
+  //dse_selected();
   dse_show();
 });
 
-$( "#edit-summary").click(function() {
-  var ds_id = "summarytable";
-  $.ajax({
-    method: "POST",
-    url: "import.php",
-    data: { ds_id: ds_id },
-  })
-  .done(function( msg ) {
-    ds = msg.toString();
-    //set the code of corresponding class in editor
-    editor.setValue(ds);
-  }); 
-});
+  alertify.dialog('EditOption',function factory(){
+    return{
+    build:function(){
+	    this.setHeader("Select option to be edited");
+    }
+    };
+  },true,'alert');
+
+var editOption = $('.edit-options').detach();
+function selectDatasource(e){
+	let option = editOption.find( 'button' );	
+    	option.each(function(){
+		$(this).attr({id: (e.id + $(this).val())});
+	});
+	alertify.EditOption(editOption.html()).setting({'label':'Back to Select Datasource'});
+}
 </script>

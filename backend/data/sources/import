@@ -57,7 +57,26 @@ string_replace($location,"this.add_cols = null","this.add_cols = [". $replace_st
 print($parent);
 copy($location,"/genedive/frontend/datasource/view/table/plugin/sources/".$parent.".js") or die "copy failed : $!";
 
+#####
+$dsparent = basename(dirname($file));
+$location = "/genedive/frontend/static/genedive/view/table/plugin/";
+$summary = "ds_".$dsparent."_sum";
+$detail = "ds_".$dsparent."_det";
 
+#add summary class
+copy("$pdir/summarytemplate.js",$location.$summary.".js") or die "copy failed : $!";
+#rename the class name in the datasource
+string_replace($location.$summary.".js","DefaultSumTable",$summary);
+#$replace_string = join(",",map " \"$_\"",@add_col);
+#string_replace($location.$summary.".ds","this.add_cols = null","this.add_cols = [". $replace_string."]");
+
+#add detail class
+copy("$pdir/detailtemplate.js",$location.$detail.".js") or die "copy failed : $!";
+#rename the class name in the datasource
+string_replace($location.$detail.".js","DefaultDetTable",$detail);
+$replace_string = join(",",map " \"$_\"",@add_col);
+string_replace($location.$detail.".js","this.add_cols = null","this.add_cols = [". $replace_string."]");
+#####
 # ============================================================
 sub adjacency_matrix {
 # ============================================================

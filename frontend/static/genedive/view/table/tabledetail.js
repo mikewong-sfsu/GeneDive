@@ -1,4 +1,4 @@
-class TableDetail extends BuildTable {
+class TableDetail extends BuildDetailTable {
 
   constructor(table, interactions, additional_columns, group,visible_columns, ds) {
     super(table, interactions,additional_columns, visible_columns,  ds);
