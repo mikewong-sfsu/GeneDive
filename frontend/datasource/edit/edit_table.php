@@ -116,8 +116,8 @@ refreshEditUI = () => {
 refreshEditUI();
 
 function loadScript(e){
-console.log("e:",e);
 var ds_id = e.getAttribute('id');
+console.log("ds_id:",ds_id);
 alertify.closeAll();
 $.ajax({
     method: "POST",

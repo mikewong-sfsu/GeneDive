@@ -35,11 +35,12 @@ class BuildSummaryTable extends ResultsTable{
 	//map the values in merged table
 	buildSummaryBody(rows,group_id){
 	//=============================
+	var summaryEle = new Map();
 	for(var row of rows){
 		var ds_class = row.ds_id;
-		var summaryEle = this.objectMap.get(ds_class).getSummaryElement(rows, group_id );
-		return summaryEle;
+		summaryEle = Object.assign(summaryEle, this.objectMap.get(ds_class).getSummaryElement(rows, group_id ));
 	}
+		return summaryEle;
 	}
 
 }

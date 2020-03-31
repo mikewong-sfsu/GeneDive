@@ -66,13 +66,13 @@
     <script src="static/genedive/color/color.js"></script>
     <script src="static/genedive/synonym/synonym.js"></script>
     <script src="static/genedive/filter/probabilityfilter.js"></script>
+    <script src="static/genedive/filter/textfilterplugin.js"></script>
     <script src="static/genedive/filter/textfilter.js"></script>
     <script src="static/genedive/highlight/highlight.js"></script>
     <script src="static/genedive/grouper/grouper.js"></script>
     <script src="static/genedive/view/table/resultstable.js"></script>
     <script src="static/genedive/view/table/buildsummarytable.js"></script>  
     <script src="static/genedive/view/table/builddetailtable.js"></script> 
-    <!--script src="static/genedive/view/table/buildtable.js"></script--> 
     <script src="static/genedive/view/table/tabledetail.js"></script>
     <script src="static/genedive/view/table/tablesummarygene.js"></script>
     <script src="static/genedive/view/table/tablesummaryarticle.js"></script>

@@ -160,7 +160,7 @@ let dss_show = () => {
 	//else { $( item ).bootstrapToggle( 'off' );} //commented to fix the toggle reset 
     =======*/
         if( selected ) { $( item ).bootstrapToggle( 'on' ); } 
-        else           { $( item ).bootstrapToggle( 'off' );}
+        //else           { $( item ).bootstrapToggle( 'off' );}//commented to fix the toggle reset
 //>>>>>>> master
     });
 };

@@ -40,6 +40,7 @@ foreach my $type (qw( gene drug disease )) {
 filter_columns( $interactions );
 print "</ul>Preparing to load data into the database<br>\n";
 write_sql( $path, $interactions );
+=begin comment
 $parent = basename(dirname($file));
 $parent = "ds_".$parent;
 $location = $path."/template.js";
@@ -56,12 +57,16 @@ string_replace($location,"this.add_cols = null","this.add_cols = [". $replace_st
 # ==== PLUGIN ARCHITECTURE
 print($parent);
 copy($location,"/genedive/frontend/datasource/view/table/plugin/sources/".$parent.".js") or die "copy failed : $!";
-
+=end comment
+=cut
 #####
+# =====PLUGIN ARCHITECTURE
 $dsparent = basename(dirname($file));
 $location = "/genedive/frontend/static/genedive/view/table/plugin/";
+$filterlocation = "/genedive/frontend/static/genedive/filter/plugin/";
 $summary = "ds_".$dsparent."_sum";
 $detail = "ds_".$dsparent."_det";
+$filter = "ds_".$dsparent."_filter";
 
 #add summary class
 copy("$pdir/summarytemplate.js",$location.$summary.".js") or die "copy failed : $!";
@@ -76,6 +81,12 @@ copy("$pdir/detailtemplate.js",$location.$detail.".js") or die "copy failed : $!
 string_replace($location.$detail.".js","DefaultDetTable",$detail);
 $replace_string = join(",",map " \"$_\"",@add_col);
 string_replace($location.$detail.".js","this.add_cols = null","this.add_cols = [". $replace_string."]");
+
+#add filter class
+copy("$pdir/filtertemplate.js",$filterlocation.$filter.".js") or die "copy failed : $!";
+#rename the class name in the datasource
+string_replace($filterlocation.$filter.".js","DefaultFilterTable",$filter);
+
 #####
 # ============================================================
 sub adjacency_matrix {
