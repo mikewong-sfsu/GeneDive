@@ -104,10 +104,13 @@ function remove_datasource( $manifest, $datasource_id ) {
 	system( "rm -rf $path" );
 
 	//Delete datasource class in plugin
-	//delete the summary page
+	//delete the filter class
+	$path =   $CACHE .'/static/genedive/filter/plugin/ds_' . $datasource[ 'path' ].'_filter.js';
+	system( "rm -rf $path" );
+	//delete the summary class
 	$path =   $CACHE .'/static/genedive/view/table/plugin/sources/ds_' . $datasource[ 'path' ].'_sum.js';
 	system( "rm -rf $path" );
-	//delete the detail page
+	//delete the detail class
 	$path =   $CACHE .'/static/genedive/view/table/plugin/sources/ds_' . $datasource[ 'path' ].'_det.js';
 	system( "rm -rf $path" );
 	
