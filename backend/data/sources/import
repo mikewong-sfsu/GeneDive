@@ -3,7 +3,7 @@
 BEGIN { $| = 1; } # Forces output buffer to flush
 
 use Text::CSV qw( csv );
-use List::Util qw( any none uniq );
+use List::Util qw( any first none uniq );
 use JSON::XS;
 use Array::Utils qw(:all);
 use Data::Dumper;
@@ -26,7 +26,7 @@ $interactions = csv( in => $file, encoding => 'utf-8', headers => "auto");
 cleanup( $interactions );
 
 # ===== GENERATE ADJACENCY MATRIX
-print "<ul><li>Building <i>adjacency matrix</i></li>\n";
+print "<ul><li><i>Adjacency matrix</i></li>\n";
 adjacency_matrix( $cache, $interactions );
 
 # ===== GENERATE TYPEAHEAD LOOKUP CACHES
@@ -34,7 +34,7 @@ foreach my $type (qw( gene drug disease )) {
 	my $hash = {};
 	extract_ids( $type, $hash, $_ ) foreach @$interactions;
 	hash_to_cache( $type, $cache, $hash );
-  	print "<li>Building <i>$type typeahead lookup cache</i></li>\n";
+	printf "<li><i>%s typeahead lookup cache</i></li>\n", ucfirst( $type );
 }
 
 filter_columns( $interactions );
@@ -120,7 +120,7 @@ sub cache {
 # ============================================================
 	my $file  = shift;
 	my @paths = split /\//, $file; pop @paths;
-  my $cache = '/var/www/html/cache/';
+	my $cache = '/var/www/html/cache/';
 	my $path  = $cache . pop @paths;
 
 	return $path;
@@ -131,8 +131,8 @@ sub cleanup {
 # ============================================================
 	my $interactions = shift;
 	foreach my $i (@$interactions) {
-    $i->{ type1 } = lc $i->{ type1 };
-    $i->{ type2 } = lc $i->{ type2 };
+		$i->{ type1 } = lc $i->{ type1 };
+		$i->{ type2 } = lc $i->{ type2 };
 		if( exists $i->{ id1 }) { $i->{ geneids1 } = $i->{ id1 }; delete $i->{ id1 }; }
 		if( exists $i->{ id2 }) { $i->{ geneids2 } = $i->{ id2 }; delete $i->{ id2 }; }
 		if( ! exists $i->{ probability }) { $i->{ probability } = 0.7; }
@@ -196,32 +196,6 @@ sub hash_to_cache {
 # ============================================================
 sub insert_table {
 # ============================================================
-=for comment
-return <<EOF;
-CREATE TABLE IF NOT EXISTS interactions (
-	id INTEGER NOT NULL, 
-	journal TEXT, 
-	article_id TEXT, 
-	pubmed_id TEXT, 
-	sentence_id TEXT, 
-	mention1_offset INTEGER, 
-	mention2_offset INTEGER, 
-	mention1 TEXT collate nocase, 
-	mention2 TEXT collate nocase, 
-	geneids1 TEXT, 
-	geneids2 TEXT, 
-	probability FLOAT, 
-	context TEXT, 
-    	section TEXT, 
-	type1 CHARACTER(1), 
-	type2 CHARACTER(1),
-	addendum TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX IF NOT EXISTS gid1 on interactions(geneids1);
-CREATE INDEX IF NOT EXISTS gid2 on interactions(geneids2);
-EOF
-=cut comment
 return <<EOF;
 CREATE TABLE IF NOT EXISTS interactions (
 	id INTEGER NOT NULL, 
@@ -268,16 +242,21 @@ sub validate {
 	my $alias = { geneids1 => 'id1', geneids2 => 'id2' };
 
 	# ===== ENFORCE REQUIRED FIELDS
+	my @missing = ();
 	foreach my $required (@required) {
 		my $aliases = exists $alias->{ $required } ? [ $alias->{ $required } ] : [];
 		unless( grep { 
 			my $field = $_;
 			$field eq $required || any { $field eq $_ } @{$aliases}
 		} @headers ) {
-			printf( "{\"result\":\"error\",\"line\":1,\"description\":\"Missing required field '%s'\"}\n", $required );
-			exit( 1 );
+			push @missing, $required;
 		}
 	}
+	if( @missing ) {
+		printf( "<h2>Import Error</h2><p>Missing required field%s %s</p>\n", @missing > 1 ? 's' : '', join( ', ', map { "<code>$_</code>" } @missing ));
+		exit( 1 );
+	}
+
 	#get additional columns
 	@add_col = array_minus(@headers, @required);#my removed NL
 	@add_col = array_minus( @add_col, @optional);
@@ -303,7 +282,6 @@ sub validate {
 	my $col_num = 0;
 	if($i == 1){
 		push @$row,"addendum";	
-
 	}else{
 		for($index = 0; $index <= $#headers; $index++)
 		{

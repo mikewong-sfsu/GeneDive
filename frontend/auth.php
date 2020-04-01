@@ -11,6 +11,7 @@ if( ! isset($_SESSION[ 'is_auth' ])) {
 // Handle logout request
 if( isset( $_REQUEST[ 'logout' ])) {
   unset( $_SESSION[ 'is_auth' ]);
+  unset( $_SESSION[ 'sources' ]);
   session_destroy();
 
   header( 'location: index.php' );

@@ -3,7 +3,7 @@ require_once( '../datasource/proxy.php' ); // Defines $server
 require_once( "../phpLib/environment.php" );
 if( ! IS_DOCKER_CONTAINER ) { require_once( "../auth.php" ); }
 
-$db     = "/usr/local/genedive/data/sources/all/data.sqlite";
+$db     = "/usr/local/genedive/data/sources/native/data.sqlite";
 $id     = $_GET['id'];
 
 if( file_exists( $db )) {

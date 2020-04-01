@@ -15,12 +15,15 @@ if( isset( $_GET[ 'get' ])) {
 // ============================================================
 function filter_by_host_manifest( $element ) {
 // ============================================================
-// 'all' is the hugely dominant use case of PharmGBK + PLoS/PMC; 
-// the front-end should prevent 'all' in combination with 
+// Pass-through filter which allows datasource selection based
+// on datasources are available on the current host
+//
+// 'native' is the hugely dominant use case of PharmGBK & PLoS/PMC; 
+// the front-end should prevent 'native' in combination with 
 // anything else.
 // ------------------------------------------------------------
 	global $manifest;
-	if( $element == 'all' ) { return true; } 
+	if( $element == 'native' ) { return true; } 
 	return array_key_exists( $element, $manifest );
 }
 
@@ -61,25 +64,32 @@ function add_datasource( $manifest, $datasource ) {
 	}
 	move_uploaded_file( $_FILES[ 'dsfile' ][ 'tmp_name' ], $file );
 
-	echo "<h1>Importing data...</h1>\n";
-  flush();
-	system( "/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1" );
+	echo "<h1>Importing Data</h1><p>Please wait while the data from $datasource[name] is being processed. All user-provided data is kept local to your computer.</p><h3>Building Cache Files</h3>\n";
+	flush();
+	system( "/usr/bin/perl /usr/local/genedive/data/sources/import $file 2>&1", $error );
+	if( $error ) {
+		echo "<h2>Data import Failed While Building Cache Files</h2><p>Please see error messages above, review the format requirements, edit the CSV file, and try again.</p>\n";
+		echo '<div class="pull-right"><a class="btn btn-danger" href="/search.php" style="width: 80px;">OK</a></div>';	
+		return;
+	}
 
-	echo "<h2>Loading data into database...</h2>\n";
-  flush();
-	system( "/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql" );
+	echo "<h3>Loading Data into Database</h3>\n";
+	flush();
+	system( "/usr/bin/sqlite3 $path/data.sqlite < $path/data.import.sql", $error );
+	if( $error ) {
+		echo "<h2>Data Import Failed While Loading the Database</h2><p>Please see error messages above, review the format requirements, edit the CSV file, and try again.</p>\n";
+		echo '<div class="pull-right"><a class="btn btn-danger" href="/search.php" style="width: 80px;">OK</a></div>';	
+		return;
+	}
 
-	echo "<h2>Updating manifest</h2>\n";
-  flush();
+	echo "<p><i>$datasource[name]</i> has been loaded into the local GeneDive database.</p><h3>Updating Manifest</h3><p>Adding <i>$datasource[name]</i> to the local datasource manifest</p>\n";
+	flush();
 	$id = $datasource[ 'id' ];
 	$manifest[ $id ] = $datasource;
 	write_manifest( $manifest );
 
-
-	echo "<h2>Data import complete!</h2>\n";
-
-	//echo "<script>setTimeout(() => { self.opener.location.reload(); window.close(); }, 2500 );</script>";	
-	echo "<script>setTimeout(() => { window.location = \"/search.php\"; }, 2500 );</script>";	
+	echo "<h1>Data Import Complete!</h1>\n";
+	echo '<div class="pull-right"><a class="btn btn-success" href="/search.php" style="width: 80px;">OK</a></div>';	
 
 }
 
@@ -143,7 +153,7 @@ function remove_datasource( $manifest, $datasource_id ) {
     if( is_array( $selected[ 'datasources' ]) && in_array( $datasource_id, $selected[ 'datasources' ])) {
       $selected[ 'datasources' ] = preg_grep( "/^$datasource_id\$/", $selected[ 'datasources' ], PREG_GREP_INVERT );
       if( count( $selected[ 'datasources' ]) == 0 ) {
-        $selected[ 'datasources' ] = [ 'plos-pmc', 'pharmgkb' ];
+        $selected[ 'datasources' ] = [ 'native' ];
       }
 	    $fp = fopen( "$DATASOURCES/selection.json", 'w' );
       fwrite( $fp, json_encode( $selected ));

@@ -3,7 +3,9 @@
 require_once "../datasource/manifest.php";
 require_once "../datasource/proxy.php"; // defines $server
 require_once "../phpLib/environment.php";
-require_once "../session.php";
+ini_set( 'memory_limit', '1024M' ); // Allows for large query results to load into memory
+ini_set( 'default_socket_timeout', 600 ); // Allows for large query results to send over network
+
 
 if( false ) {
   $response = json_encode([
@@ -107,7 +109,8 @@ function proxy_query( $source, $ids, $minProb ) {
   global $manifest;
   global $errors;
   global $server;
-  if( $source == 'all' ) { $manifest[ 'all' ][ 'host' ] = $server; }
+  if( $source == 'native' ) { $manifest[ 'native' ][ 'host' ] = $server; }
+
   $request  = $manifest[ $source ][ 'host' ] . "/api/interactions.php?ids=" . urlencode( $ids ) . "&minProb=$minProb&sources=" . base64_encode( json_encode([ $source ]));
   $response = json_decode( file_get_contents( $request ), true );;
   if( ! $response ) { 

@@ -62,12 +62,16 @@
     
 <pre>
     gunzip genedive-docker.gz 
-    docker load genedive-docker
+    docker load -i genedive-docker
     docker run -d -p 8456:80 --name genedive-v2.5-local genedive-v2.5
 </pre>
 
     <p>You can substitute port <code>8456</code> with another available port if
     8456 is already in use.</p>
+
+	<p>When all the above is done, point your browser to 
+	<a href="http://localhost:8456" target="_blank">http://localhost:8456</a> 
+	(or the port of your choice) to begin using GeneDive on Docker.</p>
 
     <h2>Cite Us</h2>
     <p>To cite this work, please use the following publication:</p>
