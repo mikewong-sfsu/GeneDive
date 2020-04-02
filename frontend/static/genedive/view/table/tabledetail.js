@@ -91,7 +91,8 @@ class TableDetail extends BuildDetailTable {
 	tr.append($(document.createElement("td")).html(element.get(this.add_columns[col])));	
 	}
       //datasource mapping
-      tr.append($(document.createElement("td")).html(this.navigateRef(i.ds_name,i.ds_url)));
+      let source = i.ds_name + " [" + i.short_id + "]";
+      tr.append($(document.createElement("td")).html(this.navigateRef(source,i.ds_url)));
  
       if (i.pubmed_id !== "")
         tr.append($(document.createElement("td")).html(pubmed_link));

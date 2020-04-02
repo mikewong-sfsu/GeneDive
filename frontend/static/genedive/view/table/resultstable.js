@@ -136,7 +136,7 @@ class ResultsTable {
 	  res += key;
 	}
 	else{
-	  res += '<a  href=/api/external_link.php?action=ref&url_link=' + value + ' target=_blank>'+ key + '</a>';
+	  res += '<a class="pubmedLink"  href=/api/external_link.php?action=ref&url_link=' + value + ' target=_blank>'+ key + '</a>';
 	}
 	return res;
   }

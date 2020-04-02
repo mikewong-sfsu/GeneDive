@@ -3,6 +3,7 @@
 require_once "../datasource/manifest.php";
 require_once "../datasource/proxy.php"; // defines $server
 require_once "../phpLib/environment.php";
+require_once "../session.php";
 ini_set( 'memory_limit', '1024M' ); // Allows for large query results to load into memory
 ini_set( 'default_socket_timeout', 600 ); // Allows for large query results to send over network
 
@@ -30,8 +31,8 @@ $query       = NULL;
 $results     = [];
 $errors      = [];
 $extra_col   = [];
-if(in_array("all", $datasources)){
-	$datasources = array_filter($datasources, function($item) {return $item != "all";});
+if(in_array("native", $datasources)){
+	$datasources = array_filter($datasources, function($item) {return $item != "native";});
 	array_push($datasources, "plos-pmc" , "pharmgkb");
 }
 $dsid_map = (array_intersect_key($dsid_map, array_flip($datasources)));

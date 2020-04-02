@@ -3,11 +3,11 @@ require_once( '../datasource/proxy.php' ); // Defines $server
 require_once( '../phpLib/environment.php' );
 
 $db = "/usr/local/genedive/data/sources/native/data.sqlite";
+$action   = $_GET['action'];
 
 if( file_exists( $db )) {
   $pdo = new PDO( "sqlite:$db" );
 
-  $action   = $_GET['action'];
   $redirect = "";
 
   $PHARM_GKB_TYPES = array(
@@ -61,14 +61,25 @@ if( file_exists( $db )) {
 
     $pubmedID = $_GET['pubmedID'];
     $redirect = "https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/";
+
+  } else if($action === "ref"){
+
+  $redirect = $_GET['url_link'];
   }
+
 
   header("Location: $redirect");
   exit();
 
-} else {
+}else if($action === "ref"){
+  $redirect = $_GET['url_link'];
+
+  header("Location: $redirect");
+  exit();
+
+}
+else {
   global $server;
-  $action   = $_GET['action'];
   $redirect = "$server/api/external_link.php?action=$action";
 
   if( $action === "single_dgr" ) {

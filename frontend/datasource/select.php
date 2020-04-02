@@ -55,7 +55,7 @@
 <script>
 GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
-var std_ds = new Set(["pharmgkb","plos-pmc","all"]);
+var std_ds = new Set(["pharmgkb","plos-pmc","native"]);
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 
 // ===== INITIALIZE DATASOURCE MANAGER
@@ -70,7 +70,7 @@ GeneDive.datasource.refreshSelectionUI = () => {
     //add the default standard datasources
     short_id_map.set("plos-pmc","G1");
     short_id_map.set("pharmgkb","G2");
-    short_id_map.set("all","G1,G2");
+    short_id_map.set("native","G1,G2");
     var i = 1;
 
     Object.entries( manifest ).forEach(([ key, datasource ]) => {
@@ -132,10 +132,12 @@ let dss = {
           let list = GeneDive.datasource.list.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
           alertify.success( `Now searching on<br>${list}` ); 
           let use_native = [ 'plos-pmc', 'pharmgkb' ].every( item => GeneDive.datasource.list.includes( item ));
-          if( use_native ) {
+	  /*if( use_native ) {
+	      console.log("ds:", GeneDive.datasource.list);
               GeneDive.datasource.list = GeneDive.datasource.list.filter( x => x != 'plos-pmc' && x != 'pharmgkb' );
-              GeneDive.datasource.list.unshift( 'native' );
-          }
+	      console.log("dslist:",GeneDive.datasource.list);
+	      GeneDive.datasource.list.unshift( 'native' );
+    }*/
 	  let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
 	  let dsid_map = btoa (JSON.stringify( Object.fromEntries(short_id_map.entries())));
           $.ajax({

@@ -3,7 +3,7 @@ class BuildDetailTable extends ResultsTable{
 	constructor(table,interactions,additional_columns, ds){
 	//===========================
 		super(table,interactions,additional_columns);
-		this.default_ds = new Set(["all","pharmgkb","plos-pmc"]);
+		this.default_ds = new Set(["native","pharmgkb","plos-pmc"]);
 		this.objectMap = new Map();
 		//create instances of the merging datasources
 		for( var key of Object.keys(ds)){

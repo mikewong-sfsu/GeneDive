@@ -4,7 +4,7 @@ class TextFilterPlugin {
 	}
 
 	createObjectMap(datasources){
-		var default_ds = new Set(["all","pharmgkb","plos-pmc"]);
+		var default_ds = new Set(["native","pharmgkb","plos-pmc"]);
 	
 		for(var key of Object.keys(datasources)){
 			if(default_ds.has(key) )
