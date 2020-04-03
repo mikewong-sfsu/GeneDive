@@ -380,7 +380,6 @@ If you feel that we are not abiding by this privacy policy, you should contact u
               zip.files[thisDownloadUpload.genediveStateFileName].async("string").then((text) => {
 
                 let textObj = JSON.parse(text);
-		      console.log("text:",textObj);
                 console.debug(textObj);
                 GeneDive.history.importEntireProgramStates(textObj);
               })

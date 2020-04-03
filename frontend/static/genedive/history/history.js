@@ -141,7 +141,7 @@ class History{
     this.controller.search.importSearchState(state.search);
     this.controller.probfilter.setMinimumProbability(state.probfilter);
 	this.controller.probfilter.showProbabilityFilter(); 
-    this.controller.textfilter.importFilterState(state.textfilter);
+    this.controller.textfilter.importFilterState(state.textfilter, state.interactions);
 
     //Highlighter
     this.controller.highlighter.importHighlightState(state.highlighter);
