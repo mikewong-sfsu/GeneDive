@@ -40,7 +40,6 @@
 
     <!-- Import plugin class -->
     <?php include("addselectsource.php");?>
-    <script src="datasource/view/table/plugin/defaultsummary.js"></script>
 
     <!-- Adjacency Matrix -->
     <script src="cache.php?get=adjacency_matrix"></script>
