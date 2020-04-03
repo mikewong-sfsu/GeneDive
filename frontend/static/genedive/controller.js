@@ -31,7 +31,6 @@ class Controller {
     this.history        = new History( this );
     this.loading        = new Loading(".loading-container", ".loading-info", ".loading-container .progress-bar");
     this.localdb        = new LocalDB(this);
-    this.buildtable 	= null;//NL
     this.tablestate 	= {zoomed: false, zoomgroup: null, visible_columns: []};//new Map()};
     this.interactions 	= null;
     this.filtrate       = null;
