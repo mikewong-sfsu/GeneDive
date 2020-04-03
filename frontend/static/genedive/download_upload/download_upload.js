@@ -86,10 +86,14 @@ If you feel that we are not abiding by this privacy policy, you should contact u
       "probability",
       "addendum",
     ];
+    let native_ds = new Set(["native", "plos-pmc", "pharmgkb"]);
 
     let csv_header = fields.join(",")+"\r\n";
     // Goes through each interaction and generates a comma seperated row of all the values from the fields above
     let csv_content = GeneDive.filtrate.map((i)=>{
+    if(native_ds.has(i.ds_id)){
+      i.addendum = this.getNativeAddendum(i);
+      }
       return fields.map((f)=>{
         try{
           if(!(f in i))
@@ -107,6 +111,15 @@ If you feel that we are not abiding by this privacy policy, you should contact u
 
 
     return csv_header+csv_content;
+  }
+
+  getNativeAddendum(interaction){
+    let nativeFields = ["journal","article_id","sentence_id","context"];
+    let addendum = {};
+    for(let i of nativeFields){
+      addendum[i] = interaction[i];
+    }
+    return JSON.stringify(addendum);
   }
 
   buildStateFile() {
@@ -367,6 +380,7 @@ If you feel that we are not abiding by this privacy policy, you should contact u
               zip.files[thisDownloadUpload.genediveStateFileName].async("string").then((text) => {
 
                 let textObj = JSON.parse(text);
+		      console.log("text:",textObj);
                 console.debug(textObj);
                 GeneDive.history.importEntireProgramStates(textObj);
               })
