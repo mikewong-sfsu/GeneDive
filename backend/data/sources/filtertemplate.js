@@ -1,4 +1,4 @@
-class DefaultFilterTable{
+class DefaultFilterTable extends DefaultFilter{
 	constructor(){
 	}
 

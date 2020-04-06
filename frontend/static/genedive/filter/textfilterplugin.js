@@ -28,13 +28,13 @@ class TextFilterPlugin {
 		return filterList;
 	}
 
-
 }
 
 class Filter{
-	constructor(attribute, filterFunction, filterInput = $('<input>',{'id':'filterText'})){
+	constructor(attribute, filterFunction, filterInput = $('<input>',{'id':'filterText'}), addSelector = null  ){
 		this.attribute = attribute;
 		this.filterFunction = filterFunction;
 		this.filterValue = filterInput;
+		this.addSelector = addSelector;
 	}
 }

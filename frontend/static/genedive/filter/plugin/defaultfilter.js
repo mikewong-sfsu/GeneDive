@@ -16,7 +16,7 @@ class DefaultFilter{
 		interactions.forEach( i =>{
 			options.add(i[attribute]);
 		})
-		let $filterValue = $('<select>',{'id':'select' + filterName});
+		var $filterValue = $('<select>',{'id':'select' + filterName});
 		Array.from(options).sort().map((i) =>{
 			$filterValue.append($(`<option value="${i}"/>`).html(i));
 		});
@@ -42,6 +42,21 @@ class DefaultFilter{
 
 	filterExcerpt(interactions, attribute){
 		return interactions.filter((i) => new RegExp(attribute, "i").test(i.context));
+	}
+
+	getValue(interaction, attribute){
+		var fields = new Set(['pubmed_id', 'probability', 'mention1', 'mention2', 'geneids1', 'geneids2', 'type1', 'type2']);
+		if(fields.has(attribute))
+			return interaction.attribute;
+		if(interaction.hasOwnProperty('addendum')){
+			var addendum = JSON.parse(interaction.addendum);
+			for(let attr in addendum){
+				if(attr == attribute){
+					return addendum[attr];
+				}
+			}
+		}
+		return null;
 	}
 
 }

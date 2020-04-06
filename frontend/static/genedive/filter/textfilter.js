@@ -102,9 +102,18 @@ class TextFilter extends TextFilterPlugin{
   }
 
   addFilter() {
-    this.currentValueInput = $('.filter-input');
-    let displayValue = $('#filterText').length ? this.currentValueInput.val() : this.currentValueInput.children(':selected').text();
-    this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val(), displayValue );
+    //this.currentValueInput = $('.filter-input');
+    let selector = this.filterList.get(this.attribute.val());
+    let displayValue;
+    if(selector.addSelector){
+    	this.currentValueInput = displayValue = selector.addSelector();
+	this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput, displayValue );
+	
+    }else{
+    	this.currentValueInput = $('.filter-input');
+    	displayValue = $('#filterText').length ? this.currentValueInput.val() : this.currentValueInput.children(':selected').text();
+    	this.addFilterSet(this.attribute.val(), this.is.prop("checked"), this.currentValueInput.val(), displayValue );
+    }
   }
 
   addFilterSet(attribute, is, value, displayValue) {
@@ -152,7 +161,6 @@ class TextFilter extends TextFilterPlugin{
 
     //append datasource filters
     this.filterList = new Map([...filterMap, ...(this.buildFilter(interactions))]);
- 
   }
 
 
@@ -186,6 +194,7 @@ class TextFilter extends TextFilterPlugin{
   let target = this.filterSelector[0].value;
   let targetInput = this.filterList.get(target).filterValue;
   targetInput.addClass("form-control filter-input");
+  //$('.input-group').append(targetInput);
   $('.filter-style').empty().append(targetInput);
   }
 
