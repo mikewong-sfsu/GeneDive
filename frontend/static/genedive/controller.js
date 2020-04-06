@@ -695,11 +695,11 @@ class Controller {
       else
       {
         this.tablestate.zoomed = false;
-        $('.table-view table').remove();
-        $('.table-view').append($("<table/>").addClass("table table-hover"));
+	$('.table-wrapper').remove();//NL
+    	$('.table-view').append($("<table/>").addClass("table table-hover").attr("id","result-table"));
+    	$('#result-table').wrap($("<div />").addClass("table-wrapper"));
       }
     }
-
 
     // Otherwise show the appropriate summary view
     if (this.grouper.selected() === "dgr") {
