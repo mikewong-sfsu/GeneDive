@@ -73,8 +73,8 @@ if( $dslist == '' ) { $dslist = []; }
 <div class="edit-options" style="text-align:center">
 <div style="text-align:center">
 <div class="btn-group" role="group" aria-label="..."> 
-  <button type="button" class="btn btn-primary"  value="_sum" title="Add Custom Columns to Summary Table from user-defined Data" onclick="loadScript(this)">Add Column<br> Summary View</button>
-  <button type="button" class="btn btn-primary" value="_det" title="Add Custom Columns to Detail Table from user-defined Data" onclick="loadScript(this)">Add Column <br> Detail View</button>
+  <button type="button" class="btn btn-primary"  value="_sum" title="Add Custom Columns to Summary Table from user-defined Data" onclick="loadScript(this)">Add Column in<br>Summary View</button>
+  <button type="button" class="btn btn-primary" value="_det" title="Add Custom Columns to Detail Table from user-defined Data" onclick="loadScript(this)">Add Column in<br>Detail View</button>
   <button type="button" class="btn btn-primary" value="_filter" title="Add Custom Filters from user-defined Data" onclick="loadScript(this)">Add <br> Custom Filter</button>
 </div>
 </div>

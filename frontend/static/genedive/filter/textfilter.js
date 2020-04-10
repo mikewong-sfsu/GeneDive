@@ -14,7 +14,7 @@ class TextFilter extends TextFilterPlugin{
     //this.filterValues = [];
     this.filterSelector = $(".filter-select");
     this.filterList = new Map();
-
+console.log("this.valueText:",this.valueText);
     // Filter dropdown lists behavior
     this.filterSelector.on('change', () => {
       this.updateSelectedFilter();
@@ -166,9 +166,11 @@ class TextFilter extends TextFilterPlugin{
 
   filterInteractions(interactions) {
     this.filterInit(interactions);
+    console.log("currentValue:", this.currentValueInput);
+console.log(";ength:",this.currentValueInput.length);
     //populate the filter-select dropdown dynamically
     if(!this.currentValueInput.length){
-    //$('.filter-select').empty();
+    $('.filter-select').empty();
     for(var key of this.filterList.keys()) {
       $('.filter-select')
          .append($("<option></option>").attr("value",key).text(key));

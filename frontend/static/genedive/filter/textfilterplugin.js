@@ -31,10 +31,10 @@ class TextFilterPlugin {
 }
 
 class Filter{
-	constructor(attribute, filterFunction, filterInput = $('<input>',{'id':'filterText'}), addSelector = null  ){
-		this.attribute = attribute;
+	constructor(filterName, filterFunction, filterSelector = $('<input>',{'id':'filterText'}), selectorValue = null  ){
+		this.attribute = filterName;
 		this.filterFunction = filterFunction;
-		this.filterValue = filterInput;
-		this.addSelector = addSelector;
+		this.filterValue = filterSelector;
+		this.addSelector = selectorValue;
 	}
 }
