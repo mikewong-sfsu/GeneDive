@@ -12,7 +12,7 @@
 #
 # $ PORT=<Your port number> make
 #
-PORT?=8080
+PORT?=8055
 
 all: devel build run
 
@@ -24,13 +24,14 @@ build: cache
 
 cache:
 	@echo Cloning the GeneDive application for Docker installation
-	cp -Rf ../../.git devel
-	cp -Rf ../../.gitignore devel
-	cp -Rf ../../LICENSE devel
-	cp -Rf ../../frontend devel
-	cp -Rf ../../backend/docker.compose devel/backend
+	cp	../../.gitignore \
+		../../LICENSE \
+		devel
+	cp -Rf ../../.git \
+		../../frontend \
+		devel
+	cp ../../backend/docker/php.ini devel/backend/docker
 	cp -Rf ../../backend/docker/install devel/backend/docker
-	cp -Rf ../../backend/docker/php.ini devel/backend/docker
 	for i in `ls ../../backend | grep -v docker | grep -v sessions`; do cp -Rf ../../backend/$$i devel/backend; done
 	for i in `ls | grep -v devel`; do cp -Rf $$i devel/backend/docker; done
 	cp -Rf ../../docs devel
