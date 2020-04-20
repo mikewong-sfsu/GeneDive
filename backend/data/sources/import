@@ -181,8 +181,6 @@ return <<EOF;
 CREATE TABLE IF NOT EXISTS interactions (
 	id INTEGER NOT NULL, 
 	pubmed_id TEXT, 
-	mention1_offset INTEGER, 
-	mention2_offset INTEGER, 
 	mention1 TEXT collate nocase, 
 	mention2 TEXT collate nocase, 
 	geneids1 TEXT, 

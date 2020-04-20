@@ -1,5 +1,6 @@
 class DefaultFilterTable extends DefaultFilter{
 	constructor(){
+		super();
 	}
 
 	addFilters(interactions){

@@ -21,7 +21,7 @@ class TableSummaryGene extends BuildSummaryTable {
 
     this.table.tablesorter({
       headers: {0: {sorter: false}, 5: {sorter: false}, 7: {sorter: false}},
-      sortList: [[6, 1],], // Sort by Max Confidence
+      sortList: [[6, 1]] // Sort by Max Confidence
     });
 
 

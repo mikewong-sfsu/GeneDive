@@ -11,10 +11,8 @@ class TextFilter extends TextFilterPlugin{
     this.submit = $(submit);
     this.display = $(display);
     this.sets = [];
-    //this.filterValues = [];
     this.filterSelector = $(".filter-select");
     this.filterList = new Map();
-console.log("this.valueText:",this.valueText);
     // Filter dropdown lists behavior
     this.filterSelector.on('change', () => {
       this.updateSelectedFilter();
@@ -25,9 +23,16 @@ console.log("this.valueText:",this.valueText);
       this.addFilter();
       return false; // Prevents form from refreshing page
     });
-
+    
   }
 
+   /**
+   @fn       textFilter.createBasicFilters
+   @brief    Create default features for  interaction data
+   @details  Creates filter for required parameter namely Article ID and DGR.
+   @param    interactions The interactions from the GeneDive search
+   @callergraph
+   */ 	
   createBasicFilters(interactions){
     let filterMap = new Map();
     let dgr = {};
@@ -45,6 +50,7 @@ console.log("this.valueText:",this.valueText);
     return filterMap;
   }
 
+  //Article ID filter
   getArticleFilter(articleList){
     //sort the articleList
     articleList = Array.from(articleList).sort((a,b) => a - b);
@@ -59,6 +65,7 @@ console.log("this.valueText:",this.valueText);
 	return interactions.filter((i) => new RegExp(pubmed_id, "i").test(i.pubmed_id));
   }
 
+  //DGR filter
   getDGRFilter(dgrList){
     let DGR = new Map();//newObject {};
     for(let i in dgrList){
@@ -101,8 +108,14 @@ console.log("this.valueText:",this.valueText);
 	
   }
 
+   /**
+   @fn       textFilter.addFilter
+   @brief    Add Filter to filterSet
+   @details  add Filter based on type of filterValue
+   @callergraph
+   */
+  //add filter with selector value
   addFilter() {
-    //this.currentValueInput = $('.filter-input');
     let selector = this.filterList.get(this.attribute.val());
     let displayValue;
     if(selector.addSelector){
@@ -116,6 +129,7 @@ console.log("this.valueText:",this.valueText);
     }
   }
 
+  //add filter to filter set
   addFilterSet(attribute, is, value, displayValue) {
     let filter = new FilterSet( attribute, is, value, displayValue );
     if( this.sets.find( f => f.id == filter.id )) { alertify.error( `Filter "${attribute} ${is} ${value}" has already been applied` ); return; }
@@ -124,15 +138,16 @@ console.log("this.valueText:",this.valueText);
     GeneDive.onAddFilter();
   }
 
+  //remove filter from filter set
   removeFilterSet(identifier) {
     this.sets = this.sets.filter((set) => set.id !== identifier);
     this.renderDisplay();
     GeneDive.onRemoveFilter();
   }
 
+  //render the added filter
   renderDisplay() {
     this.display.html("");
-
     for (let set of this.sets) {
       let item = $("<div/>")
         .addClass("filter-item")
@@ -148,10 +163,10 @@ console.log("this.valueText:",this.valueText);
               this.removeFilterSet($( ev .target).attr( 'data-filter-id' ));
             })
         );
-
       this.display.append(item);
     }
   }
+
   filterInit(interactions){
     //create ObjectMap of all selected datasources
     this.createObjectMap(GeneDive.ds);
@@ -161,21 +176,21 @@ console.log("this.valueText:",this.valueText);
 
     //append datasource filters
     this.filterList = new Map([...filterMap, ...(this.buildFilter(interactions))]);
+
+    //populate the filter-select dropdown dynamically
+    if(!this.currentValueInput.length){
+      $('.filter-select').empty();
+      for(var key of this.filterList.keys()) {
+        $('.filter-select')
+         .append($("<option></option>").attr("value",key).text(key));
+      }; 
+    } 
   }
 
 
   filterInteractions(interactions) {
+    //initialize the filter
     this.filterInit(interactions);
-    console.log("currentValue:", this.currentValueInput);
-console.log(";ength:",this.currentValueInput.length);
-    //populate the filter-select dropdown dynamically
-    if(!this.currentValueInput.length){
-    $('.filter-select').empty();
-    for(var key of this.filterList.keys()) {
-      $('.filter-select')
-         .append($("<option></option>").attr("value",key).text(key));
-    }; 
-    }
 
     //filter interactions
     for(let filter of this.sets){
@@ -196,7 +211,7 @@ console.log(";ength:",this.currentValueInput.length);
   let target = this.filterSelector[0].value;
   let targetInput = this.filterList.get(target).filterValue;
   targetInput.addClass("form-control filter-input");
-  //$('.input-group').append(targetInput);
+  //map filter-style to selected target filter
   $('.filter-style').empty().append(targetInput);
   }
 
@@ -209,15 +224,8 @@ console.log(";ength:",this.currentValueInput.length);
     let filterData = {
       "currentValueInput" : this.currentValueInput,
       "sets": this.sets,
-      "filterValues": {},
       "selectedFilter" : this.filterSelector.val(),
     };
-
-    // The filterValues are Set objects, so this converts them to an array so they can be stringified.
-    /*$.each(this.filterValues, function(index, value) {
-      filterData[index] = Array.from(value);
-    });*/
-
     return filterData;
   }
 
@@ -228,22 +236,15 @@ console.log(";ength:",this.currentValueInput.length);
    @param    filterData The state of TextFilter that was generated by TextFilter.exportFilterState
    */
   importFilterState(filterData, interactions) {
-    this.currentValueInput = filterData.currentValueInput;
     this.sets = filterData.sets;
-
-    // Convert the arrays back into Set objects
-    /*$.each(filterData.filterValues, function(index, value) {
-      this.filterValues[index] = new Set(value);
-    });*/
-    this.filterSelector.html(filterData.selectedFilter);
     this.renderDisplay();
     this.filterInit(interactions);
+    this.currentValueInput = filterData.currentValueInput;
     this.updateSelectedFilter();
   }
 
   reset(){
     this.sets = [];
-    //this.filterValues = [];
     this.renderDisplay();
   }
 

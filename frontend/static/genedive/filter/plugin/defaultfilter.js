@@ -11,10 +11,29 @@ class DefaultFilter{
 		return filterMap;
 	}
 
+	addHighlight(interactions){
+		var highlightMap = new Map();
+		var fields = ['mention1', 'mention2', 'ds_name', 'short_id','context'];
+		for(let field of fields){
+			highlightMap.set(field,this.getHighlight);//((interactions,field) => { interactions.map((i) => i.highlight = true) return i;}));
+		}
+		/*for(let field of fields){
+I	        highlightMap.set(field, interactions.map( ( i ) => { i.highlight = new RegExp(term,"i").test(`${i.mention1}` )}));//${i.mention1} ${i.mention2}`); return i; });
+		}*/
+		return highlightMap;
+	}
+
+	getHighlight(interactions, attribute){
+		return attribute;
+	}
+
+
+
 	getDropdown(interactions, attribute, filterName){
 		var options = new Set();
 		interactions.forEach( i =>{
-			options.add(i[attribute]);
+			if(i[attribute] != "NULL")
+				options.add(i[attribute]);
 		})
 		var $filterValue = $('<select>',{'id':'select' + filterName});
 		Array.from(options).sort().map((i) =>{

@@ -44,7 +44,8 @@ class TableDetail extends BuildDetailTable {
     thead.append(tr);
     tr.append($(document.createElement("th")).html("DGR<sub>1</sub>").css("width", "8%").attr({ id : 'th-dgr1', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}));
     tr.append($(document.createElement("th")).html("DGR<sub>2</sub>").css("width", "8%").attr({ id : 'th-dgr2', "toggle": "tooltip", "title": "Disease, Gene, or Drug Entity related to your query"}));
-    tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "100px").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher article accession number"}));
+    tr.append($(document.createElement("th")).text("Journal").css("width", "8%").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal or publisher for the citation supporting the interaction"}));
+    tr.append($(document.createElement("th")).text("Article ID").addClass("numeric").css("width", "100px").attr({ id : 'th-journal', "toggle": "tooltip", "title": "Journal"}));
     tr.append($(document.createElement("th")).html("C. Score").addClass("numeric").css("width", "80px").attr({ id : 'th-cscore', "toggle": "tooltip", "title": "The confidence score (likelihood) for interaction accuracy"}));
     tr.append($(document.createElement("th")).text("Excerpt").attr({ id : 'th-excerpt', "toggle": "tooltip", "title": "The article excerpt that states the interaction"}));
     
@@ -82,6 +83,7 @@ class TableDetail extends BuildDetailTable {
       let mention2 = i.synonym2 ? this.addSynonym(i.mention2, i.synonym2) : i.mention2;
       tr.append($(document.createElement("td")).html(mention1));
       tr.append($(document.createElement("td")).html(mention2));
+      tr.append($(document.createElement("td")).html(i.journal));
       tr.append($(document.createElement("td")).text(displayedID).addClass("numeric"));
       tr.append($(document.createElement("td")).text(Number(i.probability).toFixed(3)).addClass("numeric"));
       tr.append($(document.createElement("td")).html(this.adjustExcerpt(i)));
