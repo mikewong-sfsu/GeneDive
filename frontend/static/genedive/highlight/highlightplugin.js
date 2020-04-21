@@ -18,11 +18,11 @@ class HighlightPlugin {
 		}
 	}
 
-	buildHighlight(interactions){
+	buildHighlight(interactions, term){
 		var highlightList = new Map();
 		//combine all filters
 		for(var datasource of this.objectMap.values()){
-			highlightList =new Map([...highlightList, ...(datasource.addHighlight(interactions))]);
+			highlightList =new Map([...highlightList, ...(datasource.addHighlight(interactions, term))]);
 		}
 		return highlightList;
 	}

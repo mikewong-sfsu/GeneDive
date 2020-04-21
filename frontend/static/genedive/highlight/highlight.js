@@ -6,7 +6,7 @@ class Highlight extends HighlightPlugin{
     this.highlightSettings = $('.highlight-setting .basic');
     this.selectionMap = new Map();
     this.parsedInteractions = null;
-    this.selectedHeader = new Set(["DGR1", "DGR2", "Excerpt"]);//default values
+    this.selectedHeader = ["DGR1", "DGR2", "Excerpt"];//default values
     this.characterCount = 2;//default value
     this.input.on("keyup", ( e ) => {
       delay( function () {
@@ -16,18 +16,19 @@ class Highlight extends HighlightPlugin{
      this.highlightSettings.on("click",() => {
       this.getHighlightOptions();
     });
+	  console.log("highlight constructor called");
   }
   
   //initialize highlight function mapping to headers
   initColumnMap(interactions, term){
 	let columnMap = new Map();
 	//basic highlight columns
-	columnMap.set("DGR1", 	() =>  interactions.map((i) => { i.highlight = new RegExp(term, "i").test(i.mention1); return i; }));
-	columnMap.set("DGR2", 	() =>  interactions.map((i) => { i.highlight = new RegExp(term, "i").test(i.mention2); return i; }));
-	columnMap.set("Excerpt",() =>  interactions.map((i) => { i.highlight = new RegExp(term, "i").test(i.context); return i;  }));
+        columnMap.set("DGR1"   , ((interactions,term) => this.highlightFunc(interactions, term, "mention1")));		
+	columnMap.set("DGR2"   , ((interactions,term) => this.highlightFunc(interactions, term, "mention2")));
+        columnMap.set("Excerpt", ((interactions,term) => this.highlightFunc(interactions, term, "context")));		
 	//get the columns in addendum
 	let addendumColumns = GeneDive.additional_columns;
-	addendumColumns.forEach(item => columnMap.set (item, this.mapAddendumColumn));
+	addendumColumns.forEach(item => columnMap.set (item, ((interactions, term) => this.highlightFunc(interactions, term, item))));
 	//include custom highlight columns
 	  //TO BE COMPLETED
 	return columnMap;
@@ -35,18 +36,28 @@ class Highlight extends HighlightPlugin{
   }
 
   //helper to map all columns in addendum
-  mapAddendumColumn(interactions, term, header){
+  highlightFunc(interactions, term, header){
     let updatedInteractions = interactions.map((i) => {
+	    	//avoid resetting if already highlight  = true
+	    	if(i.highlight != true){
 	    		let addendum = i.addendumJSONObj;
-	    		if(addendum){
+			//direct mapping check
+	    		if(i.hasOwnProperty(header)){
+		    	 i.highlight = new RegExp ( term, "i" ).test(i[header]);
+			}
+	    		//mapping columns in addendum
+	    		else if(addendum){
+				console.log("addendum");
 			  if(addendum.hasOwnProperty(header)){
 			    i.highlight = new RegExp ( term, "i" ).test(addendum[header]);
-			    return i;
 			  }
 			}
-			//match not found
+	    		//column not found
+	    		else{
 	    		i.highlight = false;
-	    		return i;
+			}
+		}
+	    	return i;
 	    	});
     return updatedInteractions;
   }
@@ -67,25 +78,31 @@ class Highlight extends HighlightPlugin{
    */
   highlight ( interactions ) {
     let term = this.input.val();
+
+    //check min character count 
+    if(term.length < this.characterCount){
+	return interactions;
+    }
+ 
     //initialize selectionMap
     if(this.selectionMap.size == 0){
 	this.createObjectMap(GeneDive.ds);
 	this.selectionMap = this.initColumnMap(interactions, term);
-	let customHighlight = this.buildHighlight(interactions);
+	let customHighlight = this.buildHighlight(interactions, term);
 	this.selectionMap = new Map([...this.selectionMap, ...customHighlight]);
-	this.parsedInteractions = this.parseJSON(interactions);
     }
+    //parse interaction for better performance
+    this.parsedInteractions = this.parseJSON(interactions);
     
-    //highlight based on min character count
-    if(term.length < this.characterCount){
-      return interactions.map( ( i ) => { i.highlight = false; return i; });
-    }
+    //refresh highlight value to avoid caching issue
+    this.parsedInteractions = this.parsedInteractions.map( ( i ) => { i.highlight = false; return i; });
+ 
     //highlight on the selected headers
     for(let i of this.selectedHeader){
-      this.selectionMap.get(i)(this.parsedInteractions, term, i);
+      this.parsedInteractions = this.selectionMap.get(i)(this.parsedInteractions, term);
     }
-    return interactions;
-  }I
+    return this.parsedInteractions;
+  }
  
 /**ADVANCED header selection **/
 
@@ -111,7 +128,7 @@ class Highlight extends HighlightPlugin{
    for (let k of keys){
 	   let header = checkbox.clone();
 	   header.find('.form-check-label').text(k);
-	   if(this.selectedHeader.has(k))
+	   if(this.selectedHeader.indexOf(k) >= 0)
 	 	header.find('.form-check-input').attr({ id: k, name: k, value: k , checked: true});
 	   else
 		header.find('.form-check-input').attr({ id: k, name: k, value: k , checked: false});
@@ -132,8 +149,15 @@ class Highlight extends HighlightPlugin{
     alertify.confirm("Select headers to be considered for matching and highlighting free-text", 
 	    	      	highlightDialog.html(),
 	    		() => { 
-				this.selectedHeader = $('.highlight-select input:checked').map(() => this.name).get();
+				$('.highlight-select').submit(() =>{
+				this.selectedHeader = [];
+				let selection = $('.form-check-input:checked');
+				for(let i of selection){
+					this.selectedHeader.push(i.name);
+				}
 				this.characterCount = $('#charCount').val();
+				return false;});
+				$('.highlight-select').submit();
 				},
 	    		() => {}); 
   }
@@ -141,13 +165,20 @@ class Highlight extends HighlightPlugin{
 
 /** MANAGE state **/
 
+
+  reset(){
+  }
   /**
    @fn       Highlight.exportHighlightState
    @brief    Saves the Highlight state
    @details
    */
   exportHighlightState() {
-    let highlightData = this.input.val();
+    let highlightData = {
+	    "input": this.input.val(),
+	    //"selectedHeader": this.selectedHeader,
+	    //"characterCount": this.characterCount
+    };//this.input.val();
     return highlightData;
   }
 
@@ -158,7 +189,9 @@ class Highlight extends HighlightPlugin{
    @param    highlightData The state of Highlight that was generated by Highlight.exportHighlightState
    */
   importHighlightState(highlightData) {
-    this.input.val(highlightData);
+    this.input.val(highlightData.input);
+    //this.selectedHeader = highlightData.selectedHeader;
+    //this.characterCount = highlightData.characterCount;
   }
 
 }
