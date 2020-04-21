@@ -45,9 +45,13 @@ write_sql( $path, $interactions );
 $dsparent = basename(dirname($file));
 $location = "/genedive/frontend/static/genedive/view/table/plugin/";
 $filterlocation = "/genedive/frontend/static/genedive/filter/plugin/";
+$highlightlocation = "/genedive/frontend/static/genedive/highlight/plugin/";
+
 $summary = "ds_".$dsparent."_sum";
 $detail = "ds_".$dsparent."_det";
 $filter = "ds_".$dsparent."_filter";
+$highlight = "ds_".$dsparent."_highlight";
+
 
 #add summary class
 copy("$pdir/summarytemplate.js",$location.$summary.".js") or die "copy failed : $!";
@@ -68,6 +72,10 @@ copy("$pdir/filtertemplate.js",$filterlocation.$filter.".js") or die "copy faile
 #rename the class name in the datasource
 string_replace($filterlocation.$filter.".js","DefaultFilterTable",$filter);
 
+#add highlight class
+copy("$pdir/highlighttemplate.js",$highlightlocation.$highlight.".js") or die "copy failed : $!";
+#rename the class name in the datasource
+string_replace($highlightlocation.$highlight.".js","DefaultHighlightTable",$highlight);
 #####
 # ============================================================
 sub adjacency_matrix {

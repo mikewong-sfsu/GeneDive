@@ -67,6 +67,7 @@
     <script src="static/genedive/filter/probabilityfilter.js"></script>
     <script src="static/genedive/filter/textfilterplugin.js"></script>
     <script src="static/genedive/filter/textfilter.js"></script>
+    <script src="static/genedive/highlight/highlightplugin.js"></script> 
     <script src="static/genedive/highlight/highlight.js"></script>
     <script src="static/genedive/grouper/grouper.js"></script>
     <script src="static/genedive/view/table/resultstable.js"></script>

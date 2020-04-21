@@ -85,7 +85,10 @@
     <!-- Highlight Module -->
     <div class="module highlight-module require-dgr-search">
       <div class="title">
-        <h5><!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->Highlight Rows</h5>
+	<h5><!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->Highlight Rows</h5>
+        <div class="highlight-setting">
+	    <button class="btn basic" title="Highlight selection settings"><i class="fas fa-cog"></i></button>	    
+        </div>	
       </div>
       <input type="text" placeholder="highlight term..." class="form-control highlight-input">
     </div>

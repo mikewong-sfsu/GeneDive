@@ -44,9 +44,13 @@ foreach( $datasources as $source ) {
   
   // Extract additional columns in addendum
   if(file_exists($local)){
-  $addendum = extract_addendum($local);
+    $addendum = extract_addendum($local);
+    if($addendum){
+      $extra_col = array_unique(array_merge($addendum, $extra_col));
+    } 
   }
-  $extra_col = ($addendum)?array_unique(array_merge($extra_col,$addendum)): [];
+  //$extra_col = ($addendum)?array_unique(array_merge($extra_col,$addendum)): [];
+
 
   //add datasource
   $modified = array();
@@ -59,9 +63,7 @@ foreach( $datasources as $source ) {
   }
   // Accumulate results
   $results = array_merge( $results, $modified );
-  
 }
-
 $response = json_encode([
   "count"   => sizeof( $results ),
   "results" => $results,
@@ -91,7 +93,6 @@ function query_database( $file, $gids, $minProb ) {
     "SELECT * FROM interactions WHERE (geneids1 = $prepared_slots OR geneids2 = $prepared_slots) AND probability >= ?;";
 
   $stmt = $pdo->prepare( $query );
-
   if( ! $stmt ) {
     array_push( $errors, $pdo->errorInfo() );
     return null;
@@ -130,7 +131,7 @@ function extract_addendum($file ) {
   $query = "SELECT addendum from interactions limit 1;";
   $stmt = $pdo->query( $query );
   if($stmt){
-    $results = $stmt->fetch(PDO::FETCH_ASSOC);
+	  $results = $stmt->fetch(PDO::FETCH_ASSOC);
     $addendum = json_decode($results['addendum']);
     if($addendum !== null){
       foreach($addendum as $key => $value){

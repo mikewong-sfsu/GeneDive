@@ -3,6 +3,10 @@
 $filterPluginPath ="static/genedive/filter/plugin/";
 addFiles($filterPluginPath);
 
+//highlight plugin
+$highlightPluginPath ="static/genedive/highlight/plugin/";
+addFiles($highlightPluginPath);
+
 //view plugin
 $viewPluginPath = "static/genedive/view/table/plugin/";
 addFiles($viewPluginPath);
