@@ -11,6 +11,8 @@
   "dependencies": {
     "mathjs": "^6.0.3",
     "mixin-deep": "^2.0.0",
+    "mixwith": "^0.1.1",
+    "puppeteer": "^2.1.1",
     "sqlite3": "^4.0.6",
     "stopword": "^0.2.4"
   }

@@ -7,6 +7,7 @@
 */
 
 const fs       = require( 'fs' );
+const path     = require( 'path' );
 const os       = require( 'os' );
 const Test     = require( 'Test' );
 const Table    = require( '../automation/view/Table' );
@@ -38,6 +39,7 @@ class SaveLoadTest extends mix( Test ).with( SaveLoad, Score, Filter, Table, Gra
 				let before   = JSON.stringify( await this.table.summary());
 				let filename = await this.save( comment );
 				let download = `${os.homedir()}/Downloads/${filename}`; // Default Chromium downloads path
+				await new Promise(r => setTimeout(r, 2000));				
 				if( ! fs.existsSync( download )) { reject( `Download failed: "${download}" not found` ); }
 
 				// Logout and log back in
@@ -45,7 +47,8 @@ class SaveLoadTest extends mix( Test ).with( SaveLoad, Score, Filter, Table, Gra
 				await this.login();
 
 				// Upload the session file and compare states (before and after should be equal)
-				await this.load( download );
+				let table = await this.load( download );
+				console.log("upload complrte");
 				let after   = JSON.stringify( await this.table.summary());
 				if( before != after ) { reject( 'State restored from upload different from original state prior to download' ); }
 

@@ -53,15 +53,15 @@ check-keys:
 	perl preinstall/check-keys
 
 run:
-	docker run -d -p $(PORT):80 --name genedive-local genedive
+	docker run -d -p $(PORT):80 --name genedive-gpib genedive
 
 stop:
-	docker stop genedive-local
+	docker stop genedive-gpib
 
 clean: 
 	rm -f Dockerfile
 	rm -Rf devel
-	docker rm genedive-local
+	docker rm genedive-gpib
 
 shell:
-	docker exec -it genedive-local /bin/bash
+	docker exec -it genedive-gpib /bin/bash

@@ -107,7 +107,7 @@ let Registration = (superclass) => class extends superclass {
 	// designed to be run by trusted users already, there is no security risk.
 	// ------------------------------------------------------------
 		const db     = '/usr/local/genedive/data/users.sqlite';
-		const stdout = exec( `docker exec genedive-local sqlite3 ${db} '${query}'` ); // MW Running from Docker Host
+		const stdout = exec( `docker exec genedive-gpib sqlite3 ${db} '${query}'` ); // MW Running from Docker Host
 		return stdout.toString();
 	}
 	

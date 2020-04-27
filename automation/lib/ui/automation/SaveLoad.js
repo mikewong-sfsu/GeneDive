@@ -17,6 +17,7 @@ let SaveLoad = (superclass) => class extends superclass {
 	// ============================================================
 	async save( comment ) {
 	// ============================================================
+		await this.click('#menu-dropdown-button');
 		await this.click( '.download' );
 		let filename = await this.page.evaluate(() => { return $( '.filename' ).text(); });
 		await this.click( '.ajs-content .form-control' );
@@ -28,9 +29,15 @@ let SaveLoad = (superclass) => class extends superclass {
 	// ============================================================
 	async load( file ) {
 	// ============================================================
+		await this.click('#menu-dropdown-button');
 		await this.click( '.upload' );
 		let uploader = await this.page.$( '#file_upload' );
+		console.log("file:", file);
 		if( ! file ) { reject( 'No file specified to upload' ); }
+await uploader.uploadFile( file);
+await this.page.evaluate(() => {
+                $('#file_upload').change((file) => console.log("file successfully uploaded"));
+            });
 		return uploader.uploadFile( file );
 	}
 }

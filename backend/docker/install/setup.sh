@@ -24,7 +24,7 @@ cpanm install \
         JSON::XS
 
 # Delete paths
-#rm -rf /usr/local/genedive /var/www/html
+rm -rf /usr/local/genedive /var/www/html
 ln -s /genedive/backend /usr/local/genedive
 ln -s /genedive/frontend /var/www/html
 
@@ -42,7 +42,7 @@ chmod a+w /genedive/backend/data /genedive/backend/data/users.sqlite
 chmod a+w /genedive/backend/data/sources
 
 # Install default configuration files
-cp /genedive/backend/data/manifest.server-default.php /genedive/backend/data/manifest.php
+cp /genedive/backend/data/sources/manifest.server-default.json /genedive/backend/data/sources.manifest.json
 cp /genedive/backend/data/credentials-default.php /genedive/backend/data/credentials.php
 
 # Install NodeJS v10 & Puppeteer system dependencies

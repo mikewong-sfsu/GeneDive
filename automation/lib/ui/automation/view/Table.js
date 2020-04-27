@@ -50,19 +50,18 @@ let Table = (superclass) => class extends superclass {
 		try {
 			await this.page.waitForSelector( '.table', { visible: true });
 			if( await this.page.waitForSelector( '.table-help,.no-results', { timeout: 500, visible: true })) { return []; } // No search or no results found
-		} catch( e ) {}
+		} catch( e ) { }
 		
 		let grouped = await this.page.evaluate( () => {
 			window.parseTable = function () {
 				let values   = [];
 				let table    = $( '.table' )[ 0 ];
+				console.log("table:", table);
 				let rows     = [ ... table.rows ];
-
 				// Parse the header row
 				let header   = rows.shift();
 				let columns  = [ ... header.cells ];
 				let fields   = columns.map(( cell ) => { return cell.textContent });
-
 				// Parse the data rows
 				rows.forEach(( row ) => {
 					let obj   = {};

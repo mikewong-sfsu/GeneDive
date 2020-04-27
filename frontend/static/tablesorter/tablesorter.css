@@ -8,13 +8,13 @@
   font-family: FontAwesome;
 }
 
-.table-view th.headerSortDown::after { 
+.table-view th.headerSortUp::after { 
   padding-left:8px;
   content: "\f0de";
   font-family: FontAwesome;
 } 
 
-.table-view th.headerSortUp::after { 
+.table-view th.headerSortDown::after { 
   padding-left:8px;
   content: "\f0dd";
   font-family: FontAwesome;

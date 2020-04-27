@@ -42,25 +42,22 @@ class SortingColumn extends mix( Test ).with( Table ) {
 
 			// Check all orderings
 			for( let ordering of orderings ) {
-
 				// Check all sortable headers
 				for( let id of headers ) {
-
 					// Keep clicking the header to get to the requested ordering (up to 3 clicks)
 					for( let clicks = 0; clicks < 3 && ! await hasClass( id, `header${ordering}`); clicks++ ) {
 						await this.click( `#${id}` );
 					}
 					if( ! await hasClass( id, `header${ordering}` )) { reject( `Sorting Order ${ordering} for column ${id} not achieved after 3 clicks` ); }
 
-					let isNumeric = await hasClass( id, 'numeric' );
 					let summary   = await this.table.summary();
 					let column    = await getColumn( id );
-					let values    = summary.map( x => isNumeric ? parseFloat( x[ column ]) : x[ column ].toLowerCase() );
+					let values    = summary.map( x => isNaN(x [column]) ? x[ column ].toLowerCase() : parseFloat( x[ column ]));
 
 					// Confirm that the rows are sorted appropriately
 					let isSorted = false;
-					if( ordering == 'SortUp'   ) { isSorted = values.every(( val, i, arr ) => i == 0 || (val <= arr[ i - 1 ])); } else 
-					if( ordering == 'SortDown' ) { isSorted = values.every(( val, i, arr ) => i == 0 || (val >= arr[ i - 1 ])); }
+					if( ordering == 'SortUp'   ) { isSorted = values.every(( val, i, arr ) => i == 0 || (val >= arr[ i - 1 ])); }  else 
+					if( ordering == 'SortDown' ) { isSorted = values.every(( val, i, arr ) => i == 0 || (val <= arr[ i - 1 ])); }
 
 					if( ! isSorted ) { reject( `Column ${column} is improperly sorted for '${ordering}'` ); }
 				}

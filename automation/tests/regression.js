@@ -37,7 +37,7 @@ let userbot = new GeneDive( 'tests/regression.json' );
 	await userbot.run( test.unregister );
 	await userbot.run( test.register );
 	await userbot.run( test.login );
-	await userbot.run( test.resetPassword );
+	await userbot.run( test.resetPassword );//needs work
 
 	// ===== HELP SYSTEM
 	await userbot.run( test.help );
@@ -66,7 +66,7 @@ let userbot = new GeneDive( 'tests/regression.json' );
 
 	// ===== STATE FEATURES
 	await userbot.run( test.undoRedo );
-	await userbot.run( test.saveload );
+	await userbot.run( test.saveload );//needs work
 
 	// ===== BACKEND SYSTEMS
 	await userbot.run( test.cache );
