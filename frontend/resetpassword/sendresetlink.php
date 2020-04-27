@@ -15,7 +15,7 @@ require_once "/usr/local/genedive/data/credentials.php";
 
 
   // Some basic validation - we got a valid email and a password?
-  $incomplete = !( isset( $_POST[ 'email' ] ) );
+$incomplete = !( isset( $_POST[ 'email' ] ) );
   $invalid_email = !filter_var( $_POST['email'], FILTER_VALIDATE_EMAIL );
 
   if ( $incomplete ) {
@@ -62,7 +62,7 @@ try{
 
   $mail             = new PHPMailer();
   $mail->IsSMTP();                            
-  $mail->Host       = "www.genedive.net"; 
+  $mail->Host       = $BASE_URL;
 
   $mail->SMTPAuth   = true;                  
   $mail->SMTPSecure = "tls";                 
@@ -73,9 +73,9 @@ try{
 
   $mail->SetFrom('genedive@gmail.com', 'GeneDive');
   $mail->Subject    = "GeneDive: Reset Password";
-  $mail->MsgHTML($message);
+  $mail->MsgHTML( $message );
 
-  $mail->AddAddress($email);
+  $mail->AddAddress( $email );
 
   $mail->Send();
 

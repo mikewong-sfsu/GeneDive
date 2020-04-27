@@ -91,6 +91,11 @@ h5 {
   color:rgb(128,128,128);
 }
 
+.titlebar span.version{
+  font-size: 14pt;
+  color: #999;
+}
+
 .titlebar span.subtitle{
   font-size: 14pt;
   color: #666;
@@ -148,31 +153,19 @@ h5 {
   display:none;
 }
 
-.download-module {
-  /*visibility: hidden;*/
-  text-align: center;
-  flex-grow: 1;
-}
-
-.download-module button{
-  width: 50%;
-}
-
 .module .title {
+  background-color:transparent;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-.module .title span {
-  color:rgb(128,128,128);
-}
 
-.module .title i {
+/*.module .title i {
   padding-right:1em;
   color:rgb(128,128,128);
-}
+}*/
 
 .module-help {
   cursor:pointer;
@@ -194,7 +187,7 @@ h5 {
 /* Rendering */
 
 .spinner {
-  display: none;
+  display: flex;
   width: 100%;
   height:100%;
   font-size: 4em;
@@ -225,6 +218,23 @@ h5 {
 
 .no-results h3 {
   text-align: center;
+}
+
+/* Highlight Options */
+.highlight-module .highlight-setting .highlightOption {
+  margin-left:7px;
+}
+
+.highlight-module .highlight-setting .highlightOption  span {
+  padding:7px 7px;
+}
+
+.highlight-module .highlight-setting .btn{
+  background-color: transparent;
+}
+
+.form-check-label {
+  font-weight: 500;
 }
 
 /* Help Sections */

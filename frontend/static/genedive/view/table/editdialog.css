@@ -1,0 +1,56 @@
+<style>
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+.editcolumn{
+
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+ .editcolumn > div {
+  background-color: #f1f1f1;
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
+
+
+.checkbox-button input[type=checkbox]
+{
+    visibility: hidden;
+    position: relative;
+    left: -9999px;
+}
+
+.checkbox-button input[type=checkbox] + label
+{
+    display: inline-block;
+    border-radius: 5px;
+    background-color: lightgrey;
+    padding: 0.3em;
+}
+
+.checkbox-button input[type=checkbox]:checked + label
+{
+    color: white;
+    background-color: green;
+}
+
+.checkbox-button input[type=checkbox] + label i
+{
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    overflow:auto;
+     float:left; 
+}
+
+.checkbox-button{
+  /*margin-bottom:20px;*/
+}
+
+
+</style>

@@ -14,11 +14,13 @@
 
   // Proxy login
   if( isset( $_POST[ 'token' ])) {
+    $all    = base64_encode( json_encode([ "all" ]));
+    $native = base64_encode( json_encode([ "native" ]));
     $_SESSION[ 'is_auth' ] = true;
     $_SESSION[ 'email' ]   = $_POST[ 'email' ];
     $_SESSION[ 'name' ]    = $_POST[ 'name' ];
     $_SESSION[ 'token' ]   = $_POST[ 'token' ];
-    $_SESSION[ 'sources' ] = $_POST[ 'sources' ];
+    $_SESSION[ 'sources' ] = $_POST[ 'sources' ] == $all ? $native : $_POST[ 'sources' ]; # MW Workaround until staging server is updated to use 'native' instead of 'all';
     $response = json_encode([ 'is_auth' => true ]);
     header( 'Access-Control-Allow-Origin: ' . PROXY );
     echo $response;
@@ -54,7 +56,7 @@
   $_SESSION[ 'is_auth' ] = true;
   $_SESSION[ 'email' ]   = $email;
   $_SESSION[ 'name' ]    = $row[ 'name' ];
-  if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["all"] )); };
+  if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["native"] )); };
 
   // If proxy, send auth token
   if( isset( $_POST[ 'proxy' ])) {

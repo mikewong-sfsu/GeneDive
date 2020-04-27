@@ -75,34 +75,35 @@ If you feel that we are not abiding by this privacy policy, you should contact u
   buildInteractionsData() {
 
     let fields = ["id",
-      "journal",
-      "article_id",
       "pubmed_id",
-      "sentence_id",
       "geneids1",
       "mention1",
       "type1",
       "geneids2",
       "mention2",
       "type2",
-      "sentence_id",
       "highlight",
       "probability",
-      "context",
+      "addendum",
     ];
+    let native_ds = new Set(["native", "plos-pmc", "pharmgkb"]);
 
     let csv_header = fields.join(",")+"\r\n";
     // Goes through each interaction and generates a comma seperated row of all the values from the fields above
     let csv_content = GeneDive.filtrate.map((i)=>{
+    if(native_ds.has(i.ds_id)){
+      i.addendum = this.getNativeAddendum(i);
+      }
       return fields.map((f)=>{
         try{
           if(!(f in i))
             console.error(f, "not found in", i);
           let ret = i[f];
-          if(typeof ret === "string")
-            ret = ret.replace("\"", "\"\"");
-
-          return `"${ret}"`;
+          if(typeof ret === "string"){
+            ret =  ret.replace(/"/g, `""`);//ret.replace("\"", "\\\"");
+	    ret = /[",\n]/.test(ret) ? `"${ret}"` : ret;
+	  }
+          return ret;//`"${ret}"`;
         }
         catch (e){console.debug(e, f, i);return "";}
       }).join(",");
@@ -110,6 +111,15 @@ If you feel that we are not abiding by this privacy policy, you should contact u
 
 
     return csv_header+csv_content;
+  }
+
+  getNativeAddendum(interaction){
+    let nativeFields = ["journal","article_id","sentence_id","context"];
+    let addendum = {};
+    for(let i of nativeFields){
+      addendum[i] = interaction[i];
+    }
+    return JSON.stringify(addendum);
   }
 
   buildStateFile() {
@@ -180,7 +190,7 @@ If you feel that we are not abiding by this privacy policy, you should contact u
 
       /* State File */
       let state = this.buildStateFile();
-      zip.file(this.genediveStateFileName, JSON.stringify(state));
+      zip.file(this.genediveStateFileName,JSON.stringify(state));
 
       /* T&C File */
       zip.file("terms_and_conditions.txt", this.termsAndConditions);
@@ -232,7 +242,6 @@ If you feel that we are not abiding by this privacy policy, you should contact u
 
     this.intializeUploadFields($("#upload_file_state"), alert);
 
-
   }
 
   /**
@@ -279,8 +288,6 @@ If you feel that we are not abiding by this privacy policy, you should contact u
       }
 
     });
-
-
   }
 
   /**
@@ -431,20 +438,20 @@ If you feel that we are not abiding by this privacy policy, you should contact u
   }
 
   disableDownload() {
-    $(".download-module button.download")[0].disabled = true;
+    $(".download-module.download")[0].disabled = true;
   }
 
   enableDownload() {
-    $(".download-module button.download")[0].disabled = false;
+    $(".download-module.download")[0].disabled = false;
   }
 
   enableUpload() {
 
-    $(".download-module button.upload")[0].disabled = true;
+    $(".download-module.upload")[0].disabled = true;
   }
 
   disableUpload() {
-    $(".download-module button.upload")[0].disabled = false;
+    $(".download-module.upload")[0].disabled = false;
   }
 
   clearUploadField(field) {

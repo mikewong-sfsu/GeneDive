@@ -1,10 +1,11 @@
 <?php require_once "auth.php"; ?>
 <?php require_once "header.php"; ?>
+<?php require_once "datasource/native.php"; ?>
+<?php require_once "version.php"; ?>
 
 <div class="main-display">
   <div class="control-view">
-
-    <div class="titlebar"><div><a href="/">GeneDive</a><?php include( "menu/account.php" )?><?php include( "menu/data.php" ); ?></div>
+    <div class="titlebar"><div><a href="/">GeneDive</a> <span class="version">v<?= genedive_patch_level() ?></span><?php include( "menu/account.php" )?><?php include( "menu/data.php" ); ?></div>
     <span class="subtitle">Disease, Gene, Drug (DGR)<br>Interaction Explorer</span>
     </div>
 
@@ -58,11 +59,6 @@
       <form id="add-filter" onsubmit="return false;">
         <div class="top-row">
           <select class="filter-select">
-            <option>Article</option>
-            <option selected="selected">Excerpt</option>
-            <option>DGR</option>
-            <option>Journal</option>
-            <!--<option>Section</option>-->
           </select>
           <div class="filter-is-not">
             <span><input type="radio" name="isnot" value="is" class="is" checked > is </span>
@@ -70,10 +66,9 @@
           </div>
         </div>
 
-        <div class="input-group filter-input-group">
-          <input type="text" class="form-control filter-input filter-text" placeholder="value...">
-          <select class="form-control filter-input filter-dropdown" style="display:none;">
-          </select>
+	<div class="input-group filter-input-group">
+	  <div class=" filter-style">
+	  </div>
           <span class="input-group-btn">
             <button type="submit" class="btn btn-default" type="button">Add</button>
           </span>
@@ -90,7 +85,10 @@
     <!-- Highlight Module -->
     <div class="module highlight-module require-dgr-search">
       <div class="title">
-        <h5><!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->Highlight Rows</h5>
+	<h5><!-- <i class="fa fa-pencil" aria-hidden="true"></i> -->Highlight Rows</h5>
+        <div class="highlight-setting">
+	    <button class="btn basic" title="Highlight selection settings"><i class="fas fa-cog"></i></button>	    
+        </div>	
       </div>
       <input type="text" placeholder="highlight term..." class="form-control highlight-input">
     </div>
@@ -110,19 +108,6 @@
     </div>
 
     <div class="divider require-dgr-search"></div>
-
-    <!-- Download and Upload -->
-    <div class="module download-module btn-group" role="group">
-      <div class="title">
-        <h5>Session Results</h5>
-      </div>
-      <button type="button" data-toggle="tooltip-initial" data-placement="top" title="Download the current graph image, the current state, state history, and a CSV of the interactions." class="btn btn-default download" disabled><span class="fas fa-download"></span> Download</button>
-      <button type="button" class="btn btn-default upload"><span class="fas fa-upload"></span> Upload</button>
-    </div>
-
-    <div class="module about-module">
-      <a class="helplink"href="/help.html" target="_blank">Help</a>
-    </div>
   </div>
 
   <div class="views">
@@ -130,7 +115,9 @@
     <!-- Table View -->
     <div class="table-view ui-widget-content panel-top">
       <div class="messaging-and-controls require-dgr-search">
-        <span class="go-back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</span>
+	<span class="go-back"></span>
+	<span class="edit-table"></span>
+	<span class="view-header"></span>
         <span class="metadata"></span>
       </div>
       <div class="spinner table-rendering-spinner">
@@ -172,6 +159,7 @@
       <div class="no-results">
         <h3>No Results Found</h3>
       </div>
+     <div class="collapse" id="columnheaders"></div> 
     </div>
 
     <div class="splitter-horizontal"></div>

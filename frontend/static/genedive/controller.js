@@ -25,20 +25,17 @@ class Controller {
     this.highlighter    = new Highlight( ".highlight-input" );
     this.grouper        = new Grouper( ".grouper-module .table-grouping" );
     this.graph          = new GraphView( "graph" );
-    this.download       = new DownloadUpload( ".download-module button.download", ".download-module button.upload");
+    this.download       = new DownloadUpload( "a.download-module.download", "a.download-module.upload");
     this.datasources    = undefined; // MW
     this.controls       = new Controls( ".control-module button.undo", ".control-module button.redo", "button.redraw-graph" );
     this.history        = new History( this );
     this.loading        = new Loading(".loading-container", ".loading-info", ".loading-container .progress-bar");
     this.localdb        = new LocalDB(this);
-
-    this.tablestate = {zoomed: false, zoomgroup: null};
-    this.interactions = null;
-    this.filtrate = null;
+    this.tablestate 	= {zoomed: false, zoomgroup: null, visible_columns: []};//new Map()};
+    this.interactions 	= null;
+    this.filtrate       = null;
     this.additional_columns = null;//  NL
     this.ds = null;//NL
-
-	  console.log(this.datasouces);//delete later
 
     // Saves the table view's Y scroll positions
     this.yScrollSummary = 0;
@@ -320,6 +317,22 @@ class Controller {
   }
 
   /**
+   @fn       Controller.onDetailColumnSelect //NL
+   @brief    Called when the column subset selected in the details page
+   @details
+   @callergraph
+   */
+  onDetailColumnSelect() {
+    try {
+	//save changes to history
+	this.history.saveCurrentStateToHistory();
+    } catch (e) {
+      this.handleException(e);
+    }
+  }
+
+
+  /**
    @fn       Controller.onTableElementClick
    @brief    Called when a entry in the Table is clicked
    @details
@@ -349,7 +362,6 @@ class Controller {
       let thisClass = this;
       setTimeout(function(){
         try{
-		console.log(interactions);
           thisClass.yScrollReset();
           thisClass.interactions = JSON.parse(interactions).results;
 	  thisClass.additional_columns = JSON.parse(interactions).add_cols;
@@ -477,16 +489,15 @@ class Controller {
    @callergraph
    */
   loadSpinners() {
-    if (!this.spinneractive) {
-      this.hideHelp();
-      this.graph.hideGraphLegend();
-      this.graph.hideGraphAbsent();
-      this.hideTable();
-      this.graph.hideGraphView();
-      this.hideElementsRequiringDGRs();
-      this.showSpinners();
-      this.spinneractive = true;
-    }
+    if ( this.spinneractive) { return; }
+    this.hideHelp();
+    this.graph.hideGraphLegend();
+    this.graph.hideGraphAbsent();
+    this.hideTable();
+    this.graph.hideGraphView();
+    this.hideElementsRequiringDGRs();
+    this.showSpinners();
+    this.spinneractive = true;
   }
 
   /**
@@ -502,8 +513,6 @@ class Controller {
     this.hideTableSpinner();
     this.graph.hideGraphSpinner();
     this.spinneractive = false;
-
-
   }
 
   /**
@@ -612,7 +621,6 @@ class Controller {
     let token = GeneDiveAPI.generateToken();
 
     this.interactionsjqXHR = GeneDiveAPI.interactions(ids, minProb, token, (interactions) => {
-      console.log( interactions );
       this.interactionsjqXHR = null;
       this.interactions_countXHR = null;
       this.onInteractionsLoaded(interactions);
@@ -673,35 +681,31 @@ class Controller {
   drawTable() {
 
     // We want to create a new table for each iteration as the old one will have prior listener/config/bindings
-    //$('.table-view table').remove();//uncomment later NL
     $('.table-wrapper').remove();//NL
-    //$('.table-view').append($("<div/>").addClass("wrapper"));
-    //$('.wrapper').css({overflow:'auto',overflowX:'scroll'});
     $('.table-view').append($("<table/>").addClass("table table-hover").attr("id","result-table"));
     $('#result-table').wrap($("<div />").addClass("table-wrapper"));
-	  //css({"overflow-x":"scroll", "width":"100%","table-layout":"fixed","white-space":"nowrap"}));//NL
 
     // First check for zoom condition
 
     if (this.tablestate.zoomed) {
-      let table_detail = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup);
+      let table_detail = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup, this.ds);
       // If all the entries were filtered out, render the table summary instead.
       if(table_detail.amountOfEntries > 0)
         return;
       else
       {
         this.tablestate.zoomed = false;
-        $('.table-view table').remove();
-        $('.table-view').append($("<table/>").addClass("table table-hover"));
+	$('.table-wrapper').remove();//NL
+    	$('.table-view').append($("<table/>").addClass("table table-hover").attr("id","result-table"));
+    	$('#result-table').wrap($("<div />").addClass("table-wrapper"));
       }
     }
 
-
     // Otherwise show the appropriate summary view
     if (this.grouper.selected() === "dgr") {
-      new TableSummaryGene(".table-view .table", this.filtrate, this.additional_columns,this.ds, ".table-view .topbar .back");
+      new TableSummaryGene(".table-view .table", this.filtrate, this.additional_columns, this.ds, ".table-view .topbar .back");
     } else {
-      new TableSummaryArticle(".table-view table", this.filtrate, this.additional_columns, ".table-view .topbar .back");
+      new TableSummaryArticle(".table-view .table", this.filtrate, this.additional_columns, this.ds,  ".table-view .topbar .back");
     }
 
   }
@@ -789,19 +793,18 @@ class Controller {
       let interaction = this.interactions[i];
 
       // If article id is blank, copy the value from pubmed id. If both are blank, replace with "N/A"
-      let article_blank = VALUES_TO_REPLACE.has(interaction.article_id.trim().toLowerCase());
-      let pubmed_blank = VALUES_TO_REPLACE.has(interaction.pubmed_id.trim().toLowerCase());
+      let article_blank = VALUES_TO_REPLACE.has(interaction.article_id);//.trim().toLowerCase());
+      let pubmed_blank = VALUES_TO_REPLACE.has(interaction.pubmed_id);//.trim().toLowerCase());
       if(article_blank && pubmed_blank)
         interaction.article_id = interaction.pubmed_id = BLANK_STRING;
       else if(article_blank)
         interaction.article_id = interaction.pubmed_id;
 
-      if (VALUES_TO_REPLACE.has(interaction.journal.trim().toLowerCase()))
+      if (VALUES_TO_REPLACE.has(interaction.journal))//.trim().toLowerCase()))
         interaction.journal = BLANK_STRING;
 
-      if (VALUES_TO_REPLACE.has(interaction.section.trim().toLowerCase()))
+      if (VALUES_TO_REPLACE.has(interaction.section))//.trim().toLowerCase()))
         interaction.section = BLANK_STRING;
-
       // Sort the symbols alphabetically
       if(interaction.mention1 > interaction.mention2)
       {

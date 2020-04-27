@@ -1,7 +1,9 @@
 #! /usr/bin/perl
 
+BEGIN { $| = 1; } # Forces output buffer to flush
+
 use Text::CSV qw( csv );
-use List::Util qw( any none uniq );
+use List::Util qw( any first none uniq );
 use JSON::XS;
 use Array::Utils qw(:all);
 use Data::Dumper;
@@ -11,10 +13,11 @@ use File::Basename;
 
 
 my $file         = shift; # Absolute path
+my $cache        = cache( $file );
 my $path         = path( $file );
 my $pdir = dirname($path);
-my @required     = qw( mention1 mention2 geneids1 geneids2 type1 type2 );
-my @optional     = qw( journal article_id pubmed_id sentence_id mention1_offset mention2_offset probability context section);
+my @required     = qw( mention1 mention2 geneids1 geneids2 type1 type2 probability  pubmed_id);
+my @optional     = ();
 my @add_col = null;
 my $interactions = csv( in => validate( $file ), encoding => 'utf-8');
 $interactions = csv( in => $file, encoding => 'utf-8', headers => "auto");
@@ -23,38 +26,61 @@ $interactions = csv( in => $file, encoding => 'utf-8', headers => "auto");
 cleanup( $interactions );
 
 # ===== GENERATE ADJACENCY MATRIX
-print "<li>Building <i>adjacency matrix</i></li>\n";
-adjacency_matrix( $path, $interactions );
+print "<ul><li><i>Adjacency matrix</i></li>\n";
+adjacency_matrix( $cache, $interactions );
 
 # ===== GENERATE TYPEAHEAD LOOKUP CACHES
 foreach my $type (qw( gene drug disease )) {
 	my $hash = {};
 	extract_ids( $type, $hash, $_ ) foreach @$interactions;
-	hash_to_cache( $type, $path, $hash );
-	print "<li>Building <i>$type typeahead lookup cache</i></li>\n";
+	hash_to_cache( $type, $cache, $hash );
+	printf "<li><i>%s typeahead lookup cache</i></li>\n", ucfirst( $type );
 }
-`ln -s $path/../all/set_id.json $path/set_id.json` unless -e "$path/set_id.json"; # Symbolically link Set ID file
 
 filter_columns( $interactions );
-print "<li>Building <i>SQL import statements</i></li>\n";
+print "</ul>Preparing to load data into the database<br>\n";
 write_sql( $path, $interactions );
-$parent = basename(dirname($file));
-$parent = "ds_".$parent;
-$location = $path."/factory.js";
 
-copy("$pdir/factory.js",$location) or die "copy failed : $!";
-#add file with specific datasource in class name
+# =====PLUGIN ARCHITECTURE
+$dsparent = basename(dirname($file));
+$location = "/genedive/frontend/static/genedive/view/table/plugin/";
+$filterlocation = "/genedive/frontend/static/genedive/filter/plugin/";
+$highlightlocation = "/genedive/frontend/static/genedive/highlight/plugin/";
+
+$summary = "ds_".$dsparent."_sum";
+$detail = "ds_".$dsparent."_det";
+$filter = "ds_".$dsparent."_filter";
+$highlight = "ds_".$dsparent."_highlight";
+
+
+#add summary class
+copy("$pdir/summarytemplate.js",$location.$summary.".js") or die "copy failed : $!";
 #rename the class name in the datasource
-string_replace($location,"selectColumns",$parent);
+string_replace($location.$summary.".js","DefaultSumTable",$summary);
+#$replace_string = join(",",map " \"$_\"",@add_col);
+#string_replace($location.$summary.".ds","this.add_cols = null","this.add_cols = [". $replace_string."]");
 
+#add detail class
+copy("$pdir/detailtemplate.js",$location.$detail.".js") or die "copy failed : $!";
+#rename the class name in the datasource
+string_replace($location.$detail.".js","DefaultDetTable",$detail);
 $replace_string = join(",",map " \"$_\"",@add_col);
-print($replace_string);
-string_replace($location,"this.add_cols = null","this.add_cols = [". $replace_string."]");
+string_replace($location.$detail.".js","this.add_cols = null","this.add_cols = [". $replace_string."]");
 
+#add filter class
+copy("$pdir/filtertemplate.js",$filterlocation.$filter.".js") or die "copy failed : $!";
+#rename the class name in the datasource
+string_replace($filterlocation.$filter.".js","DefaultFilterTable",$filter);
+
+#add highlight class
+copy("$pdir/highlighttemplate.js",$highlightlocation.$highlight.".js") or die "copy failed : $!";
+#rename the class name in the datasource
+string_replace($highlightlocation.$highlight.".js","DefaultHighlightTable",$highlight);
+#####
 # ============================================================
 sub adjacency_matrix {
 # ============================================================
-	my $path         = shift;
+	my $cache        = shift;
 	my $interactions = shift;
 
 	my $matrix = {};
@@ -66,14 +92,27 @@ sub adjacency_matrix {
 
 		$matrix->{ $a }{ $b } = [] if not exists $matrix->{ $a }{ $b };
 		$matrix->{ $a }{ $b } = [ sort { $a <=> $b } (($p*1000), @{ $matrix->{ $a }{ $b }})];
-    $matrix->{ $b }{ $a } = $matrix->{ $a }{ $b }; # Enforce bidirectionality
+		$matrix->{ $b }{ $a } = $matrix->{ $a }{ $b }; # Enforce bidirectionality
 	}
 
 	my $json = new JSON::XS();
-	open FILE, ">$path/adjacency_matrix.json" or die $!;
+	unless( -d $cache ) { mkdir $cache; chmod 0777, $cache; }
+	open FILE, ">$cache/adjacency_matrix.js" or die "Can't write to '$cache/adjacency_matrix.js' $!";
+	print FILE "var adjacency_matrix = ";
 	print FILE $json->canonical->encode( $matrix );
+	print FILE ";";
 	close FILE;
-	`cd $path && /usr/bin/zip -mr adjacency_matrix.json.zip adjacency_matrix.json`;
+}
+
+# ============================================================
+sub cache {
+# ============================================================
+	my $file  = shift;
+	my @paths = split /\//, $file; pop @paths;
+	my $cache = '/var/www/html/cache/';
+	my $path  = $cache . pop @paths;
+
+	return $path;
 }
 
 # ============================================================
@@ -81,8 +120,8 @@ sub cleanup {
 # ============================================================
 	my $interactions = shift;
 	foreach my $i (@$interactions) {
-    $i->{ type1 } = lc $i->{ type1 };
-    $i->{ type2 } = lc $i->{ type2 };
+		$i->{ type1 } = lc $i->{ type1 };
+		$i->{ type2 } = lc $i->{ type2 };
 		if( exists $i->{ id1 }) { $i->{ geneids1 } = $i->{ id1 }; delete $i->{ id1 }; }
 		if( exists $i->{ id2 }) { $i->{ geneids2 } = $i->{ id2 }; delete $i->{ id2 }; }
 		if( ! exists $i->{ probability }) { $i->{ probability } = 0.7; }
@@ -125,18 +164,21 @@ sub extract_ids {
 # ============================================================
 sub hash_to_cache {
 # ============================================================
-	my $type = shift;
-	my $path = shift;
-	my $hash = shift;
-	my $json = new JSON::XS();
+	my $type  = shift;
+	my $cache = shift;
+	my $hash  = shift;
+	my $json  = new JSON::XS();
 
-	my $cache = [];
+	my $data = [];
 	foreach my $key (sort { $a cmp $b } keys %$hash) {
-		push @$cache, { symbol => $key, values => [ uniq @{$hash->{ $key }} ]};
+		push @$data, { symbol => $key, values => [ uniq @{$hash->{ $key }} ]};
 	}
 
-	open FILE, ">$path/$type" . '_id.json' or die $!;
-	print FILE $json->canonical->encode( $cache );
+	unless( -d $cache ) { mkdir $cache; chmod 0777, $cache; }
+	open FILE, ">$cache/$type" . '_id.js' or die $!;
+	printf FILE "var AUTOCOMPLETE_%s = ", uc( $type );
+	print FILE $json->canonical->encode( $data );
+	print FILE ";";
 	close FILE;
 }
 
@@ -146,19 +188,12 @@ sub insert_table {
 return <<EOF;
 CREATE TABLE IF NOT EXISTS interactions (
 	id INTEGER NOT NULL, 
-	journal TEXT, 
-	article_id TEXT, 
 	pubmed_id TEXT, 
-	sentence_id TEXT, 
-	mention1_offset INTEGER, 
-	mention2_offset INTEGER, 
 	mention1 TEXT collate nocase, 
 	mention2 TEXT collate nocase, 
 	geneids1 TEXT, 
 	geneids2 TEXT, 
 	probability FLOAT, 
-	context TEXT, 
-    	section TEXT, 
 	type1 CHARACTER(1), 
 	type2 CHARACTER(1),
 	addendum TEXT,
@@ -167,6 +202,8 @@ CREATE TABLE IF NOT EXISTS interactions (
 CREATE INDEX IF NOT EXISTS gid1 on interactions(geneids1);
 CREATE INDEX IF NOT EXISTS gid2 on interactions(geneids2);
 EOF
+
+
 }
 
 # ============================================================
@@ -192,16 +229,21 @@ sub validate {
 	my $alias = { geneids1 => 'id1', geneids2 => 'id2' };
 
 	# ===== ENFORCE REQUIRED FIELDS
+	my @missing = ();
 	foreach my $required (@required) {
 		my $aliases = exists $alias->{ $required } ? [ $alias->{ $required } ] : [];
 		unless( grep { 
 			my $field = $_;
 			$field eq $required || any { $field eq $_ } @{$aliases}
 		} @headers ) {
-			printf( "{\"result\":\"error\",\"line\":1,\"description\":\"Missing required field '%s'\"}\n", $required );
-			exit( 1 );
+			push @missing, $required;
 		}
 	}
+	if( @missing ) {
+		printf( "<h2>Import Error</h2><p>Missing required field%s %s</p>\n", @missing > 1 ? 's' : '', join( ', ', map { "<code>$_</code>" } @missing ));
+		exit( 1 );
+	}
+
 	#get additional columns
 	@add_col = array_minus(@headers, @required);#my removed NL
 	@add_col = array_minus( @add_col, @optional);
@@ -214,36 +256,39 @@ sub validate {
 	my @slice = map{$col2_num{$_}}@add_col;
 	#convert additional columns to json format
 	my $json = new JSON::XS();
-	my @new_col =();
-	open( FILE, $file ) or die "Cannot open '$file'\n";
+	my @new_col;
+	#open( FILE, $file ) or die "Cannot open '$file'\n";
 	my $headerFlag = 1;
-	while( $line = <FILE> ) {
-		my %map;
-		my $i = 0;
-		my $row = [split(',',$line)];
-		chomp(@$row);
-		if($headerFlag){
-			push @$row,'addendum';
-			push @new_col, $row;
-			$headerFlag = 0;
-		}
-		else{
+
+	#mapping the addendum column
+	my $csv = Text::CSV->new ({ binary => 1 });
+	open my $fh, "<", $file or die "$file: $!";
+	my $i = 1;
+	my @rows;
+	while (my $row = $csv->getline ($fh)) {
+	my $col_num = 0;
+	if($i == 1){
+		push @$row,"addendum";	
+	}else{
 		for($index = 0; $index <= $#headers; $index++)
 		{
-			if ($index == @slice[$i]){
+			if ($index == @slice[$col_num]){
 				$map{"$headers[$index]"} = @$row[$index];
-				$i++;
+				$col_num++;
 			}
 		}
-		push @$row,double_quote($json->canonical->encode(\%map));
-		push @new_col,$row;
-		}
+		
+		push @$row,$json->canonical->encode(\%map);
 	}
-	close(FILE);
-	#add new column to file
-	open (FILE,">",$file) or die $! ;
-	print FILE map{join (",",@$_)."\n"}@new_col;
-	close (FILE);
+	push(@rows,[@$row]);
+	$i++;
+	}
+	close $fh;
+	#update file with the new column
+	open ($fh,">",$file) or die $! ;
+	$csv->say ($fh, $_) for @rows;		
+	close ($fh);
+	#return the file
 	return $file;
 }
 
