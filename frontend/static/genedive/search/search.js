@@ -256,7 +256,9 @@ class Search {
 
       this.display.append( item );
       GeneDiveAPI.alternativeIDs( set.ids[0] ).then( ( returnedResult ) => {
-        this.setLinks( JSON.parse(returnedResult.vals ), returnedResult.type ,set.id);
+        if( returnedResult ) {
+          this.setLinks( JSON.parse(returnedResult.vals ), returnedResult.type ,set.id);
+        }
       }).catch((error) => {GeneDive.handleException(error)});
     }
 
