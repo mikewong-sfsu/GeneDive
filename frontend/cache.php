@@ -2,6 +2,7 @@
 require_once( 'session.php' );
 require_once( 'datasource/manifest.php' );
 require_once( 'datasource/proxy.php' ); // Defines $server
+ini_set( "memory_limit", "1024M" );
 
 /* ============================================================
  * cache.php
