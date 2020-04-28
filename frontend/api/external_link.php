@@ -69,7 +69,8 @@ if( file_exists( $db )) {
 } else {
   global $server;
   $action   = $_GET['action'];
-  $redirect = "$server/api/external_link.php?action=$action";
+  $params   = $_SERVER[ 'QUERY_STRING' ];
+  $redirect = "$server/api/external_link.php?$params";
 
   if( $action === "single_dgr" ) {
     $dgr      = $_GET[ 'dgr' ];
