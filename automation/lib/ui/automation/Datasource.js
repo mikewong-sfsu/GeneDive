@@ -123,10 +123,6 @@ let Datasource = (superclass) => class extends superclass {
             await this.page.waitFor(5000); //to view animation
             //update code in detail view
             this.updateDatasource();
-
-            //return to search
-            await this.page.click('.btn-primary.cancel');
-            await this.page.waitFor(5000); //to view animation
         }
         }
         if(!found){

@@ -24,8 +24,6 @@ class EditDatasourceTest extends mix( Test ).with( Datasource ) { // Order matte
 				await this.page.waitFor(3000);
 				//remove datasource
 				let res = await this.datasource.edit(ds);
-				//navigate to search screen
-                await this.goto.searchPage();
                 if(res.status == "error"){
                     reject(res.msg);
                 }

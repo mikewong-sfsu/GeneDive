@@ -155,7 +155,6 @@ class Test {
 				await this.page.waitForSelector( '.table-help,.table,.no-results', { visible: true }); // Search is ready when the help page, results table, or no results are displayed
 				await this.click( `button[data-type="${mode}"]` ); 
 				await this.page.mouse.move( 0, 0 ); // Move the mouse away from the button to dismiss the tooltip
-				console.log("page load complete and search mode clicked");
 				resolve(); 
 			
 			} catch( e ) { 

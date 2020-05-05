@@ -86,5 +86,6 @@ let userbot = new GeneDive( 'tests/regression.json' );
 
 	await userbot.stop();
 	await userbot.saveResults( 'RegressionTests' );
+
 	process.exit();
 })();

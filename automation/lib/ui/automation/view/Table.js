@@ -58,7 +58,6 @@ let Table = (superclass) => class extends superclass {
 			window.parseTable = function () {
 				let values   = [];
 				let table    = $( '.table' )[ 0 ];
-				console.log("table:", table);
 				let rows     = [ ... table.rows ];
 				// Parse the header row
 				let header   = rows.shift();
