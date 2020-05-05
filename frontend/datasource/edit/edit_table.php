@@ -49,7 +49,7 @@ if( $dslist == '' ) { $dslist = []; }
 	<p>You can edit table columns displayed or map new columns into GeneDive 
 	to query, visualize, and compare with provided data sources or other data sources.Columns 
 	removed will not be displayed in the hide columns option on the Details view.</p>
-	<button id="edit-detail" class="btn btn-primary">Edit Detail View</button>
+	<button id="edit-detail" class="btn btn-primary">Edit Datasource</button>
 	<button class="btn btn-primary cancel">Return to Search</button>		
 </div>
 <form id="datasource-edit" method="post" enctype="multipart/form-data" class="form-horizontal">	
@@ -85,7 +85,7 @@ if( $dslist == '' ) { $dslist = []; }
   <!--code editor-->
   <div class="container">
     <h2>
-      Table Plugin for Datasource <span id="ds_name"> </span>
+      <span id="ds_name"> Edit Datasource Plugins </span>
     </h2>
     <div id="editor" style="position :relative;">
 	 <button  class=" btn btn-primary btn_edit" id="datasource-edit" style="z-index: 10; right:110px; position: fixed;">Update Datasource</button>
@@ -128,6 +128,15 @@ $.ajax({
     ds = msg.toString();
     //set the code of corresponding class in editor
     editor.setValue(ds);
+
+    let description = $("#ds_name").text();
+    switch(e.value){
+    	case "_sum" : $("#ds_name").text(description + " Summary view plugin");break;
+	case "_det" : $("#ds_name").text(description + " Detail view plugin");break;
+	case "_filter" : $("#ds_name").text(description + " Filter plugin");break;
+	case "_highlight" : $("#ds_name").text(description + " Highlight plugin");break;
+    }
+    console.log("ds_id:",e.value);
   });
 }
 
@@ -152,18 +161,20 @@ editor.foldCode(CodeMirror.Pos(0, 0));
 
 //update the file with new changes
 $('.btn_edit').on('click',function(){
-  var retVal = confirm("Do you confirm to save the changes ?");
-  if( retVal == true ) {
-   $.ajax({
-     url:"update.php",
-     type:"POST",
-     dataType:'html',
-     data:{data : editor.getValue() }
-   }) 
-	   .done(function(msg){
-   });
-  } 
-})
+    alertify.confirm( 
+      "Update datasource",
+      "Do you confirm to save the changes ?", 
+      () => {
+      		$.ajax({
+     		url:"update.php",
+     		type:"POST",
+     		dataType:'html',
+     		data:{data : editor.getValue() }
+   		}) 
+	},
+      () => {}
+    );
+  })
 
 //close button
 $( "button.cancel" ).off( 'click' ).click(( ev ) => {
@@ -199,6 +210,13 @@ function selectDatasource(e){
 	let option = editOption.find( 'button' );	
     	option.each(function(){
 		$(this).attr({id: (e.id + $(this).val())});
+	});
+	let ds_id = e.id;
+	$("#datasources-available-for-edit > li").each( function(ds_id) {
+		let id = $(this).attr('data-id');
+		if(e.id == id){
+			$("#ds_name").text("Now editing " + $(this).attr('data-name'));
+		}
 	});
 	alertify.EditOption(editOption.html()).setting({'label':'Back to Select Datasource'});
 }

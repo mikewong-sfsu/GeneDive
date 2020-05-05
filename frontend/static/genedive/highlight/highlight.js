@@ -16,7 +16,6 @@ class Highlight extends HighlightPlugin{
      this.highlightSettings.on("click",() => {
       this.getHighlightOptions();
     });
-	  console.log("highlight constructor called");
   }
   
   //initialize highlight function mapping to headers
@@ -30,8 +29,9 @@ class Highlight extends HighlightPlugin{
 	let addendumColumns = GeneDive.additional_columns;
 	addendumColumns.forEach(item => columnMap.set (item, ((interactions, term) => this.highlightFunc(interactions, term, item))));
 	//include custom highlight columns
-	  //TO BE COMPLETED
-	return columnMap;
+	let customHighlight = this.buildHighlight(interactions, term);
+	columnMap = new Map([...columnMap, ...customHighlight]);
+	  return columnMap;
 	
   }
 
@@ -47,7 +47,6 @@ class Highlight extends HighlightPlugin{
 			}
 	    		//mapping columns in addendum
 	    		else if(addendum){
-				console.log("addendum");
 			  if(addendum.hasOwnProperty(header)){
 			    i.highlight = new RegExp ( term, "i" ).test(addendum[header]);
 			  }
@@ -78,19 +77,18 @@ class Highlight extends HighlightPlugin{
    */
   highlight ( interactions ) {
     let term = this.input.val();
-
-    //check min character count 
-    if(term.length < this.characterCount){
-	return interactions;
-    }
  
     //initialize selectionMap
     if(this.selectionMap.size == 0){
 	this.createObjectMap(GeneDive.ds);
 	this.selectionMap = this.initColumnMap(interactions, term);
-	let customHighlight = this.buildHighlight(interactions, term);
-	this.selectionMap = new Map([...this.selectionMap, ...customHighlight]);
     }
+
+    //check min character count 
+    if(term.length < this.characterCount){
+	return interactions.map((i) => { i.highlight = false; return i});
+    }
+
     //parse interaction for better performance
     this.parsedInteractions = this.parseJSON(interactions);
     
@@ -176,8 +174,8 @@ class Highlight extends HighlightPlugin{
   exportHighlightState() {
     let highlightData = {
 	    "input": this.input.val(),
-	    //"selectedHeader": this.selectedHeader,
-	    //"characterCount": this.characterCount
+	    "selectedHeader": this.selectedHeader,
+	    "characterCount": this.characterCount
     };//this.input.val();
     return highlightData;
   }
@@ -190,8 +188,8 @@ class Highlight extends HighlightPlugin{
    */
   importHighlightState(highlightData) {
     this.input.val(highlightData.input);
-    //this.selectedHeader = highlightData.selectedHeader;
-    //this.characterCount = highlightData.characterCount;
+    this.selectedHeader = highlightData.selectedHeader;
+    this.characterCount = highlightData.characterCount;
   }
 
 }

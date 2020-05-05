@@ -47,7 +47,7 @@
 <div id="datasource-selector">
     <p>Enable or disable the data sources below for search. Enabled data sources will be searched for disease, gene, or drug/Rx (DGR) interactions. </p>
     <div class="row" style="overflow-y: auto;">
-        <ul class="list-group">
+        <ul class="list-group" id="datasource-available-for-selection">
         </ul>
     </div>
 </div>
@@ -72,7 +72,7 @@ GeneDive.datasource.refreshSelectionUI = () => {
     short_id_map.set("pharmgkb","G2");
     short_id_map.set("native","G1,G2");
     var i = 1;
-
+    $( '#datasources-available-for-selection' ).empty();
     Object.entries( manifest ).forEach(([ key, datasource ]) => {
     	let entry = listitem.clone().css({ display: 'block' });
 	//if all included, add them as separate entries
@@ -89,9 +89,11 @@ GeneDive.datasource.refreshSelectionUI = () => {
 	}
 	
 	entry.find( '.name' ).html( datasource_name );
-        entry.find( '.description' ).html( datasource.description );
+	entry.find( '.description' ).html( datasource.description );
+	entry.attr({ 'data-id': datasource.id, 'data-name': datasource.name });
         let toggle = entry.find( 'input.datasource-toggle' );
-	toggle.attr({ id: datasource.id, name: datasource.id });
+	toggle.attr({ id: datasource.id, name: datasource.name });
+	$( '#datasources-available-for-selection' ).append( entry );
 	if(std_flag == 0 && std_ds.has(datasource.id)){
 	$( '#datasource-selector .list-group' ).append("<p><i>GeneDive Datasources</i></p>");
 	std_flag = 1;
@@ -132,12 +134,6 @@ let dss = {
           let list = GeneDive.datasource.list.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
           alertify.success( `Now searching on<br>${list}` ); 
           let use_native = [ 'plos-pmc', 'pharmgkb' ].every( item => GeneDive.datasource.list.includes( item ));
-	  /*if( use_native ) {
-	      console.log("ds:", GeneDive.datasource.list);
-              GeneDive.datasource.list = GeneDive.datasource.list.filter( x => x != 'plos-pmc' && x != 'pharmgkb' );
-	      console.log("dslist:",GeneDive.datasource.list);
-	      GeneDive.datasource.list.unshift( 'native' );
-    }*/
 	  let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
 	  let dsid_map = btoa (JSON.stringify( Object.fromEntries(short_id_map.entries())));
           $.ajax({

@@ -47,8 +47,22 @@ class TextFilter extends TextFilterPlugin{
     });
     filterMap.set("Article",this.getArticleFilter(articles));
     filterMap.set("DGR",this.getDGRFilter(dgr));
+    filterMap.set("Datasource",this.getSourceFilter(Object.keys(GeneDive.ds)));
     return filterMap;
   }
+
+   //Source filter
+  getSourceFilter(datasources){
+    //populate dropdown option
+    let $filterValue = $('<select>',{'id':'selectDatasource'});
+      datasources.map((i) => { $filterValue.append($(`<option value="${i}"/>`).html(i));});
+    //return Filter
+    return new Filter("Datasource", this.filterSource, $filterValue);
+  }
+  
+  filterSource(interactions, ds_id){
+	return interactions.filter((i) => new RegExp(ds_id, "i").test(i.ds_id));
+  } 
 
   //Article ID filter
   getArticleFilter(articleList){
