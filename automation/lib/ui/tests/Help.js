@@ -15,8 +15,8 @@ class Help extends Test {
 		return new Promise( async( resolve, reject ) => {
 			try{
 				await this.login();
-				await this.click( '.helplink' );
-
+				await this.click('#menu-dropdown-button');
+				await this.click( '.help' );
 				const pages = await this.browser.pages();
 				if( ! pages.some( page => page.url().match( /\/help\.html$/ ))) {
 					reject( 'The Help page did not open in any tab' );

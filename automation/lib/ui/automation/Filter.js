@@ -63,7 +63,7 @@ let Filter = (superclass) => class extends superclass {
 	// ============================================================
 		await this.page.select( '.filter-select', type );
 		return await this.page.evaluate(() => {
-			return [ ... $( '.filter-dropdown option' )].map(( el ) => $( el ).val());
+			return [ ... $( '.filter-input option' )].map(( el ) => $( el ).val());
 		});
 	}
 
@@ -84,9 +84,10 @@ let Filter = (superclass) => class extends superclass {
 	// ============================================================
 		await this.click( '.filter-select' );
 		await this.page.select( '.filter-select', 'Article' );
-		await this.page.waitForSelector( `.filter-dropdown option[value="${value}"]` );
-		await this.click( '.filter-dropdown' );
-		await this.page.select( '.filter-dropdown', value );
+		//await this.page.waitForSelector( `.filter-dropdown option[value="${value}"]` );
+		await this.page.waitForSelector( `.filter-input option[value="${value}"]` );
+		await this.click( '.filter-input' );
+		await this.page.select( '.filter-input', value );
 		return this.click( '.input-group-btn .btn' );
 	}
 
@@ -100,13 +101,13 @@ let Filter = (superclass) => class extends superclass {
 	// ------------------------------------------------------------
 		await this.click( '.filter-select' );
 		await this.page.select( '.filter-select', 'DGR' );
-		await this.page.waitForSelector( '.filter-dropdown' );
+		await this.page.waitForSelector( '.filter-input' );
 
 		let options = await this.filterDGROptions();
 		let value   = options.find( option => JSON.parse( option ).symbol == symbol );
 
-		await this.click( '.filter-dropdown' );
-		await this.page.select( '.filter-dropdown', value );
+		await this.click( '.filter-input' );
+		await this.page.select( '.filter-input', value );
 		return this.click( '.input-group-btn .btn' );
 	}
 
@@ -115,7 +116,7 @@ let Filter = (superclass) => class extends superclass {
 	// ============================================================
 		await this.click( '.filter-select' );
 		await this.page.select( '.filter-select', 'Excerpt' );
-		await this.click( '.filter-text' );
+		await this.click( '.filter-input' );
 		await this.type( value );
 		return this.click( '.input-group-btn .btn' );
 	}
@@ -125,9 +126,9 @@ let Filter = (superclass) => class extends superclass {
 	// ============================================================
 		await this.click( '.filter-select' );
 		await this.page.select( '.filter-select', 'Journal' );
-		await this.page.waitForSelector( `.filter-dropdown option[value="${value}"]` );
-		await this.click( '.filter-dropdown' );
-		await this.page.select( '.filter-dropdown', value );
+		await this.page.waitForSelector( `.filter-input option[value="${value}"]` );
+		await this.click( '.filter-input' );
+		await this.page.select( '.filter-input', value );
 		return this.click( '.input-group-btn .btn' );
 	}
 }

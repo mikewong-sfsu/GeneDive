@@ -50,8 +50,9 @@ class FilterTest extends mix( Test ).with( Filter, Table ) {
 				if( ! pass ) { reject( `Filter to pass ${phrase} in Excerpt failed` ); }
 
 				// Test Journal Filter
+				let journalRegex = new RegExp( journal );
 				await this.filter.journal.is( journal );
-				pass = (await check()).every( group => group.details.every( row => row.Journal == journal ));
+				pass = (await check()).every( group => group.details.every( row => row.Journal.match( journalRegex ) ));
 				if( ! pass ) { reject( `Filter to pass journal ${journal} failed` ); }
 
 				// Test filter removal feature
