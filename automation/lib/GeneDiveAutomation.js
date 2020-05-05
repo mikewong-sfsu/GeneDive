@@ -31,8 +31,8 @@ class GeneDive {
 
 			// ===== SET DEFAULTS
 			this.options.url                         = setDefault( this.options.url,                         'http://localhost' );
-			this.options.puppeteer                   = setDefault( this.options.puppeteer,                   { headless: true, ignoreHTTPSErrors: true });
-			this.options.puppeteer.headless          = setDefault( this.options.puppeteer.headless,          true );
+			this.options.puppeteer                   = setDefault( this.options.puppeteer,                   { headless: false, ignoreHTTPSErrors: true });
+			this.options.puppeteer.headless          = setDefault( this.options.puppeteer.headless,          false );
 			this.options.puppeteer.devtools          = setDefault( this.options.puppeteer.devtools,          false ); // If true, disables headless and displays devtools; useful for debugging
 			this.options.puppeteer.height            = setDefault( this.options.puppeteer.height,            960 );
 			this.options.puppeteer.width             = setDefault( this.options.puppeteer.width,             1280 );

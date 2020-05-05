@@ -82,7 +82,7 @@ class Test {
 	// ============================================================
 	async pageToLoad() {
 	// ============================================================
-		return this.page.waitForNavigation({ timeout: 3000, waitUntil: 'networkidle2' }).catch(() => {});
+		return this.page.waitForNavigation({ timeout: 4000, waitUntil: 'networkidle2' }).catch(() => {});
 	}
 
 	// ============================================================
@@ -151,12 +151,13 @@ class Test {
 			try { 
 				if( ! this.page.is.searchPage()) { reject( 'Search not directed to search page' ); }
 				await this.pageToLoad(); // Allow cache results to load via AJAX call
+				await this.page.waitFor( 2000 );//delay to load the datasource
 				await this.page.waitForSelector( '.table-help,.table,.no-results', { visible: true }); // Search is ready when the help page, results table, or no results are displayed
 				await this.click( `button[data-type="${mode}"]` ); 
 				await this.page.mouse.move( 0, 0 ); // Move the mouse away from the button to dismiss the tooltip
-
+				console.log("page load complete and search mode clicked");
 				resolve(); 
-
+			
 			} catch( e ) { 
 				reject( e ); 
 			} 
@@ -171,7 +172,6 @@ class Test {
 	// ============================================================
 	search() {
 	// ============================================================
-
 		// Flatten argument lists
 		let list = [];
 		for( let i = 0; i < arguments.length; i++ ) { 

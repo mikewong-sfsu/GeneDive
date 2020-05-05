@@ -14,5 +14,11 @@
 		"title":"ms",
 		"role":"o",
 		"usage":"Testing registration"
+	},
+	"ds": {
+		"name": "test dataset",
+		"description": "Add data source for testing",
+		"filepath": "tests/sampleDatasource.csv",
+		"url": "https://www.ncbi.nlm.nih.gov/pubmed/"
 	}
 }
