@@ -1,4 +1,4 @@
-<?php include_once( '../session.php' ); ?>
+<!--?php include_once( '../session.php' ); ?-->
 
 <div id="datasource-remover">
   <p>You can remove data you have previously added to GeneDive. Once removed,
