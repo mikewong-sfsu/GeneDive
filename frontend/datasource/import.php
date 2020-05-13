@@ -8,7 +8,6 @@
   $path = $id;
 
   $datasource = [
-    'host'        => 'http://localhost:8080',
     'id'          => $id,
     'name'        => $name,
     'path'        => $path,
