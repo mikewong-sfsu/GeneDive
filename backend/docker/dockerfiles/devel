@@ -3,7 +3,6 @@ COPY devel /genedive
 COPY devel/.git /genedive/.git
 RUN chmod a+x /genedive/backend/docker/install/*.sh
 RUN /genedive/backend/docker/install/setup.sh
-RUN /genedive/backend/docker/install/link.sh
 RUN /genedive/backend/docker/install/devel.sh
 COPY devel/backend/docker/php.ini /usr/local/etc/php/
 ENV IS_DOCKER_CONTAINER 1

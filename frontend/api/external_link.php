@@ -45,29 +45,26 @@ if( file_exists( $db )) {
 
     if( $org === "ncbi" ) {
       $ncbi_dgr = $ids->ncbi;
-      $redirect = "https://www.ncbi.nlm.nih.gov/gene/${ncbi_dgr}";
+      $redirect = "https://www.ncbi.nlm.nih.gov/gene/$ncbi_dgr";
 
     } else if( $org === "pgkb" ) {
       $pgkb_dgr = $ids->pgkb;
       $type_lower = strtolower($type);
-      $redirect = "https://www.pharmgkb.org/${type_lower}/${pgkb_dgr}";
+      $redirect = "https://www.pharmgkb.org/$type_lower/$pgkb_dgr";
 
     } else if( $org === "mesh" ) {
       $mesh_dgr = str_replace("MESH:","",$ids->mesh);
-      $redirect = "https://meshb.nlm.nih.gov/record/ui?ui=${mesh_dgr}";
+      $redirect = "https://meshb.nlm.nih.gov/record/ui?ui=$mesh_dgr";
     }
 
   } else if($action === "pubmed") {
 
     $pubmedID = $_GET['pubmedID'];
-    $redirect = "https://www.ncbi.nlm.nih.gov/pubmed/${pubmedID}/";
+    $redirect = "https://www.ncbi.nlm.nih.gov/pubmed/$pubmedID/";
+	
 
-  } else if($action === "ref"){
-
+  } 
   $redirect = $_GET['url_link'];
-  }
-
-
   header("Location: $redirect");
   exit();
 
@@ -80,7 +77,9 @@ if( file_exists( $db )) {
 }
 else {
   global $server;
-  $redirect = "$server/api/external_link.php?action=$action";
+  $action   = $_GET['action'];
+  $params   = $_SERVER[ 'QUERY_STRING' ];
+  $redirect = "$server/api/external_link.php?$params";
 
   if( $action === "single_dgr" ) {
     $dgr      = $_GET[ 'dgr' ];
