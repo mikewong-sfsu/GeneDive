@@ -19,7 +19,9 @@ let Table = (superclass) => class extends superclass {
 			flatten:      () => { return this.tableFlatten(); },
 			headers:      () => { return this.tableHeaders(); },
 			excerptWords: () => { return this.tableExcerptWords(); },
-			getSynonyms:  ( dgr, grouped ) => { return this.tableGetSynonyms( dgr, grouped ); }
+			getSynonyms:  ( dgr, grouped ) => { return this.tableGetSynonyms( dgr, grouped ); },
+			sourceSummary:( ds ) => { return this.validateSource( ds, "Summary" ); },
+			sourceDetail :( ds ) => { return this.validateSource( ds, "Detail" ); }
 		}
 	}
 
@@ -56,7 +58,6 @@ let Table = (superclass) => class extends superclass {
 			window.parseTable = function () {
 				let values   = [];
 				let table    = $( '.table' )[ 0 ];
-				console.log("table:", table);
 				let rows     = [ ... table.rows ];
 				// Parse the header row
 				let header   = rows.shift();
@@ -140,6 +141,18 @@ let Table = (superclass) => class extends superclass {
 
 		return dgrs.concat([ ... synonyms ]);
 	}
+
+	// ============================================================
+	validateSource( dataource, view ) {
+	// ============================================================
+	    //summary view validation
+	    if(view == "Summary"){
+	    }
+	    //detail view validation
+	    else{
+	    }
+	}
+
 }
 
 module.exports = Table;

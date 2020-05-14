@@ -48,7 +48,6 @@ class SaveLoadTest extends mix( Test ).with( SaveLoad, Score, Filter, Table, Gra
 
 				// Upload the session file and compare states (before and after should be equal)
 				let table = await this.load( download );
-				console.log("upload complrte");
 				let after   = JSON.stringify( await this.table.summary());
 				if( before != after ) { reject( 'State restored from upload different from original state prior to download' ); }
 

@@ -31,14 +31,12 @@ let SaveLoad = (superclass) => class extends superclass {
 	// ============================================================
 		await this.click('#menu-dropdown-button');
 		await this.click( '.upload' );
-		let uploader = await this.page.$( '#file_upload' );
-		console.log("file:", file);
+		//await this.click( '#file_upload' );
+		let uploader = await this.page.$('input[type=file]');
 		if( ! file ) { reject( 'No file specified to upload' ); }
-await uploader.uploadFile( file);
-await this.page.evaluate(() => {
-                $('#file_upload').change((file) => console.log("file successfully uploaded"));
-            });
-		return uploader.uploadFile( file );
+        let x = await uploader.uploadFile(file);
+        console.log("file",x);
+        return x;
 	}
 }
 
