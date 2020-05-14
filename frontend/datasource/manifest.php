@@ -117,6 +117,9 @@ function remove_datasource( $manifest, $datasource_id ) {
 	//delete the filter class
 	$path =   $CACHE .'/static/genedive/filter/plugin/ds_' . $datasource[ 'path' ].'_filter.js';
 	system( "rm -rf $path" );
+	//delete the highlight class
+	$path =   $CACHE .'/static/genedive/highlight/plugin/ds_' . $datasource[ 'path' ].'_highlight.js';
+	system( "rm -rf $path" );
 	//delete the summary class
 	$path =   $CACHE .'/static/genedive/view/table/plugin/ds_' . $datasource[ 'path' ].'_sum.js';
 	system( "rm -rf $path" );

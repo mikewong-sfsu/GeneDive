@@ -69,6 +69,9 @@
         <button id="login-submit" name="login-submit" class="btn btn-primary">Login</button> or <a class="register" href="registration.php">Register</a>
       </form>
       <script>
+        // Let the user start with logging in (e-mail takes first focus)
+        $(() => { $( '#email' ).focus(); });
+
         $( '#login-submit' ).off( 'click' ).click(( ev ) => {
           ev.preventDefault();
 

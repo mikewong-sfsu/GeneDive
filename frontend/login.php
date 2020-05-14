@@ -2,7 +2,7 @@
   require_once "./phpLib/environment.php";
   require_once "session.php";
   define( 'FORGOT_PASS_LINK', '<a href="resetpassword/forgotpass.php">Forgot your password?</a>' );
-  define( 'PROXY', 'http://localhost:8080' );
+  define( 'PROXY', $_SERVER[ 'HTTP_ORIGIN' ] );
 
   // Not form submission; maybe bot or spider
   if ( ! isset($_POST[ 'login-submit' ])) { 
