@@ -85,7 +85,7 @@ if( $dslist == '' ) { $dslist = []; }
   <!--code editor-->
   <div class="container">
     <h2>
-      <span id="ds_name"> Edit Datasource Plugins </span>
+      <span id="ds_name"> Edit Datasource Plugins </span><span id="plugin_type"></span>
     </h2>
     <div id="editor" style="position :relative;">
 	 <button  class=" btn btn-primary btn_edit" id="datasource-edit" style="z-index: 10; right:110px; position: fixed;">Update Datasource</button>
@@ -128,13 +128,11 @@ $.ajax({
     ds = msg.toString();
     //set the code of corresponding class in editor
     editor.setValue(ds);
-
-    let description = $("#ds_name").text();
     switch(e.value){
-    	case "_sum" : $("#ds_name").text(description + " Summary view plugin");break;
-	case "_det" : $("#ds_name").text(description + " Detail view plugin");break;
-	case "_filter" : $("#ds_name").text(description + " Filter plugin");break;
-	case "_highlight" : $("#ds_name").text(description + " Highlight plugin");break;
+    	case "_sum" : $("#plugin_type").text(" Summary view plugin");break;
+	case "_det" : $("#plugin_type").text(" Detail view plugin");break;
+	case "_filter" : $("#plugin_type").text(" Filter plugin");break;
+	case "_highlight" : $("#plugin_type").text(" Highlight plugin");break;
     }
     console.log("ds_id:",e.value);
   });
