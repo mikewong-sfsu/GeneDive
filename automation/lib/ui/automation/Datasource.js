@@ -79,7 +79,6 @@ let Datasource = (superclass) => class extends superclass {
     // ============================================================
     async editDatasource( ds ) {
     // ============================================================
-    try{
     await this.click('#menu-dropdown-button');
     await this.click('.datasource-edit');
     await this.click('#edit-detail');
@@ -129,9 +128,7 @@ let Datasource = (superclass) => class extends superclass {
             return({"status":"error", "msg": "Datasource not found"});
         }
         return ({"status":"success", "msg": "Edit datasource successful"});
-    } catch(e){
-        return({"status":"error", "msg": e});
-    }
+
     }
 
     async updateDatasource(){
