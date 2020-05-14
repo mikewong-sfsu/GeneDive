@@ -64,7 +64,7 @@ if( file_exists( $db )) {
 	
 
   } 
-  $redirect = $_GET['url_link'];
+  //$redirect = $_GET['url_link'];
   header("Location: $redirect");
   exit();
 
@@ -80,7 +80,7 @@ else {
   $action   = $_GET['action'];
   $params   = $_SERVER[ 'QUERY_STRING' ];
   $redirect = "$server/api/external_link.php?$params";
-
+  //print($redirect);
   if( $action === "single_dgr" ) {
     $dgr      = $_GET[ 'dgr' ];
     $org      = $_GET[ 'db' ];
