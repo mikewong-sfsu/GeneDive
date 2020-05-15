@@ -21,7 +21,8 @@ curl -L https://cpanmin.us | perl - App::cpanminus
 cpanm install \
         List::Util \
         Text::CSV \
-        JSON::XS
+        JSON::XS \
+	Array::Utils
 
 # Delete paths
 rm -rf /usr/local/genedive /var/www/html
