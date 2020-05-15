@@ -14,7 +14,7 @@ table td{
     table-layout:auto;
     overflow:auto;
     overflow-x:scroll;
-    width:1000px;
+    width:1090px;
 }
 
 .table-view .table tr.grouped {
@@ -108,7 +108,7 @@ font-size: 10px;
 }
 .messaging-and-controls{
     position: fixed;
-    width:1000px;
+    width:1090px;
 
 }
 

@@ -47,7 +47,7 @@ class TextFilter extends TextFilterPlugin{
     });
     filterMap.set("Article",this.getArticleFilter(articles));
     filterMap.set("DGR",this.getDGRFilter(dgr));
-    filterMap.set("Datasource",this.getSourceFilter(Object.keys(GeneDive.ds)));
+    //filterMap.set("Datasource",this.getSourceFilter(Object.keys(GeneDive.ds)));
     return filterMap;
   }
 
