@@ -17,6 +17,6 @@
       "name" : "PharmGKB",
       "path" : "pharmgkb",
       "user" : "GeneDive",
-      "url:  : "https://www.pharmgkb.org"
+      "url"  : "https://www.pharmgkb.org"
    }
 }
