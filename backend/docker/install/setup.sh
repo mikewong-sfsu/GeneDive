@@ -42,6 +42,14 @@ chmod a+w /genedive/backend/data /genedive/backend/data/users.sqlite
 # Allow permissions to allow autovivification of manifest.json from server default
 chmod a+w /genedive/backend/data/sources
 
+# Allow permissions to update cache
+chmod a+w /genedive/frontend/cache
+
+#Allow permissions to edit plugin systems
+chmod a+w /genedive/frontend/static/genedive/filter/plugin
+chmod a+w /genedive/frontend/static/genedive/highlight/plugin
+chmod a+w /genedive/frontend/static/genedive/view/table/plugin
+
 # Install default configuration files
 cp /genedive/backend/data/sources/manifest.server-default.json /genedive/backend/data/sources.manifest.json
 #cp /genedive/backend/data/sources/manifest.server-default.json /genedive/backend/data/sources/manifest.json
