@@ -18,7 +18,7 @@ all: devel build run
 
 build: cache
 	@echo Building Docker container
-	docker build -t genedive .
+	docker build -t genedive3 .
 	@echo Cleaning up GeneDive application cache
 	rm -Rf devel
 
@@ -54,15 +54,15 @@ check-keys:
 	perl preinstall/check-keys
 
 run:
-	docker run -d -p $(PORT):80 --name genedive-gpib genedive
+	docker run -d -p $(PORT):80 --name genedive-v3.0 genedive3
 
 stop:
-	docker stop genedive-gpib
+	docker stop genedive-v3.0
 
 clean: 
 	rm -f Dockerfile
 	rm -Rf devel
-	docker rm genedive-gpib
+	docker rm genedive-v3.0
 
 shell:
-	docker exec -it genedive-gpib /bin/bash
+	docker exec -it genedive-v3.0 /bin/bash

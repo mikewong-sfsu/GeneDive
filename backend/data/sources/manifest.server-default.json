@@ -2,19 +2,21 @@
    "plos-pmc" :
    {
       "description" : "DeepDive-extracted DGR interactions from the Public Library of Science (PLoS) and PubMed Central (PMC) <a target=\"_blank\" href=\"https://www.ncbi.nlm.nih.gov/pubmed/26338771\">[Mallory 2016]&nbsp;<span class=\"fa fa-external-link-alt\">&nbsp;</span></a>",
-      "host" : "http://localhost:8080",
+      "host" : "http://staging.genedive.net",
       "id"   : "plos-pmc",
       "name" : "DeepDive-Extracted Interactions",
       "path" : "plos-pmc",
-      "user" : "GeneDive"
+      "user" : "GeneDive",
+      "url"  : "https://www.ncbi.nlm.nih.gov/pubmed/26338771"
    },
    "pharmgkb" :
    {
       "description" : "Curated DGR interactions from <a target=\"_blank\" href=\"https://www.pharmgkb.org\">PharmGKB <span class=\"fa fa-external-link-alt\">&nbsp;</span></a>",
-      "host" : "http://localhost:8080",
+      "host" : "http://staging.genedive.net",
       "id"   : "pharmgkb",
       "name" : "PharmGKB",
       "path" : "pharmgkb",
-      "user" : "GeneDive"
+      "user" : "GeneDive",
+      "url:  : "https://www.pharmgkb.org"
    }
 }
