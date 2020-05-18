@@ -63,17 +63,12 @@ if( file_exists( $db )) {
     $redirect = "https://www.ncbi.nlm.nih.gov/pubmed/$pubmedID/";
 	
 
-  } 
-  //$redirect = $_GET['url_link'];
-  header("Location: $redirect");
-  exit();
-
-}else if($action === "ref"){
+  }
+  else if($action === "ref" ){ 
   $redirect = $_GET['url_link'];
-
+  }
   header("Location: $redirect");
   exit();
-
 }
 else {
   global $server;
