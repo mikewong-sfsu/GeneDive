@@ -166,9 +166,20 @@ form button.cancel {
         <td class="field">type<i>x</i></td>
         <td class="description">Type must be one of: <code>Gene</code>, <code>Disease</code>, <code>Drug</code></td>
       </tr>
+      <tr>
+        <td class="field">pubmed_id</td>
+        <td class="description">PubMed article ID </td>
+      </tr>      
+      <tr>
+        <td class="field">probability</td>
+        <td class="description">Interaction confidence score from 0 to 1 </td>
+      </tr>
     </table>
     <h3>Optional Fields</h3>
-    <table class="table table-sm table-bordered table-striped" id="required-fields">
+   Apart from the required fields, the user provided data may contain any kind of non-cyclic data structure with additional information 
+   mapping the data under study.
+   <br><br>
+    <!--table class="table table-sm table-bordered table-striped" id="required-fields">
       <tr class="bg-primary">
         <th class="bg-primary field">Field</th>
         <th class="bg-primary description">Description</th>
@@ -181,7 +192,7 @@ form button.cancel {
         <td class="field">journal</td>
         <td class="description">Publisher or journal title (e.g. PLoS, PMC)</td>
       </tr>
-      <tr>
+      <tr>y
         <td class="field">article_id</td>
         <td class="description">Article identifier (e.g. Diabetes, Nov 17 2011, Vol 60 Num 11, pp2883-2891)</td>
       </tr>
@@ -201,7 +212,7 @@ form button.cancel {
         <td class="field">section</td>
         <td class="description">Article section containing the sentence (e.g. Abstract, Methods, Conclusion)</td>
       </tr>
-    </table>
+    </table-->
 
     </div>
 <!--/form-->
