@@ -1,5 +1,3 @@
-<!--?php include_once( '../session.php' ); ?-->
-
 <div id="datasource-remover">
   <p>You can remove data you have previously added to GeneDive. Once removed,
   your data will be deleted from GeneDive; if you keep a backup copy of the
