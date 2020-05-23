@@ -56,8 +56,9 @@
 GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
 var std_ds = new Set(["pharmgkb","plos-pmc","native"]);
-var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
-
+//var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
+    let response = $.getJSON( '/datasource/manifest.php?get=manifest' );
+    if( response.statusText == 'OK' ) { var manifest = response.responseJSON; }
 // ===== INITIALIZE DATASOURCE MANAGER
 var short_id_map = new Map();
 
