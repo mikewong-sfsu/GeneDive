@@ -13,6 +13,8 @@
 
   <link rel="stylesheet" type="text/css" href="/static/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/static/fontawesome/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/alertify/css/alertify.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/alertify/css/alertify.bootstrap.min.css">
 
   <title>Add a Data Source</title>
   <style>
@@ -105,7 +107,7 @@ form button.cancel {
           <div class="panel-heading"><h3 class="panel-title">Add a Data Source</h3></div>
           <div class="panel-body">
             <!--p>All fields are required.</p-->
-            <form action="/datasource/import.php" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <form action="/datasource/import.php" method="post" enctype="multipart/form-data" class="form-horizontal" onSubmit= "return validateName()">
               <div class="form-group row">
                 <label for="dsname" class="col-sm-2 control-label">Name<span class="required">*</span></label>
                 <div class="col-sm-10"><input type="text" class="form-control" name="dsname" id="dsname" placeholder="My Data Source" required/></div>
@@ -182,53 +184,18 @@ form button.cancel {
    Apart from the required fields, the user provided data may contain any kind of non-cyclic data structure with additional information 
    mapping the data under study.
    <br><br>
-    <!--table class="table table-sm table-bordered table-striped" id="required-fields">
-      <tr class="bg-primary">
-        <th class="bg-primary field">Field</th>
-        <th class="bg-primary description">Description</th>
-      </tr>
-      <tr>
-        <td class="field">mention<i>x</i>_offset</td>
-        <td class="description">Mention (symbol name) character offset from beginning of sentence</td>
-      </tr>
-      <tr>
-        <td class="field">journal</td>
-        <td class="description">Publisher or journal title (e.g. PLoS, PMC)</td>
-      </tr>
-      <tr>y
-        <td class="field">article_id</td>
-        <td class="description">Article identifier (e.g. Diabetes, Nov 17 2011, Vol 60 Num 11, pp2883-2891)</td>
-      </tr>
-      <tr>
-        <td class="field">sentence_id</td>
-        <td class="description">Sentence identifier (e.g. SENT123)</td>
-      </tr>
-      <tr>
-        <td class="field">probability</td>
-        <td class="description">Interaction confidence score from 0 to 1 </td>
-      </tr>
-      <tr>
-        <td class="field">context</td>
-        <td class="description">Text for the sentence (supporting evidence) describing the interaction</td>
-      </tr>
-      <tr>
-        <td class="field">section</td>
-        <td class="description">Article section containing the sentence (e.g. Abstract, Methods, Conclusion)</td>
-      </tr>
-    </table-->
-
     </div>
-<!--/form-->
 </li>
 
   <!-- JQuery -->
   <script src="/static/jquery/jquery-3.2.1.min.js"></script>
-  <!-- <script src="static/jquery/jquery-ui.min.js"></script> -->
 
   <!-- Bootstrap and Modules -->
   <script src="/static/bootstrap/bootstrap.min.js"></script>
   <script src="/static/bootstrap/bootstrap-slider/bootstrap-slider.min.js"></script>
   <script src="/static/bootstrap/bootstrap-toggle/bootstrap-toggle.min.js"></script>
+  <script type="text/javascript" src="/static/alertify/js/alertify.min.js"></script>
+  <script type="text/javascript" src="/static/genedive/alertify-defaults.js"></script>
 
   <!-- Alertify -->
   <script src="/static/alertify/js/alertify.min.js"></script>
@@ -242,6 +209,19 @@ $( "form button.cancel" ).off( 'click' ).click(( ev ) => {
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 var listitem = $( '.datasource-list-item' ).detach();
 
+
+//validate name of datasource
+function validateName(){
+  var name = $("#dsname").val();
+  for(var datasource in manifest){
+    if(name == manifest[datasource].name){
+      var alertstr = name + " already exists. Please rename the  data source!" ; 
+      alertify.alert('', alertstr);
+      return false;
+    }
+  }
+  return true;
+}
 $('.btn_remove').on('click',function(){
   var ds_id = this.parentNode.parentNode.id;
   var ds_name = document.getElementById(ds_id).children[0].children[0].innerHTML
