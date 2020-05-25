@@ -82,7 +82,10 @@ form button.cancel {
   position: absolute;
   top: 32px;
 }
-
+.required
+{
+    color: red;
+}
 
   </style>
 
@@ -101,25 +104,25 @@ form button.cancel {
         <div class="panel panel-primary">
           <div class="panel-heading"><h3 class="panel-title">Add a Data Source</h3></div>
           <div class="panel-body">
-            <p>All fields are required.</p>
+            <!--p>All fields are required.</p-->
             <form action="/datasource/import.php" method="post" enctype="multipart/form-data" class="form-horizontal">
               <div class="form-group row">
-                <label for="dsname" class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10"><input type="text" class="form-control" name="dsname" id="dsname" placeholder="My Data Source"/></div>
+                <label for="dsname" class="col-sm-2 control-label">Name<span class="required">*</span></label>
+                <div class="col-sm-10"><input type="text" class="form-control" name="dsname" id="dsname" placeholder="My Data Source" required/></div>
               </div>
               <div class="form-group">
-                <label for="dsdesc" class="col-sm-2 control-label">Description</label>
-                <div class="col-sm-10"><input type="text" class="form-control" name="dsdesc" id="dsdesc" placeholder="My DGR interaction data"/></div>
+                <label for="dsdesc" class="col-sm-2 control-label">Description<span class="required">*</span></label>
+                <div class="col-sm-10"><input type="text" class="form-control" name="dsdesc" id="dsdesc" placeholder="My DGR interaction data" required/></div>
               </div>
               <div class="form-group">
-                <label for="dsfile" class="col-sm-2 control-label">Filename</label>
-                <div class="col-sm-10"><input type="file" class="form-control" name="dsfile" id="dsfile"/>
+                <label for="dsfile" class="col-sm-2 control-label">Filename<span class="required">*</span></label>
+                <div class="col-sm-10"><input type="file" class="form-control" name="dsfile" id="dsfile" required/>
                 <small id="dsfile-privacy" class="form-text form-muted">Your data is kept local and private to your computer</small></div>
 	      </div>
 		<!--adding URL -->
 	     <div class="form-group">
                 <label for="dsurl" class="col-sm-2 control-label">Ref. URL</label>
-                <div class="col-sm-10"><input type="text" class="form-control"name="dsurl" id="dsurl"/>
+                <div class="col-sm-10"><input type="text" class="form-control"name="dsurl" id="dsurl" placeholder="https://www.ncbi.nlm.nih.gov/pubmed"  />
                 <small id="dsurl-example" class="form-text form-muted">(for example: URL to PubMed paper.)</small></div>
 	      </div>
  

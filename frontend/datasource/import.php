@@ -4,7 +4,7 @@
 
   $name = $_POST[ 'dsname' ] ?: 'My Data Source';
   $desc = $_POST[ 'dsdesc' ] ?: 'My DGR interaction data';
-  $url  = $_POST[ 'dsurl'  ] ?:	'www.ncbi.nlm.nih.gov/pubmed';
+  $url  = $_POST[ 'dsurl'  ] ?: 'https://www.ncbi.nlm.nih.gov/pubmed';
   $id   = substr( sha1( $name ), 0, 8 );
   $path = $id;
 
@@ -13,7 +13,7 @@
     'name'        => $name,
     'url'	  => $url,
     'path'        => $path,
-    'description' => $desc . "from <a target=\"_blank\" href=\"{$url}\"><span class=\"fa fa-external-link-alt\">&nbsp;</span></a>",
+    'description' => $desc . "  <a target=\"_blank\" href=\"{$url}\"><span class=\"fa fa-external-link-alt\">&nbsp;</span></a>",
     'user'        => $_SESSION[ 'email' ], 
   ];
 ?>
