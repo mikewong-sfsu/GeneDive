@@ -17,7 +17,7 @@ my $cache        = cache( $file );
 my $path         = path( $file );
 my $pdir = dirname($path);
 my @required     = qw( mention1 mention2 geneids1 geneids2 type1 type2 probability  pubmed_id);
-my @optional     = ();
+my @optional     = qw( id1 id2);
 my @add_col = null;
 my $interactions = csv( in => validate( $file ), encoding => 'utf-8');
 $interactions = csv( in => $file, encoding => 'utf-8', headers => "auto");
@@ -250,6 +250,8 @@ sub validate {
 	if (!@add_col){
 	  return $file;
 	}
+	#reset optional
+	@optional = qw();
 	push @optional, "addendum";
 	my $pos =0;
 	my %col2_num = map {$_ => $pos++}@headers;
