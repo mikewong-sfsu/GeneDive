@@ -130,7 +130,12 @@ let dss = {
           GeneDive.datasource.list = $( 'input.datasource-toggle' ).map(( i, item ) => { 
               let key = $( item ).attr( 'id' ); 
               if( $( item ).prop( 'checked' )) { return key; } else { return null; }
-          }).toArray();
+    	}).toArray();
+	  if(GeneDive.datasource.list.length < 1){
+		  alertify.alert('','No Datasource selected! Please select atleast one datasource for search operation' );
+		  return false;
+	  }
+	  else{
           let list = GeneDive.datasource.list.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
           alertify.success( `Now searching on<br>${list}` ); 
           let use_native = [ 'plos-pmc', 'pharmgkb' ].every( item => GeneDive.datasource.list.includes( item ));
@@ -143,7 +148,8 @@ let dss = {
           .done(( message ) => {
             window.location.reload();
           })
-          .fail(( error ) => { console.log( error ); });
+	  .fail(( error ) => { console.log( error ); });
+	  }
       }, 
 
       // Cancel button behavior
@@ -179,6 +185,12 @@ $( '.datasource-select' ).off( 'click' ).click(( ev ) => {
     dss.show();
   }
 });
+
+if(GeneDive.datasource.list.length < 1){
+  setTimeout(() => {$( '.datasource-select' ).click();
+  }, 500 );
+ //$( '.datasource-select' ).click();
+}
 $( '.datasource-add' ).off( 'click' ).click(( ev ) => {
   if( GeneDive.history.stateHistory.length > 0 ) {
    alertify.confirm(
