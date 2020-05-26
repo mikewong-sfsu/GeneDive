@@ -89,6 +89,10 @@ function add_datasource( $manifest, $datasource ) {
 	write_manifest( $manifest );
 
 	echo "<h1>Data Import Complete!</h1>\n";
+	$dslist = json_decode( base64_decode( $_SESSION[ 'sources' ]));
+	//add newly added datasource to selection
+	array_push($dslist,$id);
+	$_SESSION['sources'] = base64_encode( json_encode( $dslist ));	
 	echo '<div class="pull-right"><a class="btn btn-success" href="/search.php" style="width: 80px;">OK</a></div>';	
 
 }
