@@ -103,7 +103,7 @@ class ResultsTable {
 		  let name = cur.ds_name;
 		  let url = cur.ds_url;
 		  let short_id = cur.short_id;
-		  if(!defined(name) || !defined(url)){
+		  if(!defined(name)){// || !defined(url)){
 		  return acc;
 		  }
 		  acc[name] = [url,short_id];
@@ -114,8 +114,8 @@ class ResultsTable {
     let i = 1;
     let len = Object.keys(row.ds_map).length;
     for(let key in row.ds_map){
-     if(row.ds_map[key] == null){
-      res_list += '<a title=' + key + '>' + i + '</a>';
+     if(row.ds_map[key][0] == null){
+      res_list +=   '<span title= ' +key.replace(/ /g,'\xa0') + '>' +  row.ds_map[key][1]  + '</span>';
      }else{
       res_list += "<a class=pubmedLink  target= _blank href=/api/external_link.php?action=ref&url_link=" + row.ds_map[key][0] + " title="+  key.replace(/ /g,'\xa0') +  " >" + row.ds_map[key][1] + "</a>";
      }

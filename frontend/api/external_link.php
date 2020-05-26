@@ -70,6 +70,11 @@ if( file_exists( $db )) {
   header("Location: $redirect");
   exit();
 }
+else if($action === "ref" ){
+  $redirect = $_GET['url_link'];
+  header("Location: $redirect");
+  exit();
+}
 else {
   global $server;
   $action   = $_GET['action'];
