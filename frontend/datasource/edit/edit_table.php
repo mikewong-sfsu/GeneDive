@@ -97,6 +97,7 @@ if( $dslist == '' ) { $dslist = []; }
 datasource = {};
 datasource.list = <?= json_encode( $dslist ) ?>;
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
+var len = 0;
 var edit = $( '.datasource-edit-item' ).detach();
 refreshEditUI = () => {
   $( '#datasources-available-for-edit' ).empty();
@@ -111,7 +112,8 @@ refreshEditUI = () => {
 	    $(this).attr({id: (datasource.id + $(this).val())});
     });
     toggle.attr({ id: datasource.id});
-   $( '#datasources-available-for-edit' ).append( entry );
+    $( '#datasources-available-for-edit' ).append( entry );
+    len++;
   });
 };
 refreshEditUI();
@@ -180,11 +182,15 @@ window.location = "/search.php";
   });
 
 var dse = $( '#datasource-edit' ).detach();
-
+var alertStr = '';
+if(len < 1)
+   alertStr = 'No Local datasource available for editing. Kindly import data to add new custom features.';
+else
+    alertStr = dse.html();
 let dse_show = () => {
     alertify.alert( 
       'Edit Datasources', 
-      dse.html(),
+      alertStr,
       () =>  { 
 }
     ).set({ 'label' : 'Close', 'closable': false });
