@@ -51,11 +51,31 @@ var dsr_show = () => {
   $( '.btn-remove' ).off( 'click' ).click(( e ) => {
     var entry      = $( e.target ).parents( '.datasource-remove-item' );
     var datasource = { id : entry.attr( 'data-id' ), name : entry.attr( 'data-name' ) };
-
+    var alertStr = '';
+    var removeSelected = GeneDive.datasource.list.includes(datasource.id);
+    if(removeSelected){
+	    alertStr += datasource.name + ' is currently selected for search query! Do you wish to continue ?<br /><br />';
+    }
+    alertStr +=`Click [OK] to permanently remove ${datasource.name}, [Cancel] to leave ${datasource.name} alone. If you still have the original CSV for ${datasource.name}, you can always re-import ${datasource.name} later, using the <code>Add a Datasource</code> feature.`;
     alertify.confirm( 
       `Delete ${datasource.name}?`, 
-      `Click [OK] to permanently remove ${datasource.name}, [Cancel] to leave ${datasource.name} alone. If you still have the original CSV for ${datasource.name}, you can always re-import ${datasource.name} later, using the <code>Add a Datasource</code> feature.`, 
-      () => { $.post({ url: "/datasource/delete.php", data: { "id" : datasource.id }, success: ( e ) => { console.log( 'SUCCESS', e ); $( `.datasource-remove-item[data-id="${datasource.id}"]` ).remove(); }}); },
+      alertStr, 
+      () => { 
+        //remove from datasource list
+       GeneDive.datasource.list  = GeneDive.datasource.list.filter(e => e != datasource.id);
+	console.log("ds:",GeneDive.datasource.list);
+   	let dsl = btoa(JSON.stringify(GeneDive.datasource.list));
+   	$.ajax({
+     		url:`/datasource/change.php?value=${dsl}`,
+     		method: 'GET'
+	});
+       //delete datasource	
+      $.post({ url: "/datasource/delete.php",
+      data: { "id" : datasource.id }, 
+      success: ( e ) => { 
+      	console.log( 'SUCCESS', e );
+	$( `.datasource-remove-item[data-id="${datasource.id}"]` ).remove(); 
+      }}); },
       () => {}
     );
   })
