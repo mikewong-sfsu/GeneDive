@@ -13,7 +13,7 @@
   }
 
   // Proxy login
-  if( isset( $_POST[ 'token' ])) {
+  if( isset( $_POST[ 'sources' ])) {
     $all    = base64_encode( json_encode([ "all" ]));
     $native = base64_encode( json_encode([ "native" ]));
     $_SESSION[ 'is_auth' ] = true;
