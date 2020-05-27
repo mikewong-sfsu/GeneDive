@@ -12,13 +12,13 @@ ini_set( "memory_limit", "1024M" );
  * ============================================================
  */
 if( ! isset( $_GET[ 'get' ] )) { exit; }
-if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["plos-pmc", "pharmgkb"] )); };
-//if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["native"] )); };
+//if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["plos-pmc", "pharmgkb"] )); };
+if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["native"] )); };
 
 $sources = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
 //temp fix for getting rid of 'all' datasources - NL
-if(in_array("all", $sources)){
-	$sources = array_filter($sources, function($item) { return $item != "all";});
+if(in_array("native", $sources)){
+	$sources = array_filter($sources, function($item) { return $item != "native";});
 	//replace 'all' by genedive native datasources
 	array_push($sources, "plos-pmc" , "pharmgkb");
 	//reset the value in session variable

@@ -57,7 +57,6 @@
   $_SESSION[ 'email' ]   = $email;
   $_SESSION[ 'name' ]    = $row[ 'name' ];
   if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["native"] )); };
-
   // If proxy, send auth token
   if( isset( $_POST[ 'proxy' ])) {
     $clone = $_SESSION;
