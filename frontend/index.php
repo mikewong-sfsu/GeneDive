@@ -8,7 +8,7 @@
     $ds            = $selected[ 'datasources' ];
     $use_pharmgkb  = in_array( 'pharmgkb', $ds );
     $use_deepdive  = in_array( 'plos-pmc', $ds );
-    $use_native_ds = in_array( 'native', $ds ) || $use_pharmgkb || $use_deepdive;
+    //$use_native_ds = in_array( 'native', $ds ) || $use_pharmgkb || $use_deepdive;
     $sans_native   = array_filter( $ds, function ( $source ) { return $source != "native" && $source != "pharmgkb" && $source != "plos-pmc"; });
   }
 
@@ -78,14 +78,15 @@
           let data = { email : $( '#email' ).val(), password: $( '#password' ).val(), proxy: <?php echo $use_native_ds ? 'true' : 'false' ?>, 'login-submit' : true };
           console.log( 'SENDING', data );
           $.post({
-            url: <?php if( $use_native_ds ) { echo "\"$server/login.php\""; } else { echo "\"login.php\""; } ?>,
+            url: "login.php",
             data: data,
             timeout: 3000,
             cache: false
           })
 
           // Receive response from server
-          .done(( response ) => {
+		  .done(( response ) => {
+		  console.log(response);
             response = JSON.parse( response );
             console.log( 'RESPONSE', response );
             if( response.error ) { alertify.error( response.error, 30 ); return; }
