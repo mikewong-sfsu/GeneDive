@@ -69,7 +69,7 @@ class TableSummaryGene extends BuildSummaryTable {
       let rows = this.interactions[group];
       let row  = rows[ rows.length - 1 ];
       // Compile number of unique articles
-      row.articles = Object.keys( rows.reduce(( acc, cur ) => { let article = cur.article_id; if(!defined(article) ) { return acc; } acc[ article ] = true; return acc; }, {})).length;
+      row.articles = Object.keys( rows.reduce(( acc, cur ) => { let article = cur.pubmed_id; if(!defined(article) ) { return acc; } acc[ article ] = true; return acc; }, {})).length;
 
       // Synonym styling
       let mention1 = row.synonym1 ? this.addSynonym(row.mention1, row.synonym1) : row.mention1;

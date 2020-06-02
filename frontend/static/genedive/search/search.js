@@ -438,11 +438,12 @@ class Search {
       },
     );
 
-    $('.twitter-typeahead').css('width', '100%');
+    $('.twitter-typeahead').css('width','100%');
+    //$('tt-suggestion tt-selectable').css({'width': '150px', 'word-wrap':'break-word'});
 
     // When suggestions box opens, put cursor on first result
     $('.twitter-typeahead input').off( 'typeahead:render' ).on( 'typeahead:render', () => {
-      $('.tt-suggestion').first().addClass('tt-cursor');
+      $('.tt-suggestion').css({'width': '295px', 'word-wrap':'break-word'}).first().addClass('tt-cursor');
     });
 
     // The action we take when a typeahead element is selected

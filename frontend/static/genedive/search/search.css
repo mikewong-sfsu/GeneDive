@@ -16,6 +16,8 @@
 
 .search-module .search-item .name {
   font-weight: bold;
+  word-wrap: break-word;
+  width:150px;
   flex-grow: 1;
 }
 

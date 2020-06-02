@@ -12,7 +12,7 @@ class DefaultDetTable extends DefaultDetailTable{
 
 	//===================================
 	addColumns(){
-		var customColumns = {};
+		var customColumns = new Map();
 		/*
 		 * this.getInteraction(); => gets the table data
 		 * this.getColumn(interactionData, "columnName"); => get the value of specific column
