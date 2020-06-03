@@ -90,7 +90,16 @@ class TableDetail extends BuildDetailTable {
       //add additional_columns values
       let element = this.buildDetailBody(i,this.add_columns);
       for(let col = 0 ; col < this.add_columns.length;col++){
-	tr.append($(document.createElement("td")).html(element.get(this.add_columns[col])));	
+	      let col_value = element.get(this.add_columns[col]);
+	      console.log("col_value:", col_value);
+	      const [err, result] = this.safeJsonParse(col_value);
+	      if(!err){
+		renderjson.set_show_to_level("all");
+		tr.append($(document.createElement("td")).html(renderjson(result)));
+	      }
+	      else
+		tr.append($(document.createElement("td")).html(col_value));		
+	//tr.append($(document.createElement("td")).html(element.get(this.add_columns[col])));	
 	}
       //datasource mapping
       let source = i.ds_name + " [" + i.short_id + "]";
@@ -113,6 +122,14 @@ class TableDetail extends BuildDetailTable {
 
   get amountOfEntries(){
     return this._amountOfEntries;
+  }
+
+  safeJsonParse(str) {
+    try {
+        return [null, JSON.parse(str)];
+    } catch (err) {
+        return [err];
+    }
   }
 
 

@@ -32,6 +32,7 @@
     <script src="static/jszip/jszip.min.js"></script>
     <script src="static/jszip/jszip-utils.min.js"></script>
 
+<script src="https://cdn.rawgit.com/caldwell/renderjson/master/renderjson.js"></script>
     <!-- Typeahead cache -->
     <script src="cache.php?get=disease_id"></script>
     <script src="cache.php?get=gene_id"></script>

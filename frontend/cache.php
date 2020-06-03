@@ -31,11 +31,15 @@ switch( $_GET[ 'get' ]) {
 	case "gene_id":
 	case "disease_id":
 	case "drug_id":
+	case "set_id":
 		send_cache( $_GET[ 'get' ], $manifest, $sources );
 		break;
-	case "set_id":
-		send_redirect( "/cache/shared/set_id.js" );
-		break;
+//	case "set_id":
+
+		//send_cache( $_GET[ 'get' ], $manifest, ['shared'] );
+	//	if(in_array(
+		//send_redirect( "/cache/shared/set_id.js" );
+		//break;
 	default:
 		break;
 };
@@ -43,29 +47,53 @@ switch( $_GET[ 'get' ]) {
 function send_cache( $file, $manifest, $sources ) {
 // ============================================================
 	global $CACHE;
-	global $server;
+	global $server;	
 	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
+	
+	//set_id
+	if($file == 'set_id'){
+		if(!in_array('plos-pmc',$datasources, true )){
+			$file = 'default_set_id';
+		}
+		$source = 'shared';
+		//else
+		send_redirect( "/cache/$source/$file.js" );
+
+	}
+
+
 	// ===== CASE 1: MOST COMMON CASE
 	$source = $datasources[ 0 ];
+
 	if( count( $datasources ) == 1 ) {
 
 		// Single user-provided data source adjacency matrix requested
 		// This includes: 'native', 'pharmgkb', or 'plos-pmc' 
 		// Only the server will have the default datasources installed
+
 		$url     = "cache/$source/$file.js";
 		$locally = "$CACHE/$url";
 		if(	file_exists( $locally )) {
 			send_redirect( $url );
 
-		} else if(in_array( $source, [ 'native', 'pharmgkb', 'plos-pmc', 'shared' ])) {
+		} else if(in_array( $source, [ 'native', 'pharmgkb', 'plos-pmc' ])) {
 			send_redirect( "$server/$url" );
 		}
 	}
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
 	// Caches only exist locally on the proxy server, never on the production
 	// server
+	/*if($file == 'set_id'){
+		if(!in_array('plos-pmc',$datasources, true )){
+			$file = 'default_set_id';
+		}
+		$source = 'shared';
+		//else
+		send_redirect( "/cache/$source/$file.js" );
+
+	}*/
 	$source  = substr( sha1( $_SESSION[ 'sources' ]), 0, 8 );
 	$url     = "cache/$source/$file.js";
 	$locally = "$CACHE/$url";
@@ -188,6 +216,7 @@ function merge_typeahead_tables( $datasources, $file ) {
 	global $CACHE;
 	global $DATASOURCES;
 	$typeahead = array();
+		
 	foreach( $datasources as $sourceid ) {
 		$table = read_typeahead_table("cache/$sourceid/$file.js");
 		if( is_null( $table )) { continue; } // Skip missing entries
