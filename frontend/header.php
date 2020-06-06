@@ -57,6 +57,10 @@
     <link rel=stylesheet type=text/css href="static/genedive/view/table/editdialog.css"> 
     <link rel=stylesheet type=text/css href="static/genedive/view/table/table.css">
     <link rel=stylesheet type=text/css href="static/genedive/view/graph/graph.css">
+    <!--CodeMirror-->
+    <link rel=stylesheet type=text/css href="datasource/edit/codemirror/lib/codemirror.css">
+    <link rel=stylesheet type=text/css href="datasource/edit/codemirror/addon/fold/foldgutter.css">
+    <link rel=stylesheet type=text/css href="https://codemirror.net/addon/lint/lint.css">
 
   </head>
   <body>

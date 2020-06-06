@@ -71,6 +71,7 @@
     <script src="static/genedive/highlight/highlightplugin.js"></script> 
     <script src="static/genedive/highlight/highlight.js"></script>
     <script src="static/genedive/grouper/grouper.js"></script>
+    <script src="static/genedive/plugin/plugin.js"></script> 
     <script src="static/genedive/view/table/resultstable.js"></script>
     <script src="static/genedive/view/table/buildsummarytable.js"></script>  
     <script src="static/genedive/view/table/builddetailtable.js"></script> 
@@ -85,11 +86,36 @@
     <script src="static/genedive/history/history.js"></script>
     <script src="static/genedive/localdb/db.js"></script>
 
+   <!-- Editor -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script type="text/javascript" src="/datasource/edit/codemirror/lib/codemirror.js"></script>
+  <script type="text/javascript" src="/static/alertify/js/alertify.min.js"></script>
+  <script type="text/javascript" src="/static/genedive/alertify-defaults.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/lib/codemirror.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/addon/fold/foldcode.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/addon/fold/foldgutter.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/addon/fold/brace-fold.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/addon/fold/indent-fold.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/addon/fold/comment-fold.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/addon/edit/closebrackets.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/mode/javascript/javascript.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/jshint@2.9.6/dist/jshint.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/jsonlint@1.6.3/web/jsonlint.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/csslint@1.0.5/dist/csslint.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/addon/lint/lint.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/addon/lint/javascript-lint.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/addon/lint/json-lint.js"></script>
+  <script type="text/javascript" src="datasource/edit/codemirror/addon/lint/css-lint.js"></script>
+
+   <!-- Tabs -->
+   <script src="static/genedive/plugin/closabletabs.js"></script>
+
     <!-- Core Controller -->
     <script src="static/genedive/controller.js"></script>
 
     <?php include( 'datasource/select.php' ) ?>
     <?php include( 'datasource/remove.php' ) ?>
+
 
   </body>
 </html>

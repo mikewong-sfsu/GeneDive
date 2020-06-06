@@ -94,7 +94,10 @@
     </div>
 
     <div class="divider require-dgr-search"></div>
-
+    <!-- Add Plugins -->
+    <div style="display: flex; justify-content: center">
+      <button style="width:90%;"  id="apply-plugin">Add Plugin</button>
+    </div>
     <!-- Grouper -->
     <div class="module grouper-module require-dgr-search">
       <div class="title">
@@ -164,8 +167,22 @@
 
     <div class="splitter-horizontal"></div>
 
+    <!--Navigation panel to add multiple views -->
+    <ul class="nav nav-tabs marginBottom" id="bottomPanel">
+	<li class="active">
+	    <a style="padding:0px" href="#Graphview"> Graph View </a>
+	</li>
+    </ul> 
+
+    <!-- Tab contents -->
+    <div class="tab-content" style= "width:100%;height:80%">
+      <div class="tab-pane active" style= "width:100%;height:90%" id="Graphview">
+	
+      <!--/div>
+    </div-->
+
     <!-- Graph View -->
-    <div class="graph-view panel-bottom">
+    <div class="graph-view">
       <button type="button" class="module control-module btn-group btn btn-default redraw-graph" data-toggle="tooltip-initial" data-placement="bottom" title="Regenerate the positions of the graph nodes" disabled> <i class="fa fa-refresh" aria-hidden="true"></i> <span class="button-text">Redraw Graph</span></button>
       <div class="absent">
         <div>View Absent Nodes List</div>
@@ -213,11 +230,12 @@
             <h4>Ctrl-Click DGR to Start New Search</h4>
             <p>Ctrl-Click on a DGR to start a new search with only that DGR.</p>
           </div>
-        </div>
-        </div>
+	</div>
+	</div>
       </div>
     </div>
-
+    </div>
+    </div> 
   </div>
 </div>
 

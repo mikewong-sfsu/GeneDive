@@ -31,12 +31,14 @@ class Controller {
     this.history        = new History( this );
     this.loading        = new Loading(".loading-container", ".loading-info", ".loading-container .progress-bar");
     this.localdb        = new LocalDB(this);
+    this.plugin         = new Plugin();
     this.tablestate 	= {zoomed: false, zoomgroup: null, visible_columns: []};//new Map()};
     this.interactions 	= null;
     this.filtrate       = null;
     this.additional_columns = null;//  NL
     this.ds = null;//NL
 
+    this.hidePlugin();
     // Saves the table view's Y scroll positions
     this.yScrollSummary = 0;
     // this.yScrollDetail = 0;
@@ -490,6 +492,7 @@ class Controller {
    */
   loadSpinners() {
     if ( this.spinneractive) { return; }
+    this.hidePlugin();
     this.hideHelp();
     this.graph.hideGraphLegend();
     this.graph.hideGraphAbsent();
@@ -508,6 +511,7 @@ class Controller {
    */
   loadLandingPage() {
     this.showHelp();
+    this.hidePlugin();
     this.download.disableDownload();
     this.hideElementsRequiringDGRs();
     this.hideTableSpinner();
@@ -532,8 +536,10 @@ class Controller {
     if (this.search.amountOfDGRsSearched() === 0) {
       this.hideElementsRequiringDGRs();
       this.showHelp();
+      this.hidePlugin();
       this.download.disableDownload();
     } else {
+      this.showPlugin();
       this.showElementsRequiringDGRs();
       if (this.resultsFound()) {
         if (redrawTable)
@@ -757,6 +763,14 @@ class Controller {
 
   hideHelp() {
     $(".help").hide();
+  }
+
+  showPlugin(){
+    $("#apply-plugin").show();
+  }
+
+  hidePlugin(){
+    $("#apply-plugin").hide();
   }
 
 

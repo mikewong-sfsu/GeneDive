@@ -91,7 +91,6 @@ class TableDetail extends BuildDetailTable {
       let element = this.buildDetailBody(i,this.add_columns);
       for(let col = 0 ; col < this.add_columns.length;col++){
 	      let col_value = element.get(this.add_columns[col]);
-	      console.log("col_value:", col_value);
 	      const [err, result] = this.safeJsonParse(col_value);
 	      if(!err){
 		renderjson.set_show_to_level("all");

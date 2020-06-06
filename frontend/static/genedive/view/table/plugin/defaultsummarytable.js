@@ -11,7 +11,7 @@ class DefaultSummaryTable{
 	getSummaryHeader(){
 	//=================================
 	//get contents
-	var add_header = Object.keys(this.summaryColumns);
+	var add_header = Array.from(this.summaryColumns.keys());
 	//append the datasource id
 	add_header = add_header.map(element => element + " [" + this.short_id + "]")
 	return add_header;
@@ -22,8 +22,8 @@ class DefaultSummaryTable{
 	getSummaryElement(interaction,group_id){
 	//=================================
 	var columns = this.addSummaryColumns(interaction,group_id);
-	for(var key of Object.keys(columns)){
-		this.summaryColumns[key + " [" + this.short_id + "]"] = columns[key];
+	for(var key of columns.keys()){
+		this.summaryColumns[key + " [" + this.short_id + "]"] = columns.get(key);
 	}
 	return this.summaryColumns;
 	}

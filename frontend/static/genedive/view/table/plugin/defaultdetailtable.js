@@ -5,9 +5,14 @@ class DefaultDetailTable{
 	this.header = this.set_union(this.required,this.optional);
 	this.short_id = short_id;//short id for the datasource
 	this.add_cols = null;//additional column
-	this.detail_cols;//custom columns can be added from edit datasource
+	this.detail_cols;
+	this.interaction = {};
+	this.addendum = {};
+	this.columnMap = new Map();
+	//custom columns can be added from edit datasource
 	this.columnMap = this.addColumns();
-	this.interaction = null;
+	//this.interaction = {};
+	//this.addendum = {};
 	
 	}
 
@@ -18,8 +23,8 @@ class DefaultDetailTable{
 	//=================================
 	
 	var add_header = new Set();
-	this.detail_cols = Object.keys(this.columnMap);
-	this.detail_cols = Array.from(this.set_union(new Set(this.detail_cols), new Set(this.add_cols)));
+        //add the additional columns from addendum as well as custom columns added from addDetailTableAPI
+	this.detail_cols = Array.from(this.set_union(new Set(Array.from(this.columnMap.keys())), new Set(this.add_cols)));
 	if(this.detail_cols != null){
 		//append short id to datasource column headers
 		this.detail_cols = this.detail_cols.map(element => element + " [" + this.short_id + "]")
@@ -32,39 +37,38 @@ class DefaultDetailTable{
 	//map the table values for optional columns
 	getElement(interaction,arr){
 	//=================================
+		
 		this.interaction = interaction;
-		var res = new Map();
-		var addendum = {};
-		//this.addRequiredColumns(interaction);
-		if(interaction.addendum && interaction.addendum.length){
-			addendum = JSON.parse(interaction.addendum);
-			this.interaction = Object.assign({},this.interaction,addendum);
-	
-		}
-	
-		//for native datasource columns
-		for(let i = 0 ;i < arr.length;i++){
-			if(addendum.hasOwnProperty(arr[i]))
-				res.set(arr[i],addendum[arr[i]]);
-			else
-				res.set(arr[i],"");
-		}
-		//get all the custom mapping from user//edit datasource
+
+		let res = new Map();
+		//get custom mapped values
 		this.columnMap = this.addColumns(interaction);
-		//this.addRequiredColumns(interaction);
-
-		//for local datasource columns
-		if(Array.isArray(this.detail_cols) && this.detail_cols.length > 0){
-			let key;
-			for(let i = 0; i < this.detail_cols.length;i++){
-				//remove the short_id from name
-				key = this.detail_cols[i].substring(0,this.detail_cols[i].indexOf(this.short_id) - 2);
-
-				//get the mapping from the columnMap
-				if(res.has(this.detail_cols[i]))
-					res.set(this.detail_cols[i], this.getColumn(this.interaction, key));
+		//parse addendum column if available
+		if(interaction.addendum && interaction.addendum.length){
+			this.addendum = JSON.parse(interaction.addendum);				
+		}
+		//map the columns in addendum
+		for(let key of arr){
+		//map columns corresponding to short_id
+		if(key.includes(this.short_id)){
+			let id = key.substring(0,key.indexOf(this.short_id) - 2);
+			//if column is directly mapped from keys of interaction
+			if(interaction.hasOwnProperty(id))
+				res.set(key, interaction[id]);
+			//if column is directly mapped from keys of addendum
+			if(this.addendum.hasOwnProperty(id)){
+				res.set(key, this.addendum[id]);
 			}
-
+			//if column computed from user defined function
+			else{
+				console.log("key:",key);
+				console.log("this.columnMap:",this.columnMap);
+			res.set(key, this.columnMap.get(id));
+			}
+		}
+		else
+			res.set(key,"");
+		
 		}
 		return(res);	
 	}
@@ -78,18 +82,21 @@ class DefaultDetailTable{
 
 	//=================================
 	//return value mapped to column
-	getColumn(addendum, column){
+	getColumn(column){
 	//=================================
-		//base condition
-		if(typeof addendum == 'undefined')
-			return '{}';
-		//if value present in columnMap based on custom function
-		if(this.columnMap.hasOwnProperty(column))
-			return this.columnMap[column];
-		//map the columns within addendum
-		if(addendum.hasOwnProperty(column))
-			return addendum[column];
-		return '{}';
+		console.log("this.interaction:",this.interaction);
+		console.log("column:",column);
+		//get values mapping interaction directly
+		if(this.interaction.hasOwnProperty(column))
+			return this.interaction[column];
+		//get values mapping columns  in addendum
+		else if(this.addendum.hasOwnProperty(column))
+			return this.addendum[column];
+		//get values mapping custom defined columns
+		else if(this.columnMap.has(column))
+			return this.columnMap.get(column);
+		//default value
+		return new Map();
 		
 	}
 
