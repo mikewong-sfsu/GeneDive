@@ -11,7 +11,7 @@ $(() => {
         e.preventDefault();
 	//show the clicked tab    
         $(this).tab('show');
-        $currentTabHash = $(this)[0].hash;
+        $currentTabHash = $(this)[0].hash.slice(1);
 	showTab();
     });
     registerCloseEvent();
@@ -19,14 +19,18 @@ $(() => {
 });
 
 //dynamically add tabs
-function registerAddPluginEvent(tabId) {
-        $('.nav-tabs').append('<li><a style="padding:0px" href="#' + tabId + '"><button class="close closeTab" type="button" >×</button> TabName </a></li>');
+function registerAddPluginEvent(datasource, plugin) {
+	let tabId = datasource.val() + plugin.val();
+	let tabName = [ datasource.text(),plugin.text()];
+        $('.nav-tabs').append('<li><a style="padding:0px" href="#' + tabId + '"><button class="close closeTab" type="button" >×</button>' 
+		+ datasource.text() + '/' + plugin.text() + '  </a></li>');
         $('.tab-content').append('<div class="tab-pane" id="' + tabId + '" style="width:100%;height:90%"></div>');
 	loadNewTab(tabId); //to load div contents 
         $(this).tab('show');
 	$currentTabHash = tabId;
+	console.log("value in currentTab: on create new tab", $currentTabHash);
         showTab();
-	saveEditor();
+	saveEditor(tabName);
 	testEditor();
         registerCloseEvent();
 
@@ -45,6 +49,7 @@ function registerCloseEvent() {
 	$(tabContentId).remove(); //remove respective tab content
 	//display the last tab as active
 	$('#bottomPanel a:last').tab('show');
+	window.location.hash = "";
     });
 }
 
@@ -53,8 +58,8 @@ function loadNewTab(loadDivSelector) {
     let id = loadDivSelector + '_editor';
     let divTag = $('<div>',{'class':'container'}).css({'width':'100%','height':'100%'});
     let editorHTML = $('<div>', {'id':id}).css({'border':'1px solid #DDD','height':'100%','position':'relative'});
-    divTag.append('<button style="margin:10px;" class="btn_save" id="savePluginCode"> Save Code </button> ');
-    divTag.append('<button style="margin:10px;" class="btn_test" id="testPluginCode"> Test Code </button> ');
+    divTag.append('<button style="margin:10px;" class="btn_save" > Save Code </button> ');
+    divTag.append('<button style="margin:10px;" class="btn_test" > Test Code </button> ');
     divTag.append(editorHTML);
     $('#' + loadDivSelector).append(divTag);
     //initialize code mirror instance
@@ -87,27 +92,28 @@ function loadNewTab(loadDivSelector) {
 }
 
 
-function saveEditor(){
-$( "#savePluginCode" ).on('click',function() {
+function saveEditor(identifier){
+$( ".btn_save" ).on('click',function() {
+	console.log("currentTab value on save button click", $currentTabHash);
+	console.log("cm instances:",$cmInstances);
 	let instance = $cmInstances[$currentTabHash+'_editor'];
 	$.ajax({
      		url:"/datasource/edit/update.php",
      		type:"POST",
      		dataType:'html',
      		data:{code : instance.getValue(), plugin_id:"ds_" + $currentTabHash }
-   	}).done(function(msg){ alertify.alert("Updated successfully"); alert("mg",msg);});
+   	}).done(function(msg){ alertify.alert(identifier[1] + ' for ' +  identifier[0] +' Updated successfully');});
 });
 
 }
 function testEditor(){
-$( "#testPluginCode" ).on('click',function() {
+$( ".btn_test" ).on('click',function() {
 	let instance = $cmInstances[$currentTabHash+'_editor'];
+	let div = $('<div>').css({'overflow':'auto'});
+	let testTable = $('#result-table').clone();
+	div.append(testTable);
 
-	let testTable = $('.table-wrapper').clone().css({ 'overflow': 'auto'});
-	let div = $('<div>').empty().append(testTable);
-//	let testTable = $('.table-wrapper').clone(true,true);
-	//div.empty().append(testTable);
-	alertify.alert(div.html());
+	alertify.alert($('<div>').append(div).html());
 	/*$.ajax({
      		url:"/datasource/edit/update.php",
      		type:"POST",
