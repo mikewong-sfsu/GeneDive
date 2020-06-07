@@ -8,7 +8,7 @@ class DefaultSumTable extends DefaultSummaryTable{
 
 
 	//===================================
-	addSummaryColumns(interactions, group_id){
+	addSummaryColumns( group_id){
 		var SummaryColumns = new Map();
 		return SummaryColumns;
 	}

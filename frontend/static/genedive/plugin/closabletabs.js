@@ -102,25 +102,29 @@ $( ".btn_save" ).on('click',function() {
      		type:"POST",
      		dataType:'html',
      		data:{code : instance.getValue(), plugin_id:"ds_" + $currentTabHash }
-   	}).done(function(msg){ alertify.alert(identifier[1] + ' for ' +  identifier[0] +' Updated successfully');});
+   	}).done(function(msg){ 
+		alertify.alert(identifier[1] + ' for ' +  identifier[0] +' Updated successfully');
+		//$.getScript("/static/genedive/view/table/plugin/ds_a30fb880_sum.js");
+		//$('#result-table').load(document.URL +  ' #result-table');
+		//GeneDive.loadTableAndGraphPage(true,false);
+		//location.reload();
+	});
 });
 
 }
 function testEditor(){
 $( ".btn_test" ).on('click',function() {
-	let instance = $cmInstances[$currentTabHash+'_editor'];
+	/*let instance = $cmInstances[$currentTabHash+'_editor'];
 	let div = $('<div>').css({'overflow':'auto'});
 	let testTable = $('#result-table').clone();
-	div.append(testTable);
-
-	alertify.alert($('<div>').append(div).html());
-	/*$.ajax({
-     		url:"/datasource/edit/update.php",
-     		type:"POST",
-     		dataType:'html',
-     		data:{code : instance.getValue(), plugin_id:"ds_" + $currentTabHash }
-   	}).done(function(msg){ alertify.alert("Updated successfully");});
-	*/
+	div.append(testTable);*/
+	
+	let divDialog = $('<div>');
+	let div = $('<div>',{'id':"#content"});
+	div.load("static/genedive/plugin/testtable.html");
+	divDialog.append(div);
+	//let TestTable = eval(instance.getValue());
+	alertify.alert(divDialog.html());//$('<div>').append(div).html());
 });
 
 }

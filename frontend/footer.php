@@ -57,6 +57,9 @@
     <script src="static/cytoscape/jquery.qtip.min.js"></script>
     <script src="static/cytoscape/cytoscape-qtip.js"></script>
 
+    <!-- Math.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/7.0.1/math.js"></script>
+
     <!-- GeneDive Classses -->
     <script src="static/genedive/GeneDiveAPI.js"></script>
     <script src="static/genedive/search/graphsearch.js"></script>

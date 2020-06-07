@@ -41,12 +41,12 @@ class DefaultDetailTable{
 		this.interaction = interaction;
 
 		let res = new Map();
-		//get custom mapped values
-		this.columnMap = this.addColumns(interaction);
 		//parse addendum column if available
 		if(interaction.addendum && interaction.addendum.length){
 			this.addendum = JSON.parse(interaction.addendum);				
 		}
+		//get custom mapped values
+		this.columnMap = this.addColumns(interaction);
 		//map the columns in addendum
 		for(let key of arr){
 		//map columns corresponding to short_id
@@ -61,8 +61,6 @@ class DefaultDetailTable{
 			}
 			//if column computed from user defined function
 			else{
-				console.log("key:",key);
-				console.log("this.columnMap:",this.columnMap);
 			res.set(key, this.columnMap.get(id));
 			}
 		}
@@ -84,8 +82,8 @@ class DefaultDetailTable{
 	//return value mapped to column
 	getColumn(column){
 	//=================================
-		console.log("this.interaction:",this.interaction);
-		console.log("column:",column);
+		console.log("interaction:",this.interaction);
+
 		//get values mapping interaction directly
 		if(this.interaction.hasOwnProperty(column))
 			return this.interaction[column];

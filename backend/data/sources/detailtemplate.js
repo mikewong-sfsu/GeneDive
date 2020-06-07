@@ -12,14 +12,8 @@ class DefaultDetTable extends DefaultDetailTable{
 
 	//===================================
 	addColumns(){
-		var customColumns = new Map();
-		/*
-		 * this.getInteraction(); => gets the table data
-		 * this.getColumn(interactionData, "columnName"); => get the value of specific column
-		 * add other custom functions for complex mapping
-		 *
-		*/
-		return customColumns;
+		var detailColumnMap = new Map();
+		return detailColumnMap;
 	}
 
 }

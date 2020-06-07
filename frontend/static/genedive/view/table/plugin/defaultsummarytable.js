@@ -3,7 +3,7 @@ class DefaultSummaryTable{
 	this.short_id = short_id;//short id for the datasource
 	this.add_cols = null;//additional column
 	this.summaryColumns = this.addSummaryColumns();
-	this.interaction = null;
+	this.groupInteractions = null;
 	
 	}
 	//=================================
@@ -19,9 +19,10 @@ class DefaultSummaryTable{
 
 	//=================================
 	//map the table values for optional columns
-	getSummaryElement(interaction,group_id){
+	getSummaryElement(interaction, group_id){
 	//=================================
-	var columns = this.addSummaryColumns(interaction,group_id);
+	this.groupInteractions = interaction;
+	var columns = this.addSummaryColumns(group_id);
 	for(var key of columns.keys()){
 		this.summaryColumns[key + " [" + this.short_id + "]"] = columns.get(key);
 	}
@@ -32,15 +33,36 @@ class DefaultSummaryTable{
 	//=================================
 	getInteraction(){
 	//=================================
-		return this.interaction;
+		return this.groupInteractions;
 	}
 
 	//==================================
 	//method to add custom columns
-	addSummaryColumns(interaction = null){
+	addSummaryColumns(group_id){
 	//==================================
 		return new Map();
 	}
+
+	//==================================
+	//method to add custom columns
+	getColumn(columnName){
+	//==================================
+	var columnValues = [];
+	if(this.groupInteractions != null){
+		for(let i of this.groupInteractions){
+			if(i.hasOwnProperty(columnName))
+				columnValues.push(i[columnName]);
+			else if(i.hasOwnProperty('addendum')){
+			let addendum = JSON.parse(i.addendum);
+			if(addendum.hasOwnProperty(columnName))
+				columnValues.push(addendum[columnName]);
+			}
+
+		}
+	} 
+	return columnValues;
+	}
+	
 
 	//==================================
 	//helper function
