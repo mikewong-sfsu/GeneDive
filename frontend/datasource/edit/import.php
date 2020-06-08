@@ -6,16 +6,16 @@ $filterpath = "/var/www/html/static/genedive/filter/plugin/";
 $highlightpath = "/var/www/html/static/genedive/highlight/plugin/";
 
 if(file_exists($viewpath.$ds_id.".js")){
-  echo include($viewpath.$ds_id.".js");
+  include($viewpath.$ds_id.".js");
   $_SESSION['edit_ds'] = $viewpath.$ds_id.".js";
 }else if(strpos($ds_id, "filter")){// !== false){
   if(file_exists($filterpath.$ds_id.".js")){
-    echo include($filterpath.$ds_id.".js");
+    include($filterpath.$ds_id.".js");
     $_SESSION['edit_ds'] = $filterpath.$ds_id.".js";
   }
 }else if(strpos($ds_id, "highlight")){
    if(file_exists($highlightpath.$ds_id.".js")){
-    echo include($highlightpath.$ds_id.".js");
+    include($highlightpath.$ds_id.".js");
     $_SESSION['edit_ds'] = $highlightpath.$ds_id.".js";
   }
 }else{

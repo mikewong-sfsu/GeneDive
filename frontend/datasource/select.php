@@ -63,7 +63,7 @@ var short_id_map = new Map();
 
 // ===== INITIALIZE DATASOURCE MANAGER
 var listitem = $( '.datasource-list-item' ).detach();
-GeneDive.datasource.dslist = [];
+GeneDive.datasource.dsmap = {};
 GeneDive.datasource.refreshSelectionUI = () => {
     var std_flag = 0;//to display the standard data source header
     var local_flag = 0;//to display the local data source header
@@ -93,10 +93,9 @@ GeneDive.datasource.refreshSelectionUI = () => {
 
 	//populate properties of datasource
 	ds_obj['name'] = datasource.name;
-	ds_obj['id'] = datasource.id;
 	//ds_obj['short_id'] = short_id;
 	//append to datasource ObjectList
-	GeneDive.datasource.dslist.push(ds_obj);
+	GeneDive.datasource.dsmap[datasource.id] = ds_obj;
 	
 	entry.find( '.name' ).html( datasource_name );
 	entry.find( '.description' ).html( datasource.description );

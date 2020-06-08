@@ -37,6 +37,7 @@ class Controller {
     this.filtrate       = null;
     this.additional_columns = null;//  NL
     this.ds = null;//NL
+    this.tableview = null;//for testing changes
 
     this.hidePlugin();
     // Saves the table view's Y scroll positions
@@ -694,9 +695,9 @@ class Controller {
     // First check for zoom condition
 
     if (this.tablestate.zoomed) {
-      let table_detail = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup, this.ds);
+      this.tableview = new TableDetail(".table-view table", this.filtrate, this.additional_columns, this.tablestate.zoomgroup, this.ds);
       // If all the entries were filtered out, render the table summary instead.
-      if(table_detail.amountOfEntries > 0)
+      if(this.tableview.amountOfEntries > 0)
         return;
       else
       {
@@ -709,9 +710,9 @@ class Controller {
 
     // Otherwise show the appropriate summary view
     if (this.grouper.selected() === "dgr") {
-      new TableSummaryGene(".table-view .table", this.filtrate, this.additional_columns, this.ds, ".table-view .topbar .back");
+      this.tableview = new TableSummaryGene(".table-view .table", this.filtrate, this.additional_columns, this.ds, ".table-view .topbar .back");
     } else {
-      new TableSummaryArticle(".table-view .table", this.filtrate, this.additional_columns, this.ds,  ".table-view .topbar .back");
+      this.tableview = new TableSummaryArticle(".table-view .table", this.filtrate, this.additional_columns, this.ds,  ".table-view .topbar .back");
     }
 
   }

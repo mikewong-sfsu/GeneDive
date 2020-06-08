@@ -25,9 +25,9 @@ class Plugin {
 		let dialog = $('<div>');
 		let dialogForm = $('<div>').css('overflow','auto');
 		let ds_option = {};
-		for(let i of GeneDive.datasource.dslist){
-			if(i.hasOwnProperty('short_id'))
-			ds_option[i.id] = i.name;
+		for(let [k,v] of Object.entries(GeneDive.datasource.dsmap)){
+			if(v.hasOwnProperty('short_id'))
+			ds_option[k] = v.name;
 		}
 		dialogForm.append(this.createDropdowns("ds_dropdown", "Select Data sources", ds_option));
 		dialogForm.append($('<br>'));
