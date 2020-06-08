@@ -1,5 +1,6 @@
 class DefaultHighlight{
 	constructor(){
+	  this.interactions
 	}
 
 	addHighlight(interactions, term){
@@ -10,4 +11,18 @@ class DefaultHighlight{
 		}
 		return highlightMap;
 	}
+
+	getColumnValue(columnName, interaction){
+		//directly available in interaction onject
+		if(interaction.hasOwnProperty(columnName))
+			return interaction[columnName];
+		if(interaction.hasOwnProperty('addendum')){
+			let addendum = JSON.parse(interaction.addendum);
+			if(addendum.hasOwnProperty(columnName)){
+				return addendum[columnName];
+			}
+		}
+			return [];
+	}
+
 }

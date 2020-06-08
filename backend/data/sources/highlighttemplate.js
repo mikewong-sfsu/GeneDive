@@ -1,8 +1,9 @@
-class DefaultHighlightTable{
+class DefaultHighlightTable extends DefaultHighlight{
 	constructor(){
+		super();
 	}
 
-	addHighlight(interactions){
+	addHighlight(interactions,term){
 		var highlightMap = new Map();
 		return highlightMap;
 	}

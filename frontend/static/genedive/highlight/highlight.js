@@ -79,10 +79,10 @@ class Highlight extends HighlightPlugin{
     let term = this.input.val();
  
     //initialize selectionMap
-    if(this.selectionMap.size == 0){
-	this.createObjectMap(GeneDive.ds);
+    //if(this.selectionMap.size == 0){
+	//this.createObjectMap(GeneDive.ds);
 	this.selectionMap = this.initColumnMap(interactions, term);
-    }
+   // }
 
     //check min character count 
     if(term.length < this.characterCount){

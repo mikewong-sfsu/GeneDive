@@ -183,14 +183,13 @@ class TextFilter extends TextFilterPlugin{
 
   filterInit(interactions){
     //create ObjectMap of all selected datasources
-    this.createObjectMap(GeneDive.ds);
+    //this.createObjectMap(GeneDive.ds);
  
     //create basic filters for required fields
     var filterMap = this.createBasicFilters(interactions);
 
     //append datasource filters
     this.filterList = new Map([...filterMap, ...(this.buildFilter(interactions))]);
-
     //populate the filter-select dropdown dynamically
     if(!this.currentValueInput.length){
       $('.filter-select').empty();
@@ -205,7 +204,6 @@ class TextFilter extends TextFilterPlugin{
   filterInteractions(interactions) {
     //initialize the filter
     this.filterInit(interactions);
-
     //filter interactions
     for(let filter of this.sets){
 	var filterInteraction = this.filterList.get(filter.attribute).filterFunction(interactions, filter.value);
@@ -224,6 +222,7 @@ class TextFilter extends TextFilterPlugin{
   updateSelectedFilter(){
   let target = this.filterSelector[0].value;
   let targetInput = this.filterList.get(target).filterValue;
+
   targetInput.addClass("form-control filter-input");
   //map filter-style to selected target filter
   $('.filter-style').empty().append(targetInput);
@@ -252,6 +251,7 @@ class TextFilter extends TextFilterPlugin{
   importFilterState(filterData, interactions) {
     this.sets = filterData.sets;
     this.renderDisplay();
+    this.createObjectMap(GeneDive.ds);
     this.filterInit(interactions);
     this.currentValueInput = filterData.currentValueInput;
     this.updateSelectedFilter();

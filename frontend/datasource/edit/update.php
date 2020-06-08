@@ -7,7 +7,7 @@ $code = $_POST['code'];
 $plugin_id = $_POST['plugin_id'];
 if(strpos($plugin_id, '_filter') !== false){
 	$path = $filterpath.$plugin_id.".js";
-}else if(strpos($mystring, '_highlightlight') !== false){
+}else if(strpos($plugin_id, '_highlight') !== false){
 	$path = $highlightpath.$plugin_id.".js";
 }else{
 	$path = $viewpath.$plugin_id.".js";

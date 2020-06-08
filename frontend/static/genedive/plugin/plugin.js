@@ -34,7 +34,7 @@ class Plugin {
 		let optionList = {"_sum":"Add Summary Column",
 				"_det":"Add Detail Column",
 				"_filter": "Add Filter",
-				"highlight" :"Add Highlighter"};
+				"_highlight" :"Add Highlighter"};
 		dialogForm.append(this.createDropdowns("plugin_option","Select Custom Plugin",optionList));
 
 		dialog.append('<p>User may add custom behaviour on user-defined data sources. Select the plugin for data source to be edited</p>'); 

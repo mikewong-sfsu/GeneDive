@@ -6,13 +6,13 @@ class TextFilterPlugin {
 	createObjectMap(datasources){
 		var default_ds = new Set(["native","pharmgkb","plos-pmc"]);
 	
-		for(var key of Object.keys(datasources)){
+		for(var key of datasources){// Object.keys(datasources)){
 			if(default_ds.has(key) )
 				this.objectMap.set(key,eval("new DefaultFilter()"));
 
 			else{
 				let className = 'ds_' + key + '_filter';
-				let Obj = eval("new "+className+"( \"" + datasources[key]+ "\")");
+				let Obj = eval("new "+className+"()");// \"" + datasources[key]+ "\")");
 				this.objectMap.set(key,Obj);
 			}
 		}

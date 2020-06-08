@@ -370,9 +370,11 @@ class Controller {
 	  thisClass.additional_columns = JSON.parse(interactions).add_cols;
 	  thisClass.ds = JSON.parse(interactions).ds;
           thisClass.cleanUpData();
+	  thisClass.textfilter.createObjectMap(GeneDive.datasource.list);//added NL
           thisClass.filterInteractions();
           thisClass.colorInteractions();
           thisClass.addSynonyms();
+	  thisClass.highlighter.createObjectMap(GeneDive.datasource.list);//added NL
           thisClass.highlightInteractions();
           thisClass.textfilter.updateSelectedFilter();
           thisClass.loadTableAndGraphPage();

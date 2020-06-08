@@ -150,23 +150,37 @@ $( ".btn_test" ).on('click',function() {
 	try{
 		//evaluate the code
 		eval(editedCode);
-		//temporarily replace object instance in objectMap of genedive table view
-		var oldInstance = GeneDive.tableview.objectMap.get(ds_id);
+		//for Add column plugin
+		if(GeneDive.tableview && ($currentTabHash.includes("sum") || $currentTabHash.includes("det"))){
+			//temporarily replace object instance in objectMap of genedive table view
+		 	let oldInstance = GeneDive.tableview.objectMap.get(ds_id);
 		
-		//if editing the detailview
-		if(GeneDive.tableview instanceof TableDetail && $currentTabHash.includes("det")){
-			testAddColumnCode(ds_id,newInstance, oldInstance)
-		}
-		//if editing the summaryview
-		else if((GeneDive.tableview instanceof TableSummaryGene || 
-			GeneDive.tableview instanceof TableSummaryArticle ) &&
-			$currentTabHash.includes("sum")){
-			//Edit the summary view
-			testAddColumnCode(ds_id,newInstance, oldInstance)
+			//if editing the detailview
+			if(GeneDive.tableview instanceof TableDetail && $currentTabHash.includes("det")){
+				testAddColumnCode(ds_id,newInstance, oldInstance)
+			}
+			//if editing the summaryview
+			else if((GeneDive.tableview instanceof TableSummaryGene || 
+				GeneDive.tableview instanceof TableSummaryArticle ) &&
+				$currentTabHash.includes("sum")){
+				//Edit the summary view
+				testAddColumnCode(ds_id,newInstance, oldInstance)
 
+			}
 		}
 		//if Adding new filter
+		if($currentTabHash.includes("filter")){
+			//get instance of the filter object map
+			let oldInstance = GeneDive.textfilter.objectMap.get(ds_id);
+			testAddFilter(ds_id,newInstance,oldInstance);
+		}
 		//if adding new highlight
+		if($currentTabHash.includes("highlight")){
+			//get instance of the highlight object  map
+			let oldInstance = GeneDive.highlighter.objectMap.get(ds_id);
+			console.log("in highlighter test");
+			testAddHighlight(ds_id,newInstance,oldInstance);
+		}
 
 	}
 	catch(e){
@@ -190,6 +204,24 @@ function testAddColumnCode(ds_id, newInstance, oldInstance){
 	//reset the value back to old value to maintain default behaviour
 	GeneDive.tableview.objectMap.set(ds_id,oldInstance);
 }
+
+function testAddFilter(ds_id,newInstance,oldInstance){
+	//replace filter object map with the new filter class file
+	GeneDive.textfilter.objectMap.set(ds_id,newInstance);
+	GeneDive.filterInteractions();
+	//GeneDive.filtrate = GeneDive.textfilter.filterInteractions(GeneDive.interactions);
+
+}
+
+function testAddHighlight(ds_id,newInstance,oldInstance){
+	//replace filter object map with the new filter class file
+	GeneDive.highlighter.objectMap.set(ds_id,newInstance);
+	console.log("highlight function:",GeneDive.highlighter.objectMap.get("faa33854").addHighlight(GeneDive.interactions).keys());
+	GeneDive.highlightInteractions();
+	//GeneDive.filtrate = GeneDive.textfilter.filterInteractions(GeneDive.interactions);
+
+}
+
 
 
 
