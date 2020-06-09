@@ -270,14 +270,16 @@ addDetailColumns(){
   <div>
     <h3 id="getColumnAPI">getColumn</h3>
     <p>A helper function that lets user acess the data in a specific column.On summary view, the function returns list of values from all interactions within a group. On detail view, the function returns the value mapping the colunm name for each interaction. The column value obtained is of type string.
-  <div class="parameter">
+    <ol>
+    <li>
+    <div class="parameter">
     <p><b>Input Parameters:</b><br>
     <i>columnName</i> - name of the column in the interaction data
     </p>
     <p><b>Return type:</b></br>
-    <i>columnValue</i> - Returns the value mapped to column name in each interaction data on detail view. Returns a list of values mapped to column name for all interaction in a group in the summary view.
+    <i>columnValue</i> - Returns the value mapped to column name in each interaction data on detail view. Returns a list of values mapped to column name for all interaction in a group in the summary view. This method is commonly used in <a href="#addSummaryColumnAPI">addSummaryColumn</a> and <a href="#addDetailColumnAPI">addDetailColumn</a> API.
+.
     </p>
-  </div>
     <p><b>Method Definition</b>
 <pre>
 getColumn(columnName){
@@ -285,7 +287,26 @@ getColumn(columnName){
 }</pre>
     </p>
   </div>
-
+    </li>
+    <li>
+    <div>
+    <p><b>Input Parameters:</b><br>
+    <i>columnName</i> - name of the column in the interaction data
+    <i>interaction</i> - single DGR interaction data
+    </p>
+    <p><b>Return type:</b></br>
+    <i>columnValue</i> - Returns the value mapped to column name for the interaction data in "interaction". This method is commonly used in <a href="#addFilterAPI">addFilter</a> and <a href="#addHighlightAPI">addHighlight</a> API.
+    </p>
+    <p><b>Method Definition</b>
+<pre>
+getColumn(columnName){
+  return columnValue;
+}</pre>
+    </p>
+  </div>
+    </li>
+    </ol>
+   </div>
   <!---addFilterAPI--->
   <div>
     <h3 id="addFilterAPI">addFilter</h3>
