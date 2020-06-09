@@ -70,7 +70,7 @@ code {
     <div class='scroll icon'><i class="fa fa-4x fa-angle-up"></i></div>
   </div>
   <div class="row">
-    <h1>GeneDive API documentation</h1>
+    <h1 class="APIDoc">GeneDive API documentation</h1>
   </div>
   <div class="row">
     <p>GeneDive is a powerful tool used to import, search, sort, filter, highlight and visualize results of querying 
@@ -352,6 +352,7 @@ getMaxScore(interactions, attribute){
   <div class="parameter">
     <p><b>Input Parameters:</b><br>
     <i>interactions</i> - DGR interaction data obtained on search query.
+    <br>
     <i>term</i> - Free text input provided in the highlight filter.
     </p>
     <p><b>Return type:</b></br>
@@ -388,6 +389,37 @@ highlightX(interactions, term){
 }
 </pre>
 </div>
+
+<!---Filter--->
+<div>
+    <h3 id="filter">Filter</h3>
+    <p>
+	Filter is a custom class specifically designed to add custom filters option to the  GeneDive system.
+ </p>
+  <div class="parameter">
+    <p><b>Class variables:</b><br>
+    <i>attribute</i> - Name assigned to the Filter option. The filter options will be displayed in the filter dropdown on the control view.
+    <br>
+    <i>filterFunction</i> - The function defining the behaviour of the filter.
+    <br>
+    <i>filterValue</i> - The HTML element mapping the filter input for the selected Filter option.The default value is text input field. This is option parameter.
+    <br>
+    <i>addSelector</i> - String matching the selected filter value on Adding the Filter. This is an optional parameter useful while combining multiple subfilters.
+    <br>
+    </p>
+    <p><b>Constructor:</b></br>
+<pre>
+constructor(filterName, filterFunction, filterSelector = $('&ltinput&gt',{'id':'filterText'}), selectorValue = null  )
+  this.attribute = filterName;
+  this.filterFunction = filterFunction;
+  this.filterValue = filterSelector;
+  this.addSelector = selectorValue;
+}
+</pre>
+    </p>
+  </div>
+  </div>
+
 
   <div>
     <h3 id="Additional Resources">Additonal Resources</h3>
@@ -442,7 +474,7 @@ $(window).scroll(function() {
         $('.scrolltop').stop(true, true).fadeOut();
     }
 });
-$(function(){$(".scroll").click(function(){$("html,body").animate({scrollTop:$(".tableOfContents").offset().top},"1000");return false})})
+$(function(){$(".scroll").click(function(){$("html,body").animate({scrollTop:$(".APIDoc").offset().top},"1000");return false})})
 </script>
 </body>
 </html>
