@@ -5,7 +5,7 @@
     <li class="dropdown-header">Manage Data Sources</li>
     <li class="dropdown-item" style="cursor: pointer;"><a class="datasource-select" data-toggle="tooltip-initial" title="Select different data sources to query"><span class="fas fa-database"></span><span class="fas fa-check-square" style="font-size: 8pt; margin-left: 1px"></span> Select Data Source</a></li>
     <li class="dropdown-item" style="cursor: pointer;"><a class="datasource-add" data-toggle="tooltip-initial" title="Import your own DGR interaction data."><span class="fas fa-database"></span><span class="fas fa-plus-square" style="font-size: 8pt; margin-left: 1px"></span> Add Data Source</a></li>
-    <li class="dropdown-item" style="cursor: pointer;"><a class="datasource-edit"  target="_blank" data-toggle="tooltip-initial" title="Write code to use plugins on the datasource."><span class="fas fa-database"></span><span class="fas fa-file-code" style="font-size: 8pt; margin-left: 1px"></span>Edit Data Source</a></li>
+    <!--li class="dropdown-item" style="cursor: pointer;"><a class="datasource-edit"  target="_blank" data-toggle="tooltip-initial" title="Write code to use plugins on the datasource."><span class="fas fa-database"></span><span class="fas fa-file-code" style="font-size: 8pt; margin-left: 1px"></span>Edit Data Source</a></li-->
     <li class="dropdown-item" style="cursor: pointer;"><a class="datasource-remove" data-toggle="tooltip-initial" title="Remove a DGR interaction datasource."><span class="fas fa-database"></span><span class="fas fa-minus-square" style="font-size: 8pt; margin-left: 1px"></span> Remove Data Source</a></li>
     <li class="divider" role="separator"></li>
 <?php endif; ?>
