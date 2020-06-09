@@ -1,6 +1,5 @@
 class DefaultHighlight{
 	constructor(){
-	  this.interactions
 	}
 
 	addHighlight(interactions, term){
@@ -12,7 +11,7 @@ class DefaultHighlight{
 		return highlightMap;
 	}
 
-	getColumnValue(columnName, interaction){
+	getColumn(columnName, interaction){
 		//directly available in interaction onject
 		if(interaction.hasOwnProperty(columnName))
 			return interaction[columnName];

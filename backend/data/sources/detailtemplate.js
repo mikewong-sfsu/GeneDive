@@ -11,7 +11,7 @@ class DefaultDetTable extends DefaultDetailTable{
 
 
 	//===================================
-	addColumns(){
+	addDetailColumns(){
 		var detailColumnMap = new Map();
 		return detailColumnMap;
 	}

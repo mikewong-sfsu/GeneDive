@@ -63,14 +63,14 @@ I	        highlightMap.set(field, interactions.map( ( i ) => { i.highlight = new
 		return interactions.filter((i) => new RegExp(attribute, "i").test(i.context));
 	}
 
-	getValue(interaction, attribute){
+	getColumn(columnName, interaction){
 		var fields = new Set(['pubmed_id', 'probability', 'mention1', 'mention2', 'geneids1', 'geneids2', 'type1', 'type2']);
-		if(fields.has(attribute))
-			return interaction.attribute;
+		if(fields.has(columnName))
+			return interaction.columnName;
 		if(interaction.hasOwnProperty('addendum')){
 			var addendum = JSON.parse(interaction.addendum);
 			for(let attr in addendum){
-				if(attr == attribute){
+				if(attr == columnName){
 					return addendum[attr];
 				}
 			}

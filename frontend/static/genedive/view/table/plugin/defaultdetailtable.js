@@ -10,7 +10,7 @@ class DefaultDetailTable{
 	this.addendum = {};
 	this.columnMap = new Map();
 	//custom columns can be added from edit datasource
-	this.columnMap = this.addColumns();
+	this.columnMap = this.addDetailColumns();
 	//this.interaction = {};
 	//this.addendum = {};
 	
@@ -46,7 +46,7 @@ class DefaultDetailTable{
 			this.addendum = JSON.parse(interaction.addendum);				
 		}
 		//get custom mapped values
-		this.columnMap = this.addColumns(interaction);
+		this.columnMap = this.addDetailColumns(interaction);
 		//map the columns in addendum
 		for(let key of arr){
 		//map columns corresponding to short_id
@@ -100,7 +100,7 @@ class DefaultDetailTable{
 
 	//==================================
 	//method to add custom columns
-	addColumns(interaction = null){
+	addDetailColumns(interaction = null){
 	//==================================
 		return new Map();
 	}
