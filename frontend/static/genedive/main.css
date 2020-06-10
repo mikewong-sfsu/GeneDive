@@ -148,6 +148,10 @@ h5 {
   display:none;
 }
 
+.addplugin-module {
+  display:none;
+}
+
 .grouper-module {
   /*visibility: hidden;*/
   display:none;

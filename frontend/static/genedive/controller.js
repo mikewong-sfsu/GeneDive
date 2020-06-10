@@ -39,7 +39,6 @@ class Controller {
     this.ds = null;//NL
     this.tableview = null;//for testing changes
 
-    this.hidePlugin();
     // Saves the table view's Y scroll positions
     this.yScrollSummary = 0;
     // this.yScrollDetail = 0;
@@ -495,7 +494,6 @@ class Controller {
    */
   loadSpinners() {
     if ( this.spinneractive) { return; }
-    this.hidePlugin();
     this.hideHelp();
     this.graph.hideGraphLegend();
     this.graph.hideGraphAbsent();
@@ -514,7 +512,6 @@ class Controller {
    */
   loadLandingPage() {
     this.showHelp();
-    this.hidePlugin();
     this.download.disableDownload();
     this.hideElementsRequiringDGRs();
     this.hideTableSpinner();
@@ -539,10 +536,8 @@ class Controller {
     if (this.search.amountOfDGRsSearched() === 0) {
       this.hideElementsRequiringDGRs();
       this.showHelp();
-      this.hidePlugin();
       this.download.disableDownload();
     } else {
-      this.showPlugin();
       this.showElementsRequiringDGRs();
       if (this.resultsFound()) {
         if (redrawTable)
@@ -589,13 +584,14 @@ class Controller {
     // If the user has cleared the last search items, go to HELP state. Otherwise, show the filters
     if (this.search.amountOfDGRsSearched() === 0) {
       this.history.clearData();
+      this.hidePlugin();
       this.probfilter.hideProbabilityFilter();
       this.loadLandingPage();
       return;
     }
 
     this.probfilter.showProbabilityFilter();
-
+    this.showPlugin();
     // If doing a two hop search, either 2 DGRs are selected or a gene set is selected
     let topology = GeneDive.search.selectedTopology();
     if ((this.search.amountOfDGRsSearched() < 2 && !this.search.typesOfDGRsSearched().includes('s')) && (topology === "2hop" || topology === "3hop")) {
@@ -769,11 +765,11 @@ class Controller {
   }
 
   showPlugin(){
-    $("#apply-plugin").show();
+    $(".addplugin-module").show();
   }
 
   hidePlugin(){
-    $("#apply-plugin").hide();
+    $(".addplugin-module").hide();
   }
 
 
