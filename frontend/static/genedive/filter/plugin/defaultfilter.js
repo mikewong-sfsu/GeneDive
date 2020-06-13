@@ -64,16 +64,13 @@ I	        highlightMap.set(field, interactions.map( ( i ) => { i.highlight = new
 	}
 
 	getColumn(columnName, interaction){
-		var fields = new Set(['pubmed_id', 'probability', 'mention1', 'mention2', 'geneids1', 'geneids2', 'type1', 'type2']);
-		if(fields.has(columnName))
-			return interaction.columnName;
-		if(interaction.hasOwnProperty('addendum')){
-			var addendum = JSON.parse(interaction.addendum);
-			for(let attr in addendum){
-				if(attr == columnName){
-					return addendum[attr];
-				}
-			}
+		if(interaction.hasOwnProperty(columnName))
+			return interaction[columnName];
+		else if (interaction.hasOwnProperty("addendum")){
+			let addendum = JSON.parse(interaction.addendum);
+			if(addendum.hasOwnProperty(columnName))
+				return addendum[columnName];
+
 		}
 		return null;
 	}

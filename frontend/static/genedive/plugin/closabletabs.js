@@ -139,6 +139,11 @@ $( ".btn_save" ).on('click',function() {
 }
 function testCode(){
 $( ".btn_test" ).on('click',function() {
+	//validation check only on available test data
+	if( !GeneDive.interactions || GeneDive.interactions.length == 0){
+		console.log("interactions:", GeneDive.interactions);
+		alertify.alert("Test Plugin Code","No interaction data available for testing!");
+	}
 	//test code live against data in editor
 	var instance = $cmInstances[$currentTabHash+'_editor'];
 	var editedCode = instance.getValue();
@@ -216,7 +221,6 @@ function testAddFilter(ds_id,newInstance,oldInstance){
 function testAddHighlight(ds_id,newInstance,oldInstance){
 	//replace filter object map with the new filter class file
 	GeneDive.highlighter.objectMap.set(ds_id,newInstance);
-	console.log("highlight function:",GeneDive.highlighter.objectMap.get("faa33854").addHighlight(GeneDive.interactions).keys());
 	GeneDive.highlightInteractions();
 	//GeneDive.filtrate = GeneDive.textfilter.filterInteractions(GeneDive.interactions);
 

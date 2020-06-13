@@ -91,12 +91,13 @@ class TableDetail extends BuildDetailTable {
       let element = this.buildDetailBody(i,this.add_columns);
       for(let col = 0 ; col < this.add_columns.length;col++){
 	      let col_value = element.get(this.add_columns[col]);
-	      const [err, result] = this.safeJsonParse(col_value);
+	      /*const [err, result] = this.safeJsonParse(col_value);
 	      if(!err){
 		renderjson.set_show_to_level("all");
-		tr.append($(document.createElement("td")).html(renderjson(result)));
+		//tr.append($(document.createElement("td")).html(renderjson(result)));
+		tr.append($(document.createElement("td")).html(col_value));	
 	      }
-	      else
+	      else*/
 		tr.append($(document.createElement("td")).html(col_value));		
 	//tr.append($(document.createElement("td")).html(element.get(this.add_columns[col])));	
 	}

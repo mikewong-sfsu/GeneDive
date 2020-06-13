@@ -25,10 +25,15 @@ class Plugin {
 		let dialog = $('<div>');
 		let dialogForm = $('<div>').css('overflow','auto');
 		let ds_option = {};
+		let selected_datasource = new Set(GeneDive.datasource.list);
+		let local = false;
 		for(let [k,v] of Object.entries(GeneDive.datasource.dsmap)){
-			if(v.hasOwnProperty('short_id'))
-			ds_option[k] = v.name;
+			if(selected_datasource.has(k) && v.hasOwnProperty('short_id')){
+				local = true;
+				ds_option[k] = v.name;
+			}
 		}
+		if(local){
 		dialogForm.append(this.createDropdowns("ds_dropdown", "Select Data sources", ds_option));
 		dialogForm.append($('<br>'));
 		let optionList = {"_sum":"Add Summary Column",
@@ -46,6 +51,11 @@ class Plugin {
 				registerAddPluginEvent($('#ds_dropdown option:selected'), $('#plugin_option option:selected')); 
 			}
                 , function(){ alertify.error('Cancel')});
+		}else{
+		alertify.alert("Add Custom Behaviour with GeneDive Plugins", "No local data sources available for editing. Select a local data source to proceed using the feature.");
+		}
+
+
 	}
 
 }
