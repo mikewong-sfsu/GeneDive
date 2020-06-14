@@ -124,7 +124,7 @@
         <span class="metadata"></span>
       </div>
       <div class="spinner table-rendering-spinner">
-        <div class="loading-container">
+        <div class="loading-container" id="loading-container">
           <div class="loading-info"></div>
           <div>
             <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>

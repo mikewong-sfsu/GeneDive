@@ -251,7 +251,7 @@ class TextFilter extends TextFilterPlugin{
   importFilterState(filterData, interactions) {
     this.sets = filterData.sets;
     this.renderDisplay();
-    this.createObjectMap(GeneDive.ds);
+    //this.createObjectMap(GeneDive.ds);
     this.filterInit(interactions);
     this.currentValueInput = filterData.currentValueInput;
     this.updateSelectedFilter();
