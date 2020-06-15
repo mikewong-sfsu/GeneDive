@@ -25,7 +25,7 @@ class PubmedLinkTest extends mix( Test ).with( Table, PubmedLink ) {
 				await this.oneHop();
 				await this.search( dgrs );
 
-				await this.table.checkPubmedLinks();
+				await this.tableCheckPubmedLinks();
 
 				resolve( this.result( true, "Pubmed Links all work as tested" ));
 

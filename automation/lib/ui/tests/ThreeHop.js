@@ -27,6 +27,7 @@ class ThreeHop extends mix( Test ).with( Score, Table, Graph ) {
 				await this.login();
 				await this.threeHop();
 				await this.search( dgrs );
+				await this.page.waitForSelector('#loading-container', { hidden: true });
 				await this.confidence.score.setSlider( 0.90 );
 
 				// ===== GET THE RESULTS FROM THE TABLE AND FLATTEN THE NESTED ARRAY TO 1D ARRAY

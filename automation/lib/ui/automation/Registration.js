@@ -107,6 +107,7 @@ let Registration = (superclass) => class extends superclass {
 		const db     = '/usr/local/genedive/data/users.sqlite';
 		const stdout = exec( ` sqlite3 ${db} '${query}'` ); // MW Running from Docker Host
 		let all = exec(` sqlite3 ${db} 'select * from user'`);
+		//const stdout = exec( `docker exec genedive-v3.0-local sqlite3 ${db} '${query}'` ); //merge conflict
 		return stdout.toString();
 	}
 	

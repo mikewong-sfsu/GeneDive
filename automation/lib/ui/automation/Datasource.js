@@ -16,8 +16,9 @@ let Datasource = (superclass) => class extends superclass {
 		    add:    ( ds )      => { return this.addDatasource( ds ); },
 		    select: ( ds )      => { return this.selectDatasource( ds ); },
 		    edit:   ( ds )      => { return this.editDatasource( ds ); },
-		    remove: ( ds )      => { return this.removeDatasource( ds ); }
-		}
+            remove: ( ds )      => { return this.removeDatasource( ds ); },
+        }
+        //this.table.getTable = () => { return this.summaryTable(); }
 	}
 
 	// ============================================================
@@ -42,6 +43,13 @@ let Datasource = (superclass) => class extends superclass {
         await this.page.waitFor(3000);
         //select ok to navigate to search screen
         await this.page.click('.btn-success');
+    }
+
+    // ============================================================
+	async summaryTable() {
+    // ============================================================
+        let res  = await this.table.summary();
+        return res;
     }
 
 	// ============================================================
@@ -154,6 +162,7 @@ let Datasource = (superclass) => class extends superclass {
                 index = i;
             }
     	}
+	console.log("index :",index);
     	//click remove button
     	await this.page.click( '#datasources-available-for-removal > li:nth-child(' + (index + 1) +' ) > div.datasource-actions.col-xs-2 > button' );
     	await this.page.waitFor(1000);

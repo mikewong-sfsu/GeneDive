@@ -45,7 +45,7 @@ class SaveLoadTest extends mix( Test ).with( SaveLoad, Score, Filter, Table, Gra
 				// Logout and log back in
 				await this.logout();
 				await this.login();
-
+				await this.page.waitForSelector('#loading-container', { hidden: true });
 				// Upload the session file and compare states (before and after should be equal)
 				let table = await this.load( download );
 				let after   = JSON.stringify( await this.table.summary());

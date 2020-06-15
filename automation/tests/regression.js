@@ -4,7 +4,7 @@ require( 'module' ).Module._initPaths();
 const os             = require( 'os' );
 const GeneDive       = require( 'GeneDiveAutomation' );
 let   test           = {};
-test.help            = require( 'ui/tests/help' );
+test.help            = require( 'ui/tests/Help' );
 test.login           = require( 'ui/tests/Login' );
 test.oneHop          = require( 'ui/tests/OneHop' );
 test.twoHop          = require( 'ui/tests/TwoHop' );
@@ -29,6 +29,7 @@ test.unregister      = require( 'ui/tests/Unregister' );
 
 test.addDatasource    = require( 'ui/tests/AddDatasource' );
 test.selectDatasource = require( 'ui/tests/SelectDatasource' );
+test.addPlugins       = require( 'ui/tests/AddPlugins' );
 test.editDatasource   = require( 'ui/tests/EditDatasource' );
 test.removeDatasource = require( 'ui/tests/RemoveDatasource' );
 
@@ -44,7 +45,7 @@ let userbot = new GeneDive( 'tests/regression.json' );
 	await userbot.run( test.unregister );
 	await userbot.run( test.register );
 	await userbot.run( test.login );
-	//await userbot.run( test.resetPassword );//needs work
+	await userbot.run( test.resetPassword );//needs work
 
 	// ===== HELP SYSTEM
 	await userbot.run( test.help );
@@ -77,8 +78,8 @@ let userbot = new GeneDive( 'tests/regression.json' );
 
 	// ===== GENERAL PURPOSE FEATURES
 	await userbot.run( test.addDatasource );
+	await userbot.run( test.addPlugins );
 	await userbot.run( test.selectDatasource );
-	await userbot.run( test.editDatasource );
 	await userbot.run( test.removeDatasource );
 
 	// ===== BACKEND SYSTEMS
