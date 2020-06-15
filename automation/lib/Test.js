@@ -23,7 +23,7 @@ class Test {
 		this._browser             = browser;
 		this._page                = page;
 		this._options             = options;
-
+		
 		this.page.is = {
 			searchPage: ()          => { return this.pageMatch( /\bsearch.php$/ ); },
 			indexPage:  ()          => { return this.pageMatch( /\bindex.php$/ ); }

@@ -32,8 +32,8 @@ class GeneDive {
 			// ===== SET DEFAULTS
 			this.options.url                         = setDefault( this.options.url,                         'http://localhost' );
 			this.options.puppeteer                   = setDefault( this.options.puppeteer,                   { headless: false, ignoreHTTPSErrors: true });
-			this.options.puppeteer.headless          = setDefault( this.options.puppeteer.headless,          false );
-			this.options.puppeteer.devtools          = setDefault( this.options.puppeteer.devtools,          false ); // If true, disables headless and displays devtools; useful for debugging
+			//this.options.puppeteer.headless          = setDefault( this.options.puppeteer.headless,          true );
+			this.options.puppeteer.devtools          = setDefault( this.options.puppeteer.devtools,          true);//false ); // If true, disables headless and displays devtools; useful for debugging
 			this.options.puppeteer.height            = setDefault( this.options.puppeteer.height,            960 );
 			this.options.puppeteer.width             = setDefault( this.options.puppeteer.width,             1280 );
 			this.options.puppeteer.args              = setDefault( this.options.puppeteer.args,              [ '--no-sandbox', '--disable-setuid-sandbox', `--window-size=${this.options.puppeteer.width},${this.options.puppeteer.height}` ]);
@@ -45,12 +45,13 @@ class GeneDive {
 			console.error( err );
 			process.exit( 1 );
 		}
+		this.browser;
 	}
 
 	// ============================================================
 	async start() {
 	// ============================================================
-		this.browser = await this.puppeteer.launch( this.options.puppeteer );
+		this.browser = await this.puppeteer.launch({headless:true,args:['--no-sandbox']} );//this.options.puppeteer );
 		const [page] = await this.browser.pages();
 		if( page ) { page.close(); } // Close default starting tab
 		return this.browser;

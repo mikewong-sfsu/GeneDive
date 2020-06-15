@@ -32,7 +32,6 @@ let Registration = (superclass) => class extends superclass {
 		let login = this.options.register.email;
 		const select = { token: `SELECT reset_token FROM user WHERE email="${login}"`, expiry: `SELECT reset_expiry FROM user WHERE email="${login}"` };
 		const remove = { password: `UPDATE user SET password="" WHERE email="${login}"` };
-
 		await this.goto.indexPage();
 		await this.click( '.forgot-password' );
 		await this.click( '#email' );
@@ -56,7 +55,7 @@ let Registration = (superclass) => class extends superclass {
 	// ============================================================
 		let login = this.options.register.email;
 		if( ! login.match( email.regex.rfc5322 )) { reject( `RFC5322 non-compliant e-mail ${login}` ); }
-
+		
 		await this.goto.indexPage();
 		await this.click( '.register' );
 
@@ -70,7 +69,6 @@ let Registration = (superclass) => class extends superclass {
 
 		await this.click( 'button[type="submit"]' );
 		await this.pageToLoad();
-
 		if( ! this.pageMatch( 'index.php' )) { reject( 'Was not redirected to login page' ); }
 	}
 
@@ -107,7 +105,8 @@ let Registration = (superclass) => class extends superclass {
 	// designed to be run by trusted users already, there is no security risk.
 	// ------------------------------------------------------------
 		const db     = '/usr/local/genedive/data/users.sqlite';
-		const stdout = exec( `docker exec genedive-gpib sqlite3 ${db} '${query}'` ); // MW Running from Docker Host
+		const stdout = exec( ` sqlite3 ${db} '${query}'` ); // MW Running from Docker Host
+		let all = exec(` sqlite3 ${db} 'select * from user'`);
 		return stdout.toString();
 	}
 	
@@ -119,7 +118,6 @@ let Registration = (superclass) => class extends superclass {
 
 		const select     = `SELECT email FROM user WHERE email="${login}"`;
 		const unregister = `DELETE FROM user WHERE email="${login}"`;
-
 		if( ! this.userdb( select ))     { reject( `Unregister failed: ${login} not registered.` ); }
 		if(   this.userdb( unregister )) { reject( `Unregister failed: Can't delete ${login} from DB.` ); }
 		if(   this.userdb( select ))     { reject( `Unregister failed: ${login} still registered.` ); }
