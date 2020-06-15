@@ -35,8 +35,8 @@ class GeneDive {
 			this.options.puppeteer.headless          = setDefault( this.options.puppeteer.headless,          false );
 			this.options.puppeteer.devtools          = setDefault( this.options.puppeteer.devtools,          false ); // If true, disables headless and displays devtools; useful for debugging
 			this.options.puppeteer.height            = setDefault( this.options.puppeteer.height,            960 );
-			this.options.puppeteer.width             = setDefault( this.options.puppeteer.width,             1280 );
-			this.options.puppeteer.args              = setDefault( this.options.puppeteer.args,              [ '--no-sandbox', '--disable-setuid-sandbox', `--window-size=${this.options.puppeteer.width},${this.options.puppeteer.height}` ]);
+			this.options.puppeteer.width             = setDefault( this.options.puppeteer.width,             1436 );
+			this.options.puppeteer.args              = setDefault( this.options.puppeteer.args,              [ '--no-sandbox', '--disable-setuid-sandbox']);//, `--window-size=${this.options.puppeteer.width},${this.options.puppeteer.height}` ]);
 			this.options.puppeteer.ignoreHTTPSErrors = setDefault( this.options.puppeteer.ignoreHTTPSErrors, true );
 			this.options.puppeteer.typingSpeed       = setDefault( this.options.puppeteer.typingSpeed,       30 );  
 			this.options.puppeteer.closeOnFail       = setDefault( this.options.puppeteer.closeOnFail,       true );  

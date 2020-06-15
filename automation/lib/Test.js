@@ -83,6 +83,8 @@ class Test {
 	async pageToLoad() {
 	// ============================================================
 		return this.page.waitForNavigation({ timeout: 4000, waitUntil: 'networkidle2' }).catch(() => {});
+		//return this.page.waitForSelector('.loading-container', {  visible: false , });
+		
 	}
 
 	// ============================================================
@@ -151,8 +153,11 @@ class Test {
 			try { 
 				if( ! this.page.is.searchPage()) { reject( 'Search not directed to search page' ); }
 				await this.pageToLoad(); // Allow cache results to load via AJAX call
-				await this.page.waitFor( 2000 );//delay to load the datasource
+				//await this.page.waitFor( 2000 );//delay to load the datasource
+				await this.page.waitForSelector('#loading-container', { timeout: 5000 })
 				await this.page.waitForSelector( '.table-help,.table,.no-results', { visible: true }); // Search is ready when the help page, results table, or no results are displayed
+				await this.page.waitForSelector('#loading-container', { hidden: true });
+				//console.log("visisbility:",element);
 				await this.click( `button[data-type="${mode}"]` ); 
 				await this.page.mouse.move( 0, 0 ); // Move the mouse away from the button to dismiss the tooltip
 				resolve(); 

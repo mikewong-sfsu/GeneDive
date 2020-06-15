@@ -29,6 +29,7 @@ test.unregister      = require( 'ui/tests/Unregister' );
 
 test.addDatasource    = require( 'ui/tests/AddDatasource' );
 test.selectDatasource = require( 'ui/tests/SelectDatasource' );
+test.addPlugins       = require( 'ui/tests/AddPlugins' );
 test.editDatasource   = require( 'ui/tests/EditDatasource' );
 test.removeDatasource = require( 'ui/tests/RemoveDatasource' );
 
@@ -41,45 +42,45 @@ let userbot = new GeneDive( 'tests/regression.json' );
 	await userbot.start();
 
 	// ===== USER ACCOUNT
-	await userbot.run( test.unregister );
-	await userbot.run( test.register );
-	await userbot.run( test.login );
+	//await userbot.run( test.unregister );
+	//await userbot.run( test.register );
+	//await userbot.run( test.login );
 	//await userbot.run( test.resetPassword );//needs work
 
 	// ===== HELP SYSTEM
-	await userbot.run( test.help );
+	//await userbot.run( test.help );
 
 	// ===== TOPOLOGY SEARCH
-	await userbot.run( test.oneHop );
-	await userbot.run( test.twoHop );
-	await userbot.run( test.threeHop );
-	await userbot.run( test.clique );
+	//await userbot.run( test.oneHop );
+	//await userbot.run( test.twoHop );
+	//await userbot.run( test.threeHop );
+	//await userbot.run( test.clique );
 
 	// ===== SEARCH TOOLS
-	await userbot.run( test.removeDGR );
-	await userbot.run( test.confidence );
-	await userbot.run( test.filter );
-	await userbot.run( test.groupBy );
-	await userbot.run( test.highlight );
+	//await userbot.run( test.removeDGR );
+	//await userbot.run( test.confidence );
+	//await userbot.run( test.filter );
+	//await userbot.run( test.groupBy );
+	//await userbot.run( test.highlight );
 
 	// ===== TABLE FEATURES
-	await userbot.run( test.sorting );
-	await userbot.run( test.pubmedLink );
+	//await userbot.run( test.sorting );
+	//await userbot.run( test.pubmedLink );
 
 	// ===== GRAPH FEATURES
-	await userbot.run( test.redrawGraph );
-	await userbot.run( test.ctlClickGraph );
-	await userbot.run( test.shiftClickGraph );
+	//await userbot.run( test.redrawGraph );
+	//await userbot.run( test.ctlClickGraph );
+	//await userbot.run( test.shiftClickGraph );
 
 	// ===== STATE FEATURES
-	await userbot.run( test.undoRedo );
+	//await userbot.run( test.undoRedo );
 	await userbot.run( test.saveload );//needs work
 
 	// ===== GENERAL PURPOSE FEATURES
-	await userbot.run( test.addDatasource );
-	await userbot.run( test.selectDatasource );
-	await userbot.run( test.editDatasource );
-	await userbot.run( test.removeDatasource );
+	//await userbot.run( test.addDatasource );
+	//await userbot.run( test.addPlugins );
+	//await userbot.run( test.selectDatasource );
+	//await userbot.run( test.removeDatasource );
 
 	// ===== BACKEND SYSTEMS
 	await userbot.run( test.cache );

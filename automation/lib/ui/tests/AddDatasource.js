@@ -21,7 +21,8 @@ class AddDatasourceTest extends mix( Test ).with( Datasource ) { // Order matter
 			try {
 				let ds = this.options.ds;
 				await this.login();
-				await this.page.waitFor(5000);
+				await this.page.waitForSelector('#loading-container', { hidden: true });				
+//await this.page.waitFor(5000);
 				//add datasource
 				await this.datasource.add(ds);
 				//navigate to search screen

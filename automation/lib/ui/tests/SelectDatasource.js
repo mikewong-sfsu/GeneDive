@@ -21,11 +21,11 @@ class SelectDatasourceTest extends mix( Test ).with( Datasource, Table, Graph ) 
 	execute() {
 		return new Promise( async (resolve, reject) => {
 			try {
-				let dsList = ['PharmGKB', 'Sample'];
+				let dsList = ['DeepDive-Extracted Interactions', 'test dataset'];
 				let dgr    = 'retinoblastoma'; // MW NEED TO PARAMETERIZE THIS LATER
 
 				await this.login();
-				await this.page.waitFor(5000);
+				await this.page.waitForSelector('#loading-container', { hidden: true });
 				//set datasource for selection
 				let res = await this.datasource.select(dsList);
 				if(res.status == "error"){
@@ -33,7 +33,6 @@ class SelectDatasourceTest extends mix( Test ).with( Datasource, Table, Graph ) 
 				    reject(res.msg);
 				}
 				//let the selected datasource be loaded
-				await this.page.waitFor(5000);
 				await this.oneHop();
 				await this.search( dgr );
 				let detail   = await this.table.details();
