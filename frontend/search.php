@@ -95,7 +95,7 @@
 
     <div class="divider require-dgr-search"></div>
     <!-- Add Plugins -->
-    <div class="module addplugin-module" style=" justify-content: center">
+    <div class="module addplugin-module require-dgr-search" style=" justify-content: center">
       <button style="width:100%;"  id="apply-plugin">Add Plugin</button>
     </div>
     <!-- Grouper -->

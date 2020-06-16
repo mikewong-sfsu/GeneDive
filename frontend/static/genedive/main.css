@@ -37,7 +37,7 @@ body {
 .table-view {
   border-bottom:1px solid gray;
   overflow-y: auto;
-  height: 50%;
+  height: 40%;
   min-width: 0px;
   /* resize: vertical; */
 }
