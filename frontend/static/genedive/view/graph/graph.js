@@ -428,7 +428,7 @@ class GraphView {
    so fit() would have no affect.
    */
   centerGraph() {
-    let vert = (this.graphContainer.height() / 4);
+    let vert = (this.graphContainer.height() / 2);
     let horz = (this.graphContainer.width() / 2);
     this.graph.viewport({zoom: 0, pan: {x: horz, y: vert}});
   }
@@ -442,6 +442,7 @@ class GraphView {
    @returns  boolean True if the graph was refit, false if it wasn't
    */
   refitIfNeeded(margin = 10) {
+    console.log("refit:",this.needsFitting);
     if (this.needsFitting) {
       this.needsFitting = false;
       this.graph.fit(margin);

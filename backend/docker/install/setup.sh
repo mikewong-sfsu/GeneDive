@@ -58,7 +58,14 @@ cp /genedive/backend/data/credentials-default.php /genedive/backend/data/credent
 # Install NodeJS v10 & Puppeteer system dependencies
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
 apt-get install -y nodejs
-npm install -g glob imap stopword request request-promise mathjs mixwith
 apt-get install -y libx11-xcb-dev libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libasound2 libatk1.0-0 libatk-bridge2.0-0 libpangocairo-1.0-0 libgtk-3-0
 cd /usr/lib/node_modules && npm i puppeteer
-
+apt-get update \
+    && apt-get install -y wget gnupg \
+    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+    && apt-get update \
+    && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf \
+      --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+npm install -g glob imap stopword request request-promise mathjs mixwith
