@@ -23,11 +23,12 @@ class TableDetail extends BuildDetailTable {
     }
     this.drawHeaders();
     this.drawBody();
-    this.initEditTable();
+    this.getTableSorter();
+    //this.initEditTable();
     //this.onEditTable();
-    this.table.tablesorter({
+    /*this.table.tablesorter({
       sortList: [[4, 1],], // Sort by Max Confidence
-      });
+      });*/
 
     // Bind zoom out behavior
     $('.table-view .messaging-and-controls .go-back').off('click').click(function () {
@@ -35,6 +36,12 @@ class TableDetail extends BuildDetailTable {
       GeneDive.onBackClick();
     });
 
+  }
+  getTableSorter(){
+       this.table.tablesorter({
+      sortList: [[4, 1],], // Sort by Max Confidence
+      });
+ 
   }
 
   drawHeaders() {
@@ -118,6 +125,8 @@ class TableDetail extends BuildDetailTable {
     }
 
     this.table.append(tbody);
+    this.initEditTable();
+ 
   }
 
   set amountOfEntries(n){

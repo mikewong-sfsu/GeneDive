@@ -85,7 +85,7 @@ code {
 
 	  <h3 id="addSummaryColumnAPI" class="navLink"> addSummaryColumn</h3>
   <p>This API enables users to visualize data in the summary view. Common usage include aggregation over interaction data grouped by 
-  DGR as well as grouped by Article.The user can acess the data in a specific column by using the <a href="#getColumnAPI">getColumnAPI</a>. 
+  DGR as well as grouped by Article.The user can acess the data in a specific column by using the <a href="#getColumnAPI">getColumn</a> API. 
   <div class="parameter">
     <p><b>Input Parameters:</b><br>
     <i>group_id</i> - ids used to identify interaction data grouped by DGR or Article ID
@@ -230,7 +230,7 @@ plotGraph(dataset,svg_id ){
   <div>
     <h3 id="addDetailColumnAPI">addDetailColumn</h3>
     <p>This API enables users to visualize data in the detail view. Common usage include mapping values within nested data objects, visualization in the forms of charts and graphs based on data, etc.The API works similar to <a href = "#addSummaryColumnAPI"=>AddSummaryColumn </a>, but maps values to each DGR interaction data.
-The user can acess the data in a specific column by using the <a href="#getColumnAPI">getColumnAPI</a>. 
+The user can acess the data in a specific column by using the <a href="#getColumnAPI">getColumn</a> API. 
   <div class="parameter">
     <p><b>Return type:</b></br>
     <i>detailColumnMap</i> - A javascript map variable with Custom column header as <i>key</i> and function mapping the value displayed in column as <i>value</i>
@@ -256,10 +256,9 @@ addDetailColumns(){
 <pre>
 addDetailColumns(){
   var detailColumnMap = new Map();    //add all custom detail columns to this map
-  var xvalue = this.getColumn('x');   //get x value from the interactions data //type string
-  var parseXvalue = JSON.parse(parseXvalue); //parse value to JSON object
-  detailColumnMap.set('a',() => (parseXvalue.a));    //map value for key = a
-  detailColumnMap.set('b',() => (parseXvalue.b));    //map value for key = b
+  var x = this.getColumn('x');   //get x value from the interactions data //type string
+  detailColumnMap.set('a',() => (JSON.parse(x).a));    //map value for key = a
+  detailColumnMap.set('b',() => (JSON.parse(x).b));    //map value for key = b
   return detailColumnMap;
 }
 </pre>
@@ -369,7 +368,7 @@ getMaxScore(interactions, attribute){
     <h3 id="addHighlightAPI">addHighlight</h3>
     <p>
     The user may add highlight filter to highlight interaction data based on text matching the values mapped to the column header specific to user defined data source 
-    The added highlight filters can be applied from the Highlight settings in the control view. Each interaction data comes with a boolean highlight property. The user may set the highlight property to true to enable highlighting.The user can access the data in a specific column by using the <a href="#getColumnAPI">getColumnAPI</a>. 
+    The added highlight filters can be applied from the Highlight settings in the control view. Each interaction data comes with a boolean highlight property. The user may set the highlight property to true to enable highlighting.The user can access the data in a specific column by using the <a href="#getColumnAPI">getColumn</a> API. 
   <div class="parameter">
     <p><b>Input Parameters:</b><br>
     <i>interactions</i> - DGR interaction data obtained on search query.
