@@ -2,7 +2,7 @@
 	"puppeteer" : {
 		"headless" : false
 	},
-	"url": "http://localhost:8080/",
+	"url": "http://localhost/",
 	"login": "testwork1@test.com",
 	"password": "testwork",
 	"register": {

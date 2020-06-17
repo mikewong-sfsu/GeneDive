@@ -18,16 +18,19 @@ class TableSummaryGene extends BuildSummaryTable {
     this.hideBackButton();
     this.drawHeaders();
     this.drawBody();
-
-    this.table.tablesorter({
-      headers: {0: {sorter: false}, 5: {sorter: false}, 7: {sorter: false}},
-      sortList: [[6, 1]] // Sort by Max Confidence
-    });
-
+    this.getTableSorter();
 
   }
 
+  getTableSorter(){
+   this.table.tablesorter({
+      headers: {0: {sorter: false}, 5: {sorter: false}, 7: {sorter: false}},
+      sortList: [[6, 1]] // Sort by Max Confidence
+    });
+ 
+  }
   drawHeaders ( ) {
+    console.log("in drow header summaryview");
     let thead = $(document.createElement("thead"));
     let tr    = $(document.createElement("tr"));
     thead.append(tr);

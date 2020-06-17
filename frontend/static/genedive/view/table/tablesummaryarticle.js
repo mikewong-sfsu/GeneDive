@@ -17,11 +17,15 @@ class TableSummaryArticle extends BuildSummaryTable {
     this.hideBackButton();
     this.drawHeaders();
     this.drawBody();
+    this.getTableSorter();
+  }
 
-    this.table.tablesorter({
+  getTableSorter(){
+     this.table.tablesorter({
       headers: {0: {sorter: false}, 4: {sorter: false}, 6: {sorter: false}, 7: {sorter: false}},
       sortList: [[5, 1],], // Sort by Max Confidence
     });
+ 
   }
   
   drawHeaders ( ) {

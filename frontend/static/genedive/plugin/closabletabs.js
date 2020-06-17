@@ -206,6 +206,7 @@ function testAddColumnCode(ds_id, newInstance, oldInstance){
 	$('#result-table').empty();
 	GeneDive.tableview.drawHeaders();
 	GeneDive.tableview.drawBody();
+	//GeneDive.tableview.getTableSorter();
 	//reset the value back to old value to maintain default behaviour
 	GeneDive.tableview.objectMap.set(ds_id,oldInstance);
 }

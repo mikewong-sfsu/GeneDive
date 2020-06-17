@@ -23,11 +23,12 @@ class TableDetail extends BuildDetailTable {
     }
     this.drawHeaders();
     this.drawBody();
-    this.initEditTable();
-    this.onEditTable();
-    this.table.tablesorter({
+    this.getTableSorter();
+    //this.initEditTable();
+    //this.onEditTable();
+    /*this.table.tablesorter({
       sortList: [[4, 1],], // Sort by Max Confidence
-      });
+      });*/
 
     // Bind zoom out behavior
     $('.table-view .messaging-and-controls .go-back').off('click').click(function () {
@@ -35,6 +36,12 @@ class TableDetail extends BuildDetailTable {
       GeneDive.onBackClick();
     });
 
+  }
+  getTableSorter(){
+       this.table.tablesorter({
+      sortList: [[4, 1],], // Sort by Max Confidence
+      });
+ 
   }
 
   drawHeaders() {
@@ -59,6 +66,10 @@ class TableDetail extends BuildDetailTable {
  
     tr.append($(document.createElement("th")).text("Pubmed").css({width:"70px"}).attr({ id : 'th-pubmed', "toggle": "tooltip", "title": "A PubMed link to the article (if available)"}));
     this.table.append(thead);
+  //call edit table dropdown here.
+  //this.initEditTable();
+  //this.onEditTable();
+ 
   }
 
   drawBody() {
@@ -114,6 +125,8 @@ class TableDetail extends BuildDetailTable {
     }
 
     this.table.append(tbody);
+    this.initEditTable();
+ 
   }
 
   set amountOfEntries(n){

@@ -21,7 +21,6 @@ class Plugin {
 	}
 	
 	addPluginDialog(){
-
 		let dialog = $('<div>');
 		let dialogForm = $('<div>').css('overflow','auto');
 		let ds_option = {};

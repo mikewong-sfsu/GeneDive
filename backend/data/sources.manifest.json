@@ -6,7 +6,8 @@
       "id"   : "plos-pmc",
       "name" : "DeepDive-Extracted Interactions",
       "path" : "plos-pmc",
-      "user" : "GeneDive"
+      "user" : "GeneDive",
+      "url"  : "https://www.ncbi.nlm.nih.gov/pubmed/26338771"
    },
    "pharmgkb" :
    {
@@ -15,6 +16,7 @@
       "id"   : "pharmgkb",
       "name" : "PharmGKB",
       "path" : "pharmgkb",
-      "user" : "GeneDive"
+      "user" : "GeneDive",
+      "url"  : "https://www.pharmgkb.org"
    }
 }

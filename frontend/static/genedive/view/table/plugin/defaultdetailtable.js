@@ -82,7 +82,6 @@ class DefaultDetailTable{
 	//return value mapped to column
 	getColumn(column){
 	//=================================
-		console.log("interaction:",this.interaction);
 
 		//get values mapping interaction directly
 		if(this.interaction.hasOwnProperty(column))
@@ -92,8 +91,7 @@ class DefaultDetailTable{
 			return this.addendum[column];
 		//get values mapping custom defined columns
 		else if(this.columnMap.has(column))
-			return this.columnMap.get(column);
-		//default value
+			return this.columnMap.get(column); //default value
 		return new Map();
 		
 	}

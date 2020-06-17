@@ -50,7 +50,7 @@ class ResultsTable {
   // ============================================================
     $('.table-view .messaging-and-controls .go-back').html('<i class="fa fa-arrow-left" ></i>Back to Summary Page').css({'cursor':'pointer','color':'#d84b2b','visibility':'visible'});
     $('.table-view .messaging-and-controls .edit-table').html('<a id="edittable" class="edittable centered" data-toggle="collapse" data-target="#columnheaders" title=" Edit columns in Table"><i class="fas fa-edit"></i></a>').css({'cursor':'pointer','visibility':'visible', 'margin':'10px'});
-    $('.table-view .messaging-and-controls .view-header').text('Detail View');
+    $('.table-view .messaging-and-controls .view-header').text('Detail View').css({'vertical-align':'middle', 'margin-left':'250px'});
   }
 
   // ============================================================
@@ -152,7 +152,7 @@ class ResultsTable {
 initEditTable(){
   // ============================================================
 	let columnheader = "" ;
-	
+	console.log("in here");
 	columnheader += "<br><p></p><div>Add or Remove columns from table</div>";
 	var detailTable = $('#result-table');
 	let headers = {};
@@ -178,7 +178,7 @@ initEditTable(){
 	//set tablestate.visible_columns
 	if (GeneDive.tablestate.visible_columns.length == 0){
 		$('input[type="checkbox"]').each(function(){
-		GeneDive.tablestate.visible_columns.push($(this).val());
+		GeneDive.tablestate.visible_columns.push($(this).attr('id'));//val());
 		//set to true by default
 		$(this).prop("checked", true);
 		$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').show();
@@ -187,7 +187,7 @@ initEditTable(){
 	}
 	else{
 		$('input[type="checkbox"]').each(function(){
-			if(GeneDive.tablestate.visible_columns.includes($(this).val())){
+			if(GeneDive.tablestate.visible_columns.includes($(this).attr('id'))){//val())){
 				$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').show();
 				$(this).prop("checked",true);
 			}
@@ -198,6 +198,7 @@ initEditTable(){
 		})
 	
 	}
+	this.onEditTable();
 
 }
   // ============================================================
@@ -206,10 +207,11 @@ onEditTable(){
 	$('input[type="checkbox"]').change(function() {
 		$('table tr').find('td:eq(' + this.value + '),th:eq('+ this.value + ')').toggle();
 		if($(this).prop("checked")){
-			GeneDive.tablestate.visible_columns.push($(this).val());
+			GeneDive.tablestate.visible_columns.push($(this).attr('id'));//val());
 		}
 		else{
-			delete GeneDive.tablestate.visible_columns[(GeneDive.tablestate.visible_columns.indexOf($(this).val()))] ;
+			//delete GeneDive.tablestate.visible_columns[(GeneDive.tablestate.visible_columns.indexOf($(this).val()))] ;
+			GeneDive.tablestate.visible_columns = GeneDive.tablestate.visible_columns.filter(col => col != $(this).attr('id'));
 		}
 		
 		GeneDive.onDetailColumnSelect();
