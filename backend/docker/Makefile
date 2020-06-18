@@ -12,7 +12,7 @@
 #
 # $ PORT=<Your port number> make
 #
-PORT?=8080
+PORT?=8055
 
 all: devel build run
 
@@ -35,7 +35,7 @@ cache:
 	for i in `ls ../../backend | grep -v docker | grep -v sessions`; do cp -Rf ../../backend/$$i devel/backend; done
 	for i in `ls | grep -v devel`; do cp -Rf $$i devel/backend/docker; done
 	cp -Rf ../../docs devel
-
+	cp -Rf ../../automation devel
 devel: check-keys
 	cp -f dockerfiles/devel Dockerfile
 
@@ -54,15 +54,15 @@ check-keys:
 	perl preinstall/check-keys
 
 run:
-	docker run -d -p $(PORT):80 --name genedive-v3.0-local genedive3.0
+	docker run -d -p $(PORT):80 --name genedive-3.0-local genedive3.0
 
 stop:
-	docker stop genedive-v3.0-local
+	docker stop genedive-3.0-local
 
 clean: 
 	rm -f Dockerfile
 	rm -Rf devel
-	docker rm genedive-v3.0-local
+	docker rm genedive-3.0-local
 
 shell:
-	docker exec -it genedive-v3.0-local /bin/bash
+	docker exec -it genedive-3.0-local /bin/bash

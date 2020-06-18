@@ -34,14 +34,18 @@ class SaveLoadTest extends mix( Test ).with( SaveLoad, Score, Filter, Table, Gra
 				await this.confidence.score.high();
 				await this.filter.excerpt.is( phrase );
 				await this.graph.redraw();
-
+				//download within docker
+				await this.page._client.send('Page.setDownloadBehavior', {
+ 					 behavior: 'allow',
+  					downloadPath: '/genedive/',
+				});
 				// Get the results and download the session file
 				let before   = JSON.stringify( await this.table.summary());
 				let filename = await this.save( comment );
-				let download = `${os.homedir()}/Downloads/${filename}`; // Default Chromium downloads path
+				let download = `/genedive/${filename}`;
 				await new Promise(r => setTimeout(r, 2000));				
 				if( ! fs.existsSync( download )) { reject( `Download failed: "${download}" not found` ); }
-
+	
 				// Logout and log back in
 				await this.logout();
 				await this.login();
