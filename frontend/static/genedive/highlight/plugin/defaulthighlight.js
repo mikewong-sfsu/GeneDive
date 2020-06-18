@@ -21,7 +21,7 @@ class DefaultHighlight{
 				return addendum[columnName];
 			}
 		}
-			return [];
+			return {};
 	}
 
 }
