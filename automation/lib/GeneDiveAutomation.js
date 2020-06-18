@@ -100,7 +100,7 @@ class GeneDive {
 	// ============================================================
 		const os = require( 'os' );
 		let now  = (new Date()).toISOString().replace( /:/g, '-' );
-		let file = `{/genedive/automation/testlogs/GeneDive.${log}.$now}.json`;
+		let file = `/genedive/automation/testlogs/GeneDive.${log}.${now}.json`;
 		let data = JSON.stringify( { puppeteer: this.options.puppeteer, results: this.results } );
 		this.fs.writeFileSync( file, data, ( err ) => { if( err ) { throw err; }});
 		console.log( `Saving results to "${file}"\n` );
