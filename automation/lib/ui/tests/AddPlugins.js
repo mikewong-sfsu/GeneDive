@@ -95,8 +95,7 @@ class AddPluginsTest extends mix( Test ).with( Table, Datasource ) { // Order ma
                     }
                     
                 }
-
-				resolve( 'Add Plugin features works as tested' );
+				resolve( this.result( true, "Add Plugin features work as tested" ));
 			} catch ( e ) {
 				reject( e );
 			}

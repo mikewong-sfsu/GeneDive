@@ -31,7 +31,7 @@ class AddDatasourceTest extends mix( Test ).with( Datasource ) { // Order matter
                 		if(res.status == "error"){
                     			reject('Add operation unsuccessful');
                 	}
-				resolve( 'Add Datasource works as tested' );
+				resolve( this.result( true, "Add Datasource works as tested" ));
 				} 
 		catch ( e ) {
 				reject( e );

@@ -39,7 +39,7 @@ class SelectDatasourceTest extends mix( Test ).with( Datasource, Table, Graph ) 
                 let regex     = new RegExp( dsList.join( '|' ));
                 let valid  = (detail).every( group => group.details.every( row => row[ 'Source' ].match( regex )));
                 if( ! valid ) { reject( `Select datasource not filtering correct interactions` ); }
-				resolve( 'Select Datasource works as tested' );
+				resolve( this.result( true, "Select datasource works as tested" ));
 			} catch ( e ) {
 				reject( e );
 			}

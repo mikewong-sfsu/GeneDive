@@ -31,7 +31,8 @@ class RemoveDatasourceTest extends mix( Test ).with( Datasource ) { // Order mat
 					// if(res.status != "error"){
 					// 	reject('Delete operation unsuccessful');
 					// }
-				resolve( 'Remove Datasource works as tested' );
+				resolve( this.result( true, "Remove data source works as tested" ));
+
 			} catch ( e ) {
 				reject( e );
 			}
