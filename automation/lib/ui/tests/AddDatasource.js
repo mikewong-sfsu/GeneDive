@@ -30,6 +30,7 @@ class AddDatasourceTest extends mix( Test ).with( Datasource ) { // Order matter
                 		//find newly added datasource in select options
                 		let res = await this.datasource.select([ds.name]);
                 		if(res.status == "error"){
+					console.log("res:",res);
                     			reject('Add operation unsuccessful');
                 	}
 				resolve( this.result( true, "Add Datasource works as tested" ));
