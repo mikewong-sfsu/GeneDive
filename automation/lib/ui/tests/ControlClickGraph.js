@@ -24,7 +24,7 @@ class ControlClick extends mix( Test ).with( Table, Graph ) {
 				await this.login();
 				await this.oneHop();
 				await this.search( dgr );
-//				await this.graph.redraw();
+				await this.graph.redraw();
 
 				let summary = await this.table.summary(); // Use summary; other tests cover detailed results correctness
 

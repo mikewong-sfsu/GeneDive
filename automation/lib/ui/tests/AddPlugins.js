@@ -30,7 +30,8 @@ class AddPluginsTest extends mix( Test ).with( Table, Datasource ) { // Order ma
                 await this.search( dgr );
                 //test all 4 plugins
                 for(let i = 0 ; i < 4 ;i++){
-                    await this.click('#apply-plugin'); //click on add plugin
+                    await this.page.click('#menu-dropdown-button');
+		    await this.click('#apply-plugin'); //click on add plugin
                     await this.page.waitFor(3000);//let the pop up load
                     if(!native.includes(dsname)){
                         //select from dropdown to populate code in editor

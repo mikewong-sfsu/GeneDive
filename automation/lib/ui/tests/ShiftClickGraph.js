@@ -26,6 +26,7 @@ class ShiftClick extends mix( Test ).with( Table, Graph ) {
 				await this.login();
 				await this.oneHop();
 				await this.search( dgr1 );
+				await this.graph.redraw();
 				await this.graph.node( dgr2 ).click([ 'Shift' ]);
 
 				let regex1 = new RegExp( dgr1 );
