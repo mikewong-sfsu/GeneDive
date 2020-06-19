@@ -26,6 +26,7 @@ class AddDatasourceTest extends mix( Test ).with( Datasource ) { // Order matter
 				await this.datasource.add(ds);
 				//navigate to search screen
                 		await this.goto.searchPage();
+				await this.page.waitForSelector('#loading-container', { hidden: true });	
                 		//find newly added datasource in select options
                 		let res = await this.datasource.select([ds.name]);
                 		if(res.status == "error"){

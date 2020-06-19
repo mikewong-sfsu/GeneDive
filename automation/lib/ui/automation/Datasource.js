@@ -63,7 +63,6 @@ let Datasource = (superclass) => class extends superclass {
         	//reset checkbox selection
         	await this.page.$$eval("input[type='checkbox']", checks => checks.forEach(c => c.checked = false));
         	await this.page.waitFor(1000);
-
         	//find index of datasource to be selected
         	let sources = await this.page.$$('#datasource-available-for-selection > li');
         	for( let i = 0 ; i < sources.length;i++){
@@ -77,6 +76,7 @@ let Datasource = (superclass) => class extends superclass {
         	}
         	if( datasources.size > 0){
         	    return({"status":"error", "msg":"All datasource selections not found"});
+		   
         	}
         	//confirm selection
         	await this.page.click('.ajs-button.btn.btn-success');
@@ -162,7 +162,7 @@ let Datasource = (superclass) => class extends superclass {
                 index = i;
             }
     	}
-	console.log("index :",index);
+
     	//click remove button
     	await this.page.click( '#datasources-available-for-removal > li:nth-child(' + (index + 1) +' ) > div.datasource-actions.col-xs-2 > button' );
     	await this.page.waitFor(1000);
