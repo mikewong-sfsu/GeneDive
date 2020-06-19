@@ -39,7 +39,7 @@ let Datasource = (superclass) => class extends superclass {
         await this.click( '#dsurl' );
         await this.type( ds.url );
         //submit form
-        await this.click( '.btn-primary' );
+        await this.click( 'button.btn.btn-primary' );
         await this.page.waitFor(3000);
         //select ok to navigate to search screen
         await this.page.click('.btn-success');
