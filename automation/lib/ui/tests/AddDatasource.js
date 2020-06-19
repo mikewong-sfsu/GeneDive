@@ -22,20 +22,20 @@ class AddDatasourceTest extends mix( Test ).with( Datasource ) { // Order matter
 				let ds = this.options.ds;
 				await this.login();
 				await this.page.waitForSelector('#loading-container', { hidden: true });				
-//await this.page.waitFor(5000);
 				//add datasource
 				await this.datasource.add(ds);
 				//navigate to search screen
-                await this.goto.searchPage();
-                //find newly added datasource in select options
-                let res = await this.datasource.select([ds.name]);
-                if(res.status == "error"){
-                    reject('Add operation unsuccessful');
-                }
+                		await this.goto.searchPage();
+                		//find newly added datasource in select options
+                		let res = await this.datasource.select([ds.name]);
+                		if(res.status == "error"){
+                    			reject('Add operation unsuccessful');
+                	}
 				resolve( 'Add Datasource works as tested' );
-			} catch ( e ) {
+				} 
+		catch ( e ) {
 				reject( e );
-			}
+		}
 		});
 	}
 }
