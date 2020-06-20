@@ -59,7 +59,9 @@ cp /genedive/backend/data/credentials-default.php /genedive/backend/data/credent
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
 apt-get install -y nodejs
 apt-get install -y libx11-xcb-dev libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libasound2 libatk1.0-0 libatk-bridge2.0-0 libpangocairo-1.0-0 libgtk-3-0
-cd /usr/lib/node_modules && npm i puppeteer
+npm i puppeteer
+cd /usr/lib/node_modules
+
 apt-get update \
     && apt-get install -y wget gnupg \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
