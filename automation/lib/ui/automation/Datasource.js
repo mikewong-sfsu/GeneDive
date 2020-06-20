@@ -40,9 +40,13 @@ let Datasource = (superclass) => class extends superclass {
         await this.type( ds.url );
         //submit form
         await this.click( 'button.btn.btn-primary' );
-        await this.page.waitFor(3000);
-        //select ok to navigate to search screen
-        await this.page.click('.btn-success');
+        try{
+            var [button] = await this.page.$x("//a[contains(., 'Navigate to Search Page')]");
+            await button.click();
+
+        } catch (error) {
+            return Promise.reject('link to Navigate to search page not found');
+        }
     }
 
     // ============================================================
