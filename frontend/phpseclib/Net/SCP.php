@@ -40,7 +40,9 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
+ */
+/// \cond NOPE
+/*
  * @category  Net
  * @package   Net_SCP
  * @author    Jim Wigginton <terrafrost@php.net>
@@ -48,7 +50,7 @@
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
  */
-
+/// \endcond
 /**#@+
  * @access public
  * @see self::put()

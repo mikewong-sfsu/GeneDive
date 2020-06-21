@@ -34,7 +34,9 @@ CodeMirror.defineMode("q",function(config){
     if(c=='"')
       return(state.tokenize=tokenString)(stream,state);
     if(c=='`')
-      return stream.eatWhile(/[A-Za-z\d_:\/.]/),"symbol";
+      /// \cond NOPE
+      return (stream.eatWhile(/[A-Za-z\d_:\/.]/),"symbol");
+      /// \endcond
     if(("."==c&&/\d/.test(stream.peek()))||/\d/.test(c)){
       var t=null;
       stream.backUp(1);
@@ -52,7 +54,9 @@ CodeMirror.defineMode("q",function(config){
       return(t&&(!(c=stream.peek())||E.test(c)))?t:(stream.next(),"error");
     }
     if(/[A-Za-z]|\./.test(c))
-      return stream.eatWhile(/[A-Za-z._\d]/),keywords.test(stream.current())?"keyword":"variable";
+      /// \cond NOPE
+      return (stream.eatWhile(/[A-Za-z._\d]/),keywords.test(stream.current())?"keyword":"variable");
+      /// \endcond
     if(/[|/&^!+:\\\-*%$=~#;@><\.,?_\']/.test(c))
       return null;
     if(/[{}\(\[\]\)]/.test(c))
@@ -127,8 +131,11 @@ CodeMirror.defineMode("q",function(config){
         return 0;
       else if(context.type=="pattern")
         return context.col;
-      else if(context.align)
-        return context.col+(closing?0:1);
+      else if(context.align){
+	      /// \cond NOPE
+        return (context.col+(closing?0:1));
+	      /// \endcond
+      }
       else
         return context.indent+(closing?0:indentUnit);
     }

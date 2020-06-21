@@ -148,9 +148,13 @@ CodeMirror.defineMode("turtle", function(config) {
       else if (context.type == "pattern")
         return context.col;
       else if (context.align)
+	/// \cond NOPE
         return context.col + (closing ? 0 : 1);
+	/// \endcond
       else
+	/// \cond NOPE
         return context.indent + (closing ? 0 : indentUnit);
+	/// \endcond
     },
 
     lineComment: "#"

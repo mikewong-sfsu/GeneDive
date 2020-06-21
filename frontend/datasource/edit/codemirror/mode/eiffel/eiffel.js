@@ -108,8 +108,8 @@ CodeMirror.defineMode("eiffel", function() {
       stream.eatWhile(/[a-zA-Z_0-9]/);
       stream.eat(/[\?\!]/);
       return "ident";
-    } else if (/[=+\-\/*^%<>~]/.test(ch)) {
-      stream.eatWhile(/[=+\-\/*^%<>~]/);
+    } else if (/[=+\-\/\*^%<>~]/.test(ch)) {
+      stream.eatWhile(/[=+\-\/\*^%<>~]/);
       return "operator";
     } else {
       return null;

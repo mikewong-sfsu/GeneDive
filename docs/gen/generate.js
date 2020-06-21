@@ -7,8 +7,8 @@
 				It is programmed in NoseJS, and uses Doxygen and PhantomJS for the sub scripts.
 */
 
-const OXYGEN_CONFIG_FILE = "doxygen.cfg";
-const geneDiveApi = "GeneDiveAPI.js";
+const OXYGEN_CONFIG_FILE = "../doxygen.cfg";
+const geneDiveApi = "../../automation/lib/GeneDiveAutomation.js";
 const CONFIG_DIRECTORY = __dirname;
 const LOG_DIRECTORY = "./log";
 const { exec } = require('child_process');

@@ -34,14 +34,16 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
- * @category  Crypt
+ */
+/// \cond NOPE
+ /* @category  Crypt
  * @package   Crypt_Random
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2007 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
- */
+  */
+/// \endcond
 
 // laravel is a PHP framework that utilizes phpseclib. laravel workbenches may, independently,
 // have phpseclib as a requirement as well. if you're developing such a program you may encounter
