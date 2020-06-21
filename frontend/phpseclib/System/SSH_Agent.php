@@ -26,7 +26,9 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
+ **/
+/// \cond NOPE
+/*
  * @category  System
  * @package   System_SSH_Agent
  * @author    Jim Wigginton <terrafrost@php.net>
@@ -35,5 +37,5 @@
  * @link      http://phpseclib.sourceforge.net
  * @internal  See http://api.libssh.org/rfc/PROTOCOL.agent
  */
-
+/// \endcond
 require_once 'SSH/Agent.php';

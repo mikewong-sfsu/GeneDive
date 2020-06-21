@@ -50,13 +50,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @category  Crypt
+ */
+/// \cond NOPE
+/* @category  Crypt
  * @package   Crypt_DES
  * @author    Jim Wigginton <terrafrost@php.net>
  * @copyright 2007 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
  */
+/// \endcond
 
 /**
  * Include Crypt_Base
