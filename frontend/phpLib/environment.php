@@ -2,7 +2,7 @@
 // MW This entire file is a good example of overengineering too soon
 define('IS_DOCKER_CONTAINER', getenv("IS_DOCKER_CONTAINER"));
 
-define('GENEDIVE_DATA_FILE',  '/usr/local/genedive/data/sources/all/data.sqlite');
+define('GENEDIVE_DATA_FILE',  '/usr/local/genedive/data/sources/native/data.sqlite');
 define('GENEDIVE_USERS_FILE', '/usr/local/genedive/data/users.sqlite');
 
 // Docker stuff
