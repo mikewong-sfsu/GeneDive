@@ -12,13 +12,13 @@
 #
 # $ PORT=<Your port number> make
 #
-PORT?=8055
+PORT?=8080
 
 all: devel build run
 
 build: cache
 	@echo Building Docker container
-	docker build -t genedive3.0 .
+	docker build -t genedive-v3.0 .
 	@echo Cleaning up GeneDive application cache
 	rm -Rf devel
 
@@ -54,15 +54,15 @@ check-keys:
 	perl preinstall/check-keys
 
 run:
-	docker run -d -p $(PORT):80 --name genedive-3.0-local genedive3.0
+	docker run -d -p $(PORT):80 --name genedive3.0-local genedive-v3.0
 
 stop:
-	docker stop genedive-3.0-local
+	docker stop genedive3.0-local
 
 clean: 
 	rm -f Dockerfile
 	rm -Rf devel
-	docker rm genedive-3.0-local
+	docker rm genedive3.0-local
 
 shell:
-	docker exec -it genedive-3.0-local /bin/bash
+	docker exec -it genedive3.0-local /bin/bash
