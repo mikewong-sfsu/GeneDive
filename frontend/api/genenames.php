@@ -17,7 +17,7 @@ if( file_exists( GENEDIVE_DATA_FILE )) {
   echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
 
 } else {
-  $passthru = file_get_contents( "$server/api/genenames.php?GET[ 'ids' ]" );
+  $passthru = file_get_contents( "$server/api/genenames.php?" . $_GET[ 'ids' ] );
   echo $passthru;
 
 }
