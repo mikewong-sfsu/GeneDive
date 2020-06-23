@@ -441,7 +441,7 @@ class GraphView {
    be called very late in the rendering of the page state.
    @returns  boolean True if the graph was refit, false if it wasn't
    */
-  refitIfNeeded(margin = 10) {
+  refitIfNeeded(margin = 30) {
     console.log("refit:",this.needsFitting);
     if (this.needsFitting) {
       this.needsFitting = false;

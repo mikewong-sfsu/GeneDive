@@ -21,18 +21,15 @@ class AddDatasourceTest extends mix( Test ).with( Datasource ) { // Order matter
 			try {
 				let ds = this.options.ds;
 				await this.login();
-				await this.page.waitForSelector('#loading-container', { hidden: true });				
+				await this.oneHop();
 				//add datasource
 				await this.datasource.add(ds);
-				//navigate to search screen
-                		await this.goto.searchPage();
-				await this.page.waitForSelector('#loading-container', { hidden: true });	
+				await this.goto.searchPage();
+				await this.oneHop();
                 		//find newly added datasource in select options
-                		let res = await this.datasource.select([ds.name]);
-                		if(res.status == "error"){
-					console.log("res:",res);
-                    			reject('Add operation unsuccessful');
-                	}
+                		await this.datasource.select([ds.name]);
+				if(!this.getAllDatasourceFoundValue())
+					reject('Added datasource not available for selection');
 				resolve( this.result( true, "Add Datasource works as tested" ));
 				} 
 		catch ( e ) {

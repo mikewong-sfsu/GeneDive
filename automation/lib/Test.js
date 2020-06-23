@@ -47,6 +47,8 @@ class Test {
 	// ============================================================
 	async execute() {
 	// ============================================================
+		//Inject custom scripts
+		await page.addScriptTag({url: 'https://code.jquery.com/jquery-3.2.1.min.js'});
 		return new Promise(( resolve, reject ) => {
 			reject( 'The Test class must be inherited for implementation.' );
 		})
@@ -157,6 +159,7 @@ class Test {
 			//	await this.page.waitForSelector('#loading-container', { timeout: 5000 })
 				await this.page.waitForSelector( '.table-help,.table,.no-results', { visible: true }); // Search is ready when the help page, results table, or no results are displayed
 				await this.page.waitForSelector('.loading-container', { hidden: true });
+				await this.page.waitFor(2000);
 				await this.click( `button[data-type="${mode}"]` ); 
 				await this.page.mouse.move( 0, 0 ); // Move the mouse away from the button to dismiss the tooltip
 				resolve(); 

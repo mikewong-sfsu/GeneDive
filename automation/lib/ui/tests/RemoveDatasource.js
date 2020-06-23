@@ -25,12 +25,8 @@ class RemoveDatasourceTest extends mix( Test ).with( Datasource ) { // Order mat
 				//remove datasource
 				await this.datasource.remove(ds);
 				//navigate to search screen
-                await this.goto.searchPage();
-                //find newly removed datasource in select options
-                //let res = await this.datasource.select([ds.name]);
-					// if(res.status != "error"){
-					// 	reject('Delete operation unsuccessful');
-					// }
+                		await this.goto.searchPage();
+				//await this.datasource.select([ds.name]);
 				resolve( this.result( true, "Remove data source works as tested" ));
 
 			} catch ( e ) {

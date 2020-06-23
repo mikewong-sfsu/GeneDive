@@ -21,28 +21,26 @@ class SelectDatasourceTest extends mix( Test ).with( Datasource, Table, Graph ) 
 	execute() {
 		return new Promise( async (resolve, reject) => {
 			try {
-				let dsList = ['DeepDive-Extracted Interactions', 'test dataset'];
-				let dgr    = 'retinoblastoma'; // MW NEED TO PARAMETERIZE THIS LATER
+				let dsList = ['test dataset'];
+				let dgr    = 'neurotoxic'; // MW NEED TO PARAMETERIZE THIS LATER
 
 				await this.login();
-				await this.page.waitForSelector('#loading-container', { hidden: true });
+				await this.oneHop();
 				//set datasource for selection
-				let res = await this.datasource.select(dsList);
-				if(res.status == "error"){
-				    console.log("msg:",res.msg);
-				    reject(res.msg);
-				}
+				await this.datasource.select(dsList);
+				if(!this.getAllDatasourceFoundValue()) //selection not found
+					reject('Data source defined for selection not found');
 				//let the selected datasource be loaded
 				await this.oneHop();
 				await this.search( dgr );
 				let detail   = await this.table.details();
-                let regex     = new RegExp( dsList.join( '|' ));
-                let valid  = (detail).every( group => group.details.every( row => row[ 'Source' ].match( regex )));
-                if( ! valid ) { reject( `Select datasource not filtering correct interactions` ); }
+                		let regex     = new RegExp( dsList.join( '|' ));
+                		let valid  = (detail).every( group => group.details.every( row => row[ 'Source' ].match( regex )));
+                		if( ! valid ) { reject( `Select datasource not filtering correct interactions` ); }
 				resolve( this.result( true, "Select datasource works as tested" ));
-			} catch ( e ) {
-				reject( e );
-			}
+				} catch ( e ) {
+					reject( e );
+				}
 		});
 	}
 }

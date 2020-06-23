@@ -30,6 +30,8 @@ GeneDive.datasource.refreshRemoveUI = () => {
     entry.find( '.name' ).html( datasource.name );
     entry.find( '.description' ).html( datasource.description );
     entry.attr({ 'data-id': datasource.id, 'data-name': datasource.name });
+    let btn = entry.find( '.btn-remove' );
+	btn.attr({ name: datasource.name });
     $( '#datasources-available-for-removal' ).append( entry );
   });
 };

@@ -24,8 +24,7 @@ class AddPluginsTest extends mix( Test ).with( Table, Datasource ) { // Order ma
                 let native = ["DeepDive-Extracted Interactions", "PharmGKB"];
                 let dgr    = 'neurotoxic'; 
                 await this.login();
-                await this.page.waitForSelector('#loading-container', { hidden: true });
-                //await this.datasource.select(ds.name);
+                //await this.page.waitForSelector('#loading-container', { hidden: true });
                 await this.oneHop();
                 await this.search( dgr );
                 //test all 4 plugins

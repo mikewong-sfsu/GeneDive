@@ -74,15 +74,17 @@ let userbot = new GeneDive( 'tests/regression.json' );
 	// ===== STATE FEATURES
 	await userbot.run( test.undoRedo );
 	await userbot.run( test.saveload );
+	
+	// ===== BACKEND SYSTEMS
+	await userbot.run( test.cache );
 
 	// ===== GENERAL PURPOSE FEATURES
 	await userbot.run( test.addDatasource );
-	await userbot.run( test.addPlugins );
 	await userbot.run( test.selectDatasource );
+	await userbot.run( test.addPlugins );
 	await userbot.run( test.removeDatasource );
 
-	// ===== BACKEND SYSTEMS
-	await userbot.run( test.cache );
+	// ===== Unregister test user account
 	await userbot.run( test.unregister );
 
 	await userbot.stop();
