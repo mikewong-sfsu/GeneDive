@@ -40,7 +40,7 @@ class HighlightTest extends mix( Test ).with( Table, Graph, Highlight ) { // Ord
 				await this.table.checkHighlights( term );
 				await this.graph.checkHighlights();
 
-				resolve( 'Highlighting works as tested' );
+				resolve( this.result(true,'Highlighting works as tested' ));
 			} catch ( e ) {
 				reject( e );
 			}

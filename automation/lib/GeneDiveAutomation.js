@@ -61,7 +61,7 @@ class GeneDive {
 	async stop() {
 	// ============================================================
 		let tty      = { pass: "\x1b[32mPASS\x1b[0m", fail: "\x1b[31mFAIL\x1b[0m" }; // The colors are somewhere between helpful and more trouble than their worth
-		let pass     = this.results.every( result => result.status == 'pass' );
+		let pass     = this.results.every( result => result.status === 'pass' );
 		if( pass ) { console.log( `\n${tty.pass} All tests passed\n` ); } else { console.log( `\n${tty.fail} Some tests failed\n` ); }
 
 		const [page] = await this.browser.pages();
