@@ -36,9 +36,8 @@ var searchData=
   ['resetgraphviewsize',['resetGraphViewSize',['../class_graph_view.html#a79c336b7f6824474c72b715fe3b83a84',1,'GraphView']]],
   ['resethiddennodes',['resetHiddenNodes',['../class_graph_view.html#aebd44a8a667c77abcf26d748e43bdfe0',1,'GraphView']]],
   ['resetinteractionsloadingcount',['resetInteractionsLoadingCount',['../class_loading.html#a4edb17fe8889291aa079b52868888b3f',1,'Loading']]],
-  ['resetpassword',['resetPassword',['../regression_8js.html#abfccc32e2fc8f007a6e3a33797e8fb8b',1,'regression.js']]],
+  ['resetpassword',['ResetPassword',['../class_reset_password.html',1,'ResetPassword'],['../regression_8js.html#abfccc32e2fc8f007a6e3a33797e8fb8b',1,'resetPassword():&#160;regression.js']]],
   ['resetpassword_2ejs',['ResetPassword.js',['../_reset_password_8js.html',1,'']]],
-  ['resetpasswordtest',['ResetPasswordTest',['../class_reset_password_test.html',1,'']]],
   ['resize',['Resize',['../_resize_8js.html#aab6ff9838dfba3d2ce39ace92b8a81db',1,'Resize.js']]],
   ['resize_2ejs',['Resize.js',['../_resize_8js.html',1,'']]],
   ['resolveids',['resolveIds',['../class_disambiguation.html#a465523c5b6b6c87cca7eafef56665970',1,'Disambiguation']]],
@@ -46,7 +45,7 @@ var searchData=
   ['resultstable',['ResultsTable',['../class_results_table.html',1,'']]],
   ['resultstable_2ejs',['resultstable.js',['../resultstable_8js.html',1,'']]],
   ['rfcdate',['rfcDate',['../class_p_h_p_mailer_1_1_p_h_p_mailer_1_1_p_h_p_mailer.html#a1c35f9ec17924309c683f123856866de',1,'PHPMailer::PHPMailer::PHPMailer']]],
-  ['root',['root',['../docs_2html_2svgpan_8js.html#a33796d6d1aed1fe6b4c866bfd3867459',1,'root():&#160;svgpan.js'],['../frontend_2static_2html_2svgpan_8js.html#a33796d6d1aed1fe6b4c866bfd3867459',1,'root():&#160;svgpan.js']]],
+  ['root',['root',['../docs_2html_2svgpan_8js.html#a33796d6d1aed1fe6b4c866bfd3867459',1,'root():&#160;svgpan.js'],['../frontend_2docs_2html_2svgpan_8js.html#a33796d6d1aed1fe6b4c866bfd3867459',1,'root():&#160;svgpan.js']]],
   ['run',['run',['../class_gene_dive.html#ae959fd56165be84f96a527c73c577c09',1,'GeneDive']]],
   ['runsearch',['runSearch',['../class_controller.html#a00ed132beeba5a2d5141eb5eeef44635',1,'Controller']]]
 ];

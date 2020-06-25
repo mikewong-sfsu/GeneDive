@@ -9,6 +9,6 @@ var searchData=
   ['graphsearch_2ejs',['graphsearch.js',['../graphsearch_8js.html',1,'']]],
   ['groupby_2ejs',['GroupBy.js',['../automation_2_group_by_8js.html',1,'(Global Namespace)'],['../tests_2_group_by_8js.html',1,'(Global Namespace)']]],
   ['grouper_2ejs',['grouper.js',['../grouper_8js.html',1,'']]],
-  ['groups_5f0_2ejs',['groups_0.js',['../docs_2html_2search_2groups__0_8js.html',1,'(Global Namespace)'],['../frontend_2static_2html_2search_2groups__0_8js.html',1,'(Global Namespace)']]],
-  ['groups_5f1_2ejs',['groups_1.js',['../docs_2html_2search_2groups__1_8js.html',1,'(Global Namespace)'],['../frontend_2static_2html_2search_2groups__1_8js.html',1,'(Global Namespace)']]]
+  ['groups_5f0_2ejs',['groups_0.js',['../docs_2html_2search_2groups__0_8js.html',1,'(Global Namespace)'],['../frontend_2docs_2html_2search_2groups__0_8js.html',1,'(Global Namespace)']]],
+  ['groups_5f1_2ejs',['groups_1.js',['../docs_2html_2search_2groups__1_8js.html',1,'(Global Namespace)'],['../frontend_2docs_2html_2search_2groups__1_8js.html',1,'(Global Namespace)']]]
 ];

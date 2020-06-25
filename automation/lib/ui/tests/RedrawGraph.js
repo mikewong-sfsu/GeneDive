@@ -3,7 +3,7 @@
  * @brief   redraw graph functionality
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup Graph
+ * @ingroup tests
  */
 
 const Test    = require( 'Test' );

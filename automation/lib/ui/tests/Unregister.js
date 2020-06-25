@@ -1,9 +1,9 @@
 /**
- * @class    Unregister Test
+ * @class    Unregister 
  * @brief    Cleanup after user registration (not really a UI test)
  * @details
  * @authors  Mike Wong mikewong@mail.sfsu.edu
- * @ingroup  UserAccount
+ * @ingroup  tests
 **/
 
 const Test         = require( 'Test' );

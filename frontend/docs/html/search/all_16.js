@@ -12,7 +12,7 @@ var searchData=
   ['updatemessage',['updateMessage',['../class_results_table.html#a3a4795307d7351981f140240d2b09702',1,'ResultsTable']]],
   ['updatepass_2ephp',['updatepass.php',['../updatepass_8php.html',1,'']]],
   ['updateselectedfilter',['updateSelectedFilter',['../class_text_filter.html#aee6b1e1a77a2a6312bb52deb97a4cb08',1,'TextFilter']]],
-  ['updatestripes',['updateStripes',['../docs_2html_2dynsections_8js.html#a8f7493ad859d4fbf2523917511ee7177',1,'updateStripes():&#160;dynsections.js'],['../frontend_2static_2html_2dynsections_8js.html#a8f7493ad859d4fbf2523917511ee7177',1,'updateStripes():&#160;dynsections.js']]],
+  ['updatestripes',['updateStripes',['../docs_2html_2dynsections_8js.html#a8f7493ad859d4fbf2523917511ee7177',1,'updateStripes():&#160;dynsections.js'],['../frontend_2docs_2html_2dynsections_8js.html#a8f7493ad859d4fbf2523917511ee7177',1,'updateStripes():&#160;dynsections.js']]],
   ['upload_2ephp',['upload.php',['../upload_8php.html',1,'']]],
   ['using_20genedive',['Using GeneDive',['../usage.html',1,'']]],
   ['usage_2emd',['USAGE.md',['../_u_s_a_g_e_8md.html',1,'']]],

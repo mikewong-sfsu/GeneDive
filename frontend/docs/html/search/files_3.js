@@ -9,5 +9,5 @@ var searchData=
   ['disambiguation_2ejs',['disambiguation.js',['../disambiguation_8js.html',1,'']]],
   ['download_2ephp',['download.php',['../download_8php.html',1,'']]],
   ['download_5fupload_2ejs',['download_upload.js',['../download__upload_8js.html',1,'']]],
-  ['dynsections_2ejs',['dynsections.js',['../docs_2html_2dynsections_8js.html',1,'(Global Namespace)'],['../frontend_2static_2html_2dynsections_8js.html',1,'(Global Namespace)']]]
+  ['dynsections_2ejs',['dynsections.js',['../docs_2html_2dynsections_8js.html',1,'(Global Namespace)'],['../frontend_2docs_2html_2dynsections_8js.html',1,'(Global Namespace)']]]
 ];

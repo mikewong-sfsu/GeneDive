@@ -1,9 +1,9 @@
 /**
- * @class   ScoreTest
+ * @class   Score
  * @brief   check varying confidence score
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup SearchTools
+ * @ingroup tests
  */
 const Test    = require( 'Test' );
 const Table   = require( '../automation/view/Table' );

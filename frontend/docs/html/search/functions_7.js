@@ -46,8 +46,8 @@ var searchData=
   ['gettoken',['getToken',['../class_p_h_p_mailer_1_1_p_h_p_mailer_1_1_o_auth.html#aca2254505ade7984c55d2fcdc1b2f44a',1,'PHPMailer::PHPMailer::OAuth']]],
   ['gettranslations',['getTranslations',['../class_p_h_p_mailer_1_1_p_h_p_mailer_1_1_p_h_p_mailer.html#a48e6719b93132b0098cdddcfbca0aa85',1,'PHPMailer::PHPMailer::PHPMailer']]],
   ['getverp',['getVerp',['../class_p_h_p_mailer_1_1_p_h_p_mailer_1_1_s_m_t_p.html#a21e09a3670b678e6dd9061b5fe6152df',1,'PHPMailer::PHPMailer::SMTP']]],
-  ['getxpos',['getXPos',['../docs_2html_2search_2_search_8js.html#a76d24aea0009f892f8ccc31d941c0a2b',1,'getXPos(item):&#160;search.js'],['../frontend_2static_2html_2search_2_search_8js.html#a76d24aea0009f892f8ccc31d941c0a2b',1,'getXPos(item):&#160;search.js']]],
-  ['getypos',['getYPos',['../docs_2html_2search_2_search_8js.html#a8d7b405228661d7b6216b6925d2b8a69',1,'getYPos(item):&#160;search.js'],['../frontend_2static_2html_2search_2_search_8js.html#a8d7b405228661d7b6216b6925d2b8a69',1,'getYPos(item):&#160;search.js']]],
+  ['getxpos',['getXPos',['../docs_2html_2search_2_search_8js.html#a76d24aea0009f892f8ccc31d941c0a2b',1,'getXPos(item):&#160;search.js'],['../frontend_2docs_2html_2search_2_search_8js.html#a76d24aea0009f892f8ccc31d941c0a2b',1,'getXPos(item):&#160;search.js']]],
+  ['getypos',['getYPos',['../docs_2html_2search_2_search_8js.html#a8d7b405228661d7b6216b6925d2b8a69',1,'getYPos(item):&#160;search.js'],['../frontend_2docs_2html_2search_2_search_8js.html#a8d7b405228661d7b6216b6925d2b8a69',1,'getYPos(item):&#160;search.js']]],
   ['gobackinstatehistory',['goBackInStateHistory',['../class_history.html#a5cb7936c13055e7e8f8ad2b99fb570eb',1,'History']]],
   ['goforwardinstatehistory',['goForwardInStateHistory',['../class_history.html#a81f0c5a8287c5a1fc4b62308911f9589',1,'History']]],
   ['group',['group',['../class_grouper.html#ab9cbd3edee2f7730c28ff1adfba0ee9d',1,'Grouper']]]

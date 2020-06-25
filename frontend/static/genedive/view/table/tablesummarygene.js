@@ -1,3 +1,15 @@
+/**
+ @class      TableSummaryGeneView
+ @brief      Handles the rendering and display of the summary view grouped by DGR pair.
+ @details
+ @authors    Mike Wong mikewong@sfsu.edu
+ Brook Thomas brookthomas@gmail.com
+ Jack Cole jcole2@mail.sfsu.edu
+ Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
+ @callergraph
+ @ingroup genedive
+ */
+
 class TableSummaryGene extends ResultsTable {
 
   constructor ( table, interactions ) {

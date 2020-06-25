@@ -1,3 +1,11 @@
+/**
+ * This class will filter based on confidence score
+ * @author 
+ * @date 
+ * @ingroup genedive
+ *
+ */
+
 class ProbabilityFilter {
 
     constructor ( slider, value_display, button_group ) {

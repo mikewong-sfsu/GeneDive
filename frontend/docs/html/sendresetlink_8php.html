@@ -75,7 +75,7 @@ Variables</h2></td></tr>
 <tr class="separator:a66461165be89ec200ed6470ed1bcf181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f19b5c371c3d571543742fb8fe597f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#a8f19b5c371c3d571543742fb8fe597f7">$invalid_email</a> = !filter_var( $_POST['<a class="el" href="_registration_8js.html#ae9dc421fbe358ef3901a63edd4097d3f">email</a>'], FILTER_VALIDATE_EMAIL )</td></tr>
 <tr class="separator:a8f19b5c371c3d571543742fb8fe597f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f6983316df6516d7a6bb634a2e523b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="frontend_2static_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a>( $incomplete) <a class="el" href="frontend_2static_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a>( $invalid_email)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#a6f6983316df6516d7a6bb634a2e523b2">try</a></td></tr>
+<tr class="memitem:a6f6983316df6516d7a6bb634a2e523b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="frontend_2docs_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a>( $incomplete) <a class="el" href="frontend_2docs_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a>( $invalid_email)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#a6f6983316df6516d7a6bb634a2e523b2">try</a></td></tr>
 <tr class="separator:a6f6983316df6516d7a6bb634a2e523b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad634f418b20382e2802f80532d76d3cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#ad634f418b20382e2802f80532d76d3cd">$email</a> = $_POST['<a class="el" href="_registration_8js.html#ae9dc421fbe358ef3901a63edd4097d3f">email</a>']</td></tr>
 <tr class="separator:ad634f418b20382e2802f80532d76d3cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -83,11 +83,11 @@ Variables</h2></td></tr>
 <tr class="separator:af27a9140d5f2658693e7fd107f716449"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1d731aa570613e5bcff831bb10e9b87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#aa1d731aa570613e5bcff831bb10e9b87">$row</a> = $stmt-&gt;fetch()</td></tr>
 <tr class="separator:aa1d731aa570613e5bcff831bb10e9b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae77eaed37a359e7b2ccbc25b4a53bb1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="frontend_2static_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a>( $row==false)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#ae77eaed37a359e7b2ccbc25b4a53bb1f">$token</a> = substr( hash( &quot;sha256&quot;, $email . strval(time()) . $SALT ), 0, 16 )</td></tr>
+<tr class="memitem:ae77eaed37a359e7b2ccbc25b4a53bb1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="frontend_2docs_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a>( $row==false)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#ae77eaed37a359e7b2ccbc25b4a53bb1f">$token</a> = substr( hash( &quot;sha256&quot;, $email . strval(time()) . $SALT ), 0, 16 )</td></tr>
 <tr class="separator:ae77eaed37a359e7b2ccbc25b4a53bb1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44b4bfeabb045f653fd02de355cd84af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#a44b4bfeabb045f653fd02de355cd84af">$expiry</a> = time() + (60 * 30)</td></tr>
 <tr class="separator:a44b4bfeabb045f653fd02de355cd84af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adccb18163635542616e4a92f78710875"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#adccb18163635542616e4a92f78710875">$resetlink</a> = &quot;&lt;a href=\&quot;$BASE_URL/resetpassword/<a class="el" href="frontend_2static_2html_2search_2variables__a_8js.html#a0d65cd52d084aa66df248816e6babaf7">setnewpassword.php</a>?<a class="el" href="_registration_8js.html#ae9dc421fbe358ef3901a63edd4097d3f">email</a>=$<a class="el" href="_registration_8js.html#ae9dc421fbe358ef3901a63edd4097d3f">email</a>&amp;token=$token\&quot;&gt;here&lt;/a&gt;&quot;</td></tr>
+<tr class="memitem:adccb18163635542616e4a92f78710875"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#adccb18163635542616e4a92f78710875">$resetlink</a> = &quot;&lt;a href=\&quot;$BASE_URL/resetpassword/<a class="el" href="frontend_2docs_2html_2search_2variables__a_8js.html#a0d65cd52d084aa66df248816e6babaf7">setnewpassword.php</a>?<a class="el" href="_registration_8js.html#ae9dc421fbe358ef3901a63edd4097d3f">email</a>=$<a class="el" href="_registration_8js.html#ae9dc421fbe358ef3901a63edd4097d3f">email</a>&amp;token=$token\&quot;&gt;here&lt;/a&gt;&quot;</td></tr>
 <tr class="separator:adccb18163635542616e4a92f78710875"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf17cb2dba2ed17cb28aa5f37deb5293"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sendresetlink_8php.html#abf17cb2dba2ed17cb28aa5f37deb5293">$message</a> = &quot;Reset your <a class="el" href="class_gene_dive.html">GeneDive</a> password $resetlink. &lt;br&gt;This link expires in 30 minutes.&lt;br&gt;&lt;br&gt;-<a class="el" href="class_gene_dive.html">GeneDive</a> Team&quot;</td></tr>
 <tr class="separator:abf17cb2dba2ed17cb28aa5f37deb5293"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,7 +216,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$resetlink = &quot;&lt;a href=\&quot;$BASE_URL/resetpassword/<a class="el" href="frontend_2static_2html_2search_2variables__a_8js.html#a0d65cd52d084aa66df248816e6babaf7">setnewpassword.php</a>?<a class="el" href="_registration_8js.html#ae9dc421fbe358ef3901a63edd4097d3f">email</a>=$<a class="el" href="_registration_8js.html#ae9dc421fbe358ef3901a63edd4097d3f">email</a>&amp;token=$token\&quot;&gt;here&lt;/a&gt;&quot;</td>
+          <td class="memname">$resetlink = &quot;&lt;a href=\&quot;$BASE_URL/resetpassword/<a class="el" href="frontend_2docs_2html_2search_2variables__a_8js.html#a0d65cd52d084aa66df248816e6babaf7">setnewpassword.php</a>?<a class="el" href="_registration_8js.html#ae9dc421fbe358ef3901a63edd4097d3f">email</a>=$<a class="el" href="_registration_8js.html#ae9dc421fbe358ef3901a63edd4097d3f">email</a>&amp;token=$token\&quot;&gt;here&lt;/a&gt;&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -258,7 +258,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="frontend_2static_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a> ($row==false) $token = substr( hash( &quot;sha256&quot;, $email . strval(time()) . $SALT ), 0, 16 )</td>
+          <td class="memname"><a class="el" href="frontend_2docs_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a> ($row==false) $token = substr( hash( &quot;sha256&quot;, $email . strval(time()) . $SALT ), 0, 16 )</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -356,7 +356,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="frontend_2static_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a> ($incomplete) <a class="el" href="frontend_2static_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a> ($invalid_email) try</td>
+          <td class="memname"><a class="el" href="frontend_2docs_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a> ($incomplete) <a class="el" href="frontend_2docs_2html_2svgpan_8js.html#af5ea8bd8b0e968d48c903e56d0e3afd4">if</a> ($invalid_email) try</td>
         </tr>
       </table>
 </div><div class="memdoc">

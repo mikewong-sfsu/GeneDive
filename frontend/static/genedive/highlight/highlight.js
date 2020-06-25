@@ -1,3 +1,11 @@
+/**
+ * This class will store and load state history of GeneDive
+ * @author 
+ * @date 
+ * @ingroup genedive
+ *
+ */
+
 class Highlight {
   
   constructor (input ) {

@@ -1,10 +1,10 @@
 
 /**
- * @class   FilterTest
+ * @class   Filter
  * @brief   Excercise the filter module and the filtering feature
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Vaishali Bisht vbisht1@mail.sfsu.edu
- * @ingroup SearchTools
+ * @ingroup tests
  **/
 
 const Test    = require( 'Test' );

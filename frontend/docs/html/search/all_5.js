@@ -39,5 +39,5 @@ var searchData=
   ['drawgraph',['drawGraph',['../class_controller.html#ad3e9409ace2b7cd9e687ca12fd0140d9',1,'Controller']]],
   ['drawheaders',['drawHeaders',['../class_table_detail.html#a7fe6fa850589d415f4f7a258adedb7b7',1,'TableDetail::drawHeaders()'],['../class_table_summary_article.html#aaffebf44d28d427964b7f1a81e289626',1,'TableSummaryArticle::drawHeaders()'],['../class_table_summary_gene.html#a0d06ddec229b356463de8677c5ddb00b',1,'TableSummaryGene::drawHeaders()']]],
   ['drawtable',['drawTable',['../class_controller.html#a4324368a8739d02753a66a86d83f6c49',1,'Controller']]],
-  ['dynsections_2ejs',['dynsections.js',['../docs_2html_2dynsections_8js.html',1,'(Global Namespace)'],['../frontend_2static_2html_2dynsections_8js.html',1,'(Global Namespace)']]]
+  ['dynsections_2ejs',['dynsections.js',['../docs_2html_2dynsections_8js.html',1,'(Global Namespace)'],['../frontend_2docs_2html_2dynsections_8js.html',1,'(Global Namespace)']]]
 ];

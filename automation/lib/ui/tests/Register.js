@@ -1,9 +1,9 @@
 /**
- * @class    Registration Test
+ * @class    Registration 
  * @brief    Exercise user registration functionality
  * @details
  * @authors  Mike Wong mikewong@mail.sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup  UserAccount
+ * @ingroup  tests
 **/
 
 const Test         = require( 'Test' );
