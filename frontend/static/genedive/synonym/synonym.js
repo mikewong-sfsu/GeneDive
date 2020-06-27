@@ -1,3 +1,11 @@
+/**
+ * This class creates synonym for the DGR
+ * @author 
+ * @date 
+ * @ingroup genedive
+ *
+ */
+
 class Synonym {
 
   // ============================================================

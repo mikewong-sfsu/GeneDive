@@ -1,9 +1,9 @@
 /**
- * @class   SaveLoadTest
+ * @class   SaveLoad
  * @brief   Test the one hop for gene and report errors
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup SystemState
+ * @ingroup tests
 */
 
 const fs       = require( 'fs' );

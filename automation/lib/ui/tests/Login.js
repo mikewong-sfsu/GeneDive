@@ -4,7 +4,7 @@
  @brief      Tests to see if login works
  @details
  @authors    Mike Wong mikewong@sfsu.edu, Jack Cole jcole2@mail.sfsu.edu
- @ingroup    UserAccount
+ @ingroup    tests
  */
 const Test = require( 'Test' );
 

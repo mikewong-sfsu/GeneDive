@@ -1,5 +1,13 @@
 class Highlight extends HighlightPlugin{
-  
+
+/**
+ * This class will store and load state history of GeneDive
+ * @author 
+ * @date 
+ * @ingroup genedive
+ *
+ */
+
   constructor (input ) {
     super();
     this.input = $(input);

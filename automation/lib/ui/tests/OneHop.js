@@ -3,7 +3,7 @@
  * @brief   Perform a one-hop topology search for a given gene of interest
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup Search
+ * @ingroup tests
 */
 
 const Test    = require( 'Test' );

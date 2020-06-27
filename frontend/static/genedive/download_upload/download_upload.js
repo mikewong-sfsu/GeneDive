@@ -1,3 +1,10 @@
+/**
+ * This class will enable users to download and upload the search results from  GeneDive
+ * @author 
+ * @date 
+ * @ingroup genedive
+ *
+ */
 class DownloadUpload {
 
   constructor( download, upload ) {

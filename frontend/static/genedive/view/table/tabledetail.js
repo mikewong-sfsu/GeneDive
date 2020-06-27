@@ -1,4 +1,17 @@
+
 class TableDetail extends BuildDetailTable {
+
+/**
+ @class      TableDetailView
+ @brief      Handles the rendering and display of the Detail VIew.
+ @details
+ @authors    Mike Wong mikewong@sfsu.edu
+ Brook Thomas brookthomas@gmail.com
+ Jack Cole jcole2@mail.sfsu.edu
+ Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
+ @callergraph
+ @ingroup genedive
+ */
 
   constructor(table, interactions, additional_columns, group,visible_columns, ds) {
     super(table, interactions,additional_columns, visible_columns,  ds);

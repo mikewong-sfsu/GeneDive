@@ -4,7 +4,7 @@
  * @brief   Test to check if Pubmed link is working and report errors. 
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Vaishali Bisht vbisht1@mail.sfsu.edu
- * @ingroup Table
+ * @ingroup tests
 */
 
 const Test       = require( 'Test' );

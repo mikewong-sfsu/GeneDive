@@ -1,3 +1,11 @@
+/**
+ * This class will filter based on selected FIlter options in GeneDive
+ * @author 
+ * @date 
+ * @ingroup genedive
+ *
+ */
+
 /* Interacts with the Controller-Filter module */
 class TextFilter extends TextFilterPlugin{
 
