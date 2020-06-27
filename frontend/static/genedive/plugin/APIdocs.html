@@ -74,7 +74,7 @@ code {
   </div>
   <div class="row">
     <p>GeneDive is a powerful tool used to import, search, sort, filter, highlight and visualize results of querying 
-   interactions between Diseases, Genes and dRugs(DGR). Refer to Previde et. al.[2018] for more details on the functionalities offered.
+    interactions between Diseases, Genes and dRugs(DGR). Refer to <a href ="https://pubmed.ncbi.nlm.nih.gov/29218917/">Previde et. al.[2018]</a> for more details on the functionalities offered.
     </p>
     <p>
    GeneDive 3.0 provides advanced features to add custom behaviour to visualize user imported data sources using APIs mentioned below.
@@ -83,7 +83,7 @@ code {
   <div class=" row tableOfContents">
   <div>
 
-	  <h3 id="addSummaryColumnAPI" class="navLink"> addSummaryColumn</h3>
+	  <h3 id="addSummaryColumnAPI" class="navLink"> addSummaryColumns</h3>
   <p>This API enables users to visualize data in the summary view. Common usage include aggregation over interaction data grouped by 
   DGR as well as grouped by Article.The user can acess the data in a specific column by using the <a href="#getColumnAPI">getColumn</a> API. 
   <div class="parameter">
@@ -113,8 +113,8 @@ addSummaryColumns(group_id){
 <pre>
 addSummaryColumns(group_id){
   var summaryColumnMap = new Map();    //add all custom summary columns to this map
-  var xvalues = this.getColumn('x');   //get list of x values in the interactions
-  summaryColumnMap.set('x max.',() => (xvalues.sort((a,b) => b-a)[0]));    //function computes largest x value
+  var x = this.getColumn('x');   //get list of x values in the interactions
+  summaryColumnMap.set('x max.',() => (x.sort((a,b) => b-a)[0]));    //function computes largest x value
   return summaryColumnMap;
 }
 </pre>
@@ -129,8 +129,8 @@ addSummaryColumns(group_id){
 <pre>
 addSummaryColumns(group_id){
   var summaryColumnMap = new Map();    //add all custom summary columns to this map
-  var yvalues = this.getColumn('y');   //get list of x values in the interactions
-  summaryColumnMap.set('SD on y',() => math.std(yvalues));    //function computes standard diviation on list of y values
+  var y = this.getColumn('y');   //get list of x values in the interactions
+  summaryColumnMap.set('SD on y',() => math.std(y));    //function computes standard diviation on list of y values
   return summaryColumnMap;
 }
 </pre>
@@ -145,8 +145,8 @@ addSummaryColumns(group_id){
 <pre>
 addSummaryColumns(group_id){
   var summaryColumnMap = new Map();    //add all custom summary columns to this map
-  var zvalues = this.getColumn('z');   //get list of z values in the group of interactions
-  summaryColumnMap.set('z bar',() => this.plotBarGraph(zvalues, group_id)); //plot bar graph on z values
+  var z = this.getColumn('z');   //get list of z values in the group of interactions
+  summaryColumnMap.set('z bar',() => this.plotBarGraph(z, group_id)); //plot bar graph on z values
   return summaryColumnMap;
 }
 
@@ -228,8 +228,8 @@ plotGraph(dataset,svg_id ){
   </ol>
   </div>
   <div>
-    <h3 id="addDetailColumnAPI">addDetailColumn</h3>
-    <p>This API enables users to visualize data in the detail view. Common usage include mapping values within nested data objects, visualization in the forms of charts and graphs based on data, etc.The API works similar to <a href = "#addSummaryColumnAPI"=>AddSummaryColumn </a>, but maps values to each DGR interaction data.
+    <h3 id="addDetailColumnAPI">addDetailColumns</h3>
+    <p>This API enables users to visualize data in the detail view. Common usage include mapping values within nested data objects, visualization in the forms of charts and graphs based on data, etc.The API works similar to <a href = "#addSummaryColumnAPI"=>AddSummaryColumns </a>, but maps values to each DGR interaction data.
 The user can acess the data in a specific column by using the <a href="#getColumnAPI">getColumn</a> API. 
   <div class="parameter">
     <p><b>Return type:</b></br>
@@ -257,14 +257,14 @@ addDetailColumns(){
 addDetailColumns(){
   var detailColumnMap = new Map();    //add all custom detail columns to this map
   var x = this.getColumn('x');   //get x value from the interactions data //type string
-  detailColumnMap.set('a',() => (JSON.parse(x).a));    //map value for key = a
-  detailColumnMap.set('b',() => (JSON.parse(x).b));    //map value for key = b
+  detailColumnMap.set('A',() => (JSON.parse(x).a));    //map value for key = a
+  detailColumnMap.set('B',() => (JSON.parse(x).b));    //map value for key = b
   return detailColumnMap;
 }
 </pre>
     </li>
     </ol>
-    Refer to <a href="#mathExample">Examples to use math function</a> and <a href="#D3Example"> Examples to use D3 functions</a> for more implementations using library functions for mapping the custom column . 
+    Refer to <a href="#mathExample">Examples to use math function</a> and <a href="#D3Example"> Examples to use D3 functions</a> for more implementations using library functions for mapping the custom column. 
   </div>
   <div>
     <h3 id="getColumnAPI">getColumn</h3>
@@ -276,7 +276,7 @@ addDetailColumns(){
     <i>columnName</i> - name of the column in the interaction data
     </p>
     <p><b>Return type:</b></br>
-    <i>columnValue</i> - Returns the value mapped to column name in each interaction data on detail view. Returns a list of values mapped to column name for all interaction in a group in the summary view. This method is commonly used in <a href="#addSummaryColumnAPI">addSummaryColumn</a> and <a href="#addDetailColumnAPI">addDetailColumn</a> API.
+    <i>columnValue</i> - Returns the value mapped to column name in each interaction data on detail view. Returns a list of values mapped to column name for all interaction in a group in the summary view. This method is commonly used in <a href="#addSummaryColumnAPI">addSummaryColumns</a> and <a href="#addDetailColumnAPI">addDetailColumns</a> API.
 .
     </p>
     <p><b>Method Definition</b>
@@ -290,7 +290,7 @@ getColumn(columnName){
     <li>
     <div>
     <p><b>Input Parameters:</b><br>
-    <i>columnName</i> - name of the column in the interaction data
+    <i>columnName</i> - name of the column in the interaction data</br>
     <i>interaction</i> - single DGR interaction data
     </p>
     <p><b>Return type:</b></br>
@@ -298,7 +298,7 @@ getColumn(columnName){
     </p>
     <p><b>Method Definition</b>
 <pre>
-getColumn(columnName){
+getColumn(columnName, interaction){
   return columnValue;
 }</pre>
     </p>
@@ -309,7 +309,7 @@ getColumn(columnName){
   <!---addFilterAPI--->
   <div>
     <h3 id="addFilterAPI">addFilter</h3>
-    <p>This API enables users to add custom filtering options to filter data from user defined datasources. The user may create a filter using the <a href="#filter">Filter</a> class. Filter options are added to the Filter options dropdown on the control view.
+    <p>This API enables users to add custom filtering options to filter data from user-provided data sources. The user may create a filter using the <a href="#filter">Filter</a> class. New custom Filter options are added to the Filter dropdown on the control view.
   <div class="parameter">
     <p><b>Input Parameter: </b><br>
     <i>interactions</i> - DGR interaction data obtained on search query.
@@ -351,9 +351,9 @@ filterThemeByMaxScore(interactions){
 //filter function for maxScore
 getMaxScore(interactions, attribute){
   let filteredInteractions = interactions.filter((i) => {
-    let xValue = this.getColumn("x",i); //get value of "x" for each interaction
-    if(xValue){ if exists
-      let parseX = JSON.parse(xValue);   //parse JSON to access "a" and "b"
+    let x = this.getColumn("x",i); //get value of "x" for each interaction
+    if(x){ if exists
+      let parseX = JSON.parse(x);   //parse JSON to access "a" and "b"
       let maxAttribute = (parseX.a > parseX.b) ? "a" : "b" ; //get attribute with max value
       return (maxAttribute == attribute);
     }
