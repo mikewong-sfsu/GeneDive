@@ -79,6 +79,7 @@ class GeneDive {
 	async run( Test ) {
 	// ============================================================
 		let page    = await this.browser.newPage(); page.setViewport({ width: this.options.puppeteer.width, height: this.options.puppeteer.height });
+		await page.setDefaultNavigationTimeout(0);
 		let test    = new Test( page, this.browser, this.options );
 		let tty     = { pass: "\x1b[32mPASS\x1b[0m", fail: "\x1b[31mFAIL\x1b[0m" }; // The colors are somewhere between helpful and more trouble than their worth
 		let results = test.execute().then(( reason ) => {
