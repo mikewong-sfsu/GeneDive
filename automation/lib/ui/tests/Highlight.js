@@ -1,10 +1,10 @@
 
 /**
- * @class   Highlight Test
+ * @class   Highlight
  * @brief   Test to check if highlighted rows contains the keyword and report any error
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Vaishali Bisht vbisht1@mail.sfsu.edu
- * @ingroup SearchTools
+ * @ingroup tests
 */
 
 

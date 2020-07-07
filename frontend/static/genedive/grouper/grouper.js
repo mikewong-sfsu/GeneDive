@@ -1,3 +1,11 @@
+/**
+ * This class enables to group by DGR or Article ID
+ * @author 
+ * @date 
+ * @ingroup genedive
+ *
+ */
+
 class Grouper {
   
   constructor ( selector ) {

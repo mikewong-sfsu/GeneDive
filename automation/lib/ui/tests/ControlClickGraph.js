@@ -3,7 +3,7 @@
  * @brief   Mixin for user registration
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Jack Cole jcole2@mail.sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup Graph
+ * @ingroup tests
  */
 
 const Test    = require('Test');

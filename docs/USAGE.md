@@ -44,15 +44,15 @@ The majority of screen space is taken up in the middle by the results. On the to
 
 **Results Table:** The results here are grouped by gene interactions by default. You can group them by article interactions by clicking on Articles at the bottom of the Search area, under Group Table Results By. You can sort the table by clicking the small, black arrows next to each field header. If there is only one visible arrow, then the table is currently sorted by the non-visible arrow that is paired with that visible one.
 
-![Grouped results](../old/img/results_table_grouped.png)
+![Grouped results](img/results_table_grouped.png)
 
 Clicking on a table row will present you with all the interactions of that group. You can go directly to the article by clicking on the link under the Pubmed column. To return to the grouped results, click Back at the top left of the table.
 
-![Expanded results](../old/img/results_table_individual.png)
+![Expanded results](img/results_table_individual.png)
 
 **Gene Graph:** The graph below the table presents a visual representation of the gene interactions. The thickness of an edge represents how many interactions between the gene there are in the articles. The color of the node corresponds to the colors of the search items, located under the search bar.
 
-![Graph with multiple items search, showing the correlation between color of nodes and the searches](../old/img/graph_color_results_graph.png) ![Search with same colors](../old/img/graph_color_results_search.png)
+![Graph with multiple items search, showing the correlation between color of nodes and the searches](img/graph_color_results_graph.png) ![Search with same colors](img/graph_color_results_search.png)
 
 The graph can also be visually modified in a number of ways, along with being used to alter your search parameters.
 

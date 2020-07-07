@@ -1,9 +1,9 @@
 /**
- @class		ThreeHopTest
+ @class		ThreeHop
  @brief		Test the three hop for gene and report errors
  @details
  @authors	Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- @ingroup	Search
+ @ingroup	tests
 */
 
 const Test    = require( 'Test' );

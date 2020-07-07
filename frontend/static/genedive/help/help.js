@@ -1,3 +1,11 @@
+/**
+ * This class is designed to launch help
+ * @author 
+ * @date 
+ * @ingroup genedive
+ *
+ */
+
 class Help {
   
   constructor ( units ) {

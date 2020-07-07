@@ -3,7 +3,7 @@
  * @brief   Check History
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup SystemState
+ * @ingroup tests
 **/
 
 const Test    = require('Test');

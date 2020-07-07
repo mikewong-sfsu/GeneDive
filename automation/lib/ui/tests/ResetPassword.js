@@ -1,9 +1,9 @@
 /**
- * @class   ResetPasswordTest
+ * @class   ResetPassword
  * @brief   Exercises the reset password feature
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup UserAccount
+ * @ingroup tests
 */
 
 const Test         = require( 'Test' );

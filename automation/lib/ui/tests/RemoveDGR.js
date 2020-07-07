@@ -3,7 +3,7 @@
  * @brief   Test DGR deletion
  * @details See that DGR deletion does not create problems in software state
  * @authors Mike Wong mikewong@sfsu.edu, Vaishali Bisht vbisht1@mail.sfsu.edu
- * @ingroup SearchTools
+ * @ingroup tests
 */
 
 const Test    = require( 'Test' );

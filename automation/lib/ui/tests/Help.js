@@ -3,7 +3,7 @@
  * @brief   Navigation test on clicking help
  * @details
  * @authors Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup Help
+ * @ingroup tests
  */
 
 const Test = require('Test');

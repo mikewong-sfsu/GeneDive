@@ -1,10 +1,11 @@
+
 /**
- * @class   Clique
- * @brief   interaction mode - clique
- * @details
- * @authors Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
- * @ingroup	Search
- */
+ @class		Clique
+ @brief		interaction mode - clique
+ @details
+ @authors	Mike Wong mikewong@sfsu.edu, Nayana Laxmeshwar nlaxmeshwar@mail.sfsu.edu
+ @ingroup	tests
+*/
 
 const Test    = require( 'Test' );
 const Table   = require( '../automation/view/Table' );
