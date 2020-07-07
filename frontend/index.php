@@ -23,7 +23,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>GeneDive v<?= genedive_version() ?></title>
+    <title>GeneDive v<?= genedive_patch_level() ?></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -46,7 +46,7 @@
 
   <div class="strip">
     <div class="about">
-      <h2>GeneDive <small>Version <?= genedive_version() ?></small></h2>
+      <h2>GeneDive <small>Version <?= genedive_patch_level() ?></small></h2>
       <h4>Gene, Drug, and Disease Interaction Search and Visualization Tool</h4>
       <p>GeneDive is a powerful but easy-to-use application that can search, sort, group, filter, highlight, and visualize interactions between drugs, genes, and diseases (DGR).  GeneDive also facilitates topology discovery through the various search modes that reveal direct and indirect interactions between DGR.  The search results, in textual and graphical form, can be downloaded along with the search settings to easily restart the session at later time.
          Refer to <a target="_blank" href="//www.ncbi.nlm.nih.gov/pubmed/29218917">Previde et al., 2018</a> for more details.</p>
