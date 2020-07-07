@@ -52,6 +52,10 @@
       <p>GeneDive is a joint project between the Computer Science Department at San Francisco State University, and the Bioengineering Department at Stanford University.</p>
       <p id="citation">To cite this work, please use the following publication:
          Previde P., Thomas B., Wong M., Mallory E., Petkovic D., Altman R., and Kulkarni A. (2018) <a target="_blank" href="//www.ncbi.nlm.nih.gov/pubmed/29218917">GeneDive: A Gene Interaction Search and Visualization Tool to Facilitate Precision Medicine.</a> In the Proceedings of Pacific Symposium on Biocomputing, Vol 23, pp. 590-601. January 2018.</p>
+      <div>
+        <h4 style="color: gold; display: inline-block;">Looking for GeneDive v1.0? Go to</h4>&nbsp;
+        <a class="btn btn-warning" href="https://classic.genedive.net">https://classic.genedive.net</a>
+      </div>
     </div>
 
 
