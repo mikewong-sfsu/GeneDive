@@ -32,7 +32,13 @@ class Highlight {
     if ( term.length < 2 ) {
       return interactions.map( ( i ) => { i.highlight = false; return i; });
     } else {
-      return interactions.map( ( i ) => { i.highlight = new RegExp(term,"i").test(`${i.context} ${i.mention1} ${i.mention2}`); return i; });
+      let hightlights = [];
+      try {
+        highlights = interactions.map( ( i ) => { i.highlight = new RegExp(term,"i").test(`${i.context} ${i.mention1} ${i.mention2}`); return i; });
+      } catch( err ) {
+        return interactions;
+      }
+      return highlights;
     }
   }
 

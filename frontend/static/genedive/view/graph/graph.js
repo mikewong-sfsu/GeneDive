@@ -66,12 +66,9 @@ class GraphView {
    @callergraph
    */
   addSynonym( synonym ) { 
-    let isSet = synonym ? synonym.match( /^(?:BIOCARTA|KEGG|PID|REACTOME)\s/ ) : false;
-    if( synonym === null || isSet ) {
-      return ''; 
-    } else { 
-      return ` [aka ${synonym}]`;
-    }
+    if( synonym === undefined || synonym === null          )  { return ''; }
+    if( synonym.match( /^(?:BIOCARTA|KEGG|PID|REACTOME)\s/ )) { return ''; } 
+    return ` [aka ${synonym}]`;
   }
 
   /**

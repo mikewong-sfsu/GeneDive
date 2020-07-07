@@ -47,9 +47,10 @@ class ResultsTable {
   // ============================================================
     let isSet = synonym ? synonym.match( /^(?:BIOCARTA|KEGG|PID|REACTOME)\s/ ) : false;
     let synonymPhrase = '';
-    if( synonym === null ) { synonymPhrase = ''; } else 
-    if( isSet )            { synonymPhrase = `<span class="text-muted" style="font-size: 6pt;">&isin; \{${synonym}\}</span>`; } 
-    else                   { synonymPhrase = `<span class="text-muted">[aka ${synonym}]</span>`; }
+    if( synonym === null      ) { synonymPhrase = ''; } else 
+    if( synonym === undefined ) { synonymPhrase = ''; } else 
+    if( isSet )                 { synonymPhrase = `<span class="text-muted" style="font-size: 6pt;">&isin; \{${synonym}\}</span>`; } 
+    else                        { synonymPhrase = `<span class="text-muted">[aka ${synonym}]</span>`; }
     return `${gene} ${synonymPhrase}`;
   }
 
