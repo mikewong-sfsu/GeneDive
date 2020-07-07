@@ -45,7 +45,12 @@ class ResultsTable {
   // ============================================================
   addSynonym ( gene, synonym ) {
   // ============================================================
-    return `${gene} <span class="text-muted">[aka ${synonym}]</span>`;
+    let isSet = synonym ? synonym.match( /^(?:BIOCARTA|KEGG|PID|REACTOME)\s/ ) : false;
+    let synonymPhrase = '';
+    if( synonym === null ) { synonymPhrase = ''; } else 
+    if( isSet )            { synonymPhrase = `<span class="text-muted" style="font-size: 6pt;">&isin; \{${synonym}\}</span>`; } 
+    else                   { synonymPhrase = `<span class="text-muted">[aka ${synonym}]</span>`; }
+    return `${gene} ${synonymPhrase}`;
   }
 
   // ============================================================
@@ -80,7 +85,6 @@ class ResultsTable {
     excerpt = this.styleExcerpt(excerpt, row.mention1, row.mention1_color);
     excerpt = this.styleExcerpt(excerpt, row.mention2, row.mention2_color);
     return excerpt;
-
 
   }
 }
