@@ -56,7 +56,13 @@ class ResultsTable {
   // ============================================================
   addSynonym ( gene, synonym ) {
   // ============================================================
-    return `${gene} <span class="text-muted">[aka ${synonym}]</span>`;
+    let isSet = synonym ? synonym.match( /^(?:BIOCARTA|KEGG|PID|REACTOME)\s/ ) : false;
+    let synonymPhrase = '';
+    if( synonym === null      ) { synonymPhrase = ''; } else 
+    if( synonym === undefined ) { synonymPhrase = ''; } else 
+    if( isSet )                 { synonymPhrase = `<span class="text-muted" style="font-size: 6pt;">&isin; \{${synonym}\}</span>`; } 
+    else                        { synonymPhrase = `<span class="text-muted">[aka ${synonym}]</span>`; }
+    return `${gene} ${synonymPhrase}`;
   }
 
   // ============================================================
@@ -139,6 +145,7 @@ class ResultsTable {
 	  res += '<a class="pubmedLink"  href=/api/external_link.php?action=ref&url_link=' + value + ' target=_blank>'+ key + '</a>';
 	}
 	return res;
+
   }
 
   // ============================================================

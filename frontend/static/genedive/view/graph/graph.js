@@ -59,6 +59,19 @@ class GraphView {
   }
 
   /**
+   @fn        addSynonym
+   @brief     Given a possible synonym or set membership, returns the synonym string (i.e. [aka X])
+   @details   For graphs, the synonym is not shown for set membership (too much text)
+   @param     synonym The synonym name
+   @callergraph
+   */
+  addSynonym( synonym ) { 
+    if( synonym === undefined || synonym === null          )  { return ''; }
+    if( synonym.match( /^(?:BIOCARTA|KEGG|PID|REACTOME)\s/ )) { return ''; } 
+    return ` [aka ${synonym}]`;
+  }
+
+  /**
    @fn        GraphView.draw
    @brief     Redraws the entire graph
    @details   When called, the entire graph is cleared and redrawn with the DGRs and their interactions.
@@ -125,12 +138,12 @@ class GraphView {
     for(let i of interactions)
     {
       interactionDGRs[i.geneids1] = {
-        name:  i.mention1 + (i.synonym1 != null ? ` [aka ${i.synonym1}]` : "" ),
+        name:  i.mention1 + this.addSynonym( i.synonym1 ),
         color: i.mention1_color,
         shape: this.getShapeFromType(i.type1),
       };
       interactionDGRs[i.geneids2] = {
-        name:  i.mention2 + (i.synonym2 != null ? ` [aka ${i.synonym2}]` : "" ),
+        name:  i.mention2 + this.addSynonym(i.synonym2 ),
         color: i.mention2_color,
         shape:this.getShapeFromType(i.type2),
       };
@@ -226,8 +239,8 @@ class GraphView {
     let nodes = {};
 
     interactions.forEach(i => {
-      let i1name = i.mention1 + (i.synonym1 != null ? ` [aka ${i.synonym1}]` : "" );
-      let i2name = i.mention2 + (i.synonym2 != null ? ` [aka ${i.synonym2}]` : "" );
+      let i1name = i.mention1 + this.addSynonym( i.synonym1 );
+      let i2name = i.mention2 + this.addSynonym( i.synonym2 );
 
       if (!nodes.hasOwnProperty(i.geneids1)) {
         nodes[i.geneids1] = {group: 'nodes', data: {id: i.geneids1, name: i1name, color: i.mention1_color, type:i.type1}};
