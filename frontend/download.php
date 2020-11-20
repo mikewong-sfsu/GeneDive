@@ -49,6 +49,11 @@
     and download the Docker Desktop.</p>
     <p><a class="btn btn-primary" href="https://www.docker.com/products/docker-desktop" target="_blank"><span class="fas fa-external-link-alt"></span> Get Docker Desktop</a></p>
 
+    <h3>Installing Docker on UNIX Systems without Root Access</h3>
+	<p>If you are installing Docker on a shared UNIX system (e.g. a cluster)
+	and you do <b>not</b> have root access, you can run Docker in Rootless
+	mode by following the instructions here: <a href="https://docs.docker.com/engine/security/rootless">https://docs.docker.com/engine/security/rootless</a></p>
+
     <h2>Download the GeneDive Docker Image</h2>
 <?php if( file_exists( 'static/genedive/docker/images/genedive-docker.gz' )): ?>
     <p><a class="btn btn-primary docker" data-toggle="tooltip-initial" href="/static/genedive/docker/images/genedive-docker.gz" title="Download the GeneDive Docker image. The GeneDive Docker image will allow you to import your own structured DGR data for search and visualization in GeneDive."><span class="fab fa-docker"></span> Download GeneDive Docker Image (<?php echo( sprintf( "%.1f GB", filesize( 'static/genedive/docker/images/genedive-docker.gz')/ (1024 * 1024 * 1024 ))) ?>)</a></p>
