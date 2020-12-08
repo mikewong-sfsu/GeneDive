@@ -66,12 +66,12 @@ try{
 
   $mail->SMTPAuth   = true;                  
   $mail->SMTPSecure = "tls";                 
-  $mail->Host       = "smtp.gmail.com";      
+  $mail->Host       = $SMTP_HOST;
   $mail->Port       = 587;                   
   $mail->Username   = $SMTP_USER; 
   $mail->Password   = $SMTP_PASS;      
 
-  $mail->SetFrom('genedive@gmail.com', 'GeneDive');
+  $mail->SetFrom( 'no-reply@genedive.net', 'GeneDive' );
   $mail->Subject    = "GeneDive: Reset Password";
   $mail->MsgHTML( $message );
 
