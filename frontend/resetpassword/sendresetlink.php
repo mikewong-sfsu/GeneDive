@@ -71,7 +71,7 @@ try{
   $mail->Username   = $SMTP_USER; 
   $mail->Password   = $SMTP_PASS;      
 
-  $mail->SetFrom('no-reply@genedive.net', 'GeneDive');
+  $mail->SetFrom( 'no-reply@genedive.net', 'GeneDive' );
   $mail->Subject    = "GeneDive: Reset Password";
   $mail->MsgHTML( $message );
 
