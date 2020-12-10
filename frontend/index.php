@@ -76,12 +76,12 @@
       <script>
         // Let the user start with logging in (e-mail takes first focus)
         $(() => { $( '#email' ).focus(); });
+  		var target = '<?= isset( $_GET[ 'referrer' ]) ? $_GET[ 'referrer' ] : 'search.php' ?>';
 
         $( '#login-submit' ).off( 'click' ).click(( ev ) => {
           ev.preventDefault();
 
           let data = { email : $( '#email' ).val(), password: $( '#password' ).val(), proxy: <?php echo $use_native_ds ? 'true' : 'false' ?>, 'login-submit' : true };
-          console.log( 'SENDING', data );
           $.post({
             url: <?php if( $use_native_ds ) { echo "\"$server/login.php\""; } else { echo "\"login.php\""; } ?>,
             data: data,
@@ -98,7 +98,7 @@
               response[ 'login-submit' ] = true;
               // Propogate session token to proxy
               $.post( 'login.php', response )
-              .done(( response ) => { console.log( response ); window.location = 'search.php'; })
+              .done(( response ) => { console.log( response ); window.location = target; })
               .fail(( error ) => { console.log( error ); })
             }
           })
