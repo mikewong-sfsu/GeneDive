@@ -87,7 +87,7 @@
 	the specifications set forth in the instructions as part of importing your
 	data into GeneDive.</p>
 
-	<img src="static/genedive/images/datasource/import/add-data-source.png">
+	<div style="text-align: center;"><a href="static/genedive/images/datasource/import/add-data-source.png" style="border: none;"><img src="static/genedive/images/datasource/import/add-data-source.png" width="480px"></a></div>
 
     <h2>Cite Us</h2>
     <p>To cite this work, please use the following publication:</p>
