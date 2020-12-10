@@ -60,7 +60,7 @@
     <p><a class="btn btn-primary docker" data-toggle="tooltip-initial" href="/static/genedive/docker/images/genedive-docker.gz" title="Download the GeneDive Docker image. The GeneDive Docker image will allow you to import your own structured DGR data for search and visualization in GeneDive."><span class="fab fa-docker"></span> Download GeneDive Docker Image (<?php echo( sprintf( "%d MB", filesize( 'static/genedive/docker/images/genedive-docker.gz')/ (1024 * 1024 ))) ?>)</a></p>
 <?php endif; ?>
 <?php else: ?>
-    <p>You must be <a class="btn btn-primary" href="index.php" ><span class="fas fa-key"></span> Logged in</a> to download the GeneDive Docker image.</p>
+    <p>You must <a class="btn btn-primary" href="index.php" ><span class="fas fa-key"></span> Log in</a> to download the GeneDive Docker image.</p>
 <?php endif; ?>
 
     <h2>Run GeneDive with Docker</h2>
