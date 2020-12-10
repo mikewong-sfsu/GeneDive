@@ -29,7 +29,7 @@
 
   <div class="container">
 
-    <h1>Getting Started with the GeneDive Docker Image</h1>
+    <h1>Importing Your Data with the GeneDive Docker Image</h1>
     <p>GeneDive is a powerful but easy-to-use application that can search,
     sort, group, filter, highlight, and visualize interactions between diseases,
     genes, and drugs (DGR). Refer to <a target="_blank"
@@ -68,7 +68,7 @@
 <pre>
     gunzip genedive-docker.gz 
     docker load -i genedive-docker
-    docker run -d -p 8456:80 --name genedive-v2.5-local genedive-v2.5
+    docker run -d -p 8456:80 --name genedive-v2.5.2-local genedive-v2.5.2
 </pre>
 
     <p>You can substitute port <code>8456</code> with another available port if
@@ -77,6 +77,17 @@
 	<p>When all the above is done, point your browser to 
 	<a href="http://localhost:8456" target="_blank">http://localhost:8456</a> 
 	(or the port of your choice) to begin using GeneDive on Docker.</p>
+
+	<h2>Importing Your Data</h2>
+	<p>To import your data, you will need to <i>add a data source</i> to GeneDive.
+	First login to your local GeneDive Docker application at <a href="http://localhost:8456" target="_blank">http://localhost:8456</a>.
+	Click on the hamburger menu in the upper-left corner as shown in the image
+	below. Select <i>Add a Data Source</i> from the menu, and follow the
+	instructions. You will need to reformat your data into CSV format, following
+	the specifications set forth in the instructions as part of importing your
+	data into GeneDive.</p>
+
+	<img src="static/genedive/images/datasource/import/add-data-source.png">
 
     <h2>Cite Us</h2>
     <p>To cite this work, please use the following publication:</p>
