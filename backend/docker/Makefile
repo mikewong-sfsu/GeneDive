@@ -24,6 +24,7 @@ build: cache
 
 cache:
 	@echo Cloning the GeneDive application for Docker installation
+	mkdir -p devel/backend/docker
 	cp	../../.gitignore \
 		../../LICENSE \
 		devel
@@ -36,6 +37,7 @@ cache:
 	for i in `ls | grep -v devel`; do cp -Rf $$i devel/backend/docker; done
 	cp -Rf ../../docs devel
 	cp -Rf ../../automation devel
+
 devel: check-keys
 	cp -f dockerfiles/devel Dockerfile
 
@@ -62,7 +64,7 @@ stop:
 clean: 
 	rm -f Dockerfile
 	rm -Rf devel
-	docker rm genedive3.0-local
+	docker rm -f genedive3.0-local
 
 shell:
 	docker exec -it genedive3.0-local /bin/bash
