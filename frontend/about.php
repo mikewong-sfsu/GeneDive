@@ -49,7 +49,13 @@
 
     <div class="row">
       <h2>Cite Us</h2>
-      <p>To cite this work, please use the following publication:</p>
+      <p>To cite this work, please use the following publications:</p>
+      <p id="citation">Wong M., Previde P., Cole J., Thomas B., Laxmeshwar N.,
+      Mallory E., Lever J., Petkovic D., Altman R., Kulkarni A., (2021) <a
+      href="https://pubmed.ncbi.nlm.nih.gov/33737208/"> Search and visualization of
+      gene-drug-disease interactions for pharmacogenomics and precision medicine
+      research using GeneDive</a> J Biomed. Inform., Vol 117 Num 103732, May
+      2021.</p>
       <p id="citation">Previde P., Thomas B., Wong M., Mallory E., Petkovic D.,
       Altman R., and Kulkarni A. (2018) <a target="_blank"
       href="https://www.ncbi.nlm.nih.gov/pubmed/29218917">GeneDive: A Gene Interaction
