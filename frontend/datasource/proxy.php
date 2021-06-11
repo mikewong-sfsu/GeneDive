@@ -1,3 +1,3 @@
 <?php
-$server = "https://staging.genedive.net";
+$server = "https://www.genedive.net";
 ?>

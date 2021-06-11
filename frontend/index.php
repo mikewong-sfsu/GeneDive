@@ -71,7 +71,7 @@
           <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
           <a class="forgot-password" href="resetpassword/forgotpass.php">Forgot your password?</a>
         </div>
-        <button id="login-submit" name="login-submit" class="btn btn-primary">Login</button> or <a class="register" href="registration.php">Register</a>
+        <button id="login-submit" name="login-submit" class="btn btn-primary">Login</button> or <a class="register" href=<?php echo "\"$server/registration.php\"" ?>>Register</a>
       </form>
       <script>
         // Let the user start with logging in (e-mail takes first focus)
@@ -83,7 +83,7 @@
           let data = { email : $( '#email' ).val(), password: $( '#password' ).val(), proxy: <?php echo $use_native_ds ? 'true' : 'false' ?>, 'login-submit' : true };
           console.log( 'SENDING', data );
           $.post({
-            url: "login.php",
+            url: <?php if( $use_native_ds ) { echo "\"$server/login.php\""; } else { echo "\"login.php\""; } ?>,
             data: data,
             timeout: 3000,
             cache: false
