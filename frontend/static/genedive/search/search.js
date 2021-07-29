@@ -10,7 +10,7 @@
  @callergraph
  */
 
-class Search {
+ class Search {
 
   constructor(input, topology, display, color) {
     this.input = $(input);
@@ -19,24 +19,24 @@ class Search {
     this.color = color;
     this.graphsearch = new GraphSearch();
     this.sets = [];
-    this.settingState       = false;
-    this.GENES_NAME         = "Genes";
-    this.DISEASES_NAME      = "Diseases";
-    this.DRUGS_NAME         = "Drugs";
-    this.GENESETS_NAME      = "Genesets";
-    this.TOPOLOGY_ONE_HOP   = "1hop";
-    this.TOPOLOGY_TWO_HOP   = "2hop";
+    this.settingState = false;
+    this.GENES_NAME = "Genes";
+    this.DISEASES_NAME = "Diseases";
+    this.DRUGS_NAME = "Drugs";
+    this.GENESETS_NAME = "Genesets";
+    this.TOPOLOGY_ONE_HOP = "1hop";
+    this.TOPOLOGY_TWO_HOP = "2hop";
     this.TOPOLOGY_THREE_HOP = "3hop";
-    this.TOPOLOGY_CLIQUE    = "clique";
+    this.TOPOLOGY_CLIQUE = "clique";
 
     // Load the SVG files
-    this.svgNCBI  = "";
+    this.svgNCBI = "";
     this.svgPharm = "";
-    this.svgMesh  = "";
+    this.svgMesh = "";
     (async function (thisElement) {
-      thisElement.svgNCBI  = thisElement.loadFile("/static/genedive/images/linkout-ncbi.svg");
+      thisElement.svgNCBI = thisElement.loadFile("/static/genedive/images/linkout-ncbi.svg");
       thisElement.svgPharm = thisElement.loadFile("/static/genedive/images/linkout-pharmgkb.svg");
-      thisElement.svgMesh  = thisElement.loadFile("/static/genedive/images/linkout-mesh.svg");
+      thisElement.svgMesh = thisElement.loadFile("/static/genedive/images/linkout-mesh.svg");
     }(this));
 
     this.initTypeahead();
@@ -48,7 +48,7 @@ class Search {
       $(event.currentTarget).addClass("active");
 
       this.input.val("");
-      if(!this.settingState)
+      if (!this.settingState)
         GeneDive.onSelectSearchType();
     });
   }
@@ -201,7 +201,7 @@ class Search {
 
   search3Hop() {
     let second_set;
-    if(this.sets.length >= 2)
+    if (this.sets.length >= 2)
       second_set = this.sets[1].ids;
     else
       second_set = this.sets[0].ids;
@@ -243,39 +243,39 @@ class Search {
 
       item = $("<div/>")
         .addClass(`search-item`)
-        .attr({ 'data-dgr-symbol': set.name, 'data-dgr-id': JSON.stringify( set.ids )})
+        .attr({ 'data-dgr-symbol': set.name, 'data-dgr-id': JSON.stringify(set.ids) })
         .css("background-color", set.color)
         .append($("<span/>").addClass("name").text(set.name))
         .append($("<span/>").addClass(`${set.id}-links`))
         .append(
           $("<i/>").addClass("fa fa-times text-danger remove").data("symbol", set.name)
-            .off( 'click' ).on('click', (event) => {
+            .off('click').on('click', (event) => {
               this.removeSearchTerm($(event.target).data("symbol"));
             })
         );
 
-      this.display.append( item );
-      GeneDiveAPI.alternativeIDs( set.ids[0] ).then( ( returnedResult ) => {
-        if( returnedResult ) {
-          this.setLinks( JSON.parse(returnedResult.vals ), returnedResult.type ,set.id);
+      this.display.append(item);
+      GeneDiveAPI.alternativeIDs(set.ids[0]).then((returnedResult) => {
+        if (returnedResult) {
+          this.setLinks(JSON.parse(returnedResult.vals), returnedResult.type, set.id);
         }
-      }).catch((error) => {GeneDive.handleException(error)});
+      }).catch((error) => { GeneDive.handleException(error) });
     }
 
     // Initialize tooltips
-    $('[data-toggle="tooltip"]').tooltip({trigger: 'hover',});
+    $('[data-toggle="tooltip"]').tooltip({ trigger: 'hover', });
   }
 
-  setLinks(values, type, id){
+  setLinks(values, type, id) {
     let links = [];
 
     // IDs are prepended with C or D
-    if("ncbi" in values) {
+    if ("ncbi" in values) {
       links.push($("<a/>").addClass("linkout ncbi-linkout")
         .attr("data-toggle", "tooltip")
         .attr("data-container", "body")
         .attr("title", "Open NCBI Datasheet In New Tab")
-        .attr("href", this.createExternalLink("ncbi",type,values.pgkb))
+        .attr("href", this.createExternalLink("ncbi", type, values.pgkb))
         .attr("target", "_blank")
         .append($("<svg>")
           .append(this.svgNCBI)
@@ -283,24 +283,24 @@ class Search {
     }
 
     // PHARMGKB
-    if("pgkb" in values)
+    if ("pgkb" in values)
       links.push($("<a/>").addClass("linkout pharmgkb-linkout")
         .attr("data-toggle", "tooltip")
         .attr("data-container", "body")
         .attr("title", "Open PharmGKB Datasheet In New Tab")
-        .attr("href", this.createExternalLink("pgkb",type,values.pgkb))
+        .attr("href", this.createExternalLink("pgkb", type, values.pgkb))
         .attr("target", "_blank")
         .append($("<svg>")
           .append(this.svgPharm)
         ));
 
     // MESH
-    if("mesh" in values)
+    if ("mesh" in values)
       links.push($("<a/>").addClass("linkout mesh-linkout")
         .attr("data-toggle", "tooltip")
         .attr("data-container", "body")
         .attr("title", "Open MeSH Datasheet In New Tab")
-        .attr("href", this.createExternalLink("mesh",type,values.mesh))
+        .attr("href", this.createExternalLink("mesh", type, values.mesh))
         .attr("target", "_blank")
         .append($("<svg>")
           .append(this.svgMesh)
@@ -310,8 +310,7 @@ class Search {
 
   }
 
-  createExternalLink(db, type, id)
-  {
+  createExternalLink(db, type, id) {
 
     return `/api/external_link.php?action=single_dgr&dgr=${id}&db=${db}`;
     // let pharm_gkb_types = {
@@ -333,18 +332,17 @@ class Search {
     // }
   }
 
-  createExternalLinkWithoutKnowingDB(type, id)
-  {
+  createExternalLinkWithoutKnowingDB(type, id) {
     let db = this.getDBfromID(id);
 
-    return this.createExternalLink(db, type,id)
+    return this.createExternalLink(db, type, id)
   }
 
-  getIconLinkFromID(id){
+  getIconLinkFromID(id) {
     let db = this.getDBfromID(id);
-    let svg = $("<svg>");
+    let svg = $('<svg>');
 
-    switch (db){
+    switch (db) {
       case "ncbi":
         svg.append(this.svgNCBI);
         svg.attr("title", "Open NCBI Datasheet In New Tab");
@@ -362,12 +360,11 @@ class Search {
     return svg;
   }
 
-  getDBfromID(id)
-  {
+  getDBfromID(id) {
     let db = "ncbi";
-    if(id.toUpperCase().startsWith("PA"))
+    if (id.toUpperCase().startsWith("PA"))
       db = "pgkb";
-    else if(id.toUpperCase().startsWith("MESH:"))
+    else if (id.toUpperCase().startsWith("MESH:"))
       db = "mesh";
 
     return db;
@@ -375,7 +372,7 @@ class Search {
 
   initTypeahead() {
     $().ready(() => { GeneDive.loadLandingPage(); }); // Wait until GeneDive is defined and then require landing page be loaded. 
-    console.log( `Initializing Typeahead with ${AUTOCOMPLETE_GENE.length} genes, ${AUTOCOMPLETE_DRUG.length} drugs, ${AUTOCOMPLETE_DISEASE.length} diseases, and ${AUTOCOMPLETE_GENE_SET.length} gene sets` );
+    console.log(`Initializing Typeahead with ${AUTOCOMPLETE_GENE.length} genes, ${AUTOCOMPLETE_DRUG.length} drugs, ${AUTOCOMPLETE_DISEASE.length} diseases, and ${AUTOCOMPLETE_GENE_SET.length} gene sets`);
 
     var genes = new Bloodhound({
       local: AUTOCOMPLETE_GENE,
@@ -407,58 +404,84 @@ class Search {
 
     const TYPE_AHEAD_LIMIT = 10;
     this.input.typeahead(
-      {minLength: 1, highlight: true, hint: false,},
+      { minLength: 1, highlight: true, hint: false, },
       {
         name: this.GENES_NAME,
         source: genes,
         limit: TYPE_AHEAD_LIMIT,
         display: 'symbol',
-        templates: {header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>"}
+        templates: { header: "<h4 style='color:rgb(128,128,128);'>Genes</h4>" }
       },
       {
         name: this.DRUGS_NAME,
         source: chemical,
         limit: TYPE_AHEAD_LIMIT,
         display: 'symbol',
-        templates: {header: "<h4 style='color:rgb(128,128,128);'>Drugs</h4>"}
+        templates: { header: "<h4 style='color:rgb(128,128,128);'>Drugs</h4>" }
       },
       {
         name: this.DISEASES_NAME,
         source: disease,
         limit: TYPE_AHEAD_LIMIT,
         display: 'symbol',
-        templates: {header: "<h4 style='color:rgb(128,128,128);'>Diseases</h4>"}
+        templates: { header: "<h4 style='color:rgb(128,128,128);'>Diseases</h4>" }
       },
       {
         name: this.GENESETS_NAME,
         source: geneset,
         limit: TYPE_AHEAD_LIMIT,
         display: 'symbol',
-        templates: {header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>"}
+        templates: { header: "<h4 style='color:rgb(128,128,128);'>Genesets</h4>" }
       },
     );
 
-    $('.twitter-typeahead').css('width','100%');
+    $('.twitter-typeahead').css('width', '100%');
     //$('tt-suggestion tt-selectable').css({'width': '150px', 'word-wrap':'break-word'});
 
     // When suggestions box opens, put cursor on first result
-    $('.twitter-typeahead input').off( 'typeahead:render' ).on( 'typeahead:render', () => {
-      $('.tt-suggestion').css({'width': '295px', 'word-wrap':'break-word'}).first().addClass('tt-cursor');
+    $('.twitter-typeahead input').off('typeahead:render').on('typeahead:render', () => {
+      $('.tt-suggestion').css({ 'width': '295px', 'word-wrap': 'break-word' }).first().addClass('tt-cursor');
     });
 
     // The action we take when a typeahead element is selected
-    this.input.off( 'typeahead:selected' ).on( 'typeahead:selected', (event, item, set_name) => {
+    this.input.off('typeahead:selected').on('typeahead:selected', (event, item, set_name) => {
 
       // Case: Gene w/ Disambiguation
-      if (item.values.length > 1 && set_name !== this.GENESETS_NAME) {
-        GeneDive.disambiguation.resolveIds(item.symbol, item.values, GeneDive.probfilter.getMinimumProbability());
-        this.input.typeahead("val", "");
-        return;
-      }
+      //if (item.values.length > 1 && set_name !== this.GENESETS_NAME) {
+      console.log("Enter Disambiguation");
+      let query = item.symbol + "+AND+%22Homo+sapiens%22%5Bporgn%3A__txid9606%5D";
+      $.ajax({
+        type: "GET",
+        url: `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term=${query}&retmax=5000&retmode=json&usehistory=y`,
+        success: function (result) {
+          //console.log(result);
+          if (result.esearchresult.count > 1) {
+            console.log("Case: Gene w/ Disambiguation");
+            GeneDive.disambiguation.resolveIds(item.symbol, item.values, result, GeneDive.probfilter.getMinimumProbability());
+            GeneDive.search.input.typeahead("val", "");
+            return;
+          }
+          else {
+            console.log("Case: Gene w/o Disambiguation");
+            console.log(result);
+            GeneDive.search.addSearchTerm(item.symbol, item.values, set_name);
+            GeneDive.search.input.typeahead("val", "");
+          }
+        },
+        error: function (xhr, status, errorThrown) {
+          console.log(xhr);
+          console.log(status);
+          alertify.error("Error with Entrez API : Could not resolve symbol (View console)");
+        }
+      });
+      // GeneDive.disambiguation.resolveIds(item.symbol, item.values, GeneDive.probfilter.getMinimumProbability());
+      // this.input.typeahead("val", "");
+      // return;
+      //}
 
       // Case: Gene w/o Disambiguation || Search Set
-      this.addSearchTerm(item.symbol, item.values, set_name);
-      this.input.typeahead("val", "");
+      // this.addSearchTerm(item.symbol, item.values, set_name);
+      // this.input.typeahead("val", "");
 
     });
 
@@ -472,13 +495,13 @@ class Search {
     for (let set of this.sets) {
 
       if (set.type === "Gene") {
-        graph_data[set.ids[0]] = {name: set.name, color: set.color};
+        graph_data[set.ids[0]] = { name: set.name, color: set.color };
         continue;
       }
 
       // Geneset: process each gene individually
       set.ids.forEach(g => {
-        graph_data[g] = {name: undefined, color: set.color};
+        graph_data[g] = { name: undefined, color: set.color };
         name_lookup.push(g);
       });
     }
@@ -550,14 +573,14 @@ class Search {
 
 class SearchTerm {
   constructor(name, ids, type) {
-    this.id     = sha256( name ).substr( 0, 12 );
-    this.name   = name;
-    this.type   = type;
-    this.ids    = ids.map(i => String(i));
-    this.color  = "#cccccc";
+    this.id = sha256(name).substr(0, 12);
+    this.name = name;
+    this.type = type;
+    this.ids = ids.map(i => String(i));
+    this.color = "#cccccc";
     this.entity = "";
 
-    switch ( this.ids[0].substr( 0, 1 )) {
+    switch (this.ids[0].substr(0, 1)) {
       case "C":
         this.entity = "chemical";
         break;

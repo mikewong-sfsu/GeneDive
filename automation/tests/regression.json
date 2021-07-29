@@ -2,9 +2,9 @@
 	"puppeteer" : {
 		"headless" : false
 	},
-	"url": "http://localhost/",
-	"login": "testwork1@test.com",
-	"password": "testwork",
+	"url": "http://localhost:8080",
+	"login": "rachit.j14@outlook.com",
+	"password": "Genedive123",
 	"register": {
 		"email":"testwork1@test.com",
 		"password":"testwork",

@@ -13,13 +13,13 @@ if( false ) {
     "count"   => [],
     "results" => [],
     "errors"  => ["Unauthorized"]
-  ]);
+  ]); 
 
   header( 'Content-Length: ' . mb_strlen( $response, '8bit' ));
   header( 'Content-Range: 0' ); // Content-Length header is dropped unless this is set.
   echo $response;
   exit();
-}
+} // remove - not needed
 
 $ids         = $_GET[ 'ids' ];
 $gids        = explode( ',', preg_replace('/[^0-9A-Za-z:,]/', '', $ids ));
