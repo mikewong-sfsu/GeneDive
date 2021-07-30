@@ -22,7 +22,7 @@ class AddPluginsTest extends mix( Test ).with( Table, Datasource ) { // Order ma
 			try {
                 let dsname = this.options.ds.name;
                 let native = ["DeepDive-Extracted Interactions", "PharmGKB"];
-                let dgr    = 'neurotoxic'; 
+                let dgr    = 'NHN1'; 
                 await this.login();
                 //await this.page.waitForSelector('#loading-container', { hidden: true });
                 await this.oneHop();

@@ -21,8 +21,8 @@ class HighlightTest extends mix( Test ).with( Table, Graph, Highlight ) { // Ord
 	execute() {
 		return new Promise( async (resolve, reject) => {
 			try {
-				let dgr  = 'SP-A'; // MW NEED TO PARAMETERIZE THIS LATER
-				let term = 'embolism';
+				let dgr  = 'SFTPA1'; // MW NEED TO PARAMETERIZE THIS LATER
+				let term = 'ebselen';
 
 				await this.login();
 				await this.oneHop();

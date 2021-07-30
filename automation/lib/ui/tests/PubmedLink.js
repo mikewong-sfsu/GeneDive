@@ -19,7 +19,7 @@ class PubmedLinkTest extends mix( Test ).with( Table, PubmedLink ) {
 	execute() {
 		return new Promise(async (resolve, reject) => {
 			try {
-				let dgrs = [ 'SP-A', 'Tino' ];
+				let dgrs = [ 'SFTPA1', 'SFTPA2' ];
 
 				await this.login();
 				await this.oneHop();

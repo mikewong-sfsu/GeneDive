@@ -21,13 +21,13 @@ class ThreeHop extends mix( Test ).with( Score, Table, Graph ) {
 	execute() {
 	    return new Promise( async ( resolve, reject ) => {
 			try {
-				let dgrs = [ 'SP-A', 'MAIR' ]; // MW NEED TO PARAMETERIZE THIS LATER
+				let dgrs = [ 'SFTPA1', 'SFTPA2' ]; // MW NEED TO PARAMETERIZE THIS LATER
 
 				// ===== TEST THE MECHANICS OF SEARCHING
 				await this.login();
 				await this.threeHop();
 				await this.search( dgrs );
-				await this.page.waitForSelector('#loading-container', { hidden: true });
+				await this.page.waitForSelector('#loading-container', {timeout: 60000 ,hidden: true });
 				await this.confidence.score.setSlider( 0.90 );
 
 				// ===== GET THE RESULTS FROM THE TABLE AND FLATTEN THE NESTED ARRAY TO 1D ARRAY

@@ -100,12 +100,49 @@ GeneDiveAPI.getGeneSummary = function (webEnvId, callback) {
 /// Given a gene symbol, returns gene IDs for genes with same symbols
 ///
 /// @author rjoshi@mail.sfsu.edu
-GeneDiveAPI.resolveGeneSym = function (symbol, result, callback) {
-  GeneDiveAPI.generateGeneSummary(result.esearchresult.idlist, (Id) => {
-    GeneDiveAPI.getGeneSummary(Id, (docs) => {
-      callback(docs);
+GeneDiveAPI.resolveGeneSym = function (symbol, result, min_confidence, callback) {
+  //console.log(result.esearchresult.idlist);
+  GeneDiveAPI.geneDetails(result.esearchresult.idlist.toString(), min_confidence, (dgrDetails) => {
+    console.log("DB results :");
+    console.log(JSON.parse(dgrDetails));
+    let parsedDetails = JSON.parse(dgrDetails);
+    let idlist = [];
+    for (let dgr of parsedDetails) {
+      idlist.push(dgr.geneid);
+    };
+    GeneDiveAPI.generateGeneSummary(idlist, (Id) => {
+      GeneDiveAPI.getGeneSummary(Id, (docs) => {
+        console.log("before filter");
+        console.log(docs);
+        for (let dgr of parsedDetails) {
+          let idx = parsedDetails.indexOf(dgr);
+          if ((!docs.result[dgr.geneid].name.toLowerCase().includes(symbol.toLowerCase())) && (!docs.result[dgr.geneid].otheraliases.toLowerCase().includes(symbol.toLowerCase())) && (!dgr.mention.toLowerCase().includes(symbol.toLowerCase()))) {
+            //console.log(dgr.geneid);
+            delete parsedDetails[idx];
+            //parsedDetails.splice(idx, 1);
+            //console.log(parsedDetails);
+          }
+          else {
+            parsedDetails[idx].entName = docs.result[dgr.geneid].name;
+            parsedDetails[idx].entId = docs.result[dgr.geneid].uid; //remove later
+            parsedDetails[idx].entDesc = docs.result[dgr.geneid].description;
+            parsedDetails[idx].entOtheraliases = docs.result[dgr.geneid].otheraliases;
+          }
+        };
+        console.log(symbol);
+        console.log("after filter");
+        //console.log(parsedDetails);
+        console.log("cleaning ....");
+        var cleanDetails = parsedDetails.filter(function (x) {
+          return x !== undefined;
+        });
+        console.log(cleanDetails);
+        callback(cleanDetails);
+      });
     });
   });
+
+
   // let query = symbol + "+AND+%22Homo+sapiens%22%5Bporgn%3A__txid9606%5D";
   // $.ajax({
   //   type: "GET",

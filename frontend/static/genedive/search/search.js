@@ -445,9 +445,7 @@
 
     // The action we take when a typeahead element is selected
     this.input.off('typeahead:selected').on('typeahead:selected', (event, item, set_name) => {
-
-      // Case: Gene w/ Disambiguation
-      //if (item.values.length > 1 && set_name !== this.GENESETS_NAME) {
+      console.log(item);
       console.log("Enter Disambiguation");
       let query = item.symbol + "+AND+%22Homo+sapiens%22%5Bporgn%3A__txid9606%5D";
       $.ajax({
@@ -457,7 +455,7 @@
           //console.log(result);
           if (result.esearchresult.count > 1) {
             console.log("Case: Gene w/ Disambiguation");
-            GeneDive.disambiguation.resolveIds(item.symbol, item.values, result, GeneDive.probfilter.getMinimumProbability());
+            GeneDive.disambiguation.resolveIds(item.symbol, item.values, result, GeneDive.probfilter.getMinimumProbability(), set_name);
             GeneDive.search.input.typeahead("val", "");
             return;
           }
@@ -477,7 +475,6 @@
       // GeneDive.disambiguation.resolveIds(item.symbol, item.values, GeneDive.probfilter.getMinimumProbability());
       // this.input.typeahead("val", "");
       // return;
-      //}
 
       // Case: Gene w/o Disambiguation || Search Set
       // this.addSearchTerm(item.symbol, item.values, set_name);

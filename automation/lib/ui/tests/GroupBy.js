@@ -60,7 +60,7 @@ class GroupByTest extends mix( Test ).with( Score, Table, GroupBy ) {
 
             try {
 
-        		let dgr = 'SP-A';
+        		let dgr = 'SFTPA1';
                 await this.login();
 				await this.oneHop();
                 await this.search( dgr );

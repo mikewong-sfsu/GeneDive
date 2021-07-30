@@ -22,7 +22,7 @@ class SelectDatasourceTest extends mix( Test ).with( Datasource, Table, Graph ) 
 		return new Promise( async (resolve, reject) => {
 			try {
 				let dsList = ['test dataset'];
-				let dgr    = 'neurotoxic'; // MW NEED TO PARAMETERIZE THIS LATER
+				let dgr    = 'NHN1'; // MW NEED TO PARAMETERIZE THIS LATER
 
 				await this.login();
 				await this.oneHop();
