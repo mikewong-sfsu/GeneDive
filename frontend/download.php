@@ -57,7 +57,10 @@
     <h2>Download the GeneDive Docker Image</h2>
 <?php if( $_SESSION[ 'is_auth' ]): ?>
 <?php if( file_exists( 'static/genedive/docker/images/genedive-docker.gz' )): ?>
-    <p><a class="btn btn-primary docker" data-toggle="tooltip-initial" href="/static/genedive/docker/images/genedive-docker.gz" title="Download the GeneDive Docker image. The GeneDive Docker image will allow you to import your own structured DGR data for search and visualization in GeneDive."><span class="fab fa-docker"></span> Download GeneDive Docker Image (<?php echo( sprintf( "%d MB", filesize( 'static/genedive/docker/images/genedive-docker.gz')/ (1024 * 1024 ))) ?>)</a></p>
+    <h4>GeneDive v2.5.2</h4>
+    <p><a class="btn btn-primary docker" data-toggle="tooltip-initial" href="/static/genedive/docker/images/genedive-docker.gz" title="Download the GeneDive Docker image. The GeneDive Docker image will allow you to import your own structured DGR data for search and visualization in GeneDive."><span class="fab fa-docker"></span> Download GeneDive v2.5.2 Docker Image (<?php echo( sprintf( "%d MB", filesize( 'static/genedive/docker/images/genedive-docker.gz')/ (1024 * 1024 ))) ?>)</a></p>
+    <h4>GeneDive v3.0rc (ACM BCB release)</h4>
+    <p><a class="btn btn-primary docker" data-toggle="tooltip-initial" href="https://genedive-images.s3.amazonaws.com/genedive-v3.0/releases/genedive-v3.0rc.gz" title="Download the GeneDive Docker image. The GeneDive Docker image will allow you to import your own structured DGR data for search and visualization in GeneDive."><span class="fab fa-docker"></span> Download GeneDive v3.0rc Docker Image (1.3 GB)</a></p>
 <?php endif; ?>
 <?php else: ?>
     <p>You must <a class="btn btn-primary" href="index.php?referrer=download.php" ><span class="fas fa-key"></span> Log in</a> to download the GeneDive Docker image.</p>
@@ -69,10 +72,18 @@
     install <code>gunzip</code>, or some other <i>gz-compression</i> utility
     first. Open a terminal window and type the following:</p>
     
+<h3>GeneDive v2.5.2</h3>
 <pre>
     gunzip genedive-docker.gz 
     docker load -i genedive-docker
     docker run -d -p 8456:80 --name genedive-v2.5.2-local genedive-v2.5.2
+</pre>
+
+<h3>GeneDive v3.0rc</h3>
+<pre>
+    gunzip genedive-v3.0rc.gz 
+    docker load -i genedive-v3.0-rc
+    docker run -d -p 8456:80 --name genedive-v3.0rc-local genedive-v3.0rc
 </pre>
 
     <p>You can substitute port <code>8456</code> with another available port if
