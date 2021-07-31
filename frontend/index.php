@@ -60,6 +60,10 @@
         2021.</p>
 
       <div>
+        <h4 style="color: gold; display: inline-block;">GeneDive v3.0 Release Candidate Available</h4>&nbsp;
+        <p>Login and go to Downloads to get the GeneDive v3.0 release candidate presented at ACM BCB. </p>
+      </div>
+      <div>
         <h4 style="color: gold; display: inline-block;">Looking for GeneDive v1.0? Go to</h4>&nbsp;
         <a class="btn btn-warning" href="https://classic.genedive.net">https://classic.genedive.net</a>
       </div>
