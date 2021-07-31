@@ -61,7 +61,7 @@
 
       <div>
         <h4 style="color: gold; display: inline-block;">GeneDive v3.0 Release Candidate Available</h4>&nbsp;
-        <p>Login and go to Downloads to get the GeneDive v3.0 release candidate presented at ACM BCB. </p>
+        <p>Login and go to <i>GeneDive Docker</i> (menu icon in the upper-left corner) to get the GeneDive v3.0 release candidate presented at ACM BCB. </p>
       </div>
       <div>
         <h4 style="color: gold; display: inline-block;">Looking for GeneDive v1.0? Go to</h4>&nbsp;
