@@ -93,7 +93,7 @@ If you feel that we are not abiding by this privacy policy, you should contact u
       "probability",
       "addendum",
     ];
-    let native_ds = new Set(["native", "plos-pmc", "pharmgkb"]);
+    let native_ds = new Set([ "mallory2016" ]);
 
     let csv_header = fields.join(",")+"\r\n";
     // Goes through each interaction and generates a comma seperated row of all the values from the fields above

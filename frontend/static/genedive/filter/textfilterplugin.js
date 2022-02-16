@@ -4,25 +4,25 @@ class TextFilterPlugin {
 	}
 
 	createObjectMap(datasources){
-		var default_ds = new Set(["native","pharmgkb","plos-pmc"]);
+		let native_ds = new Set([ "mallory2016" ]);
 	
-		for(var key of datasources){// Object.keys(datasources)){
-			if(default_ds.has(key) )
-				this.objectMap.set(key,eval("new DefaultFilter()"));
+		for(let key of datasources){
+			if(native_ds.has(key) )
+				this.objectMap.set( key, new DefaultFilter());
 
 			else{
 				let className = 'ds_' + key + '_filter';
-				let Obj = eval("new "+className+"()");// \"" + datasources[key]+ "\")");
-				this.objectMap.set(key,Obj);
+				let Obj = eval( `new ${className}()` );
+				this.objectMap.set( key, Obj );
 			}
 		}
 	}
 
 	buildFilter(interactions){
-		var filterList = new Map();
+		let filterList = new Map();
 
 		//combine all filters
-		for(var datasource of this.objectMap.values()){
+		for(let datasource of this.objectMap.values()){
 			filterList =new Map([...filterList, ...(datasource.addFilters(interactions))]);
 		}
 		return filterList;

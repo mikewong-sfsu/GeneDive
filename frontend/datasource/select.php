@@ -56,7 +56,7 @@
 <script>
 GeneDive.datasource = {};
 GeneDive.datasource.list = <?= json_encode( $dslist ) ?>;
-var std_ds = new Set(["pharmgkb","plos-pmc","native"]);
+var native_ds = new Set([ "mallory2016" ]);
 var manifest = <?php include( '/usr/local/genedive/data/sources/manifest.json' ); ?>;
 // ===== INITIALIZE DATASOURCE MANAGER
 var short_id_map = new Map();
@@ -69,9 +69,7 @@ GeneDive.datasource.refreshSelectionUI = () => {
     var local_flag = 0;//to display the local data source header
     var datasource_name;
     //add the default standard datasources
-    short_id_map.set("plos-pmc","G1");
-    short_id_map.set("pharmgkb","G2");
-    short_id_map.set("native","G1,G2");
+    short_id_map.set("mallory2016","G1");
     var i = 1;
     $( '#datasources-available-for-selection' ).empty();
     Object.entries( manifest ).forEach(([ key, datasource ]) => {
@@ -103,11 +101,11 @@ GeneDive.datasource.refreshSelectionUI = () => {
         let toggle = entry.find( 'input.datasource-toggle' );
 	toggle.attr({ id: datasource.id, name: datasource.name });
 	$( '#datasources-available-for-selection' ).append( entry );
-	if(std_flag == 0 && std_ds.has(datasource.id)){
+	if(std_flag == 0 && native_ds.has(datasource.id)){
 	$( '#datasource-selector .list-group' ).append("<p><i>GeneDive Datasources</i></p>");
 	std_flag = 1;
 	}
-	else if(local_flag == 0 && !std_ds.has(datasource.id)){
+	else if(local_flag == 0 && !native_ds.has(datasource.id)){
 	$( '#datasource-selector .list-group' ).append("<br><p><i>Local Datasources</i></p>");
 	local_flag = 1;
 	}	
@@ -147,7 +145,7 @@ let dss = {
 	  else{
           let list = GeneDive.datasource.list.map( sourceid  => manifest[ sourceid ].name ).sort().join( ', ' );
           alertify.success( `Now searching on<br>${list}` ); 
-          let use_native = [ 'plos-pmc', 'pharmgkb' ].every( item => GeneDive.datasource.list.includes( item ));
+          let use_native = [ 'mallory2016' ].every( item => GeneDive.datasource.list.includes( item ));
 	  let dsl = btoa( JSON.stringify( GeneDive.datasource.list ));
 	  let dsid_map = btoa (JSON.stringify( Object.fromEntries(short_id_map.entries())));
           $.ajax({
@@ -163,7 +161,7 @@ let dss = {
 
       // Cancel button behavior
       () => { 
-          let datasources = GeneDive.datasource.list.includes( 'native' ) ? [ 'plos-pmc', 'pharmgkb' ] : GeneDive.datasource.list;
+          let datasources = GeneDive.datasource.list.includes( 'native' ) ? [ 'mallory2016' ] : GeneDive.datasource.list;
           let list        = datasources.map( sourceid  => sourceid in manifest ? manifest[ sourceid ].name : null ).filter( x => x ).sort().join( ', ' );
           alertify.message( 'Data sources remain unchanged' + ( list ? `<br>(${list})` : '' )); 
       }
@@ -174,7 +172,7 @@ let dss = {
       let key        = $( item ).attr( 'id' );
       let selected   = GeneDive.datasource.list.includes( key );
       let use_native = GeneDive.datasource.list.includes( 'native' );
-      let native_ds  = key == 'plos-pmc' || key == 'pharmgkb';
+      let native_ds  = key == 'mallory2016';
       if( selected ) { $( item ).bootstrapToggle( 'on' ); } 
       else           { $( item ).bootstrapToggle( 'off' );}
       if( use_native && native_ds ) { $( item ).bootstrapToggle( 'on' ); }

@@ -1,21 +1,21 @@
 <?php
   // ============================================================
-  // FUNCTIONS MANAGING NATIVE DATASOURCES
+  // FUNCTIONS MANAGING THE NATIVE DATASOURCE
   // ============================================================
-  // We declare that servers have native datasources; clients do
-  // not have native datasources, but can have local user-provided
+  // We declare that servers have the native datasource; clients do
+  // not have the native datasource, but can have local user-provided
   // datasources.
   // ------------------------------------------------------------
 
-  $native = [ 'pharmgkb' => "/usr/local/genedive/data/sources/pharmgkb", 'deepdive' => "/usr/local/genedive/data/sources/plos-pmc" ];
-	function is_genedive_server() {
+  $native = [ 'mallory2016' => "/usr/local/genedive/data/sources/mallory2016" ];
+  function is_genedive_server() {
     global $native;
-		return file_exists( $native[ 'pharmgkb' ] ) || file_exists( $native[ 'deepdive' ] );
-	}
+    return file_exists( $native[ 'mallory2016' ] );
+  }
 
-	function is_local_client() {
+  function is_local_client() {
     global $native;
-		return ((! file_exists( $native[ 'pharmgkb' ])) && (! file_exists( $native[ 'deepdive' ])));
-	}
+    return ! file_exists( $native[ 'mallory2016' ]);
+  }
 
 ?>

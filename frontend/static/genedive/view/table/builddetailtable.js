@@ -3,16 +3,16 @@ class BuildDetailTable extends ResultsTable{
 	constructor(table,interactions,additional_columns, ds){
 	//===========================
 		super(table,interactions,additional_columns);
-		this.default_ds = new Set(["native","pharmgkb","plos-pmc"]);
+		this.native_ds = new Set([ "mallory2016" ]);
 		this.objectMap = new Map();
 		//create instances of the merging datasources
 		for( var key of Object.keys(ds)){
-			if(this.default_ds.has(key) )
-				this.objectMap.set(key,eval("new DefaultDetailTable()"));
+			if(this.native_ds.has(key) )
+				this.objectMap.set( key, new DefaultDetailTable() );
 
 			else{
-				let className = 'ds_' + key + '_det';				
-				let Obj = eval("new "+className+"( \"" + ds[key]+ "\")");
+				let className = `ds_${key}_det`;
+				let Obj = eval( `new ${className}( "${ds[key]}")` );
 				this.objectMap.set(key,Obj);
 			}
 				

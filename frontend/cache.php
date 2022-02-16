@@ -12,18 +12,9 @@ ini_set( "memory_limit", "1024M" );
  * ============================================================
  */
 if( ! isset( $_GET[ 'get' ] )) { exit; }
-//if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["plos-pmc", "pharmgkb"] )); };
-if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["native"] )); };
+if( ! isset( $_SESSION[ 'sources' ] )) { $_SESSION[ 'sources' ] = base64_encode( json_encode( ["mallory2016"] )); };
 
 $sources = json_decode( base64_decode( $_SESSION[ 'sources' ] ), true );
-//temp fix for getting rid of 'all' datasources - NL
-if(in_array("native", $sources)){
-	$sources = array_filter($sources, function($item) { return $item != "native";});
-	//replace 'all' by genedive native datasources
-	array_push($sources, "plos-pmc" , "pharmgkb");
-	//reset the value in session variable
-	$_SESSION['sources'] = base64_encode( json_encode( $sources ));
-}
 
 // ===== DISPATCH TABLE
 switch( $_GET[ 'get' ]) {
@@ -55,17 +46,12 @@ function send_cache( $file, $manifest, $sources ) {
 	if( count( $datasources ) == 1 ) {
 
 		// Single user-provided data source adjacency matrix requested
-		// This includes: 'native', 'shared', 'pharmgkb', or 'plos-pmc' 
-		// Only the server will have the native datasources installed (i.e.
-		// native, pharmgkb, plos-pmc)
+		// This includes: 'shared' or 'mallory2016' 
 
 		$url     = "cache/$source/$file.js";
 		$locally = "$CACHE/$url";
 		if(	file_exists( $locally )) {
 			send_redirect( $url );
-
-		} else if(in_array( $source, [ 'native', 'pharmgkb', 'plos-pmc' ])) {
-			send_redirect( "$server/$url" );
 		}
 	}
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED

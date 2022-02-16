@@ -32,8 +32,8 @@ $results     = [];
 $errors      = [];
 $extra_col   = [];
 if(in_array("native", $datasources)){
-	$datasources = array_filter($datasources, function($item) {return $item != "native";});
-	array_push($datasources, "plos-pmc" , "pharmgkb");
+  $datasources = array_filter($datasources, function($item) {return $item != "native";});
+  array_push($datasources, "mallory2016" );
 }
 $dsid_map = (array_intersect_key($dsid_map, array_flip($datasources)));
 foreach( $datasources as $source ) {

@@ -25,7 +25,7 @@ GeneDive.datasource.refreshRemoveUI = () => {
 
   $( '#datasources-available-for-removal' ).empty();
   Object.entries( manifest ).forEach(([ id, datasource ]) => {
-    if( id.match( /^(?:plos-pmc|pharmgkb)$/ )) { return; }
+    if( id.match( /^(?:mallory2016)$/ )) { return; }
     let entry = remove.clone();
     entry.find( '.name' ).html( datasource.name );
     entry.find( '.description' ).html( datasource.description );

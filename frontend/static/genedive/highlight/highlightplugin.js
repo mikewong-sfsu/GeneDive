@@ -1,16 +1,16 @@
 class HighlightPlugin {
-	constructor(){
+	constructor() {
 		this.objectMap = new Map();
 	}
 
-	createObjectMap(datasources){
-		var default_ds = new Set(["native","pharmgkb","plos-pmc"]);
+	createObjectMap( datasources ) {
+		let native_ds = new Set([ "mallory2016" ]);
 	
-		for(var key of datasources){
-			if(default_ds.has(key) )
-				this.objectMap.set(key,eval("new DefaultHighlight()"));
+		for( let key of datasources ) {
+			if( native_ds.has(key )) {
+				this.objectMap.set(key, new DefaultHighlight());
 
-			else{
+			} else {
 				let className = 'ds_' + key + '_highlight';
 				let Obj = eval("new "+className+"()");
 				this.objectMap.set(key,Obj);
@@ -18,11 +18,11 @@ class HighlightPlugin {
 		}
 	}
 
-	buildHighlight(interactions, term){
-		var highlightList = new Map();
+	buildHighlight( interactions, term ) {
+		let highlightList = new Map();
 		//combine all filters
-		for(var datasource of this.objectMap.values()){
-			highlightList =new Map([...highlightList, ...(datasource.addHighlight(interactions, term))]);
+		for( let datasource of this.objectMap.values()) {
+			highlightList = new Map([ ...highlightList, ...(datasource.addHighlight( interactions, term ))]);
 		}
 		return highlightList;
 	}
