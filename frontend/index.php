@@ -14,7 +14,9 @@
   }
 
   // Local datasources selected; no need for login
-  if( ! $use_native_ds ) {
+  // Auth server shutdown Feb 2022, local only
+  // if( ! $use_native_ds ) {
+  if( true ) {
     $_SESSION[ 'is_auth' ] = true;
     $_SESSION[ 'name' ]    = 'Local User';
     header( 'Location: search.php' );

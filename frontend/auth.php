@@ -3,7 +3,9 @@
 require_once "session.php";
 
 // Kick user back to the home page if they aren't currently logged in
-if( ! isset($_SESSION[ 'is_auth' ])) {
+// Auth server shutdown Feb 2022, no more login required (Docker only)
+// if( ! isset($_SESSION[ 'is_auth' ])) {
+if( false ) {
   header( 'location: index.php' );
   exit;
 }
