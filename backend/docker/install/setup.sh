@@ -51,8 +51,7 @@ chmod a+w /genedive/frontend/static/genedive/highlight/plugin
 chmod a+w /genedive/frontend/static/genedive/view/table/plugin
 
 # Install default configuration files
-cp /genedive/backend/data/sources/manifest.server-default.json /genedive/backend/data/sources.manifest.json
-#cp /genedive/backend/data/sources/manifest.server-default.json /genedive/backend/data/sources/manifest.json
+cp /genedive/backend/data/sources/manifest.server-default.json /genedive/backend/data/sources/manifest.json
 cp /genedive/backend/data/credentials-default.php /genedive/backend/data/credentials.php
 
 # Install NodeJS v10 & Puppeteer system dependencies
