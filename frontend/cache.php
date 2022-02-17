@@ -39,7 +39,6 @@ function send_cache( $file, $manifest, $sources ) {
 	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
-	var_dump( $datasources ); exit();
 	
 	// ===== CASE 1: MOST COMMON CASE
 	$source = $datasources[ 0 ];
