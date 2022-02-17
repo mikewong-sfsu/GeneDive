@@ -39,6 +39,7 @@ function send_cache( $file, $manifest, $sources ) {
 	// ===== ONLY ADDRESS SOURCES PROVIDED BY THIS HOST
 	// This filters by the host data source manifest
 	$datasources = array_filter( $sources, "filter_by_host_manifest" );
+	var_dump( $datasources ); exit();
 	
 	// ===== CASE 1: MOST COMMON CASE
 	$source = $datasources[ 0 ];
@@ -48,11 +49,10 @@ function send_cache( $file, $manifest, $sources ) {
 		// Single user-provided data source adjacency matrix requested
 		// This includes: 'shared' or 'mallory2016' 
 
-		$url     = "cache/$source/$file.js";
-		$locally = "$CACHE/$url";
-		if(	file_exists( $locally )) {
-			send_redirect( $url );
-		}
+		$local           = [];
+		$local[ 'url' ]  = "cache/$source/$file.js";
+		$local[ 'path' ] = "$CACHE/{$local[ 'url' ]}";
+		if(	file_exists( $local[ 'path' ])) { send_redirect( $local[ 'url' ]); }
 	}
 	// ===== CASE 2: COMBINATION OF SOURCES PREVIOUSLY CACHED
 	// Caches only exist locally on the proxy server, never on the production
@@ -117,12 +117,9 @@ function write_cache( $file, $data ) {
 	global $CACHE;
 	global $DATASOURCES;
 
-	$path       = "$CACHE/cache/$source";
-       	//create cache file at specified path	
-	if( ! file_exists( $path )) { mkdir( $path, 0777 ); }
-	$sources    = json_decode( base64_decode( $_SESSION[ 'sources' ]), true );
-	$path       = "$CACHE/cache/" . substr( sha1( $_SESSION[ 'sources' ]), 0, 8 );
-	if( ! file_exists( $path )) { mkdir( $path ); chmod( $path, 0777 ); }
+	$path    = "$CACHE/cache/$source"; if( ! file_exists( $path )) { mkdir( $path, 0777 ); }
+	$sources = json_decode( base64_decode( $_SESSION[ 'sources' ]), true );
+	$path    = "$CACHE/cache/" . substr( sha1( $_SESSION[ 'sources' ]), 0, 8 ); if( ! file_exists( $path )) { mkdir( $path ); chmod( $path, 0777 ); }
 
 	// Create cache path and human-readable mini-manifest 'sources.json'
 	if( count( $sources ) > 1 ) {
@@ -135,10 +132,12 @@ function write_cache( $file, $data ) {
 	}
 
 	$var = $file;
-	if( $var != 'adjacency_matrix' ) {
+	if( $var != 'adjacency_matrix' && $var != 'set_id' ) {
 		$var = preg_replace( '/_id$/', '', $var );
 		$var = strtoupper( "AUTOCOMPLETE_$var" );
 
+	} else if( $var == 'set_id' ) {
+		$var = 'AUTOCOMPLETE_GENE_SET';
 	}
 
 	// Write the cache file

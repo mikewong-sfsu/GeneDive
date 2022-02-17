@@ -114,7 +114,7 @@
             console.log( 'ERROR', error );
             if( error.readyState == 0 ) { // Request not sent; network error
 
-              alertify.error( 'Server not available<br><?php if( $use_native_ds ): ?>Mallory2016 is not available and will be removed from selected datasources', 30 );
+              alertify.error( 'Server not available<br>Mallory2016 is not available and will be removed from selected datasources', 30 );
 
               let dsl = '<?=base64_encode( json_encode( $sans_native ))?>';
               $.get({ url:  `datasource/change.php?value=${dsl}` })
